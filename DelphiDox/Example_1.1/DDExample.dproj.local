@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.501,=C:\Daten\Doxygen\Test3\DelphiProjekt\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.382,C:\Daten\Doxygen\Test3\DelphiProjekt\Unit2.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.302,D:\Daten\Doxygen\DelphiDox\Example_1.1\src\forms\frm_Main.pas=D:\Daten\Doxygen\DelphiDox\Example_1.1\src\forms\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.363,D:\Daten\Doxygen\DelphiDox\Example_1.1\src\ASCII.pas=D:\Daten\Doxygen\DelphiDox\Example_1.1\alt\ASCII.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.034,D:\Daten\Doxygen\DelphiDox\Example_1.1\src\ASCII.pas=D:\Daten\Doxygen\DelphiDox\Example_1.1\ASCII.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.311,=D:\Daten\Doxygen\DelphiDox\Example_1.1\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.289,D:\Daten\Doxygen\DelphiDox\Example_1.1\Unit1.pas=D:\Daten\Doxygen\DelphiDox\Example_1.1\src\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.573,=C:\Daten\Projekte\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.576,C:\Daten\Projekte\Unit2.pas=C:\Daten\Doxygen\Test3\DelphiProjekt\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.338,C:\Daten\Projekte\Unit1.dfm=C:\Daten\Doxygen\Test3\DelphiProjekt\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.022,D:\Daten\Doxygen\DelphiDox\Example_1.1\src\Unit2.pas=D:\Daten\Doxygen\DelphiDox\Example_1.1\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.628,D:\Daten\Doxygen\DelphiDox\Example_1.1\src\Unit2.pas=D:\Daten\Doxygen\DelphiDox\Example_1.1\alt\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.615,D:\Daten\Doxygen\DelphiDox\Example_1.1\src\forms\Unit1.pas=D:\Daten\Doxygen\DelphiDox\Example_1.1\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.302,D:\Daten\Doxygen\DelphiDox\Example_1.1\src\forms\frm_Main.dfm=D:\Daten\Doxygen\DelphiDox\Example_1.1\src\forms\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.944,=C:\Daten\Doxygen\Test3\DelphiProjekt\Unit3.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.420,=C:\Daten\Doxygen\Test3\DelphiProjekt\ASCII.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.552,D:\Daten\Doxygen\DelphiDox\Example_1.1\Project1.dproj=D:\Daten\Doxygen\DelphiDox\Example_1.1\DDExample.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.556,D:\Daten\Doxygen\DelphiDox\Example_1.1\src\Example_UNIT.pas=D:\Daten\Doxygen\DelphiDox\Example_1.1\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.190,D:\Daten\Doxygen\DelphiDox\Example_1.1\alt\ASCII.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.270,=D:\Daten\Doxygen\DelphiDox\Example_1.1\src\Example_FUNC.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.942,D:\Daten\Doxygen\DelphiDox\Example_1.1\alt\Unit3.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.526,D:\Daten\Doxygen\DelphiDox\Example_1.1\src\Unit1.pas=D:\Daten\Doxygen\DelphiDox\Example_1.1\src\Example_CLASS.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.711,D:\Daten\Doxygen\DelphiDox\Example_1.1\src\Unit3.pas=D:\Daten\Doxygen\DelphiDox\Example_1.1\Unit3.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.381,D:\Daten\Doxygen\DelphiDox\Example_1.1\src\Unit3.pas=D:\Daten\Doxygen\DelphiDox\Example_1.1\alt\Unit3.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.917,C:\Daten\Projekte\Project1.dproj=C:\Daten\Doxygen\Test3\DelphiProjekt\Project1.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.985,=D:\Daten\Doxygen\DelphiDox\Example_1.1\src\Example_VAR.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.557,=D:\Daten\Doxygen\DelphiDox\Example_1.1\src\Example_TYPE.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.701,=D:\Daten\Doxygen\DelphiDox\Example_1.1\Doxygen\DDExample.bat</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.785,D:\Daten\Doxygen\DelphiDox\Example_1.1\Doxygen\DDExample.bat=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.615,D:\Daten\Doxygen\DelphiDox\Example_1.1\src\forms\Unit1.dfm=D:\Daten\Doxygen\DelphiDox\Example_1.1\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.958,=C:\Daten\Projekte\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.721,=C:\Daten\Projekte\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.652,=C:\Daten\Projekte\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.989,=D:\Daten\Doxygen\DelphiDox\Example_1.1\src\Example_CONST.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.055,=D:\Daten\Doxygen\DelphiDox\Example_1.1\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.897,=C:\Daten\Projekte\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.857,D:\Daten\Doxygen\DelphiDox\Example_1.1\alt\Unit2.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.338,C:\Daten\Projekte\Unit1.pas=C:\Daten\Doxygen\Test3\DelphiProjekt\Unit1.pas</Transaction>
+    <Transaction>2020.05.09 11:59:33.824,=D:\Daten\Doxygen\DelphiDox\Example_1.1\Unit1.pas</Transaction>
+    <Transaction>2020.05.09 12:00:48.055,D:\Daten\Doxygen\DelphiDox\Example_1.1\DDTemplateUnit.pas=D:\Daten\Doxygen\DelphiDox\Example_1.1\Unit1.pas</Transaction>
+    <Transaction>2020.05.09 12:01:10.537,D:\Daten\Doxygen\DelphiDox\Example_1.1\src\DDTemplateUnit.pas=D:\Daten\Doxygen\DelphiDox\Example_1.1\DDTemplateUnit.pas</Transaction>
+  </Transactions>
+	<ActiveMobileDevice>
+		<NoProfile iOSSimulator="iPhone5"/>
+	</ActiveMobileDevice>
+</BorlandProject>

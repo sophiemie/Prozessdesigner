@@ -1,0 +1,31 @@
+# ------------------------------------------------------------------------------
+# Additional PREDEFINED macros:
+# - to replace Delphi reserved words by C-symbols in expressions, since Delphi
+#   is case insensitive, in various spellings:
+#   note: logical keywords in all uppercase (AND, OR, XOR) relates to logical
+#         operators &&, ||, ^^; all other spellings to bitwise operators &, |, ^
+#   Feel free to adjust this to your own pereferences.
+#-------------------------------------------------------------------------------
+PREDEFINED            += shr=>> \
+                         Shr=>> \
+                         SHR=>> \
+                         shl=<< \
+                         Shl=<< \
+                         SHL=<< \
+                         or=| \
+                         Or=| \
+                         OR=|| \
+                         and=& \
+                         And=& \
+                         AND=&& \
+                         xor=^ \
+                         Xor=^ \
+                         XOR=^^ \
+                         div=/ \
+                         Div=/ \
+                         DIV=/ \
+                         mod=% \
+                         Mod=% \
+                         MOD=%
+
+#-------------------------------------------------------------------------------

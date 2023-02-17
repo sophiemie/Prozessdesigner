@@ -1,0 +1,166 @@
+#-------------------------------------------------------------------------------
+# DDExample.dox
+#
+# This file should been imported into your Doxygen configuration file:
+#
+# @INCLUDE_PATH= ...path to this file...
+# @INCLUDE= DDExample.dox
+#
+# Be aware that doxywizard.exe merges include files explicitely and removes
+# @INCLUDE_PATH / @INCLUDE directives afterwards!
+#
+# Alternatively it can be used directly preserving all other options
+# default values
+#-------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# The following configuration tags are configured by DDAliases.dox and
+# DPredefined.dox using TAGNAME += ...
+# Cause we want the configuration from the root we have to clear them:
+# ------------------------------------------------------------------------------
+ENABLED_SECTIONS       =
+EXTENSION_MAPPING      =
+FILE_PATTERNS          =
+EXCLUDE_SYMBOLS        =
+PREDEFINED             =
+ALIASES                =
+
+# ------------------------------------------------------------------------------
+# Get DelphiDox configuration files:
+# note: the INCLUDE_PATH refers to the DelphiDox documentation; you can copy the
+# *.dox files elsewhere (in this directory for example) and adjust INCLUDE_PATH
+# ------------------------------------------------------------------------------
+@INCLUDE_PATH = ../../DoxyGen/files
+@INCLUDE = DDAliases.dox
+@INCLUDE = DDPredefined.dox
+
+# ------------------------------------------------------------------------------
+# Adjust as desired
+# ------------------------------------------------------------------------------
+PROJECT_NAME           = DelphiDox-Example
+PROJECT_LOGO           = ../DDExample.bmp
+
+# input files and directories:
+INPUT                  = ../src \
+                         ../DDExample.dpr \
+                         hpp
+
+# src directory & subdirectories!:
+RECURSIVE              = YES
+
+# be sure that doxygen.h is covered by this settings(!):
+INCLUDE_PATH           = ./ ./hpp
+
+# output directory
+OUTPUT_DIRECTORY       = ./Doc
+
+# to include declaration code into the documentation:
+# - Delphi source directories to include Delphi declarations
+# - hpp directory to include header (.hpp) sources
+EXAMPLE_PATH           = ../src \
+                         ../ \
+                         hpp
+
+EXAMPLE_RECURSIVE      = YES
+
+EXAMPLE_PATTERNS       += *.pas *.hpp
+
+# if you have dot installed; adjust path for your installation:
+HAVE_DOT               = YES
+DOT_PATH               = "C:/Anwendungen/Grafik/Graphviz-2.38/bin"
+DOT_MULTI_TARGETS      = YES
+
+# [RECOMMENDED]
+# ------------------------------------------------------------------------------
+# The following configuration are recommended:
+# ------------------------------------------------------------------------------
+
+# to exclude Delphi's __history and __recovery directories and files from being parsed:
+EXCLUDE_PATTERNS       = */__*/* \
+                         *.~*~
+
+# useful if Delphi sources complain with VCL (alle types are preceeded by "T"):
+IGNORE_PREFIX          = T
+
+# for proper evaluation of doxygen.h
+MACRO_EXPANSION        = YES
+
+# if Doxygen sorts the member docs some members my not be covered!
+SORT_MEMBER_DOCS       = NO
+
+# since Delphi collects all .hpp files in a single directory, it's very difficult
+# to prevent .hpp files not to be wanted from being documented (i.e. from external
+# Delphi modules); so hide all undoced entities and don't warn on undocumented members
+HIDE_UNDOC_CLASSES     = YES
+HIDE_UNDOC_MEMBERS     = YES
+HIDE_SCOPE_NAMES       = YES
+WARN_IF_UNDOCUMENTED   = NO
+
+# [RECOMMENDED]
+
+# [USEFUL]
+# ------------------------------------------------------------------------------
+# The following configurations may also be useful:
+# ------------------------------------------------------------------------------
+
+# probably makes no sense setting this to YES:
+VERBATIM_HEADERS       = NO
+# probably makes no sense cause source code isn't available
+EXTRACT_PACKAGE        = NO
+
+INLINE_GROUPED_CLASSES = YES
+INLINE_SIMPLE_STRUCTS  = YES
+TYPEDEF_HIDES_STRUCT   = YES
+
+EXTRACT_PRIVATE        = YES
+EXTRACT_PRIV_VIRTUAL   = YES
+EXTRACT_STATIC         = YES
+
+# all paths relative to upper (= Example) directory
+STRIP_FROM_PATH        = ../
+
+# output options
+GENERATE_TREEVIEW      = YES
+HTML_TIMESTAMP         = YES
+HTML_DYNAMIC_SECTIONS  = YES
+
+# if there are only few entries the index looks very poor with more than on column
+COLS_IN_ALPHA_INDEX    = 1
+
+# group name with an anchor for referencing:
+# note that the anchor is placed behind \name tag, regardless it is noted before!
+ALIASES               += "Name{2}=\anchor \1 ^^ \name \2" \
+                         "Name{1}=\Name{\1,\1} "
+# [USEFUL]
+
+# for only generating HTML output
+# Default value is YES
+GENERATE_LATEX        = NO
+
+# Tag file to make DelphiDox documentation able to refer to the examples:
+GENERATE_TAGFILE = DDExample.tag
+
+# An example for own aliases tailored for the following form naming conventions:
+# - type name: Tfrm<formname>
+# - file name: frm_<formname>.pas
+ALIASES += \
+           "DFormDeclHdr{1}=\DHeader{Tfrm\1} \DInclDecl{frm_\1,\1}" \
+           "DFormDeclHdr{2}=\DHeader{Tfrm\1_\2} \DInclDecl{frm_\1,\1,\2}" \
+           "DForm{1}=\Dclass{Tfrm\1}           ^^ \DFormDeclHdr{\1} \DCompTypeDecl{Tfrm\1}" \
+           "DFormField{2}=\Dmember{Tfrm\1,\2}  ^^ \DFormDeclHdr{\1,\2} \DVarDecl{\2}" \
+           "DFormProp{2}=\Dproperty{Tfrm\1,\2} ^^ \DFormDeclHdr{\1,\2} \DCompVarDecl{\2}" \
+           "DFormFunc{2}=\Dmethod{Tfrm\1,\2}   ^^ \DFormDeclHdr{\1,\2} \DFuncDecl{\2}" \
+           "DFormProc{2}=\Dmethod{Tfrm\1,\2}   ^^ \DFormDeclHdr{\1,\2} \DProcDecl{\2}" \
+           "DFormCtor{2}=DFormProc{\1,\2}" \
+           "DFormDtor{2}=DFormProc{\1,\2}" \
+           "CFormDeclHdr{1}= \CDeclHdr{frm_\1,Tfrm\1}" \
+           "CFormDeclHdr{2}= \CDeclHdr{frm_\1,Tfrm\1_\2}" \
+           "CForm{1}=\CFormDeclHdr{\1} \CClassDecl{Tfrm\1}" \
+           "CFormMethod{2}=\CFormDeclHdr{\1,\2} \CClassMethodDecl{Tfrm\1,\2}" \
+           "CFormVar{2}=\CFormDeclHdr{\1,\2} \CClassVarDecl{Tfrm\1,\2}" \
+           "CFormProperty{2}=\CFormDeclHdr{\1,\2} \CClassPropertyDecl{Tfrm\1,\2}"
+
+
+# ------------------------------------------------------------------------------
+# End of file
+# ------------------------------------------------------------------------------
