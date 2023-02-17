@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
@@ -8,3 +9,15 @@
     <Transaction>2023.02.17 23:51:26.605,D:\Prozessdesigner\Prozessdesigner.dproj=C:\Users\Sophie\OneDrive\Documents\Embarcadero\Studio\Projekte\Project1.dproj</Transaction>
   </Transactions>
 </BorlandProject>
+=======
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.420,=C:\Users\Sophie\OneDrive\Documents\Embarcadero\Studio\Projekte\Unit1.pas</Transaction>
+    <Transaction>2023.02.17 23:50:57.905,=C:\Users\Sophie\OneDrive\Documents\Embarcadero\Studio\Projekte\Unit1.pas</Transaction>
+    <Transaction>2023.02.17 23:51:18.042,D:\Prozessdesigner\MainUnit.pas=C:\Users\Sophie\OneDrive\Documents\Embarcadero\Studio\Projekte\Unit1.pas</Transaction>
+    <Transaction>2023.02.17 23:51:18.042,D:\Prozessdesigner\MainUnit.dfm=C:\Users\Sophie\OneDrive\Documents\Embarcadero\Studio\Projekte\Unit1.dfm</Transaction>
+    <Transaction>2023.02.17 23:51:26.605,D:\Prozessdesigner\Prozessdesigner.dproj=C:\Users\Sophie\OneDrive\Documents\Embarcadero\Studio\Projekte\Project1.dproj</Transaction>
+  </Transactions>
+</BorlandProject>
+>>>>>>> 3d5a98f601e73b47592f2ee510c92b10066083fa
