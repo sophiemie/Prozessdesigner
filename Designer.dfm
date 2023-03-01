@@ -10,7 +10,33 @@ object Form1: TForm1
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+<<<<<<< HEAD
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 13
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> ea5ecdfdc0acc3ae1ff02a789b93a1b611629c3d
+  Menu = MainMenu1
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object MainMenu1: TMainMenu
+    Left = 208
+    Top = 104
+    object Datei1: TMenuItem
+      Caption = 'Datei'
+    end
+  end
+<<<<<<< HEAD
+=======
+=======
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+>>>>>>> 2f64d176da8e7e65d9abe1ce5b08cc943b993c67
+>>>>>>> ea5ecdfdc0acc3ae1ff02a789b93a1b611629c3d
+>>>>>>> 87fd8aedcb42db7977290e8969f88f6c7b3b6ef1
 end
