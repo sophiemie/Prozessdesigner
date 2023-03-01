@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{DF6B6805-61E6-408C-98D3-9BD838418AC8}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Prozessdesigner.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="C:\Users\Sophie\OneDrive\Documents\Embarcadero\Studio\Projekte\ProzessdesignerTest.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="Prozessdesigner">
+        <MSBuild Projects="Prozessdesigner.dproj"/>
+    </Target>
+    <Target Name="Prozessdesigner:Clean">
+        <MSBuild Projects="Prozessdesigner.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Prozessdesigner:Make">
+        <MSBuild Projects="Prozessdesigner.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ProzessdesignerTest">
+        <MSBuild Projects="C:\Users\Sophie\OneDrive\Documents\Embarcadero\Studio\Projekte\ProzessdesignerTest.dproj"/>
+    </Target>
+    <Target Name="ProzessdesignerTest:Clean">
+        <MSBuild Projects="C:\Users\Sophie\OneDrive\Documents\Embarcadero\Studio\Projekte\ProzessdesignerTest.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ProzessdesignerTest:Make">
+        <MSBuild Projects="C:\Users\Sophie\OneDrive\Documents\Embarcadero\Studio\Projekte\ProzessdesignerTest.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="Prozessdesigner;ProzessdesignerTest"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="Prozessdesigner:Clean;ProzessdesignerTest:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="Prozessdesigner:Make;ProzessdesignerTest:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
