@@ -3,7 +3,7 @@ program Prozessdesigner;
 uses
   Vcl.Forms,
   Designer in 'Designer.pas' {Form1},
-  Startpage in 'Startpage.pas' {Form2};
+  Startpage in 'Startpage.pas';
 
 {$R *.res}
 
