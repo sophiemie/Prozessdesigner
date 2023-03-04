@@ -1,0 +1,35 @@
+unit Datenbank;
+
+interface
+
+type
+  Datensatz = interface
+
+  end;
+
+implementation
+
+procedure stelleVerbindungHer();
+begin
+  SQLDataSet1.SQLConnection := SQLConnection1;
+  SQLConnection1.Connected := True;
+end;
+
+function leseDatensatzAus(): String;
+begin
+
+end;
+
+procedure schreibeDatensatz(id: Integer); overload;
+begin
+
+end;
+
+procedure schreibeDatensatz(id: Integer; text: String); overload;
+begin
+
+end;
+
+
+
+end.
