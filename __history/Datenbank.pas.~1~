@@ -1,0 +1,30 @@
+unit Datenbank;
+
+interface
+
+implementation
+
+function leseDatensatzAus(): String; overload;
+begin
+
+end;
+
+
+function leseDatensatzAus(): Integer; overload;
+begin
+
+end;
+
+procedure schreibeDatensatz(id: Integer); overload;
+begin
+
+end;
+
+procedure schreibeDatensatz(id: Integer; text: String); overload;
+begin
+
+end;
+
+
+
+end.

@@ -2,8 +2,7 @@ program Prozessdesigner;
 
 uses
   Vcl.Forms,
-  Designer in 'Designer.pas' {Form1},
-  Datenbank in 'Datenbank.pas';
+  Designer in 'Designer.pas' {Form1};
 
 {$R *.res}
 
