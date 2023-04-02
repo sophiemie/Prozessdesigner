@@ -4,7 +4,12 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VCL.TMSFNCTypes, VCL.TMSFNCUtils,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.FMTBcd, Data.SqlExpr, Data.DB,
+  Vcl.StdCtrls, DatenbankUnit, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MySQL,
+  FireDAC.Phys.MySQLDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
+  FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,VCL.TMSFNCTypes, VCL.TMSFNCUtils,
   VCL.TMSFNCGraphics, VCL.TMSFNCGraphicsTypes, VCL.TMSFNCBloxCoreTypes,
   VCL.TMSFNCBloxCoreUtils, VCL.TMSFNCBloxCoreLine, VCL.TMSFNCBloxCorePolygon,
   VCL.TMSFNCBloxCoreTextCell, VCL.TMSFNCBloxCoreLineArrow,
@@ -12,10 +17,17 @@ uses
   VCL.TMSFNCBloxCoreGroup, VCL.TMSFNCBloxUISnapGrid, VCL.TMSFNCBloxCoreBlock,
   VCL.TMSFNCBloxCoreElement, VCL.TMSFNCBloxUIRegistration,
   VCL.TMSFNCBloxUIRenderer, VCL.TMSFNCBloxSelector, Vcl.StdCtrls,
-  VCL.TMSFNCCustomControl, VCL.TMSFNCCustomScrollControl, VCL.TMSFNCBloxControl;
+  VCL.TMSFNCCustomControl, VCL.TMSFNCCustomScrollControl, VCL.TMSFNCBloxControl;  // Datenbank.pas einbinden
 
 type
   TForm1 = class(TForm)
+    Button1: TButton;
+    FDConnection1: TFDConnection;
+    FDQuery1: TFDQuery;
+    FDConnection2: TFDConnection;
+    FDQuery2: TFDQuery;
+    FDConnection3: TFDConnection;
+    FDQuery3: TFDQuery;
     TMSFNCBloxSelector1: TTMSFNCBloxSelector;
     TMSFNCBloxControl1: TTMSFNCBloxControl;
     procedure TMSFNCBloxControl1RegisterElements(Sender: TObject);
@@ -37,4 +49,5 @@ implementation
     w := 0;
   end;
 
+// Datenbank Verbindung herstellen
 end.

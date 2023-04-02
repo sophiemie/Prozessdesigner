@@ -1,0 +1,39 @@
+unit DatenbankUnit;
+
+interface
+
+type
+  Datenbank = class
+  public
+    procedure stelleVerbindungHer();
+    function leseDatensatzAus(): String;
+    procedure schreibeDatensatz(id: Integer); overload;
+    procedure schreibeDatensatz(id: Integer; text: String); overload;
+  end;
+
+implementation
+
+procedure Datenbank.stelleVerbindungHer();
+begin
+  //SQLDataSet1.SQLConnection := SQLConnection1;
+  //SQLConnection1.Connected := True;
+end;
+
+function Datenbank.leseDatensatzAus(): String;
+begin
+
+end;
+
+procedure Datenbank.schreibeDatensatz(id: Integer);
+begin
+
+end;
+
+procedure Datenbank.schreibeDatensatz(id: Integer; text: String);
+begin
+
+end;
+
+
+
+end.

@@ -1,0 +1,37 @@
+unit DatenbankUnit;
+
+interface
+
+type
+  Datenbank = class
+  public
+    function leseDatensatzAus(): String;
+
+  end;
+
+implementation
+
+procedure stelleVerbindungHer();
+begin
+  //SQLDataSet1.SQLConnection := SQLConnection1;
+  //SQLConnection1.Connected := True;
+end;
+
+function Datenbank.leseDatensatzAus(): String;
+begin
+
+end;
+
+procedure schreibeDatensatz(id: Integer); overload;
+begin
+
+end;
+
+procedure schreibeDatensatz(id: Integer; text: String); overload;
+begin
+
+end;
+
+
+
+end.
