@@ -19,49 +19,8 @@ object Form1: TForm1
     Width = 75
     Height = 25
     Caption = 'Button1'
-    TabOrder = 0
+    TabOrder = 2
   end
-  object FDConnection1: TFDConnection
-    Params.Strings = (
-      'Database=forms'
-      'User_Name=dbapp'
-      'Password=Yv9i9OqHC8TRlCbE'
-      'DriverID=MySQL')
-    Left = 144
-    Top = 184
-  end
-  object FDQuery1: TFDQuery
-    Connection = FDConnection1
-    Left = 240
-    Top = 184
-  end
-  object FDConnection2: TFDConnection
-    Params.Strings = (
-      'Database=wf'
-      'User_Name=dbapp'
-      'Password=Yv9i9OqHC8TRlCbE'
-      'DriverID=MySQL')
-    Left = 144
-    Top = 256
-  end
-  object FDQuery2: TFDQuery
-    Connection = FDConnection2
-    Left = 240
-    Top = 264
-  end
-  object FDConnection3: TFDConnection
-    Params.Strings = (
-      'Database=main_db'
-      'User_Name=dbapp'
-      'Password=Yv9i9OqHC8TRlCbE'
-      'DriverID=MySQL')
-    Left = 136
-    Top = 344
-  end
-  object FDQuery3: TFDQuery
-    Connection = FDConnection3
-    Left = 248
-    Top = 352
   object TMSFNCBloxSelector1: TTMSFNCBloxSelector
     Left = 448
     Top = 0
@@ -70,7 +29,7 @@ object Form1: TForm1
     ParentDoubleBuffered = False
     DoubleBuffered = True
     TabOrder = 0
-    Appearance.ItemHeight = 84.000000000000000000
+    Appearance.ItemHeight = 50.000000000000000000
     Appearance.Stroke.Color = 11119017
     Appearance.Fill.Color = 15329769
     Appearance.StrokeHover.Color = 10061943
@@ -157,5 +116,47 @@ object Form1: TForm1
     GroupHandleAppearance.RotCenter.Size = 3
     GroupHandleAppearance.RotCenter.Style = hhCrossedEllipse
     Interaction.ChangeTextWithDoubleClick = False
+  end
+  object FDConnection1: TFDConnection
+    Params.Strings = (
+      'Database=forms'
+      'User_Name=dbapp'
+      'Password=Yv9i9OqHC8TRlCbE'
+      'DriverID=MySQL')
+    Left = 144
+    Top = 184
+  end
+  object FDQuery1: TFDQuery
+    Connection = FDConnection1
+    Left = 240
+    Top = 184
+  end
+  object FDConnection2: TFDConnection
+    Params.Strings = (
+      'Database=wf'
+      'User_Name=dbapp'
+      'Password=Yv9i9OqHC8TRlCbE'
+      'DriverID=MySQL')
+    Left = 144
+    Top = 256
+  end
+  object FDQuery2: TFDQuery
+    Connection = FDConnection2
+    Left = 240
+    Top = 264
+  end
+  object FDConnection3: TFDConnection
+    Params.Strings = (
+      'Database=main_db'
+      'User_Name=dbapp'
+      'Password=Yv9i9OqHC8TRlCbE'
+      'DriverID=MySQL')
+    Left = 136
+    Top = 344
+  end
+  object FDQuery3: TFDQuery
+    Connection = FDConnection3
+    Left = 248
+    Top = 352
   end
 end
