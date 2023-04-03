@@ -159,18 +159,4 @@ object Form1: TForm1
     Left = 248
     Top = 352
   end
-  object FDConnection_wftest: TFDConnection
-    Params.Strings = (
-      'Database=wf_test'
-      'User_Name=dbapp'
-      'Password=Yv9i9OqHC8TRlCbE'
-      'DriverID=MySQL')
-    Left = 136
-    Top = 424
-  end
-  object FDQuery_wftest: TFDQuery
-    Connection = FDConnection_wftest
-    Left = 248
-    Top = 424
-  end
 end
