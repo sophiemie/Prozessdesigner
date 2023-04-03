@@ -22,16 +22,14 @@ uses
 type
   TForm1 = class(TForm)
     Button1: TButton;
-    FDConnection_forms: TFDConnection;
-    FDQuery_forms: TFDQuery;
-    FDConnection_wf: TFDConnection;
-    FDQuery_wf: TFDQuery;
-    FDConnection_maindb: TFDConnection;
-    FDQuery_maindb: TFDQuery;
+    FDConnection1: TFDConnection;
+    FDQuery1: TFDQuery;
+    FDConnection2: TFDConnection;
+    FDQuery2: TFDQuery;
+    FDConnection3: TFDConnection;
+    FDQuery3: TFDQuery;
     TMSFNCBloxSelector1: TTMSFNCBloxSelector;
     TMSFNCBloxControl1: TTMSFNCBloxControl;
-    FDConnection_wftest: TFDConnection;
-    FDQuery_wftest: TFDQuery;
     procedure TMSFNCBloxControl1RegisterElements(Sender: TObject);
   private
     { Private-Deklarationen }

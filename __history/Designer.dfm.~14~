@@ -63,7 +63,6 @@ object Form1: TForm1
     ParentDoubleBuffered = False
     DoubleBuffered = True
     TabOrder = 1
-    OnClick = TMSFNCBloxControl1Click
     TopRuler.Font.Size = 10.000000000000000000
     TopRuler.Size = 18
     LeftRuler.Font.Size = 10.000000000000000000
@@ -118,7 +117,7 @@ object Form1: TForm1
     GroupHandleAppearance.RotCenter.Style = hhCrossedEllipse
     Interaction.ChangeTextWithDoubleClick = False
   end
-  object FDConnection_forms: TFDConnection
+  object FDConnection1: TFDConnection
     Params.Strings = (
       'Database=forms'
       'User_Name=dbapp'
@@ -127,12 +126,12 @@ object Form1: TForm1
     Left = 144
     Top = 184
   end
-  object FDQuery_forms: TFDQuery
-    Connection = FDConnection_forms
+  object FDQuery1: TFDQuery
+    Connection = FDConnection1
     Left = 240
     Top = 184
   end
-  object FDConnection_wf: TFDConnection
+  object FDConnection2: TFDConnection
     Params.Strings = (
       'Database=wf'
       'User_Name=dbapp'
@@ -141,12 +140,12 @@ object Form1: TForm1
     Left = 144
     Top = 256
   end
-  object FDQuery_wf: TFDQuery
-    Connection = FDConnection_wf
+  object FDQuery2: TFDQuery
+    Connection = FDConnection2
     Left = 240
     Top = 264
   end
-  object FDConnection_maindb: TFDConnection
+  object FDConnection3: TFDConnection
     Params.Strings = (
       'Database=main_db'
       'User_Name=dbapp'
@@ -155,23 +154,9 @@ object Form1: TForm1
     Left = 136
     Top = 344
   end
-  object FDQuery_maindb: TFDQuery
-    Connection = FDConnection_maindb
+  object FDQuery3: TFDQuery
+    Connection = FDConnection3
     Left = 248
     Top = 352
-  end
-  object FDConnection_wftest: TFDConnection
-    Params.Strings = (
-      'Database=wf_test'
-      'User_Name=dbapp'
-      'Password=Yv9i9OqHC8TRlCbE'
-      'DriverID=MySQL')
-    Left = 136
-    Top = 416
-  end
-  object FDQuery_wftest: TFDQuery
-    Connection = FDConnection_wftest
-    Left = 256
-    Top = 424
   end
 end

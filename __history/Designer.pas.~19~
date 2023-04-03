@@ -30,10 +30,7 @@ type
     FDQuery_maindb: TFDQuery;
     TMSFNCBloxSelector1: TTMSFNCBloxSelector;
     TMSFNCBloxControl1: TTMSFNCBloxControl;
-    FDConnection_wftest: TFDConnection;
-    FDQuery_wftest: TFDQuery;
     procedure TMSFNCBloxControl1RegisterElements(Sender: TObject);
-    procedure TMSFNCBloxControl1Click(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -45,12 +42,7 @@ var
 
 implementation
 {$R *.dfm}
-  procedure TForm1.TMSFNCBloxControl1Click(Sender: TObject);
-begin
-
-end;
-
-procedure TForm1.TMSFNCBloxControl1RegisterElements(Sender: TObject);
+  procedure TForm1.TMSFNCBloxControl1RegisterElements(Sender: TObject);
   var
     w: Double;
   begin
