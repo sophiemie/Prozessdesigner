@@ -133,8 +133,8 @@ object Form1: TForm1
     Interaction.ChangeTextWithDoubleClick = False
     OnRegisterElements = TMSFNCBloxControl1RegisterElements
     object Button2: TButton
-      Left = 336
-      Top = 80
+      Left = 177
+      Top = 48
       Width = 81
       Height = 73
       Caption = 'Button2'

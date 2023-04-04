@@ -36,8 +36,10 @@ type
     FDConnection_wftest: TFDConnection;
     FDQuery_wftest: TFDQuery;
     TMSFNCResponsiveManager1: TTMSFNCResponsiveManager;
+    Button2: TButton;
     procedure TMSFNCBloxControl1RegisterElements(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -49,6 +51,13 @@ var
 
 implementation
 {$R *.dfm}
+
+procedure TForm1.Button2Click(Sender: TObject);
+var
+  start: TStart;
+begin
+  TMSFNCBloxControl1.Blox.Add(TStart.Create);
+end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin

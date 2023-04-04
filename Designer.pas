@@ -53,10 +53,7 @@ implementation
 {$R *.dfm}
 
 procedure TForm1.Button2Click(Sender: TObject);
-var
-  start: TStart;
 begin
-  //start.FillColor := $FAE4BE; $626262; $B2B2B2; $E5BF81
   TMSFNCBloxControl1.Blox.Add(TStart.Create);
 end;
 

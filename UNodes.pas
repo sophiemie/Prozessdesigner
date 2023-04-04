@@ -16,9 +16,9 @@ uses
   VCL.TMSFNCCustomControl, VCL.TMSFNCCustomScrollControl, VCL.TMSFNCBloxControl;
 
 const
-  lightGray = $FAE4BE;
+  lightBlue = $FAE4BE;
   darkGrey = $626262;
-  lightBlue = $B2B2B2;
+  lightGray = $B2B2B2;
   darkBlue = $E5BF81;
 
 type
@@ -63,49 +63,49 @@ constructor TStart.Create;
 begin
   inherited;
   Width := 50;
-  FillColor := $FAE4BE;
+  FillColor := darkBlue;
 end;
 
 constructor TEnd.Create;
 begin
   inherited;
-  Shadow.Color := clLime;
+  FillColor := darkGrey;
 end;
 
 constructor TDecision.Create;
 begin
   inherited;
-  Shadow.Color := clLime;
+  Width := 50;
 end;
 
 constructor THumanDecision.Create;
 begin
   inherited;
-  Shadow.Color := clLime;
+  FillColor := lightBlue;
 end;
 
 constructor TMashineDecision.Create;
 begin
   inherited;
-  Shadow.Color := clLime;
+  FillColor := lightGray;
 end;
 
 constructor TTask.Create;
 begin
   inherited;
-  Shadow.Color := clLime;
+  Width := 50;
 end;
 
 constructor THumanTask.Create;
 begin
   inherited;
-  Shadow.Color := clLime;
+  FillColor := lightBlue;
 end;
 
 constructor TMashineTask.Create;
 begin
   inherited;
-  Shadow.Color := clLime;
+  FillColor := lightGray;
 end;
 
 

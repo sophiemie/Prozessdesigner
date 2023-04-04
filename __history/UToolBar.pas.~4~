@@ -20,15 +20,18 @@ procedure hideAllItems(Selector: TTMSFNCBloxSelector);
 implementation
 
 procedure hideAllItems(Selector: TTMSFNCBloxSelector);
-const
-  anzahlItems = 137;
 var
   i: Integer;
 begin
-  for i := 0 to anzahlItems do
+  for i := 0 to 137 do // they are originally 137 Items listed
   begin
     Selector.Items[i].Visible := false;
   end;
+end;
+
+procedure registerElement();
+begin
+//  RegisterElement(THumanDecision, '', 'Menschliche Entscheidung', 'Workflowdiagramm');
 end;
 
 end.

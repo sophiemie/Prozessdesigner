@@ -36,9 +36,10 @@ type
     FDConnection_wftest: TFDConnection;
     FDQuery_wftest: TFDQuery;
     TMSFNCResponsiveManager1: TTMSFNCResponsiveManager;
+    Button2: TButton;
     procedure TMSFNCBloxControl1RegisterElements(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure AddBlockButtonClick(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -51,6 +52,13 @@ var
 implementation
 {$R *.dfm}
 
+procedure TForm1.Button2Click(Sender: TObject);
+var
+  start: TStart;
+begin
+  TMSFNCBloxControl1.Blox.Add(TStart.Create);
+end;
+
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   hideAllItems(TMSFNCBloxSelector1);
@@ -58,25 +66,14 @@ end;
 
 procedure TForm1.TMSFNCBloxControl1RegisterElements(Sender: TObject);
 begin
-  RegisterElement(THumanDecision, '', 'Human', 'ZDecision');
+{  RegisterElement(THumanDecision, '', 'Human', 'ZDecision');
   RegisterElement(TMashineDecision, '', 'Mashine', 'ZDecision');
   RegisterElement(THumanTask, '', 'Human', 'ZTask');
   RegisterElement(TMashineTask, '', 'MaschinelleAktion', 'ZTask');
   RegisterElement(TStart, '', 'Start', 'ZStart and End');
-  RegisterElement(TEnd, '', 'End', 'ZStart and End');
-  //TMSFNCBloxSelector1.Rebuild;
-end;
-
-procedure TForm1.AddBlockButtonClick(Sender: TObject);
-var
-  b: TTMSFNCBloxBlock;
-begin
-  b := TTMSFNCBloxBlock.Create;
-  b.Left := 10;
-  b.Top := 40;
-  b.Height := 75;
-  b.Width := 100;
-  TMSFNCBloxControl1.Blox.Add(b);
+  RegisterElement(TEnd, '', 'End', 'ZStart and End');  }
+  registerElement();
+  TMSFNCBloxSelector1.Rebuild;
 end;
 
 // Datenbank Verbindung herstellen

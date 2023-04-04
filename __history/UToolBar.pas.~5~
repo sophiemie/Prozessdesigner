@@ -16,6 +16,7 @@ uses
   VCL.TMSFNCCustomControl, VCL.TMSFNCCustomScrollControl, VCL.TMSFNCBloxControl;
 
 procedure hideAllItems(Selector: TTMSFNCBloxSelector);
+procedure registerElement();
 
 implementation
 
@@ -31,4 +32,12 @@ begin
   end;
 end;
 
+procedure registerElement();
+begin
+  RegisterElement(THumanDecision, '', 'Human', 'ZDecision');
+  RegisterElement(TMashineDecision, '', 'Mashine', 'ZDecision');
+  RegisterElement(THumanTask, '', 'Human', 'ZTask');
+  RegisterElement(TMashineTask, '', 'MaschinelleAktion', 'ZTask');
+  RegisterElement(TStart, '', 'Start', 'ZStart and End');
+  RegisterElement(TEnd, '', 'End', 'ZStart and End');
 end.
