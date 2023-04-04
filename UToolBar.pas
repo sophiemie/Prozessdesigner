@@ -12,7 +12,10 @@ uses
   VCL.TMSFNCBloxCoreElement, VCL.TMSFNCBloxUIRegistration,
   VCL.TMSFNCBloxUIRenderer, VCL.TMSFNCBloxSelector,
   VCL.TMSFNCBloxShapesUML,   // VCL.TMSFNCBloxShapesUML fuer UML-Formen
+  UNodes,
   VCL.TMSFNCCustomControl, VCL.TMSFNCCustomScrollControl, VCL.TMSFNCBloxControl;
+
+procedure hideAllItems(Selector: TTMSFNCBloxSelector);
 
 implementation
 
@@ -24,6 +27,11 @@ begin
   begin
     Selector.Items[i].Visible := false;
   end;
+end;
+
+procedure registerElement();
+begin
+//  RegisterElement(THumanDecision, '', 'Menschliche Entscheidung', 'Workflowdiagramm');
 end;
 
 end.

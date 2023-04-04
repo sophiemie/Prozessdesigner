@@ -16,9 +16,11 @@ uses
   VCL.TMSFNCBloxCoreLinkPoint, VCL.TMSFNCBloxCoreHandle,
   VCL.TMSFNCBloxCoreGroup, VCL.TMSFNCBloxUISnapGrid, VCL.TMSFNCBloxCoreBlock,
   VCL.TMSFNCBloxCoreElement, VCL.TMSFNCBloxUIRegistration,
-  VCL.TMSFNCBloxUIRenderer, VCL.TMSFNCBloxSelector,
+  VCL.TMSFNCBloxUIRenderer, VCL.TMSFNCBloxSelector, UToolBar,
   VCL.TMSFNCCustomControl, VCL.TMSFNCCustomScrollControl, VCL.TMSFNCBloxControl,
-  UNodes;  // Datenbank.pas einbinden
+  UNodes,
+  VCL.TMSFNCCustomComponent, VCL.TMSFNCStateManager,
+  VCL.TMSFNCResponsiveManager;  // Datenbank.pas einbinden
 
 type
   TForm1 = class(TForm)
@@ -33,7 +35,11 @@ type
     TMSFNCBloxControl1: TTMSFNCBloxControl;
     FDConnection_wftest: TFDConnection;
     FDQuery_wftest: TFDQuery;
+    TMSFNCResponsiveManager1: TTMSFNCResponsiveManager;
+    Button2: TButton;
     procedure TMSFNCBloxControl1RegisterElements(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -45,12 +51,30 @@ var
 
 implementation
 {$R *.dfm}
-  procedure TForm1.TMSFNCBloxControl1RegisterElements(Sender: TObject);
-  var
-    w: Double;
-  begin
-    w := 0;
-  end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+var
+  start: TStart;
+begin
+  //start.FillColor := $FAE4BE; $626262; $B2B2B2; $E5BF81
+  TMSFNCBloxControl1.Blox.Add(TStart.Create);
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  hideAllItems(TMSFNCBloxSelector1);
+end;
+
+procedure TForm1.TMSFNCBloxControl1RegisterElements(Sender: TObject);
+begin
+  RegisterElement(THumanDecision, '', 'Human', 'ZDecision');
+  RegisterElement(TMashineDecision, '', 'Mashine', 'ZDecision');
+  RegisterElement(THumanTask, '', 'Human', 'ZTask');
+  RegisterElement(TMashineTask, '', 'MaschinelleAktion', 'ZTask');
+  RegisterElement(TStart, '', 'Start', 'ZStart and End');
+  RegisterElement(TEnd, '', 'End', 'ZStart and End');
+  TMSFNCBloxSelector1.Rebuild;
+end;
 
 // Datenbank Verbindung herstellen
 end.

@@ -1,7 +1,7 @@
 object Form1: TForm1
   Left = 0
   Top = 0
-  Caption = 'Form1'
+  Caption = 'ZMT Prozessdesigner'
   ClientHeight = 515
   ClientWidth = 711
   Color = clBtnFace
@@ -11,6 +11,10 @@ object Form1: TForm1
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
+  DesignSize = (
+    711
+    515)
   PixelsPerInch = 96
   TextHeight = 13
   object Button1: TButton
@@ -27,6 +31,7 @@ object Form1: TForm1
     Width = 264
     Height = 521
     ParentDoubleBuffered = False
+    Anchors = [akLeft, akTop, akBottom]
     DoubleBuffered = True
     TabOrder = 0
     Appearance.ItemHeight = 50.000000000000000000
@@ -55,6 +60,15 @@ object Form1: TForm1
     BloxControl = TMSFNCBloxControl1
     Rows = 100
     Items = <>
+    object TMSFNCResponsiveManager1: TTMSFNCResponsiveManager
+      Left = 120
+      Top = 424
+      Width = 26
+      Height = 26
+      Visible = True
+      States = <>
+      Control = Owner
+    end
   end
   object TMSFNCBloxControl1: TTMSFNCBloxControl
     Left = 0
@@ -117,6 +131,16 @@ object Form1: TForm1
     GroupHandleAppearance.RotCenter.Size = 3
     GroupHandleAppearance.RotCenter.Style = hhCrossedEllipse
     Interaction.ChangeTextWithDoubleClick = False
+    OnRegisterElements = TMSFNCBloxControl1RegisterElements
+    object Button2: TButton
+      Left = 336
+      Top = 80
+      Width = 81
+      Height = 73
+      Caption = 'Button2'
+      TabOrder = 0
+      OnClick = Button2Click
+    end
   end
   object FDConnection_forms: TFDConnection
     Params.Strings = (
