@@ -2,7 +2,7 @@ unit UNodes;
 
 interface
 
-uses
+uses  // VCL.TMSFNCBloxShapesUML fuer UML-Formen
   VCL.TMSFNCTypes, VCL.TMSFNCUtils,
   VCL.TMSFNCGraphics, VCL.TMSFNCGraphicsTypes, VCL.TMSFNCBloxCoreTypes,
   VCL.TMSFNCBloxCoreUtils, VCL.TMSFNCBloxCoreLine, VCL.TMSFNCBloxCorePolygon,
@@ -10,12 +10,21 @@ uses
   VCL.TMSFNCBloxCoreLinkPoint, VCL.TMSFNCBloxCoreHandle,
   VCL.TMSFNCBloxCoreGroup, VCL.TMSFNCBloxUISnapGrid, VCL.TMSFNCBloxCoreBlock,
   VCL.TMSFNCBloxCoreElement, VCL.TMSFNCBloxUIRegistration,
-  VCL.TMSFNCBloxUIRenderer, VCL.TMSFNCBloxSelector,
+  VCL.TMSFNCBloxUIRenderer, VCL.TMSFNCBloxSelector, VCL.TMSFNCBloxShapesUML,
   VCL.TMSFNCCustomControl, VCL.TMSFNCCustomScrollControl, VCL.TMSFNCBloxControl;
 
 type
+  // Start- und Endknoten
+  TStart = class(TTMSFNCBloxUMLInitialStateBlock)
+
+  end;
+
+  TEnd = class(TTMSFNCBloxUMLFinalStateBlock)
+
+  end;
+
   // Entscheidungsknoten
-  TDecision = class(TTMSFNCBloxBlock)
+  TDecision = class(TTMSFNCBloxUMLActionStateBlock)
 
   end;
 
@@ -28,7 +37,7 @@ type
   end;
 
   // Aktionsknoten
-  TTask = class(TTMSFNCBloxBlock)
+  TTask = class(TTMSFNCBloxUMLActionStateBlock)
 
   end;
 
