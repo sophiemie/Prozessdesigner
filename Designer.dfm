@@ -52,6 +52,7 @@ object Form1: TForm1
     Appearance.SeparatorFont.Height = -11
     Appearance.SeparatorFont.Name = 'Tahoma'
     Appearance.SeparatorFont.Style = []
+    BloxControl = TMSFNCBloxControl1
     Rows = 100
     Items = <>
   end
