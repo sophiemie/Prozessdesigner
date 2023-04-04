@@ -4,7 +4,8 @@ uses
   Vcl.Forms,
   Designer in 'Designer.pas' {Form1},
   DatenbankUnit in 'DatenbankUnit.pas',
-  UNodes in 'UNodes.pas';
+  UNodes in 'UNodes.pas',
+  UToolBar in 'UToolBar.pas';
 
 {$R *.res}
 

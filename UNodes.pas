@@ -2,7 +2,7 @@ unit UNodes;
 
 interface
 
-uses  // VCL.TMSFNCBloxShapesUML fuer UML-Formen
+uses
   VCL.TMSFNCTypes, VCL.TMSFNCUtils,
   VCL.TMSFNCGraphics, VCL.TMSFNCGraphicsTypes, VCL.TMSFNCBloxCoreTypes,
   VCL.TMSFNCBloxCoreUtils, VCL.TMSFNCBloxCoreLine, VCL.TMSFNCBloxCorePolygon,
@@ -10,7 +10,8 @@ uses  // VCL.TMSFNCBloxShapesUML fuer UML-Formen
   VCL.TMSFNCBloxCoreLinkPoint, VCL.TMSFNCBloxCoreHandle,
   VCL.TMSFNCBloxCoreGroup, VCL.TMSFNCBloxUISnapGrid, VCL.TMSFNCBloxCoreBlock,
   VCL.TMSFNCBloxCoreElement, VCL.TMSFNCBloxUIRegistration,
-  VCL.TMSFNCBloxUIRenderer, VCL.TMSFNCBloxSelector, VCL.TMSFNCBloxShapesUML,
+  VCL.TMSFNCBloxUIRenderer, VCL.TMSFNCBloxSelector,
+  VCL.TMSFNCBloxShapesUML,   // VCL.TMSFNCBloxShapesUML fuer UML-Formen
   VCL.TMSFNCCustomControl, VCL.TMSFNCCustomScrollControl, VCL.TMSFNCBloxControl;
 
 type

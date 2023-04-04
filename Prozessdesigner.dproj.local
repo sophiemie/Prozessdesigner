@@ -10,5 +10,7 @@
     <Transaction>2023.04.04 13:22:25.568,C:\Prozessdesigner\Prozessdesigner\Knoten.pas=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
     <Transaction>2023.04.04 13:23:01.379,C:\Prozessdesigner\Prozessdesigner\UKnoten.pas=C:\Prozessdesigner\Prozessdesigner\Knoten.pas</Transaction>
     <Transaction>2023.04.04 13:27:48.961,C:\Prozessdesigner\Prozessdesigner\UNodes.pas=C:\Prozessdesigner\Prozessdesigner\UKnoten.pas</Transaction>
+    <Transaction>2023.04.04 13:56:01.729,=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
+    <Transaction>2023.04.04 13:56:12.327,C:\Prozessdesigner\Prozessdesigner\UToolBar.pas=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
   </Transactions>
 </BorlandProject>

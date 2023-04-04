@@ -18,7 +18,7 @@ uses
   VCL.TMSFNCBloxCoreElement, VCL.TMSFNCBloxUIRegistration,
   VCL.TMSFNCBloxUIRenderer, VCL.TMSFNCBloxSelector,
   VCL.TMSFNCCustomControl, VCL.TMSFNCCustomScrollControl, VCL.TMSFNCBloxControl,
-  UKnoten;  // Datenbank.pas einbinden
+  UNodes;  // Datenbank.pas einbinden
 
 type
   TForm1 = class(TForm)
