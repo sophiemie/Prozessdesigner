@@ -82,12 +82,14 @@ constructor THumanDecision.Create;
 begin
   inherited;
   FillColor := lightBlue;
+  Text := 'HD';
 end;
 
 constructor TMashineDecision.Create;
 begin
   inherited;
   FillColor := lightGray;
+  Text := 'MD';
 end;
 
 constructor TTask.Create;
@@ -100,12 +102,14 @@ constructor THumanTask.Create;
 begin
   inherited;
   FillColor := lightBlue;
+  Text := 'HT';
 end;
 
 constructor TMashineTask.Create;
 begin
   inherited;
   FillColor := lightGray;
+  Text := 'MT';
 end;
 
 
