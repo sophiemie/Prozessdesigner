@@ -37,15 +37,15 @@ type
     TMSFNCResponsiveManager1: TTMSFNCResponsiveManager;
     Edit1: TEdit;
     Panel1: TPanel;
-    BitBtn1: TBitBtn;
+    BitBtnStart: TBitBtn;
     Label1: TLabel;
-    BitBtn2: TBitBtn;
-    BitBtn3: TBitBtn;
-    BitBtn4: TBitBtn;
+    BitBtnEnd: TBitBtn;
+    BitBtnHD: TBitBtn;
+    BitBtnMD: TBitBtn;
     Panel2: TPanel;
     Panel3: TPanel;
-    BitBtn5: TBitBtn;
-    BitBtn6: TBitBtn;
+    BitBtnHT: TBitBtn;
+    BitBtnMT: TBitBtn;
     Panel4: TPanel;
     Label2: TLabel;
     Label3: TLabel;
@@ -55,9 +55,14 @@ type
     Panel5: TPanel;
     procedure TMSFNCBloxControl1RegisterElements(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure BitBtn1Click(Sender: TObject);
+    procedure BitBtnStartClick(Sender: TObject);
     procedure TMSFNCBloxSelector1ItemClick(Sender: TObject;
       AItemIndex: Integer);
+    procedure BitBtnEndClick(Sender: TObject);
+    procedure BitBtnHTClick(Sender: TObject);
+    procedure BitBtnMTClick(Sender: TObject);
+    procedure BitBtnHDClick(Sender: TObject);
+    procedure BitBtnMDClick(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -70,7 +75,32 @@ var
 implementation
 {$R *.dfm}
 
-procedure TForm1.BitBtn1Click(Sender: TObject);
+procedure TForm1.BitBtnEndClick(Sender: TObject);
+begin
+  TMSFNCBloxControl1.Blox.Add(TEnd.Create);
+end;
+
+procedure TForm1.BitBtnHDClick(Sender: TObject);
+begin
+  TMSFNCBloxControl1.Blox.Add(THumanDecision.Create);
+end;
+
+procedure TForm1.BitBtnHTClick(Sender: TObject);
+begin
+  TMSFNCBloxControl1.Blox.Add(THumanTask.Create);
+end;
+
+procedure TForm1.BitBtnMDClick(Sender: TObject);
+begin
+  TMSFNCBloxControl1.Blox.Add(TMashineDecision.Create);
+end;
+
+procedure TForm1.BitBtnMTClick(Sender: TObject);
+begin
+  TMSFNCBloxControl1.Blox.Add(TMashineTask.Create);
+end;
+
+procedure TForm1.BitBtnStartClick(Sender: TObject);
 begin
   TMSFNCBloxControl1.Blox.Add(TStart.Create);
 end;

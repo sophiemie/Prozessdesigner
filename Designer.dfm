@@ -8480,7 +8480,7 @@ object Form1: TForm1
       Font.Style = []
       ParentFont = False
     end
-    object BitBtn1: TBitBtn
+    object BitBtnStart: TBitBtn
       Left = 41
       Top = 31
       Width = 65
@@ -10605,9 +10605,9 @@ object Form1: TForm1
       ParentShowHint = False
       ShowHint = True
       TabOrder = 0
-      OnClick = BitBtn1Click
+      OnClick = BitBtnStartClick
     end
-    object BitBtn2: TBitBtn
+    object BitBtnEnd: TBitBtn
       Left = 143
       Top = 31
       Width = 67
@@ -12859,8 +12859,9 @@ object Form1: TForm1
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
       TabOrder = 1
+      OnClick = BitBtnEndClick
     end
-    object BitBtn3: TBitBtn
+    object BitBtnHD: TBitBtn
       Left = 15
       Top = 281
       Width = 81
@@ -15950,8 +15951,9 @@ object Form1: TForm1
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFF}
       TabOrder = 2
+      OnClick = BitBtnHDClick
     end
-    object BitBtn4: TBitBtn
+    object BitBtnMD: TBitBtn
       Left = 152
       Top = 281
       Width = 81
@@ -19254,6 +19256,7 @@ object Form1: TForm1
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFF}
       TabOrder = 3
+      OnClick = BitBtnMDClick
     end
     object Panel2: TPanel
       Left = -8
@@ -19272,7 +19275,7 @@ object Form1: TForm1
       TabOrder = 4
     end
     object Panel3: TPanel
-      Left = 0
+      Left = -8
       Top = 127
       Width = 265
       Height = 24
@@ -19285,9 +19288,9 @@ object Form1: TForm1
       Font.Style = []
       ParentBackground = False
       ParentFont = False
-      TabOrder = 5
+      TabOrder = 8
     end
-    object BitBtn5: TBitBtn
+    object BitBtnHT: TBitBtn
       Left = 16
       Top = 157
       Width = 97
@@ -22654,9 +22657,10 @@ object Form1: TForm1
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFF}
-      TabOrder = 6
+      TabOrder = 5
+      OnClick = BitBtnHTClick
     end
-    object BitBtn6: TBitBtn
+    object BitBtnMT: TBitBtn
       Left = 144
       Top = 157
       Width = 97
@@ -25655,12 +25659,13 @@ object Form1: TForm1
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFF}
-      TabOrder = 7
+      TabOrder = 6
+      OnClick = BitBtnMTClick
     end
     object Panel4: TPanel
-      Left = 0
+      Left = -7
       Top = 0
-      Width = 257
+      Width = 264
       Height = 25
       Caption = 'Start/End'
       Color = clGradientActiveCaption
@@ -25671,12 +25676,12 @@ object Form1: TForm1
       Font.Style = []
       ParentBackground = False
       ParentFont = False
-      TabOrder = 8
+      TabOrder = 7
     end
     object Panel5: TPanel
-      Left = 0
+      Left = -8
       Top = 387
-      Width = 257
+      Width = 265
       Height = 22
       Caption = 'Panel5'
       Color = clGradientActiveCaption
