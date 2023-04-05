@@ -20,6 +20,7 @@ const
   darkGrey = $626262;
   lightGray = $B2B2B2;
   darkBlue = $E5BF81;
+  startEndSize = 80;
 
 type
   // Start- und Endknoten
@@ -62,14 +63,19 @@ implementation
 constructor TStart.Create;
 begin
   inherited;
-  Width := 50;
+  Width := startEndSize;
+  Height := Width;
   FillColor := darkBlue;
+  Text := 'S';
 end;
 
 constructor TEnd.Create;
 begin
   inherited;
+  Width := startEndSize;
+  Height := Width;
   FillColor := darkGrey;
+  Text := 'E';
 end;
 
 constructor TDecision.Create;

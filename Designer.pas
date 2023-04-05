@@ -20,7 +20,7 @@ uses
   VCL.TMSFNCCustomControl, VCL.TMSFNCCustomScrollControl, VCL.TMSFNCBloxControl,
   UNodes,
   VCL.TMSFNCCustomComponent, VCL.TMSFNCStateManager,
-  VCL.TMSFNCResponsiveManager;  // Datenbank.pas einbinden
+  VCL.TMSFNCResponsiveManager, Vcl.Buttons;  // Datenbank.pas einbinden
 
 type
   TForm1 = class(TForm)
@@ -37,9 +37,11 @@ type
     FDQuery_wftest: TFDQuery;
     TMSFNCResponsiveManager1: TTMSFNCResponsiveManager;
     Button2: TButton;
+    BitBtn1: TBitBtn;
     procedure TMSFNCBloxControl1RegisterElements(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -52,6 +54,11 @@ var
 implementation
 {$R *.dfm}
 
+procedure TForm1.BitBtn1Click(Sender: TObject);
+begin
+  TMSFNCBloxControl1.Blox.Add(TStart.Create);
+end;
+
 procedure TForm1.Button2Click(Sender: TObject);
 begin
   TMSFNCBloxControl1.Blox.Add(TStart.Create);
@@ -60,6 +67,7 @@ end;
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   hideAllItems(TMSFNCBloxSelector1);
+  initToolBar(TMSFNCBloxSelector1);
 end;
 
 procedure TForm1.TMSFNCBloxControl1RegisterElements(Sender: TObject);
