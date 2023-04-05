@@ -39,6 +39,20 @@ type
     Panel1: TPanel;
     BitBtn1: TBitBtn;
     Label1: TLabel;
+    BitBtn2: TBitBtn;
+    BitBtn3: TBitBtn;
+    BitBtn4: TBitBtn;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    BitBtn5: TBitBtn;
+    BitBtn6: TBitBtn;
+    Panel4: TPanel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Panel5: TPanel;
     procedure TMSFNCBloxControl1RegisterElements(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure BitBtn1Click(Sender: TObject);
@@ -65,6 +79,7 @@ procedure TForm1.FormCreate(Sender: TObject);
 begin
   hideAllItems(TMSFNCBloxSelector1);
   initToolBar(TMSFNCBloxSelector1);
+  //BitBtn2.Layout.blGlyphLeft := -1;
 end;
 
 procedure TForm1.TMSFNCBloxControl1RegisterElements(Sender: TObject);
