@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.FMTBcd, Data.SqlExpr, Data.DB,
-  Vcl.StdCtrls, DatenbankUnit, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  Vcl.StdCtrls, UDatabase, FireDAC.Stan.Intf, FireDAC.Stan.Option,
   FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MySQL,
   FireDAC.Phys.MySQLDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
@@ -20,7 +20,7 @@ uses
   VCL.TMSFNCCustomControl, VCL.TMSFNCCustomScrollControl, VCL.TMSFNCBloxControl,
   UNodes,
   VCL.TMSFNCCustomComponent, VCL.TMSFNCStateManager,
-  VCL.TMSFNCResponsiveManager, Vcl.Buttons, Vcl.ExtCtrls;  // Datenbank.pas einbinden
+  VCL.TMSFNCResponsiveManager, Vcl.Buttons, Vcl.ExtCtrls, Vcl.Menus;  // Datenbank.pas einbinden
 
 type
   TForm1 = class(TForm)

@@ -12,15 +12,18 @@ uses
   VCL.TMSFNCBloxCoreElement, VCL.TMSFNCBloxUIRegistration,
   VCL.TMSFNCBloxUIRenderer, VCL.TMSFNCBloxSelector,  VCL.TMSFNCStyles,
   VCL.TMSFNCBloxShapesUML,   // VCL.TMSFNCBloxShapesUML fuer UML-Formen,
-  Vcl.Graphics,
+  Vcl.Graphics, Vcl.Menus, Vcl.StdActnMenus,
   VCL.TMSFNCCustomControl, VCL.TMSFNCCustomScrollControl, VCL.TMSFNCBloxControl;
-
+var
+  popUp :  TStandardMenuPopup;
+  // https://stackoverflow.com/questions/18544127/creating-a-popup-menu-at-runtime
 const
   lightBlue = $FAE4BE;
   darkGrey = $626262;
   lightGray = $B2B2B2;
   darkBlue = $E5BF81;
   startEndSize = 80;
+  fontSize = 100.0;
   itemIndexStart = 145;
   itemIndexEnd = 144;
   itemIndexHD = 139;
@@ -30,6 +33,7 @@ const
 type
   // Start- und Endknoten
   TStart = class(TTMSFNCBloxUMLInitialStateBlock)
+    popUp : TPopupMenu;
     constructor Create; override;
   end;
 
@@ -66,11 +70,15 @@ type
 implementation
 
 constructor TStart.Create;
+var
+  //popUp: TPopupMenu;
+  item : TMenuItem;
 begin
   inherited;
   Width := startEndSize;
   Height := Width;
   FillColor := darkBlue;
+  FontSize := fontSize;
   Text := 'S';
 end;
 
@@ -81,12 +89,15 @@ begin
   Height := Width;
   FillColor := darkGrey;
   Text := 'E';
+  FontSize := fontSize;
 end;
 
 constructor TDecision.Create;
 begin
   inherited;
-  Width := 50;
+  Width := 200;
+  Height := 200;
+  FontSize := fontSize;
 end;
 
 constructor THumanDecision.Create;
@@ -107,6 +118,7 @@ constructor TTask.Create;
 begin
   inherited;
   Width := 50;
+  FontSize := fontSize;
 end;
 
 constructor THumanTask.Create;
