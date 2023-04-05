@@ -21,7 +21,12 @@ const
   lightGray = $B2B2B2;
   darkBlue = $E5BF81;
   startEndSize = 80;
-
+  itemIndexStart = 145;
+  itemIndexEnd = 144;
+  itemIndexHD = 139;
+  itemIndexHT = 149;
+  itemIndexMD = 140;
+  itemIndexMT = 150;
 type
   // Start- und Endknoten
   TStart = class(TTMSFNCBloxUMLInitialStateBlock)

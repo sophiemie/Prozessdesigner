@@ -15,83 +15,113 @@ uses
   Vcl.Graphics,
   VCL.TMSFNCCustomControl, VCL.TMSFNCCustomScrollControl, VCL.TMSFNCBloxControl;
 
+const
+  lightBlue = $FAE4BE;
+  darkGrey = $626262;
+  lightGray = $B2B2B2;
+  darkBlue = $E5BF81;
+  startEndSize = 80;
+  itemIndexStart = 145;
+  itemIndexEnd = 144;
+  itemIndexHD = 139;
+  itemIndexHT = 149;
+  itemIndexMD = 140;
+  itemIndexMT = 150;
 type
   // Start- und Endknoten
   TStart = class(TTMSFNCBloxUMLInitialStateBlock)
-    //constructor Create; override;
+    constructor Create; override;
   end;
 
   TEnd = class(TTMSFNCBloxUMLFinalStateBlock)
-    //constructor Create; override;
+    constructor Create; override;
   end;
 
   // Entscheidungsknoten
   TDecision = class(TTMSFNCBloxUMLDecisionBlock)
-    //constructor Create; override;
+    constructor Create; override;
   end;
 
   THumanDecision = class(TDecision)
-    //constructor Create; override;
+    constructor Create; override;
   end;
 
   TMashineDecision = class(TDecision)
-    //constructor Create; override;
+    constructor Create; override;
   end;
 
   // Aktionsknoten
   TTask = class(TTMSFNCBloxUMLActionStateBlock)
-    //constructor Create; override;
+    constructor Create; override;
   end;
 
   THumanTask = class(TTask)
-    //constructor Create; override;
+    constructor Create; override;
   end;
 
   TMashineTask = class(TTask)
-    //constructor Create; override;
+    constructor Create; override;
   end;
 
 implementation
-{
+
 constructor TStart.Create;
 begin
-  Width := 50;
+  inherited;
+  Width := startEndSize;
+  Height := Width;
+  FillColor := darkBlue;
+  Text := 'S';
 end;
 
 constructor TEnd.Create;
 begin
-  Shadow.Color := clLime;
+  inherited;
+  Width := startEndSize;
+  Height := Width;
+  FillColor := darkGrey;
+  Text := 'E';
 end;
 
 constructor TDecision.Create;
 begin
-  Shadow.Color := clLime;
+  inherited;
+  Width := 50;
 end;
 
 constructor THumanDecision.Create;
 begin
-  Shadow.Color := clLime;
+  inherited;
+  FillColor := lightBlue;
+  Text := 'HD';
 end;
 
 constructor TMashineDecision.Create;
 begin
-  Shadow.Color := clLime;
+  inherited;
+  FillColor := lightGray;
+  Text := 'MD';
 end;
 
 constructor TTask.Create;
 begin
-  Shadow.Color := clLime;
+  inherited;
+  Width := 50;
 end;
 
 constructor THumanTask.Create;
 begin
-  Shadow.Color := clLime;
+  inherited;
+  FillColor := lightBlue;
+  Text := 'HT';
 end;
 
 constructor TMashineTask.Create;
 begin
-  Shadow.Color := clLime;
-end;   }
+  inherited;
+  FillColor := lightGray;
+  Text := 'MT';
+end;
 
 
 

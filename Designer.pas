@@ -20,11 +20,10 @@ uses
   VCL.TMSFNCCustomControl, VCL.TMSFNCCustomScrollControl, VCL.TMSFNCBloxControl,
   UNodes,
   VCL.TMSFNCCustomComponent, VCL.TMSFNCStateManager,
-  VCL.TMSFNCResponsiveManager, Vcl.Buttons;  // Datenbank.pas einbinden
+  VCL.TMSFNCResponsiveManager, Vcl.Buttons, Vcl.ExtCtrls;  // Datenbank.pas einbinden
 
 type
   TForm1 = class(TForm)
-    Button1: TButton;
     FDConnection_forms: TFDConnection;
     FDQuery_forms: TFDQuery;
     FDConnection_wf: TFDConnection;
@@ -36,12 +35,15 @@ type
     FDConnection_wftest: TFDConnection;
     FDQuery_wftest: TFDQuery;
     TMSFNCResponsiveManager1: TTMSFNCResponsiveManager;
-    Button2: TButton;
+    Edit1: TEdit;
+    Panel1: TPanel;
     BitBtn1: TBitBtn;
+    Label1: TLabel;
     procedure TMSFNCBloxControl1RegisterElements(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
     procedure BitBtn1Click(Sender: TObject);
+    procedure TMSFNCBloxSelector1ItemClick(Sender: TObject;
+      AItemIndex: Integer);
   private
     { Private-Deklarationen }
   public
@@ -59,11 +61,6 @@ begin
   TMSFNCBloxControl1.Blox.Add(TStart.Create);
 end;
 
-procedure TForm1.Button2Click(Sender: TObject);
-begin
-  TMSFNCBloxControl1.Blox.Add(TStart.Create);
-end;
-
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   hideAllItems(TMSFNCBloxSelector1);
@@ -75,10 +72,17 @@ begin
   RegisterElement(THumanDecision, '', 'Human', 'ZDecision');
   RegisterElement(TMashineDecision, '', 'Mashine', 'ZDecision');
   RegisterElement(THumanTask, '', 'Human', 'ZTask');
-  RegisterElement(TMashineTask, '', 'MaschinelleAktion', 'ZTask');
+  RegisterElement(TMashineTask, '', 'Mashine', 'ZTask');
   RegisterElement(TStart, '', 'Start', 'ZStart and End');
   RegisterElement(TEnd, '', 'End', 'ZStart and End');
   TMSFNCBloxSelector1.Rebuild;
+end;
+
+procedure TForm1.TMSFNCBloxSelector1ItemClick(Sender: TObject;
+  AItemIndex: Integer);
+begin
+  itemClick(TMSFNCBloxSelector1, TMSFNCBloxControl1, AItemIndex);
+  Edit1.Text := AItemIndex.ToString;
 end;
 
 // Datenbank Verbindung herstellen

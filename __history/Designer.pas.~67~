@@ -20,7 +20,7 @@ uses
   VCL.TMSFNCCustomControl, VCL.TMSFNCCustomScrollControl, VCL.TMSFNCBloxControl,
   UNodes,
   VCL.TMSFNCCustomComponent, VCL.TMSFNCStateManager,
-  VCL.TMSFNCResponsiveManager;  // Datenbank.pas einbinden
+  VCL.TMSFNCResponsiveManager, Vcl.Buttons;  // Datenbank.pas einbinden
 
 type
   TForm1 = class(TForm)
@@ -37,9 +37,14 @@ type
     FDQuery_wftest: TFDQuery;
     TMSFNCResponsiveManager1: TTMSFNCResponsiveManager;
     Button2: TButton;
+    BitBtn1: TBitBtn;
+    Edit1: TEdit;
     procedure TMSFNCBloxControl1RegisterElements(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure TMSFNCBloxSelector1ItemClick(Sender: TObject;
+      AItemIndex: Integer);
   private
     { Private-Deklarationen }
   public
@@ -52,29 +57,38 @@ var
 implementation
 {$R *.dfm}
 
-procedure TForm1.Button2Click(Sender: TObject);
-var
-  start: TStart;
+procedure TForm1.BitBtn1Click(Sender: TObject);
 begin
-  //start := TStart.Create;
-  //start.FillColor := $FAE4BE; $626262; $B2B2B2; $E5BF81
+  TMSFNCBloxControl1.Blox.Add(TStart.Create);
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+begin
   TMSFNCBloxControl1.Blox.Add(TStart.Create);
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   hideAllItems(TMSFNCBloxSelector1);
+  initToolBar(TMSFNCBloxSelector1);
 end;
 
 procedure TForm1.TMSFNCBloxControl1RegisterElements(Sender: TObject);
 begin
-  {RegisterElement(THumanDecision, '', 'Human', 'ZDecision');
+  RegisterElement(THumanDecision, '', 'Human', 'ZDecision');
   RegisterElement(TMashineDecision, '', 'Mashine', 'ZDecision');
   RegisterElement(THumanTask, '', 'Human', 'ZTask');
-  RegisterElement(TMashineTask, '', 'MaschinelleAktion', 'ZTask');}
+  RegisterElement(TMashineTask, '', 'MaschinelleAktion', 'ZTask');
   RegisterElement(TStart, '', 'Start', 'ZStart and End');
-  //RegisterElement(TEnd, '', 'End', 'ZStart and End');
+  RegisterElement(TEnd, '', 'End', 'ZStart and End');
   TMSFNCBloxSelector1.Rebuild;
+end;
+
+procedure TForm1.TMSFNCBloxSelector1ItemClick(Sender: TObject;
+  AItemIndex: Integer);
+begin
+  itemClick(TMSFNCBloxSelector1, AItemIndex);
+  Edit1.Text := AItemIndex.ToString;
 end;
 
 // Datenbank Verbindung herstellen

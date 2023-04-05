@@ -8276,11 +8276,19 @@ object Form1: TForm1
     515)
   PixelsPerInch = 96
   TextHeight = 13
+  object Button1: TButton
+    Left = 384
+    Top = 168
+    Width = 75
+    Height = 25
+    Caption = 'Button1'
+    TabOrder = 2
+  end
   object TMSFNCBloxSelector1: TTMSFNCBloxSelector
-    Left = 416
-    Top = 256
-    Width = 290
-    Height = 193
+    Left = 448
+    Top = 0
+    Width = 264
+    Height = 521
     ParentDoubleBuffered = False
     Anchors = [akLeft, akTop, akBottom]
     DoubleBuffered = True
@@ -8384,35 +8392,20 @@ object Form1: TForm1
     GroupHandleAppearance.RotCenter.Style = hhCrossedEllipse
     Interaction.ChangeTextWithDoubleClick = False
     OnRegisterElements = TMSFNCBloxControl1RegisterElements
-    object Edit1: TEdit
-      Left = 321
-      Top = 23
-      Width = 121
-      Height = 21
+    object Button2: TButton
+      Left = 177
+      Top = 48
+      Width = 81
+      Height = 73
+      Caption = 'Button2'
       TabOrder = 0
-      Text = 'Edit1'
-    end
-  end
-  object Panel1: TPanel
-    Left = 448
-    Top = 0
-    Width = 258
-    Height = 257
-    Caption = 'Panel1'
-    TabOrder = 2
-    object Label1: TLabel
-      Left = 88
-      Top = 81
-      Width = 24
-      Height = 13
-      Caption = 'Start'
+      OnClick = Button2Click
     end
     object BitBtn1: TBitBtn
-      Left = 80
-      Top = 33
+      Left = 360
+      Top = 104
       Width = 42
       Height = 42
-      Hint = 'Jedes Diagramm startet mit einem Startknoten.'
       Glyph.Data = {
         C24C0000424DC24C000000000000420000002800000044000000480000000100
         200003000000804C0000871D0000871D000000000000000000000000FF0000FF
@@ -9029,9 +9022,7 @@ object Form1: TForm1
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFF}
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 0
+      TabOrder = 1
       OnClick = BitBtn1Click
     end
   end
