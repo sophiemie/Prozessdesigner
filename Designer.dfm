@@ -3,7 +3,7 @@ object Form1: TForm1
   Top = 0
   Caption = 'ZMT Prozessdesigner'
   ClientHeight = 515
-  ClientWidth = 711
+  ClientWidth = 719
   Color = clGradientActiveCaption
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -8272,7 +8272,7 @@ object Form1: TForm1
   OldCreateOrder = False
   OnCreate = FormCreate
   DesignSize = (
-    711
+    719
     515)
   PixelsPerInch = 96
   TextHeight = 13
@@ -19261,7 +19261,7 @@ object Form1: TForm1
     object Panel2: TPanel
       Left = -8
       Top = 251
-      Width = 265
+      Width = 273
       Height = 24
       Caption = 'Decisions'
       Color = clGradientActiveCaption
@@ -19277,7 +19277,7 @@ object Form1: TForm1
     object Panel3: TPanel
       Left = -8
       Top = 127
-      Width = 265
+      Width = 273
       Height = 24
       Caption = 'Tasks'
       Color = clGradientActiveCaption
@@ -25665,7 +25665,7 @@ object Form1: TForm1
     object Panel4: TPanel
       Left = -7
       Top = 0
-      Width = 264
+      Width = 272
       Height = 25
       Caption = 'Start/End'
       Color = clGradientActiveCaption
@@ -25681,7 +25681,7 @@ object Form1: TForm1
     object Panel5: TPanel
       Left = -8
       Top = 387
-      Width = 265
+      Width = 273
       Height = 22
       Caption = 'Panel5'
       Color = clGradientActiveCaption

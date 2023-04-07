@@ -15,22 +15,16 @@ uses
 type
   Database = class
   public
-    procedure stelleVerbindungHer(dataSet: TSQLDataSet; connection: TSQLConnection);
-    function read(sqlString: String; query: TFDQuery): String;
+    //function read(sqlString: String; query: TFDQuery; edit: TEdit): String;
+    procedure read(sqlString: String; query: TFDQuery; edit: TEdit);
     procedure schreibeDatensatz(id: Integer); overload;
     procedure schreibeDatensatz(id: Integer; text: String); overload;
   end;
 
 implementation
 
-procedure Database.stelleVerbindungHer(dataSet: TSQLDataSet;
-connection: TSQLConnection);
-begin
-  dataSet.SQLConnection := connection;
-  connection.Connected := True;
-end;
-
-function Database.read(sqlString: String; query: TFDQuery): String;
+//function Database.read(sqlString: String; query: TFDQuery; edit: TEdit): String;
+procedure Database.read(sqlString: String; query: TFDQuery; edit: TEdit);
 begin
   try
     query.Active := False;
@@ -40,6 +34,18 @@ begin
     except on e: Exception do
     begin
       ShowMessage(e.Message);
+    end;
+  end;
+
+  with query do
+  begin
+    First;
+    while not EOF do
+    begin
+      //AppLabel  := FieldByName('app_label').AsString;
+      //FormLabel := FieldByName('form_label').AsString;
+      //Listbox1.Items.Add(AppLabel+' - '+FormLabel);
+      //Next;
     end;
   end;
 end;

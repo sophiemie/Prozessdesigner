@@ -42,7 +42,7 @@ type
   end;
 
   // Entscheidungsknoten
-  TDecision = class(TTMSFNCBloxUMLDecisionBlock)
+  TDecision = class abstract(TTMSFNCBloxUMLDecisionBlock)
     constructor Create; override;
   end;
 
@@ -55,7 +55,7 @@ type
   end;
 
   // Aktionsknoten
-  TTask = class(TTMSFNCBloxUMLActionStateBlock)
+  TTask = class abstract(TTMSFNCBloxUMLActionStateBlock)
     constructor Create; override;
   end;
 
