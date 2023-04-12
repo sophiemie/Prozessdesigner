@@ -18,9 +18,10 @@ uses
   VCL.TMSFNCBloxCoreElement, VCL.TMSFNCBloxUIRegistration,
   VCL.TMSFNCBloxUIRenderer, VCL.TMSFNCBloxSelector, UToolBar,
   VCL.TMSFNCCustomControl, VCL.TMSFNCCustomScrollControl, VCL.TMSFNCBloxControl,
-  UNodes,
+  UNodes, UNodeSelection,
   VCL.TMSFNCCustomComponent, VCL.TMSFNCStateManager,
-  VCL.TMSFNCResponsiveManager, Vcl.Buttons, Vcl.ExtCtrls, Vcl.Menus;  // Datenbank.pas einbinden
+  VCL.TMSFNCResponsiveManager, Vcl.Buttons, Vcl.ExtCtrls, Vcl.Menus,
+  Vcl.ToolWin, Vcl.ComCtrls;  // Datenbank.pas einbinden
 
 type
   TForm1 = class(TForm)
@@ -53,65 +54,103 @@ type
     Label5: TLabel;
     Label6: TLabel;
     Panel5: TPanel;
+    Button1: TButton;
     procedure TMSFNCBloxControl1RegisterElements(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure BitBtnStartClick(Sender: TObject);
-    procedure TMSFNCBloxSelector1ItemClick(Sender: TObject;
-      AItemIndex: Integer);
+    procedure TMSFNCBloxSelector1ItemClick(Sender: TObject; AItemIndex: Integer);
     procedure BitBtnEndClick(Sender: TObject);
     procedure BitBtnHTClick(Sender: TObject);
     procedure BitBtnMTClick(Sender: TObject);
     procedure BitBtnHDClick(Sender: TObject);
     procedure BitBtnMDClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure createNodeForm();
   private
     { Private-Deklarationen }
+
   public
     { Public-Deklarationen }
   end;
 
 var
   Form1: TForm1;
+  DatabaseWf: TDatabase;
 
 implementation
 {$R *.dfm}
 
+//uses UNodeSelection;
+procedure TForm1.createNodeForm();
+begin
+  with TForm2.Create(nil) do
+  try
+    ShowModal;
+  finally
+    Free;
+  end;
+end;
+
+///////////////////////// Toolbar-Funktionen
 procedure TForm1.BitBtnEndClick(Sender: TObject);
 begin
   TMSFNCBloxControl1.Blox.Add(TEnd.Create);
+
+  createNodeForm();
 end;
 
 procedure TForm1.BitBtnHDClick(Sender: TObject);
 begin
   TMSFNCBloxControl1.Blox.Add(THumanDecision.Create);
+  createNodeForm();
 end;
 
 procedure TForm1.BitBtnHTClick(Sender: TObject);
 begin
   TMSFNCBloxControl1.Blox.Add(THumanTask.Create);
+  createNodeForm();
 end;
 
 procedure TForm1.BitBtnMDClick(Sender: TObject);
 begin
   TMSFNCBloxControl1.Blox.Add(TMashineDecision.Create);
+  createNodeForm();
 end;
 
 procedure TForm1.BitBtnMTClick(Sender: TObject);
 begin
   TMSFNCBloxControl1.Blox.Add(TMashineTask.Create);
+  createNodeForm();
 end;
 
 procedure TForm1.BitBtnStartClick(Sender: TObject);
 begin
   TMSFNCBloxControl1.Blox.Add(TStart.Create);
+  DatabaseWf.schreibeDatensatz(FDQuery_wftest);
+end;
+
+////////////////////////////// TEST
+procedure TForm1.Button1Click(Sender: TObject);
+var
+  tabelle: String;
+begin
+  tabelle := 'wf_nodes';
+  ShowMessage(DatabaseWf.gebAnzahlDatensaetze(FDQuery_wf, tabelle).ToString);
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
+  // Aktuell nicht benoetigt
   hideAllItems(TMSFNCBloxSelector1);
   initToolBar(TMSFNCBloxSelector1);
-  //BitBtn2.Layout.blGlyphLeft := -1;
+
+
+  //DatabaseWf.Create(FDQuery_wf);  // FUNKTIONIERT NICHT?
+  //DatabaseWf.Create;  // FUNKTIONIERT NICHT?
+
 end;
 
+// Aktuell nicht benoetigt
 procedure TForm1.TMSFNCBloxControl1RegisterElements(Sender: TObject);
 begin
   RegisterElement(THumanDecision, '', 'Human', 'ZDecision');

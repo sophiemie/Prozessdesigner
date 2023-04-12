@@ -8274,11 +8274,25 @@ object Form2: TForm2
   PixelsPerInch = 96
   TextHeight = 13
   object ListBox1: TListBox
-    Left = 0
-    Top = 0
-    Width = 345
-    Height = 305
+    Left = 24
+    Top = 8
+    Width = 297
+    Height = 265
     ItemHeight = 13
     TabOrder = 0
+  end
+  object FDQuery1: TFDQuery
+    Connection = FDConnection1
+    Left = 216
+    Top = 168
+  end
+  object FDConnection1: TFDConnection
+    Params.Strings = (
+      'Database=wf'
+      'User_Name=dbapp'
+      'Password=Yv9i9OqHC8TRlCbE'
+      'DriverID=MySQL')
+    Left = 144
+    Top = 168
   end
 end
