@@ -8271,58 +8271,8 @@ object Form1: TForm1
     FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0}
   OldCreateOrder = False
   OnCreate = FormCreate
-  DesignSize = (
-    719
-    515)
   PixelsPerInch = 96
   TextHeight = 13
-  object TMSFNCBloxSelector1: TTMSFNCBloxSelector
-    Left = 448
-    Top = 424
-    Width = 290
-    Height = 161
-    ParentDoubleBuffered = False
-    Anchors = [akLeft, akTop, akBottom]
-    DoubleBuffered = True
-    TabOrder = 0
-    Visible = False
-    Appearance.ItemHeight = 50.000000000000000000
-    Appearance.Stroke.Color = 11119017
-    Appearance.Fill.Color = 15329769
-    Appearance.StrokeHover.Color = 10061943
-    Appearance.FillHover.Color = 13419707
-    Appearance.StrokeDown.Color = 9470064
-    Appearance.FillDown.Color = 13156536
-    Appearance.StrokeSelected.Color = 5197615
-    Appearance.FillSelected.Color = 13156536
-    Appearance.StrokeDisabled.Color = 11119017
-    Appearance.FillDisabled.Color = clSilver
-    Appearance.SeparatorStroke.Color = 11119017
-    Appearance.SeparatorFill.Color = 13419707
-    Appearance.Font.Charset = DEFAULT_CHARSET
-    Appearance.Font.Color = clWindowText
-    Appearance.Font.Height = -9
-    Appearance.Font.Name = 'Tahoma'
-    Appearance.Font.Style = []
-    Appearance.SeparatorFont.Charset = DEFAULT_CHARSET
-    Appearance.SeparatorFont.Color = clWindowText
-    Appearance.SeparatorFont.Height = -11
-    Appearance.SeparatorFont.Name = 'Tahoma'
-    Appearance.SeparatorFont.Style = []
-    BloxControl = TMSFNCBloxControl1
-    Rows = 100
-    Items = <>
-    OnItemClick = TMSFNCBloxSelector1ItemClick
-    object TMSFNCResponsiveManager1: TTMSFNCResponsiveManager
-      Left = 120
-      Top = 424
-      Width = 26
-      Height = 26
-      Visible = True
-      States = <>
-      Control = Owner
-    end
-  end
   object TMSFNCBloxControl1: TTMSFNCBloxControl
     Left = 0
     Top = 0
@@ -8330,7 +8280,7 @@ object Form1: TForm1
     Height = 513
     ParentDoubleBuffered = False
     DoubleBuffered = True
-    TabOrder = 1
+    TabOrder = 0
     TopRuler.Font.Size = 10.000000000000000000
     TopRuler.Size = 18
     LeftRuler.Font.Size = 10.000000000000000000
@@ -8384,7 +8334,6 @@ object Form1: TForm1
     GroupHandleAppearance.RotCenter.Size = 3
     GroupHandleAppearance.RotCenter.Style = hhCrossedEllipse
     Interaction.ChangeTextWithDoubleClick = False
-    OnRegisterElements = TMSFNCBloxControl1RegisterElements
     object Edit1: TEdit
       Left = 321
       Top = 23
@@ -8410,7 +8359,7 @@ object Form1: TForm1
     Height = 513
     Color = clBtnHighlight
     ParentBackground = False
-    TabOrder = 2
+    TabOrder = 1
     object Label1: TLabel
       Left = 56
       Top = 103

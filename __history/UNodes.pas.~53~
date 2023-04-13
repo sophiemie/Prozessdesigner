@@ -32,28 +32,46 @@ const
   itemIndexMT = 150;
 type
 
-  IworkflowComponent = interface
-    procedure setID;
+  IWorkflowComponent = interface(IInterface)
+    procedure setID(newID : Integer);
+    function getID : Integer;
+  end;
+
+  INodes = interface(IWorkflowComponent)
+
   end;
 
   // Start- und Endknoten
   TStart = class(TTMSFNCBloxUMLInitialStateBlock)
     popUp : TPopupMenu;
     constructor Create; override;
+  private
+    nodeType : String;
   end;
 
   TEnd = class(TTMSFNCBloxUMLFinalStateBlock)
     constructor Create; override;
+  private
+    nodeType : String;
+  end;
+
+  TTest = class(TInterfacedObject)
+
   end;
 
   // Entscheidungsknoten       // TInterfacedObject
   //TDecision = class abstract(TTMSFNCBloxUMLDecisionBlock, IworkflowComponent)
-  TDecision = class abstract (TTMSFNCBloxUMLDecisionBlock)
+  TDecision = class abstract (TTMSFNCBloxUMLDecisionBlock, IworkflowComponent)
     constructor Create; override;
-    procedure setID;
+    procedure setID(newID : Integer);
+    function getID : Integer;
+    function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
+    function _AddRef: Integer; stdcall;
+    function _Release: Integer; stdcall;
   private
     Id: Integer;
     Description: String;
+    nodeType: String;
   end;
 
   THumanDecision = class(TDecision)
@@ -67,6 +85,11 @@ type
   // Aktionsknoten
   TTask = class abstract(TTMSFNCBloxUMLActionStateBlock)
     constructor Create; override;
+    procedure setID;
+  private
+    Id: Integer;
+    Description: String;
+    nodeType: String;
   end;
 
   THumanTask = class(TTask)
@@ -79,6 +102,46 @@ type
  /////////////////////////////////////////////////////////////////////
 implementation
 
+//// Kopierte Funktionen aus System
+function TDecision.QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
+begin
+  if GetInterface(IID, Obj) then Result := 0
+  else Result := E_NOINTERFACE;
+end;
+
+function TDecision._AddRef: Integer; stdcall;
+begin
+{$IFNDEF AUTOREFCOUNT}
+  //Result := AtomicIncrement(FRefCount);
+{$ELSE}
+  Result := __ObjAddRef;
+{$ENDIF}
+end;
+function TDecision._Release: Integer; stdcall;
+begin
+{$IFNDEF AUTOREFCOUNT}
+  //Result := AtomicDecrement(FRefCount);
+  if Result = 0 then
+  begin
+    // Mark the refcount field so that any refcounting during destruction doesn't infinitely recurse.
+    //__MarkDestroying(Self);
+    Destroy;
+  end;
+{$ELSE}
+  Result := __ObjRelease;
+{$ENDIF}
+end;
+
+procedure TTask.setID;
+begin
+
+end;
+
+function TDecision.getID : Integer;
+begin
+
+end;
+
 constructor TStart.Create;
 var
   //popUp: TPopupMenu;
@@ -90,6 +153,7 @@ begin
   FillColor := darkBlue;
   FontSize := fontSize;
   Text := 'S';
+  nodeType := Text;
 end;
 
 constructor TEnd.Create;
@@ -99,14 +163,15 @@ begin
   Height := Width;
   FillColor := darkGrey;
   Text := 'E';
+  nodeType := Text;
   FontSize := fontSize;
 end;
 
 constructor TDecision.Create;
 begin
   inherited;
-  Width := 200;
-  Height := 200;
+  Width := 100;
+  Height := 100;
   FontSize := fontSize;
 end;
 
@@ -115,6 +180,7 @@ begin
   inherited;
   FillColor := lightBlue;
   Text := 'HD';
+  nodeType := Text;
 end;
 
 constructor TMashineDecision.Create;
@@ -122,12 +188,14 @@ begin
   inherited;
   FillColor := lightGray;
   Text := 'MD';
+  nodeType := Text;
 end;
 
 constructor TTask.Create;
 begin
   inherited;
-  Width := 50;
+  Width := 150;
+  Height := 80;
   FontSize := fontSize;
 end;
 
@@ -136,6 +204,7 @@ begin
   inherited;
   FillColor := lightBlue;
   Text := 'HT';
+  nodeType := Text;
 end;
 
 constructor TMashineTask.Create;
@@ -143,11 +212,12 @@ begin
   inherited;
   FillColor := lightGray;
   Text := 'MT';
+  nodeType := Text;
 end;
 
-procedure TDecision.setID;
+procedure TDecision.setID(newID : Integer);
 begin
-  Id := 0;
+  Id := newID;
 end;
 
 end.

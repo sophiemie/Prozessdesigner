@@ -31,7 +31,7 @@ type
 
   TNodeDatabase = class(TDatabase)
   public
-    //constructor Create;
+    constructor Create;
     procedure addNewNode(query: TFDQuery; diagramID: Integer; nodeType: String);
   private
     table : String;
@@ -117,25 +117,26 @@ begin
 end;
 
 
-//constructor TNodeDatabase.Create();
-//begin
-//  inherited Create();
-//  //table := nodeTable;
-//end;
+constructor TNodeDatabase.Create();
+begin
+  inherited Create();
+  //table := nodeTable;
+end;
 
 procedure TNodeDatabase.addNewNode(query: TFDQuery; diagramID: Integer; nodeType: String);
 var
   newNodeID: Integer;
   sqlString: String;
 begin
-  newNodeID := gebAnzahlDatensaetze(query, 'wf_nodes') + 1;
-  //table := '';   // TABLE IST DAS PROBLEM?
+  //newNodeID := 45;//gebAnzahlDatensaetze(query, table) + 1;
+  //table := '';
   //sqlString := 'insert into wf_nodes (node_id) values ('+ newNodeID.ToString + ')';
   //sqlString := 'insert into wf_nodes' + table + ' (node_id, wf_type_id, node_type) values ('
               //+ newNodeID.ToString + ',' + diagramID.ToString + ',"' + nodeType + '")';
-  write(query, 'insert into wf_nodes (node_id, wf_type_id, node_type) values ('
-            + newNodeID.ToString + ',' + diagramID.ToString + ',"' + nodeType + '")');
-  query.Close;
+  write(query, 'insert into wf_nodes' + table + ' (node_id, wf_type_id, node_type) values ('
+    //         + newNodeID.ToString
+              +'1'+ ',' + diagramID.ToString + ',"' + nodeType + '")');
+  //query.Close;
 end;
 
 end.

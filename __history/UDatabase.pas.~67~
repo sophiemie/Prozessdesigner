@@ -128,13 +128,13 @@ var
   newNodeID: Integer;
   sqlString: String;
 begin
-  newNodeID := gebAnzahlDatensaetze(query, 'wf_nodes') + 1;
-  //table := '';   // TABLE IST DAS PROBLEM?
+  newNodeID := 45;//gebAnzahlDatensaetze(query, table) + 1;
+  //table := '';
   //sqlString := 'insert into wf_nodes (node_id) values ('+ newNodeID.ToString + ')';
   //sqlString := 'insert into wf_nodes' + table + ' (node_id, wf_type_id, node_type) values ('
               //+ newNodeID.ToString + ',' + diagramID.ToString + ',"' + nodeType + '")';
-  write(query, 'insert into wf_nodes (node_id, wf_type_id, node_type) values ('
-            + newNodeID.ToString + ',' + diagramID.ToString + ',"' + nodeType + '")');
+  write(query, 'insert into wf_nodes' + table + ' (node_id, wf_type_id, node_type) values ('
+             + newNodeID.ToString + ',' + diagramID.ToString + ',"' + nodeType + '")');
   query.Close;
 end;
 

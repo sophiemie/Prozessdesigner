@@ -32,8 +32,13 @@ const
   itemIndexMT = 150;
 type
 
-  IworkflowComponent = interface(IInterface)
-    procedure setID;
+  IWorkflowComponent = interface(IInterface)
+    procedure setID(newID : Integer);
+    function getID : Integer;
+  end;
+
+  INodes = interface(IWorkflowComponent)
+
   end;
 
   // Start- und Endknoten
@@ -50,11 +55,19 @@ type
     nodeType : String;
   end;
 
+  TTest = class(TInterfacedObject)
+
+  end;
+
   // Entscheidungsknoten       // TInterfacedObject
   //TDecision = class abstract(TTMSFNCBloxUMLDecisionBlock, IworkflowComponent)
-  TDecision = class abstract (TTMSFNCBloxUMLDecisionBlock)
+  TDecision = class abstract (TTMSFNCBloxUMLDecisionBlock, IworkflowComponent)
     constructor Create; override;
-    procedure setID;
+    procedure setID(newID : Integer);
+    function getID : Integer;
+    function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
+    function _AddRef: Integer; stdcall;
+    function _Release: Integer; stdcall;
   private
     Id: Integer;
     Description: String;
@@ -72,6 +85,7 @@ type
   // Aktionsknoten
   TTask = class abstract(TTMSFNCBloxUMLActionStateBlock)
     constructor Create; override;
+    procedure setID;
   private
     Id: Integer;
     Description: String;
@@ -87,6 +101,45 @@ type
   end;
  /////////////////////////////////////////////////////////////////////
 implementation
+//// Kopierte Funktionen aus System
+function TDecision.QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
+begin
+  if GetInterface(IID, Obj) then Result := 0
+  else Result := E_NOINTERFACE;
+end;
+
+function TDecision._AddRef: Integer; stdcall;
+begin
+{$IFNDEF AUTOREFCOUNT}
+  //Result := AtomicIncrement(FRefCount);
+{$ELSE}
+  Result := __ObjAddRef;
+{$ENDIF}
+end;
+function TDecision._Release: Integer; stdcall;
+begin
+{$IFNDEF AUTOREFCOUNT}
+  //Result := AtomicDecrement(FRefCount);
+  if Result = 0 then
+  begin
+    // Mark the refcount field so that any refcounting during destruction doesn't infinitely recurse.
+    //__MarkDestroying(Self);
+    Destroy;
+  end;
+{$ELSE}
+  Result := __ObjRelease;
+{$ENDIF}
+end;
+/////////////////////////////
+procedure TTask.setID;
+begin
+
+end;
+
+function TDecision.getID : Integer;
+begin
+  Result := ID;
+end;
 
 constructor TStart.Create;
 var
@@ -116,8 +169,8 @@ end;
 constructor TDecision.Create;
 begin
   inherited;
-  Width := 200;
-  Height := 200;
+  Width := 100;
+  Height := 100;
   FontSize := fontSize;
 end;
 
@@ -140,7 +193,8 @@ end;
 constructor TTask.Create;
 begin
   inherited;
-  Width := 50;
+  Width := 150;
+  Height := 80;
   FontSize := fontSize;
 end;
 
@@ -160,9 +214,9 @@ begin
   nodeType := Text;
 end;
 
-procedure TDecision.setID;
+procedure TDecision.setID(newID : Integer);
 begin
-  Id := 0;
+  Id := newID;
 end;
 
 end.

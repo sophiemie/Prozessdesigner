@@ -128,7 +128,7 @@ var
   newNodeID: Integer;
   sqlString: String;
 begin
-  newNodeID := gebAnzahlDatensaetze(query, 'wf_nodes') + 1;
+  newNodeID := gebAnzahlDatensaetze(query, table) + 1;
   //table := '';   // TABLE IST DAS PROBLEM?
   //sqlString := 'insert into wf_nodes (node_id) values ('+ newNodeID.ToString + ')';
   //sqlString := 'insert into wf_nodes' + table + ' (node_id, wf_type_id, node_type) values ('

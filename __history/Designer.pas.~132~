@@ -74,6 +74,7 @@ type
 var
   Form1: TForm1;
   DatabaseWf: TDatabase;
+  NodeDatabase: TNodeDatabase;
 
 implementation
 {$R *.dfm}
@@ -81,6 +82,7 @@ implementation
 //uses UNodeSelection;
 procedure TForm1.createNodeForm();
 begin
+  //NodeDatabase.Create('wf_nodes');     // Davor schreiben loest fehler aus
   with TForm2.Create(nil) do
   try
     ShowModal;
@@ -93,7 +95,7 @@ end;
 procedure TForm1.BitBtnEndClick(Sender: TObject);
 begin
   TMSFNCBloxControl1.Blox.Add(TEnd.Create);
-
+  //NodeDatabase.addNewNode(FDQuery_wftest, 1, 'E');
   createNodeForm();
 end;
 
@@ -124,7 +126,7 @@ end;
 procedure TForm1.BitBtnStartClick(Sender: TObject);
 begin
   TMSFNCBloxControl1.Blox.Add(TStart.Create);
-  DatabaseWf.schreibeDatensatz(FDQuery_wftest);
+  DatabaseWf.schreibeDatensatz(FDQuery_wftest, DatabaseWf.gebAnzahlDatensaetze(FDQuery_wftest, 'wf_nodes')+1);
 end;
 
 ////////////////////////////// TEST
@@ -141,8 +143,6 @@ begin
   // Aktuell nicht benoetigt
 //  hideAllItems(TMSFNCBloxSelector1);
 //  initToolBar(TMSFNCBloxSelector1);
-
-
   //DatabaseWf.Create(FDQuery_wf);  // FUNKTIONIERT NICHT?
   //DatabaseWf.Create;  // FUNKTIONIERT NICHT?
 
