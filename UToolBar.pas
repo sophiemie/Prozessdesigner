@@ -21,8 +21,7 @@ const
 
 procedure hideAllItems(Selector: TTMSFNCBloxSelector);
 procedure initToolBar(Selector: TTMSFNCBloxSelector);
-procedure itemClick(Selector: TTMSFNCBloxSelector; Control: TTMSFNCBloxControl;
-Index: Integer);
+//procedure itemClick(Selector: TTMSFNCBloxSelector; Control: TTMSFNCBloxControl;Index: Integer);
 
 implementation
 
@@ -52,17 +51,17 @@ begin
   Selector.Appearance.Font.Size := 10;
 end;
 
-procedure itemClick(Selector: TTMSFNCBloxSelector; Control: TTMSFNCBloxControl;
-Index: Integer);
-begin
-  case Index of
-    itemIndexStart: Control.Blox.Add(TStart.Create);
-    itemIndexEnd: Control.Blox.Add(TEnd.Create);
-    itemIndexHD: Control.Blox.Add(THumanDecision.Create);
-    itemIndexHT: Control.Blox.Add(THumanTask.Create);
-    itemIndexMD: Control.Blox.Add(TMashineDecision.Create);
-    itemIndexMT: Control.Blox.Add(TMashineTask.Create);
-  end;
-end;
+//procedure itemClick(Selector: TTMSFNCBloxSelector; Control: TTMSFNCBloxControl;
+//Index: Integer);
+//begin
+//  case Index of
+//    itemIndexStart: Control.Blox.Add(TStart.Create);
+//    itemIndexEnd: Control.Blox.Add(TEnd.Create);
+//    itemIndexHD: Control.Blox.Add(THumanDecision.Create);
+//    itemIndexHT: Control.Blox.Add(THumanTask.Create);
+//    itemIndexMD: Control.Blox.Add(TMashineDecision.Create);
+//    itemIndexMT: Control.Blox.Add(TMashineTask.Create);
+//  end;
+//end;
 
 end.

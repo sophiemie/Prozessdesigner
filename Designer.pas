@@ -94,42 +94,43 @@ end;
 procedure TForm1.BitBtnEndClick(Sender: TObject);
 begin
   TMSFNCBloxControl1.Blox.Add(TEnd.Create);
-  NodeDatabase.addNewNode(FDQuery_wftest, 1, 'E');
+  //NodeDatabase.addNewNode(FDQuery_wftest, 1, 'E');
+  NodeDatabase.addNewNode(1, 'E');
   createNodeForm();
 end;
 
 procedure TForm1.BitBtnHDClick(Sender: TObject);
 begin
   TMSFNCBloxControl1.Blox.Add(THumanDecision.Create);
-  NodeDatabase.addNewNode(FDQuery_wftest, 1, 'HD');
+  NodeDatabase.addNewNode(1, 'HD');
   createNodeForm();
 end;
 
 procedure TForm1.BitBtnHTClick(Sender: TObject);
 begin
   TMSFNCBloxControl1.Blox.Add(THumanTask.Create);
-  NodeDatabase.addNewNode(FDQuery_wftest, 1, 'HT');
+  NodeDatabase.addNewNode(1, 'HT');
   createNodeForm();
 end;
 
 procedure TForm1.BitBtnMDClick(Sender: TObject);
 begin
   TMSFNCBloxControl1.Blox.Add(TMashineDecision.Create);
-  NodeDatabase.addNewNode(FDQuery_wftest, 1, 'MD');
+  NodeDatabase.addNewNode(1, 'MD');
   createNodeForm();
 end;
 
 procedure TForm1.BitBtnMTClick(Sender: TObject);
 begin
   TMSFNCBloxControl1.Blox.Add(TMashineTask.Create);
-  NodeDatabase.addNewNode(FDQuery_wftest, 1, 'MT');
+  NodeDatabase.addNewNode(1, 'MT');
   createNodeForm();
 end;
 
 procedure TForm1.BitBtnStartClick(Sender: TObject);
 begin
   TMSFNCBloxControl1.Blox.Add(TStart.Create);
-  NodeDatabase.addNewNode(FDQuery_wftest, 1, 'S');
+  NodeDatabase.addNewNode(1, 'S');
   //DatabaseWf.schreibeDatensatz(FDQuery_wftest, DatabaseWf.gebAnzahlDatensaetze(FDQuery_wftest, 'wf_nodes')+1);
 end;
 
@@ -144,32 +145,8 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  // Aktuell nicht benoetigt
-//  hideAllItems(TMSFNCBloxSelector1);
-//  initToolBar(TMSFNCBloxSelector1);
-  //DatabaseWf.Create(FDQuery_wf);  // FUNKTIONIERT NICHT?
-  //DatabaseWf.Create;  // FUNKTIONIERT NICHT?
-
+   // https://www.delphipraxis.net/printthread.php?t=115552
+   NodeDatabase := TNodeDatabase.Create(FDQuery_wftest); // So ruft man einen Konstruktor auf
 end;
 
-//// Aktuell nicht benoetigt
-//procedure TForm1.TMSFNCBloxControl1RegisterElements(Sender: TObject);
-//begin
-//  RegisterElement(THumanDecision, '', 'Human', 'ZDecision');
-//  RegisterElement(TMashineDecision, '', 'Mashine', 'ZDecision');
-//  RegisterElement(THumanTask, '', 'Human', 'ZTask');
-//  RegisterElement(TMashineTask, '', 'Mashine', 'ZTask');
-//  RegisterElement(TStart, '', 'Start', 'ZStart and End');
-//  RegisterElement(TEnd, '', 'End', 'ZStart and End');
-//  TMSFNCBloxSelector1.Rebuild;
-//end;
-//
-//procedure TForm1.TMSFNCBloxSelector1ItemClick(Sender: TObject;
-//  AItemIndex: Integer);
-//begin
-//  itemClick(TMSFNCBloxSelector1, TMSFNCBloxControl1, AItemIndex);
-//  Edit1.Text := AItemIndex.ToString;
-//end;
-
-// Datenbank Verbindung herstellen
 end.

@@ -17,36 +17,36 @@ type
   TDatabase = class
   public
     //function read(sqlString: String; query: TFDQuery; edit: TEdit): String;
-    constructor Create();
+    constructor Create(newQuery : TFDQuery);
     //constructor Create; overload;
     procedure schreibeDatensatz(query: TFDQuery; id: Integer); overload;
     procedure schreibeDatensatz(id: Integer; text: String); overload;
     procedure fuelleListeMitDatensatz(query: TFDQuery; list: TListBox);
-    function gebAnzahlDatensaetze(query: TFDQuery; tabelle: String): Integer;
+    function gebAnzahlDatensaetze(query: TFDQuery; tabelle: String): Integer; overload;
+    function gebAnzahlDatensaetze(tabelle: String): Integer; overload;
   private
-    //query: TFDQuery;
+    class var query: TFDQuery;
     procedure read(query: TFDQuery; sqlString: String);
     procedure write(query: TFDQuery; sqlString: String);
   end;
 
   TNodeDatabase = class(TDatabase)
   public
-    //constructor Create;
-    procedure addNewNode(query: TFDQuery; diagramID: Integer; nodeType: String);
+    constructor Create(newQuery : TFDQuery);
+    procedure addNewNode(diagramID: Integer; nodeType: String);
+    procedure setTable(newTable : String);
+    function getTable : String;
   private
-    table : String;
-    nodeCount : Integer;
+    // Ohne class = Zugriffsverletzung
+    class var table : String; // https://de.wikibooks.org/wiki/Programmierkurs:_Delphi:_Pascal:_Zugriff_auf_Klassen
   end;
 
 implementation
 
-uses Designer;
-// Beim Instanzieren soll die Datenbank Komponente zugewiesen werden
-constructor TDatabase.Create();
+constructor TDatabase.Create(newQuery : TFDQuery);
 begin
   inherited Create();
-  //query := databaseQuery;
-  //databaseQuery.CloneCursor(query, True, False);
+  query := newQuery;
 end;
 
 procedure TDatabase.read(query: TFDQuery; sqlString: String);
@@ -101,6 +101,16 @@ begin
   end;
 end;
 
+function TDatabase.gebAnzahlDatensaetze(tabelle: String): Integer;
+begin
+  read(query, 'select count(*) from ' + tabelle);
+
+  with query do
+  begin
+    Result := FieldByName('count(*)').AsString.ToInteger();
+  end;
+end;
+
 procedure TDatabase.fuelleListeMitDatensatz(query: TFDQuery; list: TListBox);
 begin
   read(query, 'select * from wf_def');
@@ -117,25 +127,37 @@ begin
 end;
 
 
-//constructor TNodeDatabase.Create();
-//begin
-//  inherited Create();
-//  //table := nodeTable;
-//end;
+constructor TNodeDatabase.Create(newQuery : TFDQuery);
+begin
+  inherited Create(newQuery);
+  table := 'wf_nodes';
+  //query := newQuery;
+end;
 
-procedure TNodeDatabase.addNewNode(query: TFDQuery; diagramID: Integer; nodeType: String);
+procedure TNodeDatabase.setTable(newTable : String);
+begin
+  table := newTable;
+end;
+
+function TNodeDatabase.getTable : String;
+begin
+  Result := table;
+end;
+
+procedure TNodeDatabase.addNewNode(diagramID: Integer; nodeType: String);
 var
   newNodeID: Integer;
   sqlString: String;
 begin
-  newNodeID := gebAnzahlDatensaetze(query, 'wf_nodes') + 1;
-  //table := '';   // TABLE IST DAS PROBLEM?
-  //sqlString := 'insert into wf_nodes (node_id) values ('+ newNodeID.ToString + ')';
-  //sqlString := 'insert into wf_nodes' + table + ' (node_id, wf_type_id, node_type) values ('
-              //+ newNodeID.ToString + ',' + diagramID.ToString + ',"' + nodeType + '")';
-  write(query, 'insert into wf_nodes (node_id, wf_type_id, node_type) values ('
-            + newNodeID.ToString + ',' + diagramID.ToString + ',"' + nodeType + '")');
+  //table := 'wf_nodes';
+  newNodeID := gebAnzahlDatensaetze(query, getTable()) + 1;
+  //newNodeID := gebAnzahlDatensaetze(getTable()) + 1;  // TEST
+
+  sqlString := 'insert into ' + getTable + ' (node_id, wf_type_id, node_type) values (' + newNodeID.ToString + ',' + diagramID.ToString + ',"' + nodeType + '")';
+  write(query, sqlString);
   query.Close;
 end;
+
+
 
 end.
