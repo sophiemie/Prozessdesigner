@@ -36,9 +36,11 @@ type
     procedure addNewNode(diagramID: Integer; nodeType: String);
     procedure setTable(newTable : String);
     function getTable : String;
+    function getHighestNodeID : Integer;
   private
     // Ohne class = Zugriffsverletzung
-    class var table : String; // https://de.wikibooks.org/wiki/Programmierkurs:_Delphi:_Pascal:_Zugriff_auf_Klassen
+    var table : String;
+    //class var table : String; // https://de.wikibooks.org/wiki/Programmierkurs:_Delphi:_Pascal:_Zugriff_auf_Klassen
   end;
 
 implementation
@@ -130,13 +132,26 @@ var
   newNodeID: Integer;
   sqlString: String;
 begin
-  //setTable('wf_nodes');
-  newNodeID := gebAnzahlDatensaetze(getTable()) + 1;
+  //newNodeID := gebAnzahlDatensaetze(getTable()) + 1;
+  newNodeID := getHighestNodeID +1; //
   sqlString := 'insert into ' + getTable + ' (node_id, wf_type_id, node_type) values (' + newNodeID.ToString + ',' + diagramID.ToString + ',"' + nodeType + '")';
   write(sqlString);
   query.Close;
 end;
 
+{}
+function TNodeDatabase.getHighestNodeID : Integer;
+var
+  sqlString: String;
+begin
+  sqlString := 'SELECT MAX(node_id) FROM ' + table;
+  read(sqlString);
+
+  with query do
+  begin
+    Result := FieldByName('MAX(node_id)').AsString.ToInteger();
+  end;
+end;
 
 
 end.

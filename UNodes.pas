@@ -40,6 +40,7 @@ type
   TStart = class(TTMSFNCBloxUMLInitialStateBlock, INodes)
     popUp : TPopupMenu;
     constructor Create; override;
+    destructor Destroy;
     procedure setID(newID : Integer);
     function getID : Integer;
     procedure setDescription(newDescpription : String);
@@ -54,6 +55,7 @@ type
 
   TEnd = class(TTMSFNCBloxUMLFinalStateBlock, INodes)
     constructor Create; override;
+    destructor Destroy;
     procedure setID(newID : Integer);
     function getID : Integer;
     procedure setDescription(newDescpription : String);
@@ -74,6 +76,7 @@ type
   //TDecision = class abstract(TTMSFNCBloxUMLDecisionBlock, IworkflowComponent)
   TDecision = class abstract (TTMSFNCBloxUMLDecisionBlock, INodes)
     constructor Create; override;
+    destructor Destroy;
     procedure setID(newID : Integer);
     procedure setDescription(newDescpription : String);
     function getDescription : String;
@@ -99,6 +102,7 @@ type
   // Aktionsknoten
   TTask = class abstract(TTMSFNCBloxUMLActionStateBlock, INodes)
     constructor Create; override;
+    destructor Destroy;
     procedure setID(newID : Integer);
     function getID : Integer;
     procedure setDescription(newDescpription : String);
@@ -143,7 +147,8 @@ function TDecision.getDescription : String;
 begin
   Result := Description;
 end;
-
+//////////////////////////////////
+{Konstruktoren aller Knoten}
 constructor TStart.Create;
 var
   //popUp: TPopupMenu;
@@ -215,6 +220,28 @@ begin
   FillColor := lightGray;
   Text := 'MT';
   nodeType := Text;
+end;
+
+//////////////////////////////////
+{Destruktoren aller Knoten}
+destructor TStart.Destroy;
+begin
+
+end;
+
+destructor TEnd.Destroy;
+begin
+
+end;
+
+destructor TDecision.Destroy;
+begin
+
+end;
+
+destructor TTask.Destroy;
+begin
+
 end;
 
 procedure TDecision.setID(newID : Integer);
