@@ -79,6 +79,7 @@ var
   Form1: TForm1;
   //DatabaseWf: TDatabase;
   NodeDatabase: TNodeDatabase;
+  selectedNodeID: Integer; // fuer das loeschen von Knoten
 
 implementation
 {$R *.dfm}
@@ -97,42 +98,49 @@ end;
 ///////////////////////// Toolbar-Funktionen
 procedure TForm1.BitBtnEndClick(Sender: TObject);
 var
-  newMT : TEnd;
+  newEnd : TEnd;
   newNodeID : Integer;
 begin
-  TMSFNCBloxControl1.Blox.Add(TEnd.Create);
-  //NodeDatabase.addNewNode(FDQuery_wftest, 1, 'E');
-  NodeDatabase.addNewNode(1, 'E');
+  newNodeID := NodeDatabase.getHighestNodeID +1;
+  newEnd := TEnd.Create(newNodeID);
+  TMSFNCBloxControl1.Blox.Add(newEnd);
+  NodeDatabase.addNewNode(1, newNodeID, 'E');
   createNodeForm();
 end;
 
 procedure TForm1.BitBtnHDClick(Sender: TObject);
 var
-  newMT : THumanDecision;
+  newHD : THumanDecision;
   newNodeID : Integer;
 begin
-  TMSFNCBloxControl1.Blox.Add(THumanDecision.Create);
-  NodeDatabase.addNewNode(1, 'HD');
+  newNodeID := NodeDatabase.getHighestNodeID +1;
+  newHD := THumanDecision.Create(newNodeID);
+  TMSFNCBloxControl1.Blox.Add(newHD);
+  NodeDatabase.addNewNode(1, newNodeID, 'HD');
   createNodeForm();
 end;
 
 procedure TForm1.BitBtnHTClick(Sender: TObject);
 var
-  newMT : THumanTask;
+  newHT : THumanTask;
   newNodeID : Integer;
 begin
-  TMSFNCBloxControl1.Blox.Add(THumanTask.Create);
-  NodeDatabase.addNewNode(1, 'HT');
+  newNodeID := NodeDatabase.getHighestNodeID +1;
+  newHT := THumanTask.Create(newNodeID);
+  TMSFNCBloxControl1.Blox.Add(newHT);
+  NodeDatabase.addNewNode(1, newNodeID, 'HT');
   createNodeForm();
 end;
 
 procedure TForm1.BitBtnMDClick(Sender: TObject);
 var
-  newMT : TMashineDecision;
+  newMD : TMashineDecision;
   newNodeID : Integer;
 begin
-  TMSFNCBloxControl1.Blox.Add(TMashineDecision.Create);
-  NodeDatabase.addNewNode(1, 'MD');
+  newNodeID := NodeDatabase.getHighestNodeID +1;
+  newMD := TMashineDecision.Create(newNodeID);
+  TMSFNCBloxControl1.Blox.Add(newMD);
+  NodeDatabase.addNewNode(1, newNodeID, 'MD');
   createNodeForm();
 end;
 
@@ -141,8 +149,10 @@ var
   newMT : TMashineTask;
   newNodeID : Integer;
 begin
-  TMSFNCBloxControl1.Blox.Add(TMashineTask.Create);
-  NodeDatabase.addNewNode(1, 'MT');
+  newNodeID := NodeDatabase.getHighestNodeID +1;
+  newMT := TMashineTask.Create(newNodeID);
+  TMSFNCBloxControl1.Blox.Add(newMT);
+  NodeDatabase.addNewNode(1, newNodeID, 'MT');
   createNodeForm();
 end;
 
@@ -165,7 +175,7 @@ begin
   tabelle := 'wf_nodes';
   //ShowMessage(DatabaseWf.gebAnzahlDatensaetze(tabelle).ToString);
   ShowMessage(NodeDatabase.gebAnzahlDatensaetze(tabelle).ToString);
-
+  //NodeDatabase.deleteNode(2);    // hier funktioniert es
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
@@ -177,14 +187,16 @@ end;
 procedure TForm1.TMSFNCBloxControl1ElementClick(Sender: TObject;
   Element: TTMSFNCBloxElement);
 begin
-  ShowMessage(TMSFNCBloxControl1.Presenter.Selecteds[0].Id);
-  //TMSFNCBloxControl1.Presenter.
+  selectedNodeID := (TMSFNCBloxControl1.Presenter.Selecteds[0].Id).ToInteger();
+  ShowMessage(selectedNodeID.ToString);
+  //NodeDatabase.deleteNode((TMSFNCBloxControl1.Presenter.Selecteds[0].Id).ToInteger());  // hier funktioniert es
 end;
 
 procedure TForm1.TMSFNCBloxControl1ElementRemove(Sender: TObject;
   Element: TTMSFNCBloxElement);
 begin
-  //TMSFNCBloxControl1.Presenter.Selecteds.ElementId
+  //ShowMessage(TMSFNCBloxControl1.Presenter.Selecteds[0].Id);
+  NodeDatabase.deleteNode(selectedNodeID);  // hier nicht??? :(
 end;
 
 end.

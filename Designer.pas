@@ -195,8 +195,10 @@ end;
 procedure TForm1.TMSFNCBloxControl1ElementRemove(Sender: TObject;
   Element: TTMSFNCBloxElement);
 begin
-  //ShowMessage(TMSFNCBloxControl1.Presenter.Selecteds[0].Id);
-  NodeDatabase.deleteNode(selectedNodeID);  // hier nicht??? :(
+  // Das funktioniert nicht, da die ID schon vor dem Aufruf der Methde geloescht wird
+  // Es ensteht also ein Zugriffsfehler
+  //NodeDatabase.deleteNode((TMSFNCBloxControl1.Presenter.Selecteds[0].Id).ToInteger());
+  NodeDatabase.deleteNode(selectedNodeID);  // Mit zwischengespeicherter Variable geht es
 end;
 
 end.
