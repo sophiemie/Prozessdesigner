@@ -8334,6 +8334,8 @@ object Form1: TForm1
     GroupHandleAppearance.RotCenter.Size = 3
     GroupHandleAppearance.RotCenter.Style = hhCrossedEllipse
     Interaction.ChangeTextWithDoubleClick = False
+    OnElementClick = TMSFNCBloxControl1ElementClick
+    OnElementRemove = TMSFNCBloxControl1ElementRemove
     object Edit1: TEdit
       Left = 321
       Top = 23

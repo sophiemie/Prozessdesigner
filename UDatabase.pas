@@ -33,7 +33,9 @@ type
   TNodeDatabase = class(TDatabase)
   public
     constructor Create(newQuery : TFDQuery; newTable : String);
-    procedure addNewNode(diagramID: Integer; nodeType: String);
+    procedure addNewNode(diagramID: Integer; nodeType: String); overload;
+    procedure addNewNode(diagramID: Integer; nodeID: Integer; nodeType: String); overload;
+    procedure deleteNode(nodeID: Integer);
     procedure setTable(newTable : String);
     function getTable : String;
     function getHighestNodeID : Integer;
@@ -132,11 +134,26 @@ var
   newNodeID: Integer;
   sqlString: String;
 begin
-  //newNodeID := gebAnzahlDatensaetze(getTable()) + 1;
   newNodeID := getHighestNodeID +1; //
   sqlString := 'insert into ' + getTable + ' (node_id, wf_type_id, node_type) values (' + newNodeID.ToString + ',' + diagramID.ToString + ',"' + nodeType + '")';
   write(sqlString);
   query.Close;
+end;
+
+procedure TNodeDatabase.addNewNode(diagramID: Integer; nodeID: Integer; nodeType: String);
+var
+  sqlString: String;
+begin
+  sqlString := 'insert into ' + getTable + ' (node_id, wf_type_id, node_type) values ('
+            + nodeID.ToString + ',' + diagramID.ToString + ',"' + nodeType + '")';
+  write(sqlString);
+  query.Close;
+end;
+
+
+procedure TNodeDatabase.deleteNode(nodeID: Integer);
+begin
+  write('DELETE FROM ' + getTable + ' WHERE id = ' + nodeID.ToString);
 end;
 
 {}

@@ -136,7 +136,7 @@ end;
 
 function TDecision.getID : Integer;
 begin
-  Result := ID.ToInteger();
+  Result := ID;
 end;
 
 procedure TDecision.setDescription(newDescpription : String);
@@ -251,7 +251,7 @@ end;
 ///////////////////////////
 procedure TDecision.setID(newID : Integer);
 begin
-  Id := newID.ToString;
+  Id := newID;
 end;
 
 function TTask.getID : Integer;

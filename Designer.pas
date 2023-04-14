@@ -64,6 +64,10 @@ type
     procedure BitBtnMDClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure createNodeForm();
+    procedure TMSFNCBloxControl1ElementRemove(Sender: TObject;
+      Element: TTMSFNCBloxElement);
+    procedure TMSFNCBloxControl1ElementClick(Sender: TObject;
+      Element: TTMSFNCBloxElement);
   private
     { Private-Deklarationen }
 
@@ -92,46 +96,74 @@ end;
 
 ///////////////////////// Toolbar-Funktionen
 procedure TForm1.BitBtnEndClick(Sender: TObject);
+var
+  newEnd : TEnd;
+  newNodeID : Integer;
 begin
-  TMSFNCBloxControl1.Blox.Add(TEnd.Create);
-  //NodeDatabase.addNewNode(FDQuery_wftest, 1, 'E');
-  NodeDatabase.addNewNode(1, 'E');
+  newNodeID := NodeDatabase.getHighestNodeID +1;
+  newEnd := TEnd.Create(newNodeID);
+  TMSFNCBloxControl1.Blox.Add(newEnd);
+  NodeDatabase.addNewNode(1, newNodeID, 'E');
   createNodeForm();
 end;
 
 procedure TForm1.BitBtnHDClick(Sender: TObject);
+var
+  newHD : THumanDecision;
+  newNodeID : Integer;
 begin
-  TMSFNCBloxControl1.Blox.Add(THumanDecision.Create);
-  NodeDatabase.addNewNode(1, 'HD');
+  newNodeID := NodeDatabase.getHighestNodeID +1;
+  newHD := THumanDecision.Create(newNodeID);
+  TMSFNCBloxControl1.Blox.Add(newHD);
+  NodeDatabase.addNewNode(1, newNodeID, 'HD');
   createNodeForm();
 end;
 
 procedure TForm1.BitBtnHTClick(Sender: TObject);
+var
+  newHT : THumanTask;
+  newNodeID : Integer;
 begin
-  TMSFNCBloxControl1.Blox.Add(THumanTask.Create);
-  NodeDatabase.addNewNode(1, 'HT');
+  newNodeID := NodeDatabase.getHighestNodeID +1;
+  newHT := THumanTask.Create(newNodeID);
+  TMSFNCBloxControl1.Blox.Add(newHT);
+  NodeDatabase.addNewNode(1, newNodeID, 'HT');
   createNodeForm();
 end;
 
 procedure TForm1.BitBtnMDClick(Sender: TObject);
+var
+  newMD : TMashineDecision;
+  newNodeID : Integer;
 begin
-  TMSFNCBloxControl1.Blox.Add(TMashineDecision.Create);
-  NodeDatabase.addNewNode(1, 'MD');
+  newNodeID := NodeDatabase.getHighestNodeID +1;
+  newMD := TMashineDecision.Create(newNodeID);
+  TMSFNCBloxControl1.Blox.Add(newMD);
+  NodeDatabase.addNewNode(1, newNodeID, 'MD');
   createNodeForm();
 end;
 
 procedure TForm1.BitBtnMTClick(Sender: TObject);
+var
+  newMT : TMashineTask;
+  newNodeID : Integer;
 begin
-  TMSFNCBloxControl1.Blox.Add(TMashineTask.Create);
-  NodeDatabase.addNewNode(1, 'MT');
+  newNodeID := NodeDatabase.getHighestNodeID +1;
+  newMT := TMashineTask.Create(newNodeID);
+  TMSFNCBloxControl1.Blox.Add(newMT);
+  NodeDatabase.addNewNode(1, newNodeID, 'MT');
   createNodeForm();
 end;
 
 procedure TForm1.BitBtnStartClick(Sender: TObject);
+var
+  newStart : TStart;
+  newNodeID: Integer;
 begin
-  TMSFNCBloxControl1.Blox.Add(TStart.Create);
-  NodeDatabase.addNewNode(1, 'S');
-  //DatabaseWf.schreibeDatensatz(FDQuery_wftest, DatabaseWf.gebAnzahlDatensaetze(FDQuery_wftest, 'wf_nodes')+1);
+  newNodeID := NodeDatabase.getHighestNodeID +1;
+  newStart := TStart.Create(newNodeID);
+  TMSFNCBloxControl1.Blox.Add(newStart);
+  NodeDatabase.addNewNode(1, newNodeID, 'S');
 end;
 
 ////////////////////////////// TEST
@@ -149,6 +181,19 @@ procedure TForm1.FormCreate(Sender: TObject);
 begin
    // https://www.delphipraxis.net/printthread.php?t=115552
    NodeDatabase := TNodeDatabase.Create(FDQuery_wftest, 'wf_nodes'); // So ruft man einen Konstruktor auf
+end;
+
+procedure TForm1.TMSFNCBloxControl1ElementClick(Sender: TObject;
+  Element: TTMSFNCBloxElement);
+begin
+  ShowMessage(TMSFNCBloxControl1.Presenter.Selecteds[0].Id);
+  //TMSFNCBloxControl1.Presenter.
+end;
+
+procedure TForm1.TMSFNCBloxControl1ElementRemove(Sender: TObject;
+  Element: TTMSFNCBloxElement);
+begin
+  //TMSFNCBloxControl1.Presenter.Selecteds.ElementId
 end;
 
 end.

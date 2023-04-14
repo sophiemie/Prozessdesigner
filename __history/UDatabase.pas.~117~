@@ -24,7 +24,8 @@ type
     procedure fuelleListeMitDatensatz(list: TListBox);
     function gebAnzahlDatensaetze(tabelle: String): Integer;
   private
-    class var query: TFDQuery;
+    //class var query: TFDQuery;
+    var query: TFDQuery;
     procedure read(sqlString: String);
     procedure write(sqlString: String);
   end;
@@ -33,11 +34,14 @@ type
   public
     constructor Create(newQuery : TFDQuery; newTable : String);
     procedure addNewNode(diagramID: Integer; nodeType: String);
+    procedure deleteNode(nodeID: Integer);
     procedure setTable(newTable : String);
     function getTable : String;
+    function getHighestNodeID : Integer;
   private
     // Ohne class = Zugriffsverletzung
-    class var table : String; // https://de.wikibooks.org/wiki/Programmierkurs:_Delphi:_Pascal:_Zugriff_auf_Klassen
+    var table : String;
+    //class var table : String; // https://de.wikibooks.org/wiki/Programmierkurs:_Delphi:_Pascal:_Zugriff_auf_Klassen
   end;
 
 implementation
@@ -110,7 +114,8 @@ end;
 constructor TNodeDatabase.Create(newQuery : TFDQuery; newTable : String);
 begin
   inherited Create(newQuery);
-  //table := newTable;
+  table := newTable;
+  //setTable(newTable);
 end;
 
 procedure TNodeDatabase.setTable(newTable : String);
@@ -128,12 +133,31 @@ var
   newNodeID: Integer;
   sqlString: String;
 begin
-  newNodeID := gebAnzahlDatensaetze(getTable()) + 1;
+  //newNodeID := gebAnzahlDatensaetze(getTable()) + 1;
+  newNodeID := getHighestNodeID +1; //
   sqlString := 'insert into ' + getTable + ' (node_id, wf_type_id, node_type) values (' + newNodeID.ToString + ',' + diagramID.ToString + ',"' + nodeType + '")';
   write(sqlString);
   query.Close;
 end;
 
+procedure TNodeDatabase.deleteNode(nodeID: Integer);
+begin
+  write('DELETE FROM ' + getTable +' WHERE id = ' + nodeID.ToString);
+end;
+
+{}
+function TNodeDatabase.getHighestNodeID : Integer;
+var
+  sqlString: String;
+begin
+  sqlString := 'SELECT MAX(node_id) FROM ' + table;
+  read(sqlString);
+
+  with query do
+  begin
+    Result := FieldByName('MAX(node_id)').AsString.ToInteger();
+  end;
+end;
 
 
 end.
