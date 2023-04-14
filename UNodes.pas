@@ -168,6 +168,7 @@ end;
 constructor TEnd.Create(nodeID: Integer);
 begin
   inherited Create;
+  ID := nodeID.ToString;
   Width := startEndSize;
   Height := Width;
   FillColor := darkGrey;

@@ -152,8 +152,12 @@ end;
 
 
 procedure TNodeDatabase.deleteNode(nodeID: Integer);
+var
+  sqlString : String;
 begin
-  write('DELETE FROM ' + getTable + ' WHERE id = ' + nodeID.ToString);
+  sqlString := 'DELETE FROM ' + getTable + ' WHERE node_id = ' + nodeID.ToString;
+  write(sqlString);
+  query.Close;
 end;
 
 {}

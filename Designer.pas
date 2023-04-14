@@ -79,6 +79,7 @@ var
   Form1: TForm1;
   //DatabaseWf: TDatabase;
   NodeDatabase: TNodeDatabase;
+  selectedNodeID: Integer; // fuer das loeschen von Knoten
 
 implementation
 {$R *.dfm}
@@ -174,7 +175,7 @@ begin
   tabelle := 'wf_nodes';
   //ShowMessage(DatabaseWf.gebAnzahlDatensaetze(tabelle).ToString);
   ShowMessage(NodeDatabase.gebAnzahlDatensaetze(tabelle).ToString);
-
+  //NodeDatabase.deleteNode(2);    // hier funktioniert es
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
@@ -186,14 +187,16 @@ end;
 procedure TForm1.TMSFNCBloxControl1ElementClick(Sender: TObject;
   Element: TTMSFNCBloxElement);
 begin
-  ShowMessage(TMSFNCBloxControl1.Presenter.Selecteds[0].Id);
-  //TMSFNCBloxControl1.Presenter.
+  selectedNodeID := (TMSFNCBloxControl1.Presenter.Selecteds[0].Id).ToInteger();
+  ShowMessage(selectedNodeID.ToString);
+  //NodeDatabase.deleteNode((TMSFNCBloxControl1.Presenter.Selecteds[0].Id).ToInteger());  // hier funktioniert es
 end;
 
 procedure TForm1.TMSFNCBloxControl1ElementRemove(Sender: TObject;
   Element: TTMSFNCBloxElement);
 begin
-  //TMSFNCBloxControl1.Presenter.Selecteds.ElementId
+  //ShowMessage(TMSFNCBloxControl1.Presenter.Selecteds[0].Id);
+  NodeDatabase.deleteNode(selectedNodeID);  // hier nicht??? :(
 end;
 
 end.
