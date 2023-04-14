@@ -26,7 +26,7 @@ type
 
 var
   Form2: TForm2;
-  Database: TDatabase;
+  Database: TNodeDatabase;
 
 implementation
 
@@ -36,7 +36,8 @@ implementation
 
 procedure TForm2.FormCreate(Sender: TObject);
 begin
-  Database.fuelleListeMitDatensatz(FDQuery1, ListBox1);
+  Database := TNodeDatabase.Create(FDQuery1, 'wf_nodes');
+  Database.fuelleListeMitDatensatz(ListBox1);
 end;
 
 end.

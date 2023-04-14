@@ -73,7 +73,7 @@ type
 
 var
   Form1: TForm1;
-  DatabaseWf: TDatabase;
+  //DatabaseWf: TDatabase;
   NodeDatabase: TNodeDatabase;
 
 implementation
@@ -140,13 +140,15 @@ var
   tabelle: String;
 begin
   tabelle := 'wf_nodes';
-  ShowMessage(DatabaseWf.gebAnzahlDatensaetze(FDQuery_wf, tabelle).ToString);
+  //ShowMessage(DatabaseWf.gebAnzahlDatensaetze(tabelle).ToString);
+  ShowMessage(NodeDatabase.gebAnzahlDatensaetze(tabelle).ToString);
+
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
    // https://www.delphipraxis.net/printthread.php?t=115552
-   NodeDatabase := TNodeDatabase.Create(FDQuery_wftest); // So ruft man einen Konstruktor auf
+   NodeDatabase := TNodeDatabase.Create(FDQuery_wftest, 'wf_nodes'); // So ruft man einen Konstruktor auf
 end;
 
 end.
