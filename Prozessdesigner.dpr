@@ -3,7 +3,10 @@ program Prozessdesigner;
 uses
   Vcl.Forms,
   Designer in 'Designer.pas' {Form1},
-  DatenbankUnit in 'DatenbankUnit.pas';
+  UDatabase in 'UDatabase.pas',
+  UNodes in 'UNodes.pas',
+  UToolBar in 'UToolBar.pas',
+  UNodeSelection in 'UNodeSelection.pas' {Form2};
 
 {$R *.res}
 
@@ -11,5 +14,6 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TForm2, Form2);
   Application.Run;
 end.
