@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'ZMT Prozessdesigner'
-  ClientHeight = 515
+  ClientHeight = 526
   ClientWidth = 719
   Color = clGradientActiveCaption
   Font.Charset = DEFAULT_CHARSET
@@ -8277,7 +8277,7 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 449
-    Height = 513
+    Height = 518
     ParentDoubleBuffered = False
     DoubleBuffered = True
     TabOrder = 0
@@ -8358,7 +8358,7 @@ object Form1: TForm1
     Left = 455
     Top = 0
     Width = 258
-    Height = 513
+    Height = 518
     Color = clBtnHighlight
     ParentBackground = False
     TabOrder = 1
@@ -8433,6 +8433,19 @@ object Form1: TForm1
       Width = 117
       Height = 18
       Caption = 'Mashine Decision'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Avenir LT Pro 55 Roman'
+      Font.Style = []
+      ParentFont = False
+    end
+    object Label7: TLabel
+      Left = 104
+      Top = 497
+      Width = 45
+      Height = 18
+      Caption = 'Label7'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -15
@@ -25643,7 +25656,7 @@ object Form1: TForm1
       Top = 387
       Width = 273
       Height = 22
-      Caption = 'Panel5'
+      Caption = 'Connector'
       Color = clGradientActiveCaption
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBtnHighlight
@@ -25653,6 +25666,14 @@ object Form1: TForm1
       ParentBackground = False
       ParentFont = False
       TabOrder = 9
+    end
+    object BitBtnEdge: TBitBtn
+      Left = 88
+      Top = 415
+      Width = 81
+      Height = 76
+      TabOrder = 10
+      OnClick = BitBtnEdgeClick
     end
   end
   object FDConnection_forms: TFDConnection

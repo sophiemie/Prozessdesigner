@@ -19,7 +19,7 @@ uses
   VCL.TMSFNCCustomControl, VCL.TMSFNCCustomScrollControl, VCL.TMSFNCBloxControl,
   VCL.TMSFNCCustomComponent, VCL.TMSFNCStateManager, VCL.TMSFNCResponsiveManager,
   Vcl.Buttons, Vcl.ExtCtrls, Vcl.Menus, Vcl.ToolWin, Vcl.ComCtrls,
-  UNodes, UNodeSelection, UDatabase, UToolBar;  // Datenbank.pas einbinden
+  UNodes, UNodeSelection, UDatabase, UToolBar, UEdge;  // Datenbank.pas einbinden
 
 type
   TForm1 = class(TForm)
@@ -51,6 +51,8 @@ type
     Label6: TLabel;
     Panel5: TPanel;
     Button1: TButton;
+    BitBtnEdge: TBitBtn;
+    Label7: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure BitBtnStartClick(Sender: TObject);
     procedure BitBtnEndClick(Sender: TObject);
@@ -62,6 +64,7 @@ type
     procedure createNodeForm();
     procedure TMSFNCBloxControl1ElementRemove(Sender: TObject; Element: TTMSFNCBloxElement);
     procedure TMSFNCBloxControl1ElementClick(Sender: TObject; Element: TTMSFNCBloxElement);
+    procedure BitBtnEdgeClick(Sender: TObject);
   private
     { Private-Deklarationen }
 
@@ -89,6 +92,11 @@ begin
 end;
 
 ///////////////////////// Toolbar-Funktionen
+procedure TForm1.BitBtnEdgeClick(Sender: TObject);
+begin
+  TMSFNCBloxControl1.Blox.Add(TEdge.Create);
+end;
+
 procedure TForm1.BitBtnEndClick(Sender: TObject);
 var
   newEnd : TEnd;

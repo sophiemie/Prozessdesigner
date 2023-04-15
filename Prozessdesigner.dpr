@@ -6,7 +6,8 @@ uses
   UDatabase in 'UDatabase.pas',
   UNodes in 'UNodes.pas',
   UToolBar in 'UToolBar.pas',
-  UNodeSelection in 'UNodeSelection.pas' {Form2};
+  UNodeSelection in 'UNodeSelection.pas' {Form2},
+  UEdge in 'UEdge.pas';
 
 {$R *.res}
 
