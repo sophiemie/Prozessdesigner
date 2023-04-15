@@ -79,6 +79,7 @@ var
   Form1: TForm1;
   //DatabaseWf: TDatabase;
   NodeDatabase: TNodeDatabase;
+  selectedNodeID: Integer; // fuer das loeschen von Knoten
 
 implementation
 {$R *.dfm}
@@ -174,7 +175,7 @@ begin
   tabelle := 'wf_nodes';
   //ShowMessage(DatabaseWf.gebAnzahlDatensaetze(tabelle).ToString);
   ShowMessage(NodeDatabase.gebAnzahlDatensaetze(tabelle).ToString);
-
+  //NodeDatabase.deleteNode(2);    // hier funktioniert es
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
@@ -186,14 +187,16 @@ end;
 procedure TForm1.TMSFNCBloxControl1ElementClick(Sender: TObject;
   Element: TTMSFNCBloxElement);
 begin
-  ShowMessage(TMSFNCBloxControl1.Presenter.Selecteds[0].Id);
-  //TMSFNCBloxControl1.Presenter.
+  selectedNodeID := (TMSFNCBloxControl1.Presenter.Selecteds[0].Id).ToInteger();
 end;
 
 procedure TForm1.TMSFNCBloxControl1ElementRemove(Sender: TObject;
   Element: TTMSFNCBloxElement);
 begin
-  //TMSFNCBloxControl1.Presenter.Selecteds.ElementId
+  // Das funktioniert nicht, da die ID schon vor dem Aufruf der Methde geloescht wird
+  // Es ensteht also ein Zugriffsfehler
+  //NodeDatabase.deleteNode((TMSFNCBloxControl1.Presenter.Selecteds[0].Id).ToInteger());
+  NodeDatabase.deleteNode(selectedNodeID);  // Mit zwischengespeicherter Variable geht es
 end;
 
 end.

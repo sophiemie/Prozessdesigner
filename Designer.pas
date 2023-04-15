@@ -3,25 +3,23 @@ unit Designer;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.FMTBcd, Data.SqlExpr, Data.DB,
-  Vcl.StdCtrls, UDatabase, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.FMTBcd, Data.SqlExpr,
+  Vcl.StdCtrls, FireDAC.Stan.Intf, FireDAC.Stan.Option, VCL.TMSFNCUtils,
   FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MySQL,
   FireDAC.Phys.MySQLDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
-  FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,VCL.TMSFNCTypes, VCL.TMSFNCUtils,
+  FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet, Data.DB,
   VCL.TMSFNCGraphics, VCL.TMSFNCGraphicsTypes, VCL.TMSFNCBloxCoreTypes,
   VCL.TMSFNCBloxCoreUtils, VCL.TMSFNCBloxCoreLine, VCL.TMSFNCBloxCorePolygon,
-  VCL.TMSFNCBloxCoreTextCell, VCL.TMSFNCBloxCoreLineArrow,
-  VCL.TMSFNCBloxCoreLinkPoint, VCL.TMSFNCBloxCoreHandle,
-  VCL.TMSFNCBloxCoreGroup, VCL.TMSFNCBloxUISnapGrid, VCL.TMSFNCBloxCoreBlock,
-  VCL.TMSFNCBloxCoreElement, VCL.TMSFNCBloxUIRegistration,
-  VCL.TMSFNCBloxUIRenderer, VCL.TMSFNCBloxSelector, UToolBar,
+  VCL.TMSFNCBloxCoreTextCell, VCL.TMSFNCBloxCoreLineArrow, VCL.TMSFNCBloxCoreGroup,
+  VCL.TMSFNCBloxCoreLinkPoint, VCL.TMSFNCBloxCoreHandle, VCL.TMSFNCBloxUISnapGrid,
+  VCL.TMSFNCBloxCoreBlock, VCL.TMSFNCBloxCoreElement, VCL.TMSFNCBloxUIRegistration,
+  VCL.TMSFNCBloxUIRenderer, VCL.TMSFNCBloxSelector,  FireDAC.Comp.Client,VCL.TMSFNCTypes,
   VCL.TMSFNCCustomControl, VCL.TMSFNCCustomScrollControl, VCL.TMSFNCBloxControl,
-  UNodes, UNodeSelection,
-  VCL.TMSFNCCustomComponent, VCL.TMSFNCStateManager,
-  VCL.TMSFNCResponsiveManager, Vcl.Buttons, Vcl.ExtCtrls, Vcl.Menus,
-  Vcl.ToolWin, Vcl.ComCtrls;  // Datenbank.pas einbinden
+  VCL.TMSFNCCustomComponent, VCL.TMSFNCStateManager, VCL.TMSFNCResponsiveManager,
+  Vcl.Buttons, Vcl.ExtCtrls, Vcl.Menus, Vcl.ToolWin, Vcl.ComCtrls,
+  UNodes, UNodeSelection, UDatabase, UToolBar;  // Datenbank.pas einbinden
 
 type
   TForm1 = class(TForm)
@@ -53,10 +51,8 @@ type
     Label6: TLabel;
     Panel5: TPanel;
     Button1: TButton;
-//    procedure TMSFNCBloxControl1RegisterElements(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure BitBtnStartClick(Sender: TObject);
-//    procedure TMSFNCBloxSelector1ItemClick(Sender: TObject; AItemIndex: Integer);
     procedure BitBtnEndClick(Sender: TObject);
     procedure BitBtnHTClick(Sender: TObject);
     procedure BitBtnMTClick(Sender: TObject);
@@ -64,10 +60,8 @@ type
     procedure BitBtnMDClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure createNodeForm();
-    procedure TMSFNCBloxControl1ElementRemove(Sender: TObject;
-      Element: TTMSFNCBloxElement);
-    procedure TMSFNCBloxControl1ElementClick(Sender: TObject;
-      Element: TTMSFNCBloxElement);
+    procedure TMSFNCBloxControl1ElementRemove(Sender: TObject; Element: TTMSFNCBloxElement);
+    procedure TMSFNCBloxControl1ElementClick(Sender: TObject; Element: TTMSFNCBloxElement);
   private
     { Private-Deklarationen }
 
@@ -77,7 +71,6 @@ type
 
 var
   Form1: TForm1;
-  //DatabaseWf: TDatabase;
   NodeDatabase: TNodeDatabase;
   selectedNodeID: Integer; // fuer das loeschen von Knoten
 
@@ -173,9 +166,7 @@ var
   tabelle: String;
 begin
   tabelle := 'wf_nodes';
-  //ShowMessage(DatabaseWf.gebAnzahlDatensaetze(tabelle).ToString);
   ShowMessage(NodeDatabase.gebAnzahlDatensaetze(tabelle).ToString);
-  //NodeDatabase.deleteNode(2);    // hier funktioniert es
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
@@ -188,8 +179,6 @@ procedure TForm1.TMSFNCBloxControl1ElementClick(Sender: TObject;
   Element: TTMSFNCBloxElement);
 begin
   selectedNodeID := (TMSFNCBloxControl1.Presenter.Selecteds[0].Id).ToInteger();
-  ShowMessage(selectedNodeID.ToString);
-  //NodeDatabase.deleteNode((TMSFNCBloxControl1.Presenter.Selecteds[0].Id).ToInteger());  // hier funktioniert es
 end;
 
 procedure TForm1.TMSFNCBloxControl1ElementRemove(Sender: TObject;
