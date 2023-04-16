@@ -98,15 +98,15 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="UMain.pas">
-            <Form>Form1</Form>
+        <DCCReference Include="UDesigner.pas">
+            <Form>DesignerForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UDatabase.pas"/>
         <DCCReference Include="UNodes.pas"/>
         <DCCReference Include="UToolBar.pas"/>
         <DCCReference Include="UNodeSelection.pas">
-            <Form>Form2</Form>
+            <Form>NodeSelectionForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UEdge.pas"/>

@@ -2,11 +2,11 @@ program Prozessdesigner;
 
 uses
   Vcl.Forms,
-  UMain in 'UMain.pas' {Form1},
+  UDesigner in 'UDesigner.pas' {DesignerForm},
   UDatabase in 'UDatabase.pas',
   UNodes in 'UNodes.pas',
   UToolBar in 'UToolBar.pas',
-  UNodeSelection in 'UNodeSelection.pas' {Form2},
+  UNodeSelection in 'UNodeSelection.pas' {NodeSelectionForm},
   UEdge in 'UEdge.pas';
 
 {$R *.res}
@@ -14,7 +14,7 @@ uses
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TForm1, Form1);
-  Application.CreateForm(TForm2, Form2);
+  Application.CreateForm(TDesignerForm, DesignerForm);
+  Application.CreateForm(TNodeSelectionForm, NodeSelectionForm);
   Application.Run;
 end.
