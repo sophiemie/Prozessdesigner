@@ -52,6 +52,7 @@ type
     constructor Create(newQuery : TFDQuery; newTable : String);
     function getHighestEdgeID : Integer;
     procedure addNewEdge(edgeID: Integer);
+    procedure deleteEdge(edgeID: Integer);
   end;
 
 implementation
@@ -212,6 +213,15 @@ begin
   write(sqlString);
   query.Close;
 end;
+end;
+
+procedure TEdgeDatabase.deleteEdge(edgeID: Integer);
+var
+  sqlString : String;
+begin
+  sqlString := 'DELETE FROM ' + getTable + ' WHERE wf_edge_id = ' + edgeID.ToString;
+  write(sqlString);
+  query.Close;
 end;
 
 end.

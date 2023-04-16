@@ -74,9 +74,11 @@ type
 var
   DesignerForm: TDesignerForm;
   NodeDatabase: TNodeDatabase;
-  selectedNodeID: Integer; // fuer das loeschen von Knoten
-  selectedEdgeID: Integer;
+  selectedID: Integer; // fuer das loeschen von Knoten oder Kanten
+  selectedWorkflowComponent: String;
+  //selectedEdgeID: Integer;
   EdgeDatabase: TEdgeDatabase;
+  newEdgeButtonClicked: boolean;
 
 implementation
 {$R *.dfm}
@@ -98,6 +100,7 @@ var
   newEdge : TEdge;
   newEdgeID : Integer;
 begin
+  newEdgeButtonClicked := true;
   newEdgeID := EdgeDatabase.getHighestEdgeID +1;
   newEdge := TEdge.Create(newEdgeID);
   TMSFNCBloxControl1.Blox.Add(newEdge);
@@ -184,8 +187,10 @@ begin
   ShowMessage(NodeDatabase.gebAnzahlDatensaetze(tabelle).ToString);
 end;
 
+{ Initialisierung von Anfrangswerten }
 procedure TDesignerForm.FormCreate(Sender: TObject);
 begin
+   newEdgeButtonClicked := false;
    // https://www.delphipraxis.net/printthread.php?t=115552
    EdgeDatabase := TEdgeDatabase.Create(FDQuery_wftest, 'wf_edges');
    NodeDatabase := TNodeDatabase.Create(FDQuery_wftest, 'wf_nodes'); // So ruft man einen Konstruktor auf
@@ -194,8 +199,12 @@ end;
 procedure TDesignerForm.TMSFNCBloxControl1ElementClick(Sender: TObject;
   Element: TTMSFNCBloxElement);
 begin
-  selectedNodeID := (TMSFNCBloxControl1.Presenter.Selecteds[0].Id).ToInteger();
+  selectedWorkflowComponent := TMSFNCBloxControl1.Presenter.Selecteds[0].GetNamePath;
+
+  selectedID := (TMSFNCBloxControl1.Presenter.Selecteds[0].Id).ToInteger();
+  ShowMessage(selectedWorkflowComponent);
 end;
+
 
 procedure TDesignerForm.TMSFNCBloxControl1ElementRemove(Sender: TObject;
   Element: TTMSFNCBloxElement);
@@ -203,7 +212,8 @@ begin
   // Das funktioniert nicht, da die ID schon vor dem Aufruf der Methde geloescht wird
   // Es ensteht also ein Zugriffsfehler
   //NodeDatabase.deleteNode((TMSFNCBloxControl1.Presenter.Selecteds[0].Id).ToInteger());
-  NodeDatabase.deleteNode(selectedNodeID);  // Mit zwischengespeicherter Variable geht es
+  if selectedWorkflowComponent.Equals('TEdge') then EdgeDatabase.deleteEdge(selectedID)
+  else NodeDatabase.deleteNode(selectedID);  // Mit zwischengespeicherter Variable geht es
 end;
 
 end.
