@@ -8335,6 +8335,7 @@ object DesignerForm: TDesignerForm
     GroupHandleAppearance.RotCenter.Style = hhCrossedEllipse
     Interaction.ChangeTextWithDoubleClick = False
     OnElementClick = TMSFNCBloxControl1ElementClick
+    OnElementMouseDown = TMSFNCBloxControl1ElementMouseDown
     OnElementRemove = TMSFNCBloxControl1ElementRemove
     object Edit1: TEdit
       Left = 321

@@ -73,16 +73,18 @@ type
 
 var
   DesignerForm: TDesignerForm;
+  { Variablen der verwendeten Datenbanken }
   NodeDatabase: TNodeDatabase;
-  selectedNodeID: Integer; // fuer das loeschen von Knoten
-  selectedEdgeID: Integer;
   EdgeDatabase: TEdgeDatabase;
+  { Variablen fuer die Bestimmung der aktuell ausgewaehlten Komponente }
+  selectedID: Integer;
+  selectedWorkflowComponent: String;
   newEdgeButtonClicked: boolean;
 
 implementation
 {$R *.dfm}
 
-//uses UNodeSelection;
+{ Oeffnen des Formulars fuer die Knotenauswahl }
 procedure TDesignerForm.createNodeForm();
 begin
   with TNodeSelectionForm.Create(nil) do
@@ -94,18 +96,6 @@ begin
 end;
 
 ///////////////////////// Toolbar-Funktionen
-procedure TDesignerForm.BitBtnEdgeClick(Sender: TObject);
-var
-  newEdge : TEdge;
-  newEdgeID : Integer;
-begin
-  newEdgeButtonClicked := true;
-  newEdgeID := EdgeDatabase.getHighestEdgeID +1;
-  newEdge := TEdge.Create(newEdgeID);
-  TMSFNCBloxControl1.Blox.Add(newEdge);
-  EdgeDatabase.addNewEdge(EdgeDatabase.getHighestEdgeID +1);
-end;
-
 procedure TDesignerForm.BitBtnEndClick(Sender: TObject);
 var
   newEnd : TEnd;
@@ -186,30 +176,63 @@ begin
   ShowMessage(NodeDatabase.gebAnzahlDatensaetze(tabelle).ToString);
 end;
 
-{ Initialisierung von Anfrangswerten }
+{ Event bei der Erstellung des Designer Formulars }
 procedure TDesignerForm.FormCreate(Sender: TObject);
 begin
+   { Initialisierung von Anfrangswerten }
    newEdgeButtonClicked := false;
-   // https://www.delphipraxis.net/printthread.php?t=115552
+   { Aufrufen von Konstruktoren der Datanbank-Objekte }
    EdgeDatabase := TEdgeDatabase.Create(FDQuery_wftest, 'wf_edges');
-   NodeDatabase := TNodeDatabase.Create(FDQuery_wftest, 'wf_nodes'); // So ruft man einen Konstruktor auf
+   NodeDatabase := TNodeDatabase.Create(FDQuery_wftest, 'wf_nodes');
 end;
 
+
+{ Event bei Anklicken einer Komponte im Editor }
 procedure TDesignerForm.TMSFNCBloxControl1ElementClick(Sender: TObject;
   Element: TTMSFNCBloxElement);
+var
+  newEdge : TEdge;
+  newEdgeID : Integer;
+  test : TEdge;
 begin
-  selectedNodeID := (TMSFNCBloxControl1.Presenter.Selecteds[0].Id).ToInteger();
-  ShowMessage(TMSFNCBloxControl1.Presenter.Selecteds[0].GetNamePath);
+  { Klasse und ID der angeklickten Komponente bestimmen }
+  selectedWorkflowComponent := TMSFNCBloxControl1.Presenter.Selecteds[0].GetNamePath;
+  selectedID := (TMSFNCBloxControl1.Presenter.Selecteds[0].Id).ToInteger();
+  { Wenn eine Kante gesetzt werden will }
+  if newEdgeButtonClicked and not selectedWorkflowComponent.Equals('TEdge') then
+  begin
+    { Und es kein Endknoten ist }
+    if selectedWorkflowComponent.Equals('TEnd')
+    then ShowMessage('Endknoten kann keine Weiterführung haben.')
+    else { Dann soll Kante erstellt und eingetragen werden }
+    begin
+      newEdgeButtonClicked := false;
+      newEdgeID := EdgeDatabase.getHighestEdgeID +1;
+      newEdge := TEdge.Create(newEdgeID, selectedID);
+      TMSFNCBloxControl1.Blox.Add(newEdge);
+      EdgeDatabase.addNewEdge(newEdgeID, selectedID);
+    end;
+  end
+//  else if selectedWorkflowComponent.Equals('TEdge')
+//  then  ShowMessage(newEdge.getID.ToString);
+
+
 end;
 
-
+{ Event bei der Entfernung einer Komponente im Editor }
 procedure TDesignerForm.TMSFNCBloxControl1ElementRemove(Sender: TObject;
   Element: TTMSFNCBloxElement);
 begin
-  // Das funktioniert nicht, da die ID schon vor dem Aufruf der Methde geloescht wird
-  // Es ensteht also ein Zugriffsfehler
-  //NodeDatabase.deleteNode((TMSFNCBloxControl1.Presenter.Selecteds[0].Id).ToInteger());
-  NodeDatabase.deleteNode(selectedNodeID);  // Mit zwischengespeicherter Variable geht es
+  { Ueberpruefung ob ein Knoten oder eine Kante geloescht wird }
+  if selectedWorkflowComponent.Equals('TEdge') then EdgeDatabase.deleteEdge(selectedID)
+  else NodeDatabase.deleteNode(selectedID);
+end;
+
+{ Event bei Anklicken des Edge-Buttons }
+procedure TDesignerForm.BitBtnEdgeClick(Sender: TObject);
+begin
+  { Zwischenspeichern vom Betaetigen des Buttons }
+  newEdgeButtonClicked := true;
 end;
 
 end.
