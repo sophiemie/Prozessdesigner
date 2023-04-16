@@ -124,13 +124,16 @@ end;
 function TDatabase.getHighestID(idName : String; table : String) : Integer;
 var
   sqlString: String;
+  highestID : String;
 begin
   sqlString := 'SELECT MAX(' + idName + ') FROM ' + table;
   read(sqlString);
 
   with query do
   begin
-    Result := FieldByName('MAX(' + idName + ')').AsString.ToInteger();
+    highestID := FieldByName('MAX(' + idName + ')').AsString;
+    if highestID.IsEmpty then Result := 0
+    else Result := FieldByName('MAX(' + idName + ')').AsString.ToInteger();
   end;
 end;
 
