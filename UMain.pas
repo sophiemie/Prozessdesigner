@@ -22,7 +22,7 @@ uses
   UNodes, UNodeSelection, UDatabase, UToolBar, UEdge;  // Datenbank.pas einbinden
 
 type
-  TDesignerForm = class(TForm)
+  TForm1 = class(TForm)
     FDConnection_forms: TFDConnection;
     FDQuery_forms: TFDQuery;
     FDConnection_wf: TFDConnection;
@@ -72,7 +72,7 @@ type
   end;
 
 var
-  DesignerForm: TDesignerForm;
+  Form1: TForm1;
   NodeDatabase: TNodeDatabase;
   selectedNodeID: Integer; // fuer das loeschen von Knoten
   selectedEdgeID: Integer;
@@ -82,7 +82,7 @@ implementation
 {$R *.dfm}
 
 //uses UNodeSelection;
-procedure TDesignerForm.createNodeForm();
+procedure TForm1.createNodeForm();
 begin
   with TForm2.Create(nil) do
   try
@@ -93,7 +93,7 @@ begin
 end;
 
 ///////////////////////// Toolbar-Funktionen
-procedure TDesignerForm.BitBtnEdgeClick(Sender: TObject);
+procedure TForm1.BitBtnEdgeClick(Sender: TObject);
 var
   newEdge : TEdge;
   newEdgeID : Integer;
@@ -104,7 +104,7 @@ begin
   EdgeDatabase.addNewEdge(EdgeDatabase.getHighestEdgeID +1);
 end;
 
-procedure TDesignerForm.BitBtnEndClick(Sender: TObject);
+procedure TForm1.BitBtnEndClick(Sender: TObject);
 var
   newEnd : TEnd;
   newNodeID : Integer;
@@ -116,7 +116,7 @@ begin
   createNodeForm();
 end;
 
-procedure TDesignerForm.BitBtnHDClick(Sender: TObject);
+procedure TForm1.BitBtnHDClick(Sender: TObject);
 var
   newHD : THumanDecision;
   newNodeID : Integer;
@@ -128,7 +128,7 @@ begin
   createNodeForm();
 end;
 
-procedure TDesignerForm.BitBtnHTClick(Sender: TObject);
+procedure TForm1.BitBtnHTClick(Sender: TObject);
 var
   newHT : THumanTask;
   newNodeID : Integer;
@@ -140,7 +140,7 @@ begin
   createNodeForm();
 end;
 
-procedure TDesignerForm.BitBtnMDClick(Sender: TObject);
+procedure TForm1.BitBtnMDClick(Sender: TObject);
 var
   newMD : TMashineDecision;
   newNodeID : Integer;
@@ -152,7 +152,7 @@ begin
   createNodeForm();
 end;
 
-procedure TDesignerForm.BitBtnMTClick(Sender: TObject);
+procedure TForm1.BitBtnMTClick(Sender: TObject);
 var
   newMT : TMashineTask;
   newNodeID : Integer;
@@ -164,7 +164,7 @@ begin
   createNodeForm();
 end;
 
-procedure TDesignerForm.BitBtnStartClick(Sender: TObject);
+procedure TForm1.BitBtnStartClick(Sender: TObject);
 var
   newStart : TStart;
   newNodeID: Integer;
@@ -176,7 +176,7 @@ begin
 end;
 
 ////////////////////////////// TEST
-procedure TDesignerForm.Button1Click(Sender: TObject);
+procedure TForm1.Button1Click(Sender: TObject);
 var
   tabelle: String;
 begin
@@ -184,20 +184,20 @@ begin
   ShowMessage(NodeDatabase.gebAnzahlDatensaetze(tabelle).ToString);
 end;
 
-procedure TDesignerForm.FormCreate(Sender: TObject);
+procedure TForm1.FormCreate(Sender: TObject);
 begin
    // https://www.delphipraxis.net/printthread.php?t=115552
    EdgeDatabase := TEdgeDatabase.Create(FDQuery_wftest, 'wf_edges');
    NodeDatabase := TNodeDatabase.Create(FDQuery_wftest, 'wf_nodes'); // So ruft man einen Konstruktor auf
 end;
 
-procedure TDesignerForm.TMSFNCBloxControl1ElementClick(Sender: TObject;
+procedure TForm1.TMSFNCBloxControl1ElementClick(Sender: TObject;
   Element: TTMSFNCBloxElement);
 begin
   selectedNodeID := (TMSFNCBloxControl1.Presenter.Selecteds[0].Id).ToInteger();
 end;
 
-procedure TDesignerForm.TMSFNCBloxControl1ElementRemove(Sender: TObject;
+procedure TForm1.TMSFNCBloxControl1ElementRemove(Sender: TObject;
   Element: TTMSFNCBloxElement);
 begin
   // Das funktioniert nicht, da die ID schon vor dem Aufruf der Methde geloescht wird
