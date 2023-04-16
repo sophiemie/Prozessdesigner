@@ -2,7 +2,7 @@ program Prozessdesigner;
 
 uses
   Vcl.Forms,
-  Designer in 'Designer.pas' {Form1},
+  UMain in 'UMain.pas' {Form1},
   UDatabase in 'UDatabase.pas',
   UNodes in 'UNodes.pas',
   UToolBar in 'UToolBar.pas',

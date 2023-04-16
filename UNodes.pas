@@ -24,7 +24,7 @@ const
   lightGray = $B2B2B2;
   darkBlue = $E5BF81;
   startEndSize = 80;
-  fontSize = 100.0;
+  fontSize = 300.0;
 type
 
   IWorkflowComponent = interface(IInterface)

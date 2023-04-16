@@ -12,14 +12,14 @@ uses
   VCL.TMSFNCBloxCoreElement, VCL.TMSFNCBloxUIRegistration,
   VCL.TMSFNCBloxUIRenderer, VCL.TMSFNCBloxSelector,  VCL.TMSFNCStyles,
   VCL.TMSFNCBloxShapesUML,   // VCL.TMSFNCBloxShapesUML fuer UML-Formen,
-  VCL.TMSFNCBloxCoreBaseElement,
-  Vcl.Graphics, Vcl.Menus, Vcl.StdActnMenus,
+  VCL.TMSFNCBloxCoreBaseElement, Vcl.Graphics, Vcl.Menus, Vcl.StdActnMenus,
   VCL.TMSFNCCustomControl, VCL.TMSFNCCustomScrollControl, VCL.TMSFNCBloxControl,
   System.SysUtils, System.Variants, System.Classes, UNodes;
 type
 
-  TEdge = class(TTMSFNCBloxUMLGenericLine, IWorkflowComponent)
-    constructor Create;
+  //TEdge = class(TTMSFNCBloxUMLGenericLine, IWorkflowComponent)
+  TEdge = class(TTMSFNCBloxLine, IWorkflowComponent)
+    constructor Create(edgeID : Integer);
     procedure setID(newID : Integer);
     function getID : Integer;
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
@@ -29,9 +29,12 @@ type
 
 implementation
 
-constructor TEdge.Create;
+constructor TEdge.Create(edgeID : Integer);
 begin
   inherited Create;
+  ID := edgeID.ToString;
+  TargetArrow.Shape := asSolidArrow;
+  //RequiresConnections := true;    // Variable bestimmt ob Linie immer zwishchen 2 Objekten sein muss
 end;
 
 procedure TEdge.setID(newID : Integer);
