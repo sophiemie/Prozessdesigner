@@ -51,7 +51,7 @@ type
   public
     constructor Create(newQuery : TFDQuery; newTable : String);
     function getHighestEdgeID : Integer;
-    procedure addNewEdge(edgeID: Integer);
+    procedure addNewEdge(edgeID: Integer; nodeID: Integer);
     procedure deleteEdge(edgeID: Integer);
   end;
 
@@ -204,12 +204,13 @@ begin
   Result := getHighestID('wf_edge_id', table);
 end;
 
-procedure TEdgeDatabase.addNewEdge(edgeID: Integer);
+procedure TEdgeDatabase.addNewEdge(edgeID: Integer; nodeID: Integer);
 begin
 var
   sqlString: String;
 begin
-  sqlString := 'insert into ' + getTable + ' (wf_edge_id) values (' + edgeID.ToString + ')';
+  sqlString := 'insert into ' + getTable + ' (wf_edge_id, node_id) values ('
+                + edgeID.ToString + ',' + nodeID.ToString + ')';
   write(sqlString);
   query.Close;
 end;

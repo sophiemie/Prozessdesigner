@@ -95,18 +95,6 @@ begin
 end;
 
 ///////////////////////// Toolbar-Funktionen
-procedure TDesignerForm.BitBtnEdgeClick(Sender: TObject);
-var
-  newEdge : TEdge;
-  newEdgeID : Integer;
-begin
-  newEdgeButtonClicked := true;
-  newEdgeID := EdgeDatabase.getHighestEdgeID +1;
-  newEdge := TEdge.Create(newEdgeID);
-  TMSFNCBloxControl1.Blox.Add(newEdge);
-  EdgeDatabase.addNewEdge(EdgeDatabase.getHighestEdgeID +1);
-end;
-
 procedure TDesignerForm.BitBtnEndClick(Sender: TObject);
 var
   newEnd : TEnd;
@@ -198,11 +186,29 @@ end;
 
 procedure TDesignerForm.TMSFNCBloxControl1ElementClick(Sender: TObject;
   Element: TTMSFNCBloxElement);
+var
+  newEdge : TEdge;
+  newEdgeID : Integer;
 begin
   selectedWorkflowComponent := TMSFNCBloxControl1.Presenter.Selecteds[0].GetNamePath;
-
   selectedID := (TMSFNCBloxControl1.Presenter.Selecteds[0].Id).ToInteger();
-  ShowMessage(selectedWorkflowComponent);
+
+  { Wenn eine Kante gesetzt werden will }
+  if newEdgeButtonClicked and not selectedWorkflowComponent.Equals('TEdge') then
+  begin
+    { Und es kein Endknoten ist }
+    if selectedWorkflowComponent.Equals('TEnd')
+    then ShowMessage('Endknoten kann keine Weiterführung haben.')
+    else { Dann soll Kante erstellt und eingetragen werden }
+    begin
+      newEdgeButtonClicked := false;
+      newEdgeID := EdgeDatabase.getHighestEdgeID +1;
+      newEdge := TEdge.Create(newEdgeID, selectedID);
+      TMSFNCBloxControl1.Blox.Add(newEdge);
+      EdgeDatabase.addNewEdge(newEdgeID, selectedID);
+    end;
+  end;
+
 end;
 
 
@@ -214,6 +220,18 @@ begin
   //NodeDatabase.deleteNode((TMSFNCBloxControl1.Presenter.Selecteds[0].Id).ToInteger());
   if selectedWorkflowComponent.Equals('TEdge') then EdgeDatabase.deleteEdge(selectedID)
   else NodeDatabase.deleteNode(selectedID);  // Mit zwischengespeicherter Variable geht es
+end;
+
+procedure TDesignerForm.BitBtnEdgeClick(Sender: TObject);
+var
+  newEdge : TEdge;
+  newEdgeID : Integer;
+begin
+  newEdgeButtonClicked := true;
+//  newEdgeID := EdgeDatabase.getHighestEdgeID +1;
+//  newEdge := TEdge.Create(newEdgeID);
+//  TMSFNCBloxControl1.Blox.Add(newEdge);
+//  EdgeDatabase.addNewEdge(EdgeDatabase.getHighestEdgeID +1);
 end;
 
 end.

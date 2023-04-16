@@ -19,23 +19,57 @@ type
 
   //TEdge = class(TTMSFNCBloxUMLGenericLine, IWorkflowComponent)
   TEdge = class(TTMSFNCBloxLine, IWorkflowComponent)
-    constructor Create(edgeID : Integer);
+  public
+    constructor Create(edgeID : Integer; newNodeID: Integer); // overload;
+//    constructor Create(edgeID : Integer; startNode : TStart); overload;
+//    constructor Create(edgeID : Integer; decisionNode : TDecision); overload;
+//    constructor Create(edgeID : Integer; taskNode : TTask); overload;
     procedure setID(newID : Integer);
     function getID : Integer;
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
     function _Release: Integer; stdcall;
+  private
+    var nodeID : Integer; { ID des Knotens wo Kante herkommt }
+    var nextNodeID : Integer; { ID des darauffolgenden Knotens }
+    procedure init(newID: Integer); { Initialisierung der Variablen }
   end;
 
 implementation
 
-constructor TEdge.Create(edgeID : Integer);
+procedure TEdge.init(newID: Integer);
+begin
+  ID := newID.ToString;
+  TargetArrow.Shape := asSolidArrow;
+end;
+
+constructor TEdge.Create(edgeID : Integer; newNodeID: Integer);
 begin
   inherited Create;
-  ID := edgeID.ToString;
-  TargetArrow.Shape := asSolidArrow;
+  init(edgeID);
+  nodeID := newNodeID;
   //RequiresConnections := true;    // Variable bestimmt ob Linie immer zwishchen 2 Objekten sein muss
 end;
+
+//constructor TEdge.Create(edgeID : Integer; startNode : TStart);
+//begin
+//  inherited Create;
+//  init(edgeID);
+//end;
+//
+//constructor TEdge.Create(edgeID : Integer; taskNode : TTask);
+//begin
+//  inherited Create;
+//  init(edgeID);
+//end;
+//
+//constructor TEdge.Create(edgeID : Integer; decisionNode : TDecision);
+//begin
+//  inherited Create;
+//  init(edgeID);
+//end;
+
+
 
 procedure TEdge.setID(newID : Integer);
 begin
