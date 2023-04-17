@@ -64,14 +64,14 @@ type
     procedure TMSFNCBloxControl1ElementRemove(Sender: TObject; Element: TTMSFNCBloxElement);
     procedure TMSFNCBloxControl1ElementClick(Sender: TObject; Element: TTMSFNCBloxElement);
     procedure BitBtnEdgeClick(Sender: TObject);
-    procedure TMSFNCBloxControl1ElementMouseDown(Sender: TObject;
-      Element: TTMSFNCBloxElement; Button: TMouseButton; Shift: TShiftState; X,
-      Y: Single);
+    procedure TMSFNCBloxControl1MouseMove(Sender: TObject; Shift: TShiftState;
+      X, Y: Integer);
   private
     { Private-Deklarationen }
 
   public
     { Public-Deklarationen }
+//    var edgeComponent : TTMSFNCBloxElement;
   end;
 
 var
@@ -83,6 +83,8 @@ var
   selectedID: Integer;
   selectedWorkflowComponent: String;
   newEdgeButtonClicked: boolean;
+  newEdgeCreatedWithoutTarget: boolean;
+  newEdge : TEdge;
 
 implementation
 {$R *.dfm}
@@ -167,7 +169,7 @@ begin
   newNodeID := NodeDatabase.getHighestNodeID +1;
   newStart := TStart.Create(newNodeID);
   TMSFNCBloxControl1.Blox.Add(newStart);
-  NodeDatabase.addNewNode(1, newNodeID, 'S');
+  NodeDatabase.addNewNode(1, newNodeID, 'S'); // Aus den Buchstaben Klassenvariablen machen?
 end;
 
 ////////////////////////////// TEST
@@ -184,6 +186,7 @@ procedure TDesignerForm.FormCreate(Sender: TObject);
 begin
    { Initialisierung von Anfrangswerten }
    newEdgeButtonClicked := false;
+   newEdgeCreatedWithoutTarget := false;
    { Aufrufen von Konstruktoren der Datanbank-Objekte }
    EdgeDatabase := TEdgeDatabase.Create(FDQuery_wftest, 'wf_edges');
    NodeDatabase := TNodeDatabase.Create(FDQuery_wftest, 'wf_nodes');
@@ -194,8 +197,9 @@ end;
 procedure TDesignerForm.TMSFNCBloxControl1ElementClick(Sender: TObject;
   Element: TTMSFNCBloxElement);
 var
-  newEdge : TEdge;
+//  newEdge : TEdge;
   newEdgeID : Integer;
+  component : TObject;
 begin
   { Klasse und ID der angeklickten Komponente bestimmen }
   selectedWorkflowComponent := TMSFNCBloxControl1.Presenter.Selecteds[0].GetNamePath;
@@ -209,23 +213,26 @@ begin
     else { Dann soll Kante erstellt und eingetragen werden }
     begin
       newEdgeButtonClicked := false;
+      newEdgeCreatedWithoutTarget := true;
       newEdgeID := EdgeDatabase.getHighestEdgeID +1;
       newEdge := TEdge.Create(newEdgeID, selectedID);
-      newEdge.SourceLinkPoint.AnchorLink := TMSFNCBloxControl1.Presenter.Selecteds[0].LinkPoints[0];
+      newEdge.SourceLinkPoint.AnchorLink := TMSFNCBloxControl1.Presenter.Selecteds[0].LinkPoints[1];
       TMSFNCBloxControl1.Blox.Add(newEdge);
       EdgeDatabase.addNewEdge(newEdgeID, selectedID);
     end;
+  end
+  else if newEdgeCreatedWithoutTarget and not selectedWorkflowComponent.Equals('TEdge') then  { Kante einem zweiten Knoten zuweisen }
+  begin
+    if selectedWorkflowComponent.Equals('TStart')
+    then ShowMessage('Startknoten kann keine Weiterführung sein.')
+    else
+    begin
+    newEdgeCreatedWithoutTarget := false;
+    newEdge.TargetLinkPoint.AnchorLink := TMSFNCBloxControl1.Presenter.Selecteds[0].LinkPoints[0];
+    newEdge.RequiresConnections := true;
+    EdgeDatabase.addNextNode(newEdge.getID, selectedID);
+    end;   // FEHLER BEI ZU VIELEM BEWEGEN?
   end;
-
-
-
-end;
-
-procedure TDesignerForm.TMSFNCBloxControl1ElementMouseDown(Sender: TObject;
-  Element: TTMSFNCBloxElement; Button: TMouseButton; Shift: TShiftState; X,
-  Y: Single);
-begin
-// Zum ziehen der Kante verwenden?
 end;
 
 { Event bei der Entfernung einer Komponente im Editor }
@@ -236,6 +243,17 @@ begin
   if selectedWorkflowComponent.Equals('TEdge') then EdgeDatabase.deleteEdge(selectedID)
   else NodeDatabase.deleteNode(selectedID);
 end;
+
+procedure TDesignerForm.TMSFNCBloxControl1MouseMove(Sender: TObject;
+  Shift: TShiftState; X, Y: Integer);
+var
+  point : TTMSFNCBloxPoint;
+begin
+  point.X := X;
+  point.Y := Y;
+  if newEdgeCreatedWithoutTarget then newEdge.TargetHandle.ChangePoint(point);
+end;
+
 
 { Event bei Anklicken des Edge-Buttons }
 procedure TDesignerForm.BitBtnEdgeClick(Sender: TObject);
