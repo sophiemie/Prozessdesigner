@@ -1,76 +1,102 @@
+{
+  Bachelorthesis ueber die Entwicklung einer grafischen Oberflaeche zur
+  Erstellung von Workflows am ZMT (Leibniz-Zentrum fuer Marine Tropenforschung)
+  Duales Studium Informatik, Hochschule Bremen
+  Sophie Miessner 5046830, 2023
+
+  Unit UEdge: In der Unit wird die Klasse der Kanten TEdge sowie das
+  dazugehoerige Interface und weitere Methoden implementiert.
+}
 unit UEdge;
 
 interface
 
-uses
-  VCL.TMSFNCTypes, VCL.TMSFNCUtils,
+uses  { Verwendete Bibliotheken}
+  VCL.TMSFNCTypes, VCL.TMSFNCUtils, VCL.TMSFNCCustomControl, Vcl.StdActnMenus,
   VCL.TMSFNCGraphics, VCL.TMSFNCGraphicsTypes, VCL.TMSFNCBloxCoreTypes,
   VCL.TMSFNCBloxCoreUtils, VCL.TMSFNCBloxCoreLine, VCL.TMSFNCBloxCorePolygon,
-  VCL.TMSFNCBloxCoreTextCell, VCL.TMSFNCBloxCoreLineArrow,
-  VCL.TMSFNCBloxCoreLinkPoint, VCL.TMSFNCBloxCoreHandle,
+  VCL.TMSFNCBloxCoreTextCell, VCL.TMSFNCBloxCoreLineArrow, VCL.TMSFNCStyles,
+  VCL.TMSFNCBloxCoreLinkPoint, VCL.TMSFNCBloxShapesUML, System.SysUtils,
   VCL.TMSFNCBloxCoreGroup, VCL.TMSFNCBloxUISnapGrid, VCL.TMSFNCBloxCoreBlock,
-  VCL.TMSFNCBloxCoreElement, VCL.TMSFNCBloxUIRegistration,
-  VCL.TMSFNCBloxUIRenderer, VCL.TMSFNCBloxSelector,  VCL.TMSFNCStyles,
-  VCL.TMSFNCBloxShapesUML,   // VCL.TMSFNCBloxShapesUML fuer UML-Formen,
-  VCL.TMSFNCBloxCoreBaseElement, Vcl.Graphics, Vcl.Menus, Vcl.StdActnMenus,
-  VCL.TMSFNCCustomControl, VCL.TMSFNCCustomScrollControl, VCL.TMSFNCBloxControl,
-  System.SysUtils, System.Variants, System.Classes, UNodes;
-type
+  VCL.TMSFNCBloxCoreElement, VCL.TMSFNCBloxUIRegistration, System.Variants,
+  VCL.TMSFNCBloxUIRenderer, VCL.TMSFNCBloxSelector, VCL.TMSFNCBloxCoreHandle,
+  VCL.TMSFNCBloxCoreBaseElement, Vcl.Graphics, Vcl.Menus, VCL.TMSFNCBloxControl,
+  VCL.TMSFNCCustomScrollControl, System.Classes, UNodes; // Dort ist das Interface
 
-  //TEdge = class(TTMSFNCBloxUMLGenericLine, IWorkflowComponent)
+type
+  { Klasse fuer die Kanten }
   TEdge = class(TTMSFNCBloxLine, IWorkflowComponent)
   public
-    constructor Create(edgeID : Integer; newNodeID: Integer); // overload;
-//    constructor Create(edgeID : Integer; startNode : TStart); overload;
-//    constructor Create(edgeID : Integer; decisionNode : TDecision); overload;
-//    constructor Create(edgeID : Integer; taskNode : TTask); overload;
+    constructor Create(edgeID : Integer; newNodeID: Integer);
+    { Methoden aus dem Interface }
     procedure setID(newID : Integer);
     function getID : Integer;
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
     function _Release: Integer; stdcall;
+    { Getter und Setter der privaten Variablen }
+    procedure setNodeID(newNodeID : Integer);
+    function getNodeID : Integer;
+    procedure setNextNodeID(newNextNodeID : Integer);
+    function getNextNodeID : Integer;
+    procedure setDecisionVal(newDecisionVal : Integer);
+    function getDecisionVal : Integer;
   private
     var nodeID : Integer; { ID des Knotens wo Kante herkommt }
     var nextNodeID : Integer; { ID des darauffolgenden Knotens }
-    procedure init(newID: Integer); { Initialisierung der Variablen }
+    var decisionVal : Integer; { Entscheidungswert }
+    { Verschiedene Arten von Entscheidungswerten}
+    const NO_DECISION = 0;
+    const DEC2 = 1;
+    const DEC3 = 10;
+    const DEC4 = 20;
+    const DEC5 = 30;
+    const DEC6 = 40;
   end;
 
 implementation
 
-procedure TEdge.init(newID: Integer);
-begin
-  ID := newID.ToString;
-  TargetArrow.Shape := asSolidArrow;
-end;
-
 constructor TEdge.Create(edgeID : Integer; newNodeID: Integer);
 begin
-  inherited Create;
-  init(edgeID);
-  nodeID := newNodeID;
-  //RequiresConnections := true;    // Variable bestimmt ob Linie immer zwishchen 2 Objekten sein muss
+  inherited Create;  { Konstruktor von TTMSFNCBloxLine aufrufen }
+  ID := edgeID.ToString; { ID zuweisen }
+  TargetArrow.Shape := asSolidArrow; { Spitze des Pfeils zuweisen }
+  StrokeWidth := 3; { Liniendicke }
+  nodeID := newNodeID; { Knoten wo Kante anfaengt zuweisen }
 end;
 
-//constructor TEdge.Create(edgeID : Integer; startNode : TStart);
-//begin
-//  inherited Create;
-//  init(edgeID);
-//end;
-//
-//constructor TEdge.Create(edgeID : Integer; taskNode : TTask);
-//begin
-//  inherited Create;
-//  init(edgeID);
-//end;
-//
-//constructor TEdge.Create(edgeID : Integer; decisionNode : TDecision);
-//begin
-//  inherited Create;
-//  init(edgeID);
-//end;
+{ Getter und Setter }
+procedure TEdge.setNodeID(newNodeID : Integer);
+begin
+  nodeID := newNodeID;
+end;
 
+function TEdge.getNodeID : Integer;
+begin
+  Result := nodeID;
+end;
 
+procedure TEdge.setNextNodeID(newNextNodeID : Integer);
+begin
+  nextNodeID := newNextNodeID;
+end;
 
+function TEdge.getNextNodeID : Integer;
+begin
+  Result := nextNodeID;
+end;
+
+procedure TEdge.setDecisionVal(newDecisionVal : Integer);
+begin
+  decisionVal := newDecisionVal;
+end;
+
+function TEdge.getDecisionVal : Integer;
+begin
+  Result := decisionVal;
+end;
+
+{ Interface Methoden }
 procedure TEdge.setID(newID : Integer);
 begin
   ID := newID.ToString;
@@ -81,12 +107,13 @@ begin
   Result := ID.ToInteger();
 end;
 
-{ Interface-Funktionen }
+{ Weitere Interface-Methoden, kopiert aus dem Delphi-System }
 function TEdge.QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
 begin
   if GetInterface(IID, Obj) then Result := 0
   else Result := E_NOINTERFACE;
 end;
+
 function TEdge._AddRef: Integer; stdcall;
 begin
 {$IFNDEF AUTOREFCOUNT}
@@ -108,6 +135,5 @@ begin
   Result := __ObjRelease;
 {$ENDIF}
 end;
-
 
 end.

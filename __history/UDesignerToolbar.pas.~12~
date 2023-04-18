@@ -1,0 +1,108 @@
+unit UDesignerToolbar;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, Vcl.Menus,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.FMTBcd, Data.SqlExpr,
+  Vcl.StdCtrls, VCL.TMSFNCUtils, Data.DB, Vcl.Buttons, Vcl.ExtCtrls, Vcl.ToolWin,
+  Vcl.ComCtrls, System.Classes, UZMTStandard;
+
+  type
+  TToolBar = class
+  public
+    constructor Create;
+    var
+      { 1: Button fuer den Startknoten
+        2: Button fuer den Endknoten
+        3: Button fuer die menschliche Aufgabe
+        4: Button fuer die maschinelle Aufgabe
+        5: Button fuer die menschliche Entscheidung
+        6: Button fuer die maschinelle Entscheidung
+        7: Button fuer die Kanten }
+      toolBarBtn: array[1..7] of TBitBtn;
+      { 1: Main-Panel
+        2: Start- und Endknoten
+        3: Aufgabenknoten
+        4: Entscheidungsknoten
+        5: Button fuer die menschliche Aufgabe }
+      panel: array[1..5] of TPanel;
+      { 1: Label fuer den Startknoten
+        2: Label fuer den Endknoten
+        3: Label fuer die menschliche Aufgabe
+        4: Label fuer die maschinelle Aufgabe
+        5: Label fuer die menschliche Entscheidung
+        6: Label fuer die maschinelle Entscheidung }
+      sign: array[1..6] of TLabel;
+  private
+    var
+      MainPanelHeight : Integer;
+    const
+      MAIN_PANEL_WIDTH = 260;
+      PANEL_HEIGHT = 25;
+      PANEL_WIDTH = 274;
+      MAIN_PANEL_COLOR = clBtnHighlight;
+      PANEL_COLOR = lightBlue;
+      PANEL_FONT_COLOR = clBtnHighlight;
+      BTN_HEIGHT = 65;
+      BTN_TASK_WIDTH = 98;
+      BTN_DECISION_WIDTH = 81;
+      BTN_DECISION_HEIGHT = 76;
+      PANEL_FONTSIZE = 16;
+      LABEL_FONTSIZE = 11;
+  end;
+
+implementation
+
+constructor TToolbar.Create;
+var
+  I: Integer;
+begin
+  inherited Create;
+  { Initialisierung der Buttons }
+  {Start- und End}
+  for I := 1 to 2 do
+  begin
+    toolBarBtn[I].Height := BTN_HEIGHT;
+    toolBarBtn[I].Width := BTN_HEIGHT;
+  end;
+  {Aufgaben}
+  for I := 3 to 4 do
+  begin
+    toolBarBtn[I].Height := BTN_HEIGHT;
+    toolBarBtn[I].Width := BTN_TASK_WIDTH;
+  end;
+  {Entscheidungen}
+  for I := 5 to 6 do
+  begin
+    toolBarBtn[I].Height := BTN_DECISION_HEIGHT;
+    toolBarBtn[I].Width := BTN_DECISION_WIDTH;
+  end;
+  {Kante}
+  toolBarBtn[7].Height := BTN_DECISION_HEIGHT;
+  toolBarBtn[7].Width := BTN_DECISION_WIDTH;
+  {Alle}
+  for I := 1 to 7 do
+  begin
+    toolBarBtn[I].Caption := '';
+  end;
+
+
+  {Initialisierung der Panels}
+  panel[1].Color := MAIN_PANEL_COLOR;
+
+  for I := 2 to 5 do
+  begin
+    panel[I].Color := PANEL_COLOR;
+    panel[I].Font.Size := PANEL_FONTSIZE;
+  end;
+
+  {Initialisierung der Labels}
+  for I := 1 to 6 do
+  begin
+    sign[I].Font.Size := LABEL_FONTSIZE;
+  end;
+
+end;
+
+end.

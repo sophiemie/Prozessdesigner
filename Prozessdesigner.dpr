@@ -7,7 +7,9 @@ uses
   UNodes in 'UNodes.pas',
   UToolBar in 'UToolBar.pas',
   UNodeSelection in 'UNodeSelection.pas' {NodeSelectionForm},
-  UEdge in 'UEdge.pas';
+  UEdge in 'UEdge.pas',
+  UDesignerToolbar in 'UDesignerToolbar.pas',
+  UZMTStandard in 'UZMTStandard.pas';
 
 {$R *.res}
 

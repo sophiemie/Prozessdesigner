@@ -37,7 +37,7 @@ implementation
 procedure TNodeSelectionForm.FormCreate(Sender: TObject);
 begin
   Database := TNodeDatabase.Create(FDQuery1, 'wf_nodes');
-  Database.fuelleListeMitDatensatz(ListBox1);
+  Database.fillList(ListBox1);
 end;
 
 end.
