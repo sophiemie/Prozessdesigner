@@ -3,29 +3,27 @@ unit UDatabase;
 interface
 
 uses
-    Data.SqlExpr,
-    Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
-    Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf,
+    Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, Vcl.Forms,
+    Vcl.Graphics, Vcl.Controls, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.DatS,
     FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf,
     FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
     FireDAC.Phys.MySQL, FireDAC.Phys.MySQLDef, FireDAC.VCLUI.Wait, Data.DB,
-    FireDAC.Comp.Client, FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf,
-    FireDAC.DApt, FireDAC.Comp.DataSet, Vcl.StdCtrls;
+    FireDAC.Comp.Client, FireDAC.Stan.Param, FireDAC.DApt.Intf, Vcl.StdCtrls,
+    FireDAC.DApt, FireDAC.Comp.DataSet, Data.SqlExpr, System.Classes;
 
 type
   {Klasse fuer normale Datenbankfunktionen}
   TDatabase = class
   public
-    //function read(sqlString: String; query: TFDQuery; edit: TEdit): String;
-    constructor Create(newQuery : TFDQuery);
-    //constructor Create; overload;
-    //procedure schreibeDatensatz(query: TFDQuery; id: Integer); overload;
-    procedure schreibeDatensatz(id: Integer; text: String);
-    procedure fuelleListeMitDatensatz(list: TListBox);
-    function gebAnzahlDatensaetze(tabelle: String): Integer;
+    constructor Create(newQuery : TFDQuery; newTable: String);
+    procedure fillList(list: TListBox);
+    function getDataCount : Integer;
+    function getHighestID(idName : String) : Integer;
+    procedure setTable(newTable : String);
+    function getTable : String;
   private
-    //class var query: TFDQuery;
     var query: TFDQuery;
+    var table : String;
     procedure read(sqlString: String);
     procedure write(sqlString: String);
   end;
@@ -36,21 +34,25 @@ type
     procedure addNewNode(diagramID: Integer; nodeType: String); overload;
     procedure addNewNode(diagramID: Integer; nodeID: Integer; nodeType: String); overload;
     procedure deleteNode(nodeID: Integer);
-    procedure setTable(newTable : String);
-    function getTable : String;
     function getHighestNodeID : Integer;
-  private
-    // Ohne class = Zugriffsverletzung
-    var table : String;
-    //class var table : String; // https://de.wikibooks.org/wiki/Programmierkurs:_Delphi:_Pascal:_Zugriff_auf_Klassen
+  end;
+
+  TEdgeDatabase = class(TDatabase)
+  public
+    constructor Create(newQuery : TFDQuery; newTable : String);
+    function getHighestEdgeID : Integer;
+    procedure addNewEdge(edgeID: Integer; nodeID: Integer);
+    procedure addNextNode(edgeID: Integer; nodeID: Integer);
+    procedure deleteEdge(edgeID: Integer);
   end;
 
 implementation
 
-constructor TDatabase.Create(newQuery : TFDQuery);
+constructor TDatabase.Create(newQuery : TFDQuery; newTable: String);
 begin
   inherited Create();
   query := newQuery;
+  table := newTable;
 end;
 
 procedure TDatabase.read(sqlString: String);
@@ -80,15 +82,9 @@ end;
 
 end;
 
-
-procedure TDatabase.schreibeDatensatz(id: Integer; text: String);
+function TDatabase.getDataCount(): Integer;
 begin
-
-end;
-
-function TDatabase.gebAnzahlDatensaetze(tabelle: String): Integer;
-begin
-  read('select count(*) from ' + tabelle);
+  read('select count(*) from ' + table);
 
   with query do
   begin
@@ -96,7 +92,7 @@ begin
   end;
 end;
 
-procedure TDatabase.fuelleListeMitDatensatz(list: TListBox);
+procedure TDatabase.fillList(list: TListBox);
 begin
   read('select * from wf_def');
 
@@ -111,20 +107,37 @@ begin
   end;
 end;
 
+function TDatabase.getHighestID(idName : String) : Integer;
+var
+  sqlString: String;
+  highestID : String;
+begin
+  sqlString := 'SELECT MAX(' + idName + ') FROM ' + table;
+  read(sqlString);
+
+  with query do
+  begin
+    highestID := FieldByName('MAX(' + idName + ')').AsString;
+    if highestID.IsEmpty then Result := 0
+    else Result := FieldByName('MAX(' + idName + ')').AsString.ToInteger();
+  end;
+end;
+
+
 
 constructor TNodeDatabase.Create(newQuery : TFDQuery; newTable : String);
 begin
-  inherited Create(newQuery);
-  table := newTable;
+  inherited Create(newQuery, newTable);
+  //table := newTable;
   //setTable(newTable);
 end;
 
-procedure TNodeDatabase.setTable(newTable : String);
+procedure TDatabase.setTable(newTable : String);
 begin
   table := newTable;
 end;
 
-function TNodeDatabase.getTable : String;
+function TDatabase.getTable : String;
 begin
   Result := table;
 end;
@@ -162,17 +175,50 @@ end;
 
 {}
 function TNodeDatabase.getHighestNodeID : Integer;
+begin
+  Result := getHighestID('node_id');
+end;
+
+constructor TEdgeDatabase.Create(newQuery: TFDQuery; newTable : String);
+begin
+  inherited Create(newQuery, newTable);
+end;
+
+function TEdgeDatabase.getHighestEdgeID : Integer;
+begin
+  Result := getHighestID('wf_edge_id');
+end;
+
+procedure TEdgeDatabase.addNewEdge(edgeID: Integer; nodeID: Integer);
+begin
 var
   sqlString: String;
 begin
-  sqlString := 'SELECT MAX(node_id) FROM ' + table;
-  read(sqlString);
-
-  with query do
-  begin
-    Result := FieldByName('MAX(node_id)').AsString.ToInteger();
-  end;
+  sqlString := 'insert into ' + getTable + ' (wf_edge_id, node_id) values ('
+                + edgeID.ToString + ',' + nodeID.ToString + ')';
+  write(sqlString);
+  query.Close;
+end;
 end;
 
+procedure TEdgeDatabase.deleteEdge(edgeID: Integer);
+var
+  sqlString : String;
+begin
+  sqlString := 'DELETE FROM ' + getTable + ' WHERE wf_edge_id = ' + edgeID.ToString;
+  write(sqlString);
+  query.Close;
+end;
+
+
+procedure TEdgeDatabase.addNextNode(edgeID: Integer; nodeID: Integer);
+var
+  sqlString : String;
+begin
+  sqlString := 'UPDATE ' + getTable + ' SET ' + ' next_node_id = ' + nodeID.ToString
+                + ' WHERE wf_edge_id =' + edgeID.ToString;
+  write(sqlString);
+  query.Close;
+end;
 
 end.

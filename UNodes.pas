@@ -14,17 +14,13 @@ uses
   VCL.TMSFNCBloxShapesUML,   // VCL.TMSFNCBloxShapesUML fuer UML-Formen,
   Vcl.Graphics, Vcl.Menus, Vcl.StdActnMenus,
   VCL.TMSFNCCustomControl, VCL.TMSFNCCustomScrollControl, VCL.TMSFNCBloxControl,
-  System.SysUtils, System.Variants, System.Classes;
+  System.SysUtils, System.Variants, System.Classes, UZMTStandard;
 var
   popUp :  TStandardMenuPopup;
   // https://stackoverflow.com/questions/18544127/creating-a-popup-menu-at-runtime
 const
-  lightBlue = $FAE4BE;
-  darkGrey = $626262;
-  lightGray = $B2B2B2;
-  darkBlue = $E5BF81;
   startEndSize = 80;
-  fontSize = 100.0;
+  fontSize = 300.0;
 type
 
   IWorkflowComponent = interface(IInterface)
