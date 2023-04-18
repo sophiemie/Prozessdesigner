@@ -20,15 +20,12 @@ uses  { Verwendete Bibliotheken}
   VCL.TMSFNCBloxCoreGroup, VCL.TMSFNCBloxUISnapGrid, VCL.TMSFNCBloxCoreBlock,
   VCL.TMSFNCBloxCoreElement, VCL.TMSFNCBloxUIRegistration, System.Variants,
   VCL.TMSFNCBloxUIRenderer, VCL.TMSFNCBloxSelector, VCL.TMSFNCBloxCoreHandle,
-
-
   VCL.TMSFNCBloxCoreBaseElement, Vcl.Graphics, Vcl.Menus, VCL.TMSFNCBloxControl,
   VCL.TMSFNCCustomScrollControl, System.Classes, UNodes; // Dort ist das Interface
 
 type
   { Klasse fuer die Kanten }
-  //TEdge = class(TTMSFNCBloxLine, IWorkflowComponent)
-  TEdge = class(TTMSFNCBloxDFDDataFlowLine, IWorkflowComponent)
+  TEdge = class(TTMSFNCBloxLine, IWorkflowComponent)
   public
     constructor Create(edgeID : Integer; newNodeID: Integer);
     { Methoden aus dem Interface }
