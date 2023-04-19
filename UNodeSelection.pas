@@ -25,6 +25,7 @@ type
     procedure FillList(NodeClass: String);
     procedure ListBox1DblClick(Sender: TObject);
     function getSelectedNodeDescription : String;
+    procedure Button1Click(Sender: TObject);
   private
     { Private-Deklarationen }
     var
@@ -56,6 +57,17 @@ end;
 procedure TNodeSelectionForm.ListBox1DblClick(Sender: TObject);
 begin
   NodeDescription := Listbox1.Items[Listbox1.ItemIndex];
+  Close;
+end;
+
+procedure TNodeSelectionForm.Button1Click(Sender: TObject);
+begin
+  if ListBox1.ItemIndex = -1 then ShowMessage(NO_DESCRIPTIONSELECT_DE)
+  else
+  begin
+    NodeDescription := Listbox1.Items[Listbox1.ItemIndex];
+    Close;
+  end;
 end;
 
 procedure TNodeSelectionForm.FillList(NodeClass: String);

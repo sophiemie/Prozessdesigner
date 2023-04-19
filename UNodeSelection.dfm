@@ -2,8 +2,8 @@ object NodeSelectionForm: TNodeSelectionForm
   Left = 0
   Top = 0
   Caption = 'Knotenauswahl'
-  ClientHeight = 312
-  ClientWidth = 305
+  ClientHeight = 286
+  ClientWidth = 312
   Color = clBtnHighlight
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -8276,8 +8276,8 @@ object NodeSelectionForm: TNodeSelectionForm
   object GroupBox1: TGroupBox
     Left = 8
     Top = 8
-    Width = 289
-    Height = 289
+    Width = 297
+    Height = 273
     Caption = 'GroupBox1'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -8350,7 +8350,7 @@ object NodeSelectionForm: TNodeSelectionForm
       Left = 23
       Top = 63
       Width = 250
-      Height = 145
+      Height = 163
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
@@ -8363,17 +8363,18 @@ object NodeSelectionForm: TNodeSelectionForm
     end
     object Button1: TButton
       Left = 104
-      Top = 224
+      Top = 232
       Width = 75
       Height = 33
       Caption = 'Selected'
       TabOrder = 1
+      OnClick = Button1Click
     end
   end
   object FDQuery1: TFDQuery
     Connection = FDConnection1
-    Left = 248
-    Top = 232
+    Left = 256
+    Top = 248
   end
   object FDConnection1: TFDConnection
     Params.Strings = (
@@ -8381,7 +8382,7 @@ object NodeSelectionForm: TNodeSelectionForm
       'User_Name=dbapp'
       'Password=Yv9i9OqHC8TRlCbE'
       'DriverID=MySQL')
-    Left = 40
-    Top = 232
+    Left = 32
+    Top = 248
   end
 end

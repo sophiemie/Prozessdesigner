@@ -96,6 +96,9 @@ const
   MT_SEL2_EN = 'Send PDF';
   MT_SEL3_EN = 'Send Info';
 
+  NO_DESCRIPTIONSELECT_DE = 'Bitte auswählen.';
+  NO_DESCRIPTIONSELECT_EN = 'Please choose.';
+
   END_HINT_DE = 'Standard ist für ein Prozess der erfolgreich geendet ist.'
                   + ' Sind bestimmte Kriterien nicht erfüllt kann ein Prozess'
                   + ' vorzeitig beendet werden, dies führt zu einem Abbruch.';
@@ -116,7 +119,6 @@ const
   HT_HINT_EN = 'They are different kinds of Formulars which must be filled by '
                 + 'the Appliant.';
   MT_HINT_EN = 'These are functions which can be performed by the system.';
-
 
 implementation
 

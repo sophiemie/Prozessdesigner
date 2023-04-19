@@ -153,12 +153,6 @@ end;
 procedure TDesignerForm.createNodeForm();
 begin
   NodeSelectionForm.ShowModal;
-//  with TNodeSelectionForm.Create(nil) do
-//  try
-//    ShowModal;
-//  finally
-//    Free;
-//  end;
 end;
 
 ///////////////////////// Toolbar-Funktionen ////////////////////////////////
@@ -180,12 +174,11 @@ var
   newHD : THumanDecision;
   newNodeID : Integer;
 begin
+  NodeSelectionForm.FillList('THumanDecision');
   newNodeID := NodeDatabase.getHighestNodeID +1;
   newHD := THumanDecision.Create(newNodeID);
   TMSFNCBloxControl1.Blox.Add(newHD);
   NodeDatabase.addNewNode(diagram, newHD);
-  NodeSelectionForm.FillList('THumanDecision');
-//  NodeDatabase.addNewNode(diagram.getID, newNodeID, 'HD');
   createNodeForm();
 end;
 
