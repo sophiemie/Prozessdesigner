@@ -24,7 +24,6 @@ type
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private-Deklarationen }
   public
@@ -48,20 +47,10 @@ begin
   if Edit1.Text = '' then ShowMessage('Name can not be emty')
   else
   begin
-    StartPageForm.CloseQuery; // Schliesst beide Fenster?
-    DesignerForm.newDiagramCreated := true;
-    with TDesignerForm.Create(nil) do
-    try
-      ShowModal;
-    finally
-      Free;
-    end;
+    DesignerForm.newDiagramName := Edit1.Text;
+    DesignerForm.newDiagramDescription := Memo1.Text;
+    DesignerForm.Show;
   end;
-end;
-
-procedure TStartPageForm.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  Action := caHide ;
 end;
 
 procedure TStartPageForm.FormCreate(Sender: TObject);

@@ -49,16 +49,7 @@ begin
   begin
     DesignerForm.newDiagramName := Edit1.Text;
     DesignerForm.newDiagramDescription := Memo1.Text;
-
-    DesignerForm.Show;
-//    with TDesignerForm.Create(nil) do
-//    try
-//      //StartPageForm.Close; // Schliesst beide Fenster?
-//      ShowModal; // Nur auf das eine zugreifen
-//    finally
-//      Free;
-//    end;
-
+    DesignerForm.ShowModal;
   end;
 end;
 

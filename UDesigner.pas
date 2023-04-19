@@ -187,7 +187,6 @@ begin
   newStart := TStart.Create(newNodeID);
   TMSFNCBloxControl1.Blox.Add(newStart);
   NodeDatabase.addNewNode(diagram, newStart);
-//  NodeDatabase.addNewNode(diagram.getID, newNodeID, 'S'); // Klassenvariablen machen?
 end;
 
 ////////////////////////////// TEST
@@ -260,7 +259,7 @@ begin
       newEdge.SourceLinkPoint.AnchorLink :=
         TMSFNCBloxControl1.Presenter.Selecteds[0].LinkPoints[1];
       TMSFNCBloxControl1.Blox.Add(newEdge);
-      EdgeDatabase.addNewEdge(newEdgeID, selectedID);
+      EdgeDatabase.addNewEdge(newEdge);
     end;
   end { Kante einem zweiten Knoten zuweisen }
   else if newEdgeCreatedWithoutTarget and not
@@ -274,8 +273,9 @@ begin
       newEdge.TargetLinkPoint.AnchorLink :=
         TMSFNCBloxControl1.Presenter.Selecteds[0].LinkPoints[0];
       newEdge.RequiresConnections := true;
-      EdgeDatabase.addNextNode(newEdge.getID, selectedID);
-    end;   // FEHLER BEI ZU VIELEM BEWEGEN?
+      newEdge.setNextNodeID(selectedID);
+      EdgeDatabase.addNextNode(newEdge);
+    end;
   end;
 end;
 

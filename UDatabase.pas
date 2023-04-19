@@ -10,7 +10,7 @@ uses
     FireDAC.Phys.MySQL, FireDAC.Phys.MySQLDef, FireDAC.VCLUI.Wait, Data.DB,
     FireDAC.Comp.Client, FireDAC.Stan.Param, FireDAC.DApt.Intf, Vcl.StdCtrls,
     FireDAC.DApt, FireDAC.Comp.DataSet, Data.SqlExpr, System.Classes, UDiagram,
-    UNodes;
+    UNodes, UEdge;
 
 type
   {Klasse fuer normale Datenbankfunktionen}
@@ -36,7 +36,6 @@ type
     procedure addNewNode(diagram: TDiagram; node: TEnd); overload;
     procedure addNewNode(diagram: TDiagram; node: TDecision); overload;
     procedure addNewNode(diagram: TDiagram; node: TTask); overload;
-//    procedure addNewNode(diagramID: Integer; nodeID: Integer; nodeType: String); overload;
     procedure deleteNode(nodeID: Integer);
     function getHighestNodeID : Integer;
   end;
@@ -45,8 +44,8 @@ type
   public
     constructor Create(newQuery : TFDQuery; newTable : String);
     function getHighestEdgeID : Integer;
-    procedure addNewEdge(edgeID: Integer; nodeID: Integer);
-    procedure addNextNode(edgeID: Integer; nodeID: Integer);
+    procedure addNewEdge(edge: TEdge);
+    procedure addNextNode(edge: TEdge);
     procedure deleteEdge(edgeID: Integer);
   end;
 
@@ -154,20 +153,6 @@ begin
   Result := table;
 end;
 
-//procedure TNodeDatabase.addNewNode(diagramID: Integer; nodeType: String);
-//var
-//  newNodeID: Integer;
-//  sqlString: String;
-//begin
-//  newNodeID := getHighestNodeID +1; //
-//  sqlString := 'insert into ' + getTable
-//                + ' (node_id, wf_type_id, node_type) values ('
-//                + newNodeID.ToString + ',' + diagramID.ToString + ',"'
-//                + nodeType + '")';
-//  write(sqlString);
-//  query.Close;
-//end;
-
 procedure TNodeDatabase.addNewNode(diagram: TDiagram; node: TStart);
 var
   sqlString: String;
@@ -216,17 +201,6 @@ begin
   query.Close;
 end;
 
-//procedure TNodeDatabase.addNewNode(diagramID: Integer; nodeID: Integer; nodeType: String);
-//var
-//  sqlString: String;
-//begin
-//  sqlString := 'insert into ' + getTable + ' (node_id, wf_type_id, node_type) values ('
-//            + nodeID.ToString + ',' + diagramID.ToString + ',"' + nodeType + '")';
-//  write(sqlString);
-//  query.Close;
-//end;
-
-
 procedure TNodeDatabase.deleteNode(nodeID: Integer);
 var
   sqlString : String;
@@ -252,13 +226,13 @@ begin
   Result := getHighestID('wf_edge_id');
 end;
 
-procedure TEdgeDatabase.addNewEdge(edgeID: Integer; nodeID: Integer);
+procedure TEdgeDatabase.addNewEdge(edge: TEdge);
 begin
 var
   sqlString: String;
 begin
   sqlString := 'insert into ' + getTable + ' (wf_edge_id, node_id) values ('
-                + edgeID.ToString + ',' + nodeID.ToString + ')';
+                + edge.getID.ToString + ',' + edge.getNodeID.ToString + ')';
   write(sqlString);
   query.Close;
 end;
@@ -275,12 +249,13 @@ begin
 end;
 
 
-procedure TEdgeDatabase.addNextNode(edgeID: Integer; nodeID: Integer);
+procedure TEdgeDatabase.addNextNode(edge: TEdge);
 var
   sqlString : String;
 begin
   sqlString := 'UPDATE ' + getTable + ' SET ' + ' next_node_id = '
-                + nodeID.ToString + ' WHERE wf_edge_id =' + edgeID.ToString;
+                + edge.getNextNodeID.ToString + ' WHERE wf_edge_id ='
+                + edge.getID.ToString;
   write(sqlString);
   query.Close;
 end;
