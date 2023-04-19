@@ -8271,6 +8271,7 @@ object DesignerForm: TDesignerForm
     FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0}
   OldCreateOrder = False
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object TMSFNCBloxControl1: TTMSFNCBloxControl

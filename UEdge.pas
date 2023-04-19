@@ -50,6 +50,7 @@ type
     { Verschiedene Arten von Entscheidungswerten}
     const NO_DECISION = 0;
     const DEC2 = 1;
+    const DEC7 = 3;
     const DEC3 = 10;
     const DEC4 = 20;
     const DEC5 = 30;

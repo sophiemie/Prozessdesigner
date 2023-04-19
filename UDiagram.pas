@@ -17,10 +17,10 @@ type
     function getDescription : String;
     function getInUse : boolean;
   private
-    ID : Integer;
-    Name : String;
-    Description : String;
-    InUse : boolean;
+    var ID : Integer;
+    var Name : String;
+    var Description : String;
+    var InUse : boolean;
   end;
 
 implementation
@@ -54,7 +54,7 @@ begin
   InUse := value;
 end;
 
-function TDiagram.getID : Integer;
+function TDiagram.getID : Integer;  // Zugriffsfehler
 begin
   Result := ID;
 end;

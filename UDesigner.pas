@@ -20,7 +20,7 @@ uses
   VCL.TMSFNCStateManager, VCL.TMSFNCResponsiveManager, Vcl.ExtCtrls, Vcl.Menus,
   Vcl.ComCtrls, FireDAC.Phys, Vcl.ToolWin, VCL.TMSFNCBloxCoreGroup,
   VCL.TMSFNCBloxUIRegistration,UNodes, UNodeSelection, UDatabase, UToolBar,
-  UEdge, UDesignerToolbar;  // Datenbank.pas einbinden
+  UEdge, UDesignerToolbar, UDiagram;  // Datenbank.pas einbinden
 
 type
   TDesignerForm = class(TForm)
@@ -74,11 +74,14 @@ type
     procedure BitBtnEdgeClick(Sender: TObject);
     procedure TMSFNCBloxControl1MouseMove(Sender: TObject; Shift: TShiftState;
       X, Y: Integer);
+    procedure FormShow(Sender: TObject);
   private
     { Private-Deklarationen }
 
   public
     { Public-Deklarationen }
+    var newDiagramName : String;
+    var newDiagramDescription : String;
   end;
 
 var
@@ -86,12 +89,14 @@ var
   { Variablen der verwendeten Datenbanken }
   NodeDatabase: TNodeDatabase;
   EdgeDatabase: TEdgeDatabase;
+  DiagramDatabase: TDiagramDatabase;
   { Variablen fuer die Bestimmung der aktuell ausgewaehlten Komponente }
   selectedID: Integer;
   selectedWorkflowComponent: String;
   newEdgeButtonClicked: boolean;
   newEdgeCreatedWithoutTarget: boolean;
   newEdge : TEdge;
+  diagram : TDiagram;
 
 implementation
 {$R *.dfm}
@@ -116,7 +121,7 @@ begin
   newNodeID := NodeDatabase.getHighestNodeID +1;
   newEnd := TEnd.Create(newNodeID);
   TMSFNCBloxControl1.Blox.Add(newEnd);
-  NodeDatabase.addNewNode(1, newNodeID, 'E');
+  NodeDatabase.addNewNode(diagram.getID, newNodeID, 'E');
   createNodeForm();
 end;
 
@@ -128,7 +133,7 @@ begin
   newNodeID := NodeDatabase.getHighestNodeID +1;
   newHD := THumanDecision.Create(newNodeID);
   TMSFNCBloxControl1.Blox.Add(newHD);
-  NodeDatabase.addNewNode(1, newNodeID, 'HD');
+  NodeDatabase.addNewNode(diagram.getID, newNodeID, 'HD');
   createNodeForm();
 end;
 
@@ -140,7 +145,7 @@ begin
   newNodeID := NodeDatabase.getHighestNodeID +1;
   newHT := THumanTask.Create(newNodeID);
   TMSFNCBloxControl1.Blox.Add(newHT);
-  NodeDatabase.addNewNode(1, newNodeID, 'HT');
+  NodeDatabase.addNewNode(diagram.getID, newNodeID, 'HT');
   createNodeForm();
 end;
 
@@ -152,7 +157,7 @@ begin
   newNodeID := NodeDatabase.getHighestNodeID +1;
   newMD := TMashineDecision.Create(newNodeID);
   TMSFNCBloxControl1.Blox.Add(newMD);
-  NodeDatabase.addNewNode(1, newNodeID, 'MD');
+  NodeDatabase.addNewNode(diagram.getID, newNodeID, 'MD');
   createNodeForm();
 end;
 
@@ -164,7 +169,7 @@ begin
   newNodeID := NodeDatabase.getHighestNodeID +1;
   newMT := TMashineTask.Create(newNodeID);
   TMSFNCBloxControl1.Blox.Add(newMT);
-  NodeDatabase.addNewNode(1, newNodeID, 'MT');
+  NodeDatabase.addNewNode(diagram.getID, newNodeID, 'MT');
   createNodeForm();
 end;
 
@@ -176,7 +181,7 @@ begin
   newNodeID := NodeDatabase.getHighestNodeID +1;
   newStart := TStart.Create(newNodeID);
   TMSFNCBloxControl1.Blox.Add(newStart);
-  NodeDatabase.addNewNode(1, newNodeID, 'S'); // Klassenvariablen machen?
+  NodeDatabase.addNewNode(diagram.getID, newNodeID, 'S'); // Klassenvariablen machen?
 end;
 
 ////////////////////////////// TEST
@@ -188,7 +193,7 @@ begin
   ShowMessage(NodeDatabase.getDataCount.ToString);
 end;
 
-{ Event bei der Erstellung des Designer Formulars }
+{ Einmaliges Event bei Start der Applikation}
 procedure TDesignerForm.FormCreate(Sender: TObject);
 begin
    { Initialisierung von Anfrangswerten }
@@ -198,8 +203,21 @@ begin
    { Aufrufen von Konstruktoren der Datanbank-Objekte }
    EdgeDatabase := TEdgeDatabase.Create(FDQuery_wftest, 'wf_edges');
    NodeDatabase := TNodeDatabase.Create(FDQuery_wftest, 'wf_nodes');
+   DiagramDatabase := TDiagramDatabase.Create(FDQuery_wftest, 'wf_def');
 end;
 
+{ Event beim neu Laden des Editors }
+procedure TDesignerForm.FormShow(Sender: TObject);
+begin
+   {Wenn ein neues Diagramm erstellt wurde}
+   if not newDiagramName.Equals('') then
+   begin
+    diagram := TDiagram.Create(DiagramDatabase.getHighestDiagramID+1,
+                                    newDiagramName, newDiagramDescription);
+    DiagramDatabase.addNewDiagram(diagram);
+    TMSFNCBloxControl1.DestroyComponents;
+   end;
+end;
 
 { Event bei Anklicken einer Komponte im Editor }
 procedure TDesignerForm.TMSFNCBloxControl1ElementClick(Sender: TObject;

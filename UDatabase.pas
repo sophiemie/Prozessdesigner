@@ -9,7 +9,7 @@ uses
     FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
     FireDAC.Phys.MySQL, FireDAC.Phys.MySQLDef, FireDAC.VCLUI.Wait, Data.DB,
     FireDAC.Comp.Client, FireDAC.Stan.Param, FireDAC.DApt.Intf, Vcl.StdCtrls,
-    FireDAC.DApt, FireDAC.Comp.DataSet, Data.SqlExpr, System.Classes;
+    FireDAC.DApt, FireDAC.Comp.DataSet, Data.SqlExpr, System.Classes, UDiagram;
 
 type
   {Klasse fuer normale Datenbankfunktionen}
@@ -44,6 +44,15 @@ type
     procedure addNewEdge(edgeID: Integer; nodeID: Integer);
     procedure addNextNode(edgeID: Integer; nodeID: Integer);
     procedure deleteEdge(edgeID: Integer);
+  end;
+
+  TDiagramDatabase = class(TDatabase)
+  public
+    constructor Create(newQuery : TFDQuery; newTable : String);
+    procedure addNewDiagram(diagram: TDiagram);
+    procedure deleteDiagram(diagram: TDiagram);
+    procedure addNewDiagramVersion(diagram: TDiagram);
+    function getHighestDiagramID : Integer;
   end;
 
 implementation
@@ -119,7 +128,8 @@ begin
   begin
     highestID := FieldByName('MAX(' + idName + ')').AsString;
     if highestID.IsEmpty then Result := 0
-    else Result := FieldByName('MAX(' + idName + ')').AsString.ToInteger();
+    //else Result := FieldByName('MAX(' + idName + ')').AsString.ToInteger();
+    else Result := highestID.ToInteger;
   end;
 end;
 
@@ -128,8 +138,6 @@ end;
 constructor TNodeDatabase.Create(newQuery : TFDQuery; newTable : String);
 begin
   inherited Create(newQuery, newTable);
-  //table := newTable;
-  //setTable(newTable);
 end;
 
 procedure TDatabase.setTable(newTable : String);
@@ -205,7 +213,8 @@ procedure TEdgeDatabase.deleteEdge(edgeID: Integer);
 var
   sqlString : String;
 begin
-  sqlString := 'DELETE FROM ' + getTable + ' WHERE wf_edge_id = ' + edgeID.ToString;
+  sqlString := 'DELETE FROM ' + getTable + ' WHERE wf_edge_id = '
+                + edgeID.ToString;
   write(sqlString);
   query.Close;
 end;
@@ -215,10 +224,47 @@ procedure TEdgeDatabase.addNextNode(edgeID: Integer; nodeID: Integer);
 var
   sqlString : String;
 begin
-  sqlString := 'UPDATE ' + getTable + ' SET ' + ' next_node_id = ' + nodeID.ToString
-                + ' WHERE wf_edge_id =' + edgeID.ToString;
+  sqlString := 'UPDATE ' + getTable + ' SET ' + ' next_node_id = '
+                + nodeID.ToString + ' WHERE wf_edge_id =' + edgeID.ToString;
   write(sqlString);
   query.Close;
+end;
+
+
+constructor TDiagramDatabase.Create(newQuery : TFDQuery; newTable : String);
+begin
+  inherited Create(newQuery, newTable);
+end;
+
+procedure TDiagramDatabase.addNewDiagram(diagram: TDiagram);
+var
+  sqlString: String;
+begin
+  sqlString := 'insert into ' + getTable + ' (wf_type_id, name_en, description_en)'
+                + 'values (' + diagram.getID.ToString + ',"' + diagram.getName
+                + '","' + diagram.getDescription + '")';
+  write(sqlString);
+  query.Close;
+end;
+
+procedure TDiagramDatabase.deleteDiagram(diagram: TDiagram);
+var
+  sqlString: String;
+begin
+  sqlString := 'DELETE FROM ' + getTable + ' WHERE wf_type_id = '
+                + diagram.getID.ToString;
+  write(sqlString);
+  query.Close;
+end;
+
+procedure TDiagramDatabase.addNewDiagramVersion(diagram: TDiagram);
+begin
+
+end;
+
+function TDiagramDatabase.getHighestDiagramID : Integer;
+begin
+  Result := getHighestID('wf_type_id');
 end;
 
 end.
