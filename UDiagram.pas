@@ -12,15 +12,18 @@ type
     procedure setName(newName: String);
     procedure setDescription(newDescription: String);
     procedure setInUse(value: boolean);
+    procedure setClassName(newClassName : String);
     function getID : Integer;
     function getName : String;
     function getDescription : String;
     function getInUse : boolean;
+    function getClassName : String;
   private
     var ID : Integer;
     var Name : String;
     var Description : String;
     var InUse : boolean;
+    var ClassName : String;
   end;
 
 implementation
@@ -31,6 +34,7 @@ begin
   ID := newID;
   Name := newName;
   Description := newDescription;
+  ClassName := Name + 'Form';
 end;
 
 {Getter und Setter}
@@ -54,6 +58,11 @@ begin
   InUse := value;
 end;
 
+procedure TDiagram.setClassName(newClassName : String);
+begin
+  ClassName := newClassName;
+end;
+
 function TDiagram.getID : Integer;  // Zugriffsfehler
 begin
   Result := ID;
@@ -72,6 +81,11 @@ end;
 function TDiagram.getInUse : boolean;
 begin
   Result := InUse;
+end;
+
+function TDiagram.getClassName : String;
+begin
+  Result := ClassName;
 end;
 
 end.

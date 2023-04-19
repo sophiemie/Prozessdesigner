@@ -121,7 +121,8 @@ begin
   newNodeID := NodeDatabase.getHighestNodeID +1;
   newEnd := TEnd.Create(newNodeID);
   TMSFNCBloxControl1.Blox.Add(newEnd);
-  NodeDatabase.addNewNode(diagram.getID, newNodeID, 'E');
+  NodeDatabase.addNewNode(diagram, newEnd);
+  //NodeDatabase.addNewNode(diagram.getID, newNodeID, 'E');
   createNodeForm();
 end;
 
@@ -133,7 +134,8 @@ begin
   newNodeID := NodeDatabase.getHighestNodeID +1;
   newHD := THumanDecision.Create(newNodeID);
   TMSFNCBloxControl1.Blox.Add(newHD);
-  NodeDatabase.addNewNode(diagram.getID, newNodeID, 'HD');
+  NodeDatabase.addNewNode(diagram, newHD);
+//  NodeDatabase.addNewNode(diagram.getID, newNodeID, 'HD');
   createNodeForm();
 end;
 
@@ -145,7 +147,8 @@ begin
   newNodeID := NodeDatabase.getHighestNodeID +1;
   newHT := THumanTask.Create(newNodeID);
   TMSFNCBloxControl1.Blox.Add(newHT);
-  NodeDatabase.addNewNode(diagram.getID, newNodeID, 'HT');
+  NodeDatabase.addNewNode(diagram, newHT);
+//  NodeDatabase.addNewNode(diagram.getID, newNodeID, 'HT');
   createNodeForm();
 end;
 
@@ -157,7 +160,8 @@ begin
   newNodeID := NodeDatabase.getHighestNodeID +1;
   newMD := TMashineDecision.Create(newNodeID);
   TMSFNCBloxControl1.Blox.Add(newMD);
-  NodeDatabase.addNewNode(diagram.getID, newNodeID, 'MD');
+  NodeDatabase.addNewNode(diagram, newMD);
+//  NodeDatabase.addNewNode(diagram.getID, newNodeID, 'MD');
   createNodeForm();
 end;
 
@@ -169,7 +173,8 @@ begin
   newNodeID := NodeDatabase.getHighestNodeID +1;
   newMT := TMashineTask.Create(newNodeID);
   TMSFNCBloxControl1.Blox.Add(newMT);
-  NodeDatabase.addNewNode(diagram.getID, newNodeID, 'MT');
+  NodeDatabase.addNewNode(diagram, newMT);
+//  NodeDatabase.addNewNode(diagram.getID, newNodeID, 'MT');
   createNodeForm();
 end;
 
@@ -181,7 +186,8 @@ begin
   newNodeID := NodeDatabase.getHighestNodeID +1;
   newStart := TStart.Create(newNodeID);
   TMSFNCBloxControl1.Blox.Add(newStart);
-  NodeDatabase.addNewNode(diagram.getID, newNodeID, 'S'); // Klassenvariablen machen?
+  NodeDatabase.addNewNode(diagram, newStart);
+//  NodeDatabase.addNewNode(diagram.getID, newNodeID, 'S'); // Klassenvariablen machen?
 end;
 
 ////////////////////////////// TEST
@@ -208,6 +214,8 @@ end;
 
 { Event beim neu Laden des Editors }
 procedure TDesignerForm.FormShow(Sender: TObject);
+var
+  I : Integer;
 begin
    {Wenn ein neues Diagramm erstellt wurde}
    if not newDiagramName.Equals('') then
@@ -215,7 +223,13 @@ begin
     diagram := TDiagram.Create(DiagramDatabase.getHighestDiagramID+1,
                                     newDiagramName, newDiagramDescription);
     DiagramDatabase.addNewDiagram(diagram);
-    TMSFNCBloxControl1.DestroyComponents;
+    {Alle vorherigen Elemente im Editor entfernen}
+    TMSFNCBloxControl1.Presenter.SelectAll;
+    TMSFNCBloxControl1.Presenter.DeleteSelecteds;
+   end
+   else {Wenn Diagramm geladen wird}
+   begin
+
    end;
 end;
 
