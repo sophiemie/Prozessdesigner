@@ -23,12 +23,8 @@ type
     Button1: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FillList(NodeClass: String);
-    procedure ListBox1DblClick(Sender: TObject);
-    function getSelectedNodeDescription : String;
   private
     { Private-Deklarationen }
-    var
-      NodeDescription : String;
     const
       END_HINT_DE = 'Standard ist für ein Prozess der erfolgreich geendt ist.'
                   + ' Sind bestimmte Kriterien nicht erfüllt kann ein Prozess'
@@ -50,10 +46,7 @@ implementation
 
 
 {$R *.dfm}
-function TNodeSelectionForm.getSelectedNodeDescription : String;
-begin
-  Result := NodeDescription;
-end;
+
 
 procedure TNodeSelectionForm.FormCreate(Sender: TObject);
 begin
@@ -61,11 +54,6 @@ begin
   Database.fillList(ListBox1);
 end;
 
-
-procedure TNodeSelectionForm.ListBox1DblClick(Sender: TObject);
-begin
-  NodeDescription := Listbox1.Items[Listbox1.ItemIndex];
-end;
 
 procedure TNodeSelectionForm.FillList(NodeClass: String);
 begin

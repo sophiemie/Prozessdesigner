@@ -82,6 +82,7 @@ type
     { Public-Deklarationen }
     var newDiagramName : String;
     var newDiagramDescription : String;
+    var newNodeDescription : String;
   end;
 
 var

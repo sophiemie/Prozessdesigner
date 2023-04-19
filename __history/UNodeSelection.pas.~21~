@@ -13,7 +13,7 @@ uses
   FireDAC.Phys.MySQLDef;
 
 type
-  TForm2 = class(TForm)
+  TNodeSelectionForm = class(TForm)
     ListBox1: TListBox;
     FDQuery1: TFDQuery;
     FDConnection1: TFDConnection;
@@ -25,7 +25,7 @@ type
   end;
 
 var
-  Form2: TForm2;
+  NodeSelectionForm: TNodeSelectionForm;
   Database: TNodeDatabase;
 
 implementation
@@ -34,10 +34,10 @@ implementation
 {$R *.dfm}
 
 
-procedure TForm2.FormCreate(Sender: TObject);
+procedure TNodeSelectionForm.FormCreate(Sender: TObject);
 begin
   Database := TNodeDatabase.Create(FDQuery1, 'wf_nodes');
-  Database.fuelleListeMitDatensatz(ListBox1);
+  Database.fillList(ListBox1);
 end;
 
 end.

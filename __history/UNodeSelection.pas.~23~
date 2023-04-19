@@ -13,11 +13,13 @@ uses
   FireDAC.Phys.MySQLDef;
 
 type
-  TForm2 = class(TForm)
+  TNodeSelectionForm = class(TForm)
     ListBox1: TListBox;
     FDQuery1: TFDQuery;
     FDConnection1: TFDConnection;
+    Button1: TButton;
     procedure FormCreate(Sender: TObject);
+    procedure FillList(NodeClass: String);
   private
     { Private-Deklarationen }
   public
@@ -25,7 +27,7 @@ type
   end;
 
 var
-  Form2: TForm2;
+  NodeSelectionForm: TNodeSelectionForm;
   Database: TNodeDatabase;
 
 implementation
@@ -34,10 +36,38 @@ implementation
 {$R *.dfm}
 
 
-procedure TForm2.FormCreate(Sender: TObject);
+procedure TNodeSelectionForm.FormCreate(Sender: TObject);
 begin
-  //Database := TNodeDatabase.Create(FDQuery1, 'wf_nodes');
-  //Database.fuelleListeMitDatensatz(ListBox1);
+  Database := TNodeDatabase.Create(FDQuery1, 'wf_nodes');
+  Database.fillList(ListBox1);
+end;
+
+
+procedure TNodeSelectionForm.FillList(NodeClass: String);
+begin
+
+  if NodeClass.Equals('TEnd') then
+  begin
+    ListBox1.Items.Add('Standard');
+    ListBox1.Items.Add('Abbruch');
+  end
+  else if NodeClass.Equals('THumanDecision') then
+  begin
+
+  end
+  else if NodeClass.Equals('TMashineDecision') then
+  begin
+
+  end
+  else if NodeClass.Equals('THumanTask') then
+  begin
+
+  end
+  else if NodeClass.Equals('TMashineTask') then
+  begin
+
+  end;
+
 end;
 
 end.

@@ -1,10 +1,10 @@
-object Form2: TForm2
+object NodeSelectionForm: TNodeSelectionForm
   Left = 0
   Top = 0
   Caption = 'Knotenauswahl'
   ClientHeight = 306
   ClientWidth = 347
-  Color = clBtnFace
+  Color = clBtnHighlight
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -8274,11 +8274,45 @@ object Form2: TForm2
   PixelsPerInch = 96
   TextHeight = 13
   object ListBox1: TListBox
-    Left = 0
-    Top = 0
-    Width = 345
-    Height = 305
-    ItemHeight = 13
+    Left = 24
+    Top = 8
+    Width = 297
+    Height = 241
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Avenir LT Pro 55 Roman'
+    Font.Style = []
+    ItemHeight = 15
+    ParentFont = False
     TabOrder = 0
+  end
+  object Button1: TButton
+    Left = 128
+    Top = 255
+    Width = 89
+    Height = 43
+    Caption = 'Select'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Avenir LT Pro 55 Roman'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 1
+  end
+  object FDQuery1: TFDQuery
+    Connection = FDConnection1
+    Left = 216
+    Top = 168
+  end
+  object FDConnection1: TFDConnection
+    Params.Strings = (
+      'Database=wf'
+      'User_Name=dbapp'
+      'Password=Yv9i9OqHC8TRlCbE'
+      'DriverID=MySQL')
+    Left = 144
+    Top = 168
   end
 end

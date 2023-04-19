@@ -8353,7 +8353,6 @@ object NodeSelectionForm: TNodeSelectionForm
       Height = 145
       ItemHeight = 19
       TabOrder = 0
-      OnDblClick = ListBox1DblClick
     end
     object Button1: TButton
       Left = 104
