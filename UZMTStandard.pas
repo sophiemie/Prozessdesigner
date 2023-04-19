@@ -4,7 +4,6 @@ interface
 
 uses
   VCL.Graphics;
-
 const
   lightBlue = $FAE4BE;
   darkGrey = $626262;

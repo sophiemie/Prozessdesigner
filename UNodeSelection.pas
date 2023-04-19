@@ -10,7 +10,7 @@ uses
   FireDAC.Stan.Async, FireDAC.DApt, FireDAC.UI.Intf, FireDAC.Stan.Def,
   FireDAC.Stan.Pool, FireDAC.Phys, FireDAC.VCLUI.Wait, Data.DB,
   FireDAC.Comp.Client, FireDAC.Comp.DataSet, FireDAC.Phys.MySQL,
-  FireDAC.Phys.MySQLDef, Vcl.Imaging.pngimage, Vcl.ExtCtrls;
+  FireDAC.Phys.MySQLDef, Vcl.Imaging.pngimage, Vcl.ExtCtrls, ULanguage;
 
 type
   TNodeSelectionForm = class(TForm)
@@ -29,15 +29,6 @@ type
     { Private-Deklarationen }
     var
       NodeDescription : String;
-    const
-      END_HINT_DE = 'Standard ist für ein Prozess der erfolgreich geendt ist.'
-                  + ' Sind bestimmte Kriterien nicht erfüllt kann ein Prozess'
-                  + ' vorzeitig beendet werden, dies führt zu einem Abbruch.';
-      HD_HINT_DE = 'Es gibt verschiedene Arten von Anträgen die vom Auftrag'
-                  + 'steller ausgefüllt werden können. ';
-      MD_HINT_DE = '';
-      HT_HINT_DE = '';
-      MT_HINT_DE = '';
   public
     { Public-Deklarationen }
   end;
@@ -57,8 +48,8 @@ end;
 
 procedure TNodeSelectionForm.FormCreate(Sender: TObject);
 begin
-  Database := TNodeDatabase.Create(FDQuery1, 'wf_nodes');
-  Database.fillList(ListBox1);
+//  Database := TNodeDatabase.Create(FDQuery1, 'wf_nodes');
+//  Database.fillList(ListBox1);
 end;
 
 
@@ -69,7 +60,7 @@ end;
 
 procedure TNodeSelectionForm.FillList(NodeClass: String);
 begin
-
+  ListBox1.Clear;
   if NodeClass.Equals('TEnd') then
   begin
     Image1.Hint := END_HINT_DE;

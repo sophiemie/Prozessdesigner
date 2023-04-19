@@ -8300,8 +8300,8 @@ object NodeSelectionForm: TNodeSelectionForm
       ParentFont = False
     end
     object Image1: TImage
-      Left = 200
-      Top = 32
+      Left = 248
+      Top = 35
       Width = 25
       Height = 25
       ParentShowHint = False
@@ -8351,7 +8351,13 @@ object NodeSelectionForm: TNodeSelectionForm
       Top = 63
       Width = 250
       Height = 145
-      ItemHeight = 19
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Avenir LT Pro 55 Roman'
+      Font.Style = []
+      ItemHeight = 15
+      ParentFont = False
       TabOrder = 0
       OnDblClick = ListBox1DblClick
     end

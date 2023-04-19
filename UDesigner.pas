@@ -102,15 +102,63 @@ var
 implementation
 {$R *.dfm}
 
+{ Event bei Anklicken einer Komponte im Editor }
+procedure TDesignerForm.TMSFNCBloxControl1ElementClick(Sender: TObject;
+  Element: TTMSFNCBloxElement);
+var
+//  newEdge : TEdge;
+  newEdgeID : Integer;
+  component : TObject;
+begin
+  { Klasse und ID der angeklickten Komponente bestimmen }
+  selectedWorkflowComponent :=
+    TMSFNCBloxControl1.Presenter.Selecteds[0].GetNamePath;
+  selectedID := (TMSFNCBloxControl1.Presenter.Selecteds[0].Id).ToInteger();
+  { Wenn eine Kante gesetzt werden will }
+  if newEdgeButtonClicked and not selectedWorkflowComponent.Equals('TEdge') then
+  begin
+    { Und es kein Endknoten ist }
+    if selectedWorkflowComponent.Equals('TEnd')
+    then ShowMessage('Endknoten kann keine Weiterführung haben.')
+    else { Dann soll Kante erstellt und eingetragen werden }
+    begin
+      newEdgeButtonClicked := false;
+      newEdgeCreatedWithoutTarget := true;
+      newEdgeID := EdgeDatabase.getHighestEdgeID +1;
+      newEdge := TEdge.Create(newEdgeID, selectedID);
+      newEdge.SourceLinkPoint.AnchorLink :=
+        TMSFNCBloxControl1.Presenter.Selecteds[0].LinkPoints[1];
+      TMSFNCBloxControl1.Blox.Add(newEdge);
+      EdgeDatabase.addNewEdge(newEdge);
+    end;
+  end { Kante einem zweiten Knoten zuweisen }
+  else if newEdgeCreatedWithoutTarget and not
+    selectedWorkflowComponent.Equals('TEdge') then
+  begin
+    if selectedWorkflowComponent.Equals('TStart')
+    then ShowMessage('Startknoten kann keine Weiterführung sein.')
+    else
+    begin
+      newEdgeCreatedWithoutTarget := false;
+      newEdge.TargetLinkPoint.AnchorLink :=
+        TMSFNCBloxControl1.Presenter.Selecteds[0].LinkPoints[0];
+      newEdge.RequiresConnections := true;
+      newEdge.setNextNodeID(selectedID);
+      EdgeDatabase.addNextNode(newEdge);
+    end;
+  end;
+end;
+
 { Oeffnen des Formulars fuer die Knotenauswahl }
 procedure TDesignerForm.createNodeForm();
 begin
-  with TNodeSelectionForm.Create(nil) do
-  try
-    ShowModal;
-  finally
-    Free;
-  end;
+  NodeSelectionForm.ShowModal;
+//  with TNodeSelectionForm.Create(nil) do
+//  try
+//    ShowModal;
+//  finally
+//    Free;
+//  end;
 end;
 
 ///////////////////////// Toolbar-Funktionen ////////////////////////////////
@@ -123,7 +171,7 @@ begin
   newEnd := TEnd.Create(newNodeID);
   TMSFNCBloxControl1.Blox.Add(newEnd);
   NodeDatabase.addNewNode(diagram, newEnd);
-  //NodeDatabase.addNewNode(diagram.getID, newNodeID, 'E');
+  NodeSelectionForm.FillList('TEnd');
   createNodeForm();
 end;
 
@@ -136,6 +184,7 @@ begin
   newHD := THumanDecision.Create(newNodeID);
   TMSFNCBloxControl1.Blox.Add(newHD);
   NodeDatabase.addNewNode(diagram, newHD);
+  NodeSelectionForm.FillList('THumanDecision');
 //  NodeDatabase.addNewNode(diagram.getID, newNodeID, 'HD');
   createNodeForm();
 end;
@@ -149,6 +198,7 @@ begin
   newHT := THumanTask.Create(newNodeID);
   TMSFNCBloxControl1.Blox.Add(newHT);
   NodeDatabase.addNewNode(diagram, newHT);
+  NodeSelectionForm.FillList('THumanTask');
 //  NodeDatabase.addNewNode(diagram.getID, newNodeID, 'HT');
   createNodeForm();
 end;
@@ -162,6 +212,7 @@ begin
   newMD := TMashineDecision.Create(newNodeID);
   TMSFNCBloxControl1.Blox.Add(newMD);
   NodeDatabase.addNewNode(diagram, newMD);
+  NodeSelectionForm.FillList('TMashineDecision');
 //  NodeDatabase.addNewNode(diagram.getID, newNodeID, 'MD');
   createNodeForm();
 end;
@@ -175,6 +226,7 @@ begin
   newMT := TMashineTask.Create(newNodeID);
   TMSFNCBloxControl1.Blox.Add(newMT);
   NodeDatabase.addNewNode(diagram, newMT);
+  NodeSelectionForm.FillList('TMashineTask');
 //  NodeDatabase.addNewNode(diagram.getID, newNodeID, 'MT');
   createNodeForm();
 end;
@@ -231,53 +283,6 @@ begin
    begin
 
    end;
-end;
-
-{ Event bei Anklicken einer Komponte im Editor }
-procedure TDesignerForm.TMSFNCBloxControl1ElementClick(Sender: TObject;
-  Element: TTMSFNCBloxElement);
-var
-//  newEdge : TEdge;
-  newEdgeID : Integer;
-  component : TObject;
-begin
-  { Klasse und ID der angeklickten Komponente bestimmen }
-  selectedWorkflowComponent :=
-    TMSFNCBloxControl1.Presenter.Selecteds[0].GetNamePath;
-  selectedID := (TMSFNCBloxControl1.Presenter.Selecteds[0].Id).ToInteger();
-  { Wenn eine Kante gesetzt werden will }
-  if newEdgeButtonClicked and not selectedWorkflowComponent.Equals('TEdge') then
-  begin
-    { Und es kein Endknoten ist }
-    if selectedWorkflowComponent.Equals('TEnd')
-    then ShowMessage('Endknoten kann keine Weiterführung haben.')
-    else { Dann soll Kante erstellt und eingetragen werden }
-    begin
-      newEdgeButtonClicked := false;
-      newEdgeCreatedWithoutTarget := true;
-      newEdgeID := EdgeDatabase.getHighestEdgeID +1;
-      newEdge := TEdge.Create(newEdgeID, selectedID);
-      newEdge.SourceLinkPoint.AnchorLink :=
-        TMSFNCBloxControl1.Presenter.Selecteds[0].LinkPoints[1];
-      TMSFNCBloxControl1.Blox.Add(newEdge);
-      EdgeDatabase.addNewEdge(newEdge);
-    end;
-  end { Kante einem zweiten Knoten zuweisen }
-  else if newEdgeCreatedWithoutTarget and not
-    selectedWorkflowComponent.Equals('TEdge') then
-  begin
-    if selectedWorkflowComponent.Equals('TStart')
-    then ShowMessage('Startknoten kann keine Weiterführung sein.')
-    else
-    begin
-      newEdgeCreatedWithoutTarget := false;
-      newEdge.TargetLinkPoint.AnchorLink :=
-        TMSFNCBloxControl1.Presenter.Selecteds[0].LinkPoints[0];
-      newEdge.RequiresConnections := true;
-      newEdge.setNextNodeID(selectedID);
-      EdgeDatabase.addNextNode(newEdge);
-    end;
-  end;
 end;
 
 { Event bei der Entfernung einer Komponente im Editor }

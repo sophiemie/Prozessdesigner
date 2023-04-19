@@ -11,7 +11,8 @@ uses
   UDesignerToolbar in 'UDesignerToolbar.pas',
   UZMTStandard in 'UZMTStandard.pas',
   UStartPage in 'UStartPage.pas' {StartPageForm},
-  UDiagram in 'UDiagram.pas';
+  UDiagram in 'UDiagram.pas',
+  ULanguage in 'ULanguage.pas';
 
 {$R *.res}
 
