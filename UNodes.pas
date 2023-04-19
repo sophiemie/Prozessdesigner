@@ -175,9 +175,9 @@ type
 implementation
 
 /////////////////////////////
-procedure TTask.setID;
+procedure TTask.setID(newID : Integer);
 begin
-
+  ID := newID.ToString();
 end;
 
 function TDecision.getID : Integer;
@@ -305,12 +305,12 @@ begin
 end;
 function TTask.getDescription : String;
 begin
-
+  Result := Description;
 end;
 
 procedure TStart.setID(newID : Integer);
 begin
-
+  ID := newID.ToString();
 end;
 function TStart.getID : Integer;
 begin
@@ -322,12 +322,12 @@ begin
 end;
 function TStart.getDescription : String;
 begin
-
+  Result := Description;
 end;
 
 procedure TEnd.setID(newID : Integer);
 begin
-
+  ID := newID.ToString();
 end;
 function TEnd.getID : Integer;
 begin
@@ -339,7 +339,7 @@ begin
 end;
 function TEnd.getDescription : String;
 begin
-
+  Result := Description;
 end;
 
 
@@ -353,15 +353,15 @@ begin
 end;
 function TStart.getClassName : String;
 begin
-
+  Result := ClassName;
 end;
 procedure TStart.setMethodName(newMethodName : String);
 begin
-
+  Method := newMethodName;
 end;
 function TStart.getMethodName : String;
 begin
-
+  Result := Method;
 end;
 
 
@@ -375,51 +375,51 @@ begin
 end;
 function TEnd.getClassName : String;
 begin
-
+  Result := ClassName;
 end;
 procedure TEnd.setMethodName(newMethodName : String);
 begin
-
+  Method := newMethodName;
 end;
 function TEnd.getMethodName : String;
 begin
-
+  Result := Method;
 end;
 
 
 procedure TTask.setClassName(newClassName: String);
 begin
-
+  ClassName := newClassName;
 end;
 function TTask.getClassName : String;
 begin
-
+  Result := ClassName;
 end;
 procedure TTask.setMethodName(newMethodName : String);
 begin
-
+  Method := newMethodName;
 end;
 function TTask.getMethodName : String;
 begin
-
+  Result := Method;
 end;
 
 
 procedure TDecision.setClassName(newClassName: String);
 begin
-
+  ClassName := newClassName;
 end;
 function TDecision.getClassName : String;
 begin
-
+  Result := ClassName;
 end;
 procedure TDecision.setMethodName(newMethodName : String);
 begin
-
+  Method := newMethodName;
 end;
 function TDecision.getMethodName : String;
 begin
-
+  Result := Method;
 end;
 
 
