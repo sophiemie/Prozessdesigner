@@ -119,6 +119,7 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UDiagram.pas"/>
+        <DCCReference Include="ULanguage.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

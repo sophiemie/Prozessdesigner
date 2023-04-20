@@ -11,7 +11,7 @@ uses
   VCL.TMSFNCBloxCoreGroup, VCL.TMSFNCBloxUISnapGrid, VCL.TMSFNCBloxCoreBlock,
   VCL.TMSFNCBloxCoreElement, VCL.TMSFNCBloxUIRegistration,
   VCL.TMSFNCBloxUIRenderer, VCL.TMSFNCBloxSelector,  VCL.TMSFNCStyles,
-  VCL.TMSFNCBloxShapesUML,   // VCL.TMSFNCBloxShapesUML fuer UML-Formen,
+  VCL.TMSFNCBloxShapesUML,
   Vcl.Graphics, Vcl.Menus, Vcl.StdActnMenus,
   VCL.TMSFNCCustomControl, VCL.TMSFNCCustomScrollControl, VCL.TMSFNCBloxControl,
   System.SysUtils, System.Variants, System.Classes, UZMTStandard;
@@ -20,7 +20,7 @@ var
   // https://stackoverflow.com/questions/18544127/creating-a-popup-menu-at-runtime
 const
   startEndSize = 80;
-  fontSize = 3.0;
+  FONT_SIZE = 25.0;
 type
 
   IWorkflowComponent = interface(IInterface)
@@ -66,7 +66,8 @@ type
   end;
 
   TEnd = class(TTMSFNCBloxUMLFinalStateBlock, INodes)
-    constructor Create(nodeID: Integer);
+  public
+    constructor Create(nodeID: Integer; newDescription: String);
     destructor Destroy;
     procedure setID(newID : Integer);
     function getID : Integer;
@@ -93,14 +94,13 @@ type
   // Entscheidungsknoten       // TInterfacedObject
   //TDecision = class abstract(TTMSFNCBloxUMLDecisionBlock, IworkflowComponent)
   TDecision = class abstract (TTMSFNCBloxUMLDecisionBlock, INodes)
-    constructor Create(nodeID: Integer);
+    constructor Create(nodeID: Integer; newDescription: String);
     destructor Destroy;
     procedure setID(newID : Integer);
     procedure setDescription(newDescription : String);
     function getDescription : String;
     function getID : Integer;
-    function getType : String; virtual; //abstract; // soll erst in Childklasse
-    // beschrieben werden
+    function getType : String; virtual;
     procedure setClassName(newClassName: String);
     function getClassName : String;
     procedure setMethodName(newMethodName : String);
@@ -117,16 +117,16 @@ type
   end;
 
   THumanDecision = class(TDecision)
-    constructor Create(nodeID: Integer);
-    function getType : String;
+    constructor Create(nodeID: Integer; newDescription: String);
+    function getType : String; override;
   private
     const
     NODE_TYPE = 'HD';
   end;
 
   TMashineDecision = class(TDecision)
-    constructor Create(nodeID: Integer);
-    function getType : String;
+    constructor Create(nodeID: Integer; newDescription: String);
+    function getType : String; override;
   private
     const
     NODE_TYPE = 'MD';
@@ -134,13 +134,13 @@ type
 
   // Aktionsknoten
   TTask = class abstract(TTMSFNCBloxUMLActionStateBlock, INodes)
-    constructor Create(nodeID: Integer);
+    constructor Create(nodeID: Integer; newDescription: String);
     destructor Destroy;
     procedure setID(newID : Integer);
     function getID : Integer;
     procedure setDescription(newDescription : String);
     function getDescription : String;
-    function getType : String; virtual; //abstract;
+    function getType : String; virtual;
     procedure setClassName(newClassName: String);
     function getClassName : String;
     procedure setMethodName(newMethodName : String);
@@ -157,7 +157,7 @@ type
   end;
 
   THumanTask = class(TTask)
-    constructor Create(nodeID: Integer);
+    constructor Create(nodeID: Integer; newDescription: String);
     function getType : String; override;
   private
     const
@@ -165,7 +165,7 @@ type
   end;
 
   TMashineTask = class(TTask)
-    constructor Create(nodeID: Integer);
+    constructor Create(nodeID: Integer; newDescription: String);
     function getType : String; override;
   private
     const
@@ -174,7 +174,6 @@ type
  /////////////////////////////////////////////////////////////////////
 implementation
 
-/////////////////////////////
 procedure TTask.setID(newID : Integer);
 begin
   ID := newID.ToString();
@@ -194,7 +193,7 @@ function TDecision.getDescription : String;
 begin
   Result := Description;
 end;
-//////////////////////////////////
+///////////////////////////////////////////////////////////////////
 {Konstruktoren aller Knoten}
 constructor TStart.Create(nodeID: Integer);
 var
@@ -207,86 +206,87 @@ begin
   Height := Width;
   FillColor := darkBlue;
   FontSize := fontSize;
+  Description := '';
   Text := NODE_TYPE;
+  TextCells.Items[0].Font.Size := FONT_SIZE;
 end;
 
-constructor TEnd.Create(nodeID: Integer);
+constructor TEnd.Create(nodeID: Integer; newDescription: String);
 begin
   inherited Create;
   ID := nodeID.ToString;
   Width := startEndSize;
   Height := Width;
   FillColor := darkGrey;
-  Text := NODE_TYPE;
-  FontSize := fontSize;
+  Description := newDescription;
+  Text := NODE_TYPE + ': ' + newDescription;
+  TextCells.Items[0].Font.Size := FONT_SIZE;
 end;
 
-constructor TDecision.Create(nodeID: Integer);
+constructor TDecision.Create(nodeID: Integer; newDescription: String);
 begin
   inherited Create;
   ID := nodeID.ToString;
   Width := 100;
   Height := 100;
-  FontSize := fontSize;
+  Description := newDescription;
+  TextCells.Items[0].Font.Size := FONT_SIZE;
 end;
 
-constructor THumanDecision.Create(nodeID: Integer);
+constructor THumanDecision.Create(nodeID: Integer; newDescription: String);
 begin
-  inherited Create(nodeID);
+  inherited Create(nodeID, newDescription);
   FillColor := lightBlue;
-  Text := NODE_TYPE;
+  Text := NODE_TYPE + ': ' + newDescription;
 end;
 
-constructor TMashineDecision.Create(nodeID: Integer);
+constructor TMashineDecision.Create(nodeID: Integer; newDescription: String);
 begin
-  inherited Create(nodeID);
+  inherited Create(nodeID, newDescription);
   FillColor := lightGray;
-  Text := NODE_TYPE;
+  Text := NODE_TYPE + ': ' + newDescription;
 end;
 
-constructor TTask.Create(nodeID: Integer);
+constructor TTask.Create(nodeID: Integer; newDescription: String);
 begin
   inherited Create;
   ID := nodeID.ToString;
   Width := 150;
   Height := 80;
-  FontSize := fontSize;
+  TextCells.Items[0].Font.Size := FONT_SIZE;
+  Description := newDescription;
 end;
 
-constructor THumanTask.Create(nodeID: Integer);
+constructor THumanTask.Create(nodeID: Integer; newDescription: String);
 begin
-  inherited Create(nodeID);
+  inherited Create(nodeID, newDescription);
   FillColor := lightBlue;
-  Text := NODE_TYPE;
+  Text := NODE_TYPE + ': ' + newDescription;
 end;
 
-constructor TMashineTask.Create(nodeID: Integer);
+constructor TMashineTask.Create(nodeID: Integer; newDescription: String);
 begin
-  inherited Create(nodeID);
+  inherited Create(nodeID, newDescription);
   FillColor := lightGray;
-  Text := NODE_TYPE;
+  Text := NODE_TYPE + ': ' + newDescription;
 end;
 
 //////////////////////////////////
 {Destruktoren aller Knoten}
 destructor TStart.Destroy;
 begin
-
 end;
 
 destructor TEnd.Destroy;
 begin
-
 end;
 
 destructor TDecision.Destroy;
 begin
-
 end;
 
 destructor TTask.Destroy;
 begin
-
 end;
 
 ///////////////////////////
