@@ -38,6 +38,9 @@ type
     procedure addNewNode(diagram: TDiagram; node: TTask); overload;
     procedure deleteNode(nodeID: Integer);
     function getHighestNodeID : Integer;
+  private
+    procedure addNewNode(diagramID : String; nodeID : String; nodeType : String;
+                          nodeDescription : String); overload;
   end;
 
   TEdgeDatabase = class(TDatabase)
@@ -153,52 +156,49 @@ begin
   Result := table;
 end;
 
+procedure TNodeDatabase.addNewNode(diagramID : String; nodeID : String;
+                                  nodeType : String; nodeDescription : String);
+var
+  sqlString : String;
+begin
+  sqlString := 'insert into ' + getTable
+                + ' (node_id, wf_type_id, node_type, note_label_de) values ('
+                + nodeID + ',' + diagramID + ',"' + nodeType + '","'
+                + nodeDescription + '")';
+  write(sqlString);
+  query.Close;
+end;
+
 procedure TNodeDatabase.addNewNode(diagram: TDiagram; node: TStart);
 var
   sqlString: String;
 begin
-  sqlString := 'insert into ' + getTable
-                + ' (node_id, wf_type_id, node_type) values ('
-                + node.getID.ToString + ',' + diagram.getID.ToString + ',"'
-                + node.getType + '")';
-  write(sqlString);
-  query.Close;
+//  sqlString := 'insert into ' + getTable
+//                + ' (node_id, wf_type_id, node_type) values ('
+//                + node.getID.ToString + ',' + diagram.getID.ToString + ',"'
+//                + node.getType + '")';
+//  write(sqlString);
+//  query.Close;
+  addNewNode(diagram.getID.ToString, node.getID.ToString, node.getType,
+              node.getDescription);
 end;
 
 procedure TNodeDatabase.addNewNode(diagram: TDiagram; node: TEnd);
-var
-  sqlString: String;
 begin
-  sqlString := 'insert into ' + getTable
-                + ' (node_id, wf_type_id, node_type) values ('
-                + node.getID.ToString + ',' + diagram.getID.ToString + ',"'
-                + node.getType + '")';
-  write(sqlString);
-  query.Close;
+  addNewNode(diagram.getID.ToString, node.getID.ToString, node.getType,
+              node.getDescription);
 end;
 
 procedure TNodeDatabase.addNewNode(diagram: TDiagram; node: TDecision);
-var
-  sqlString: String;
 begin
-  sqlString := 'insert into ' + getTable
-                + ' (node_id, wf_type_id, node_type) values ('
-                + node.getID.ToString + ',' + diagram.getID.ToString + ',"'
-                + node.getType + '")';
-  write(sqlString);
-  query.Close;
+  addNewNode(diagram.getID.ToString, node.getID.ToString, node.getType,
+              node.getDescription);
 end;
 
 procedure TNodeDatabase.addNewNode(diagram: TDiagram; node: TTask);
-var
-  sqlString: String;
 begin
-  sqlString := 'insert into ' + getTable
-                + ' (node_id, wf_type_id, node_type) values ('
-                + node.getID.ToString + ',' + diagram.getID.ToString + ',"'
-                + node.getType + '")';
-  write(sqlString);
-  query.Close;
+  addNewNode(diagram.getID.ToString, node.getID.ToString, node.getType,
+              node.getDescription);
 end;
 
 procedure TNodeDatabase.deleteNode(nodeID: Integer);

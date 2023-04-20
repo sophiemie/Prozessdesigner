@@ -16,11 +16,11 @@ const
   END_DE = 'Ende';
   HD_EN = 'Human Decision';
   HD_DE = 'Menschliche Entscheidung';
-  MD_EN = 'Machine Decision';
+  MD_EN = 'Mashine Decision';
   MD_DE = 'Maschinelle Entscheidung';
   HT_EN = 'Human Task';
   HT_DE = 'Menschliche Aufgabe';
-  MT_EN = 'Machine Task';
+  MT_EN = 'Mashine Task';
   MT_DE = 'Maschinelle Aufgabe';
   PROCESSDESIGNER_EN = 'Processdesigner';
   PROCESSDESIGNER_DE = 'Prozessdesigner';

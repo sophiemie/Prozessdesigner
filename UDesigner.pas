@@ -75,6 +75,7 @@ type
     procedure TMSFNCBloxControl1MouseMove(Sender: TObject; Shift: TShiftState;
       X, Y: Integer);
     procedure FormShow(Sender: TObject);
+    procedure Label4Click(Sender: TObject);
   private
     { Private-Deklarationen }
 
@@ -82,7 +83,7 @@ type
     { Public-Deklarationen }
     var newDiagramName : String;
     var newDiagramDescription : String;
-    var newNodeDescription : String;
+//    var newNodeDescription : String;
   end;
 
 var
@@ -161,12 +162,13 @@ var
   newEnd : TEnd;
   newNodeID : Integer;
 begin
-  newNodeID := NodeDatabase.getHighestNodeID +1;
-  newEnd := TEnd.Create(newNodeID);
-  TMSFNCBloxControl1.Blox.Add(newEnd);
-  NodeDatabase.addNewNode(diagram, newEnd);
   NodeSelectionForm.FillList('TEnd');
   createNodeForm();
+  newNodeID := NodeDatabase.getHighestNodeID +1;
+  newEnd := TEnd.Create(newNodeID,
+                          NodeSelectionForm.getSelectedNodeDescription);
+  TMSFNCBloxControl1.Blox.Add(newEnd);
+  NodeDatabase.addNewNode(diagram, newEnd);
 end;
 
 procedure TDesignerForm.BitBtnHDClick(Sender: TObject);
@@ -175,11 +177,12 @@ var
   newNodeID : Integer;
 begin
   NodeSelectionForm.FillList('THumanDecision');
+  createNodeForm();
   newNodeID := NodeDatabase.getHighestNodeID +1;
-  newHD := THumanDecision.Create(newNodeID);
+  newHD := THumanDecision.Create(newNodeID,
+                                  NodeSelectionForm.getSelectedNodeDescription);
   TMSFNCBloxControl1.Blox.Add(newHD);
   NodeDatabase.addNewNode(diagram, newHD);
-  createNodeForm();
 end;
 
 procedure TDesignerForm.BitBtnHTClick(Sender: TObject);
@@ -187,13 +190,13 @@ var
   newHT : THumanTask;
   newNodeID : Integer;
 begin
+  NodeSelectionForm.FillList('THumanTask');
+  createNodeForm();
   newNodeID := NodeDatabase.getHighestNodeID +1;
-  newHT := THumanTask.Create(newNodeID);
+  newHT := THumanTask.Create(newNodeID,
+                              NodeSelectionForm.getSelectedNodeDescription);
   TMSFNCBloxControl1.Blox.Add(newHT);
   NodeDatabase.addNewNode(diagram, newHT);
-  NodeSelectionForm.FillList('THumanTask');
-//  NodeDatabase.addNewNode(diagram.getID, newNodeID, 'HT');
-  createNodeForm();
 end;
 
 procedure TDesignerForm.BitBtnMDClick(Sender: TObject);
@@ -201,13 +204,13 @@ var
   newMD : TMashineDecision;
   newNodeID : Integer;
 begin
+  NodeSelectionForm.FillList('TMashineDecision');
+  createNodeForm();
   newNodeID := NodeDatabase.getHighestNodeID +1;
-  newMD := TMashineDecision.Create(newNodeID);
+  newMD := TMashineDecision.Create(newNodeID,
+                                  NodeSelectionForm.getSelectedNodeDescription);
   TMSFNCBloxControl1.Blox.Add(newMD);
   NodeDatabase.addNewNode(diagram, newMD);
-  NodeSelectionForm.FillList('TMashineDecision');
-//  NodeDatabase.addNewNode(diagram.getID, newNodeID, 'MD');
-  createNodeForm();
 end;
 
 procedure TDesignerForm.BitBtnMTClick(Sender: TObject);
@@ -215,13 +218,13 @@ var
   newMT : TMashineTask;
   newNodeID : Integer;
 begin
+  NodeSelectionForm.FillList('TMashineTask');
+  createNodeForm();
   newNodeID := NodeDatabase.getHighestNodeID +1;
-  newMT := TMashineTask.Create(newNodeID);
+  newMT := TMashineTask.Create(newNodeID,
+                                  NodeSelectionForm.getSelectedNodeDescription);
   TMSFNCBloxControl1.Blox.Add(newMT);
   NodeDatabase.addNewNode(diagram, newMT);
-  NodeSelectionForm.FillList('TMashineTask');
-//  NodeDatabase.addNewNode(diagram.getID, newNodeID, 'MT');
-  createNodeForm();
 end;
 
 procedure TDesignerForm.BitBtnStartClick(Sender: TObject);
@@ -276,6 +279,11 @@ begin
    begin
 
    end;
+end;
+
+procedure TDesignerForm.Label4Click(Sender: TObject);
+begin
+
 end;
 
 { Event bei der Entfernung einer Komponente im Editor }

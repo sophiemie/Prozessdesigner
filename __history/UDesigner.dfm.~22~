@@ -8271,6 +8271,7 @@ object DesignerForm: TDesignerForm
     FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0}
   OldCreateOrder = False
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object TMSFNCBloxControl1: TTMSFNCBloxControl
@@ -8281,6 +8282,7 @@ object DesignerForm: TDesignerForm
     ParentDoubleBuffered = False
     DoubleBuffered = True
     TabOrder = 0
+    OnMouseMove = TMSFNCBloxControl1MouseMove
     TopRuler.Font.Size = 10.000000000000000000
     TopRuler.Size = 18
     LeftRuler.Font.Size = 10.000000000000000000
@@ -8335,7 +8337,6 @@ object DesignerForm: TDesignerForm
     GroupHandleAppearance.RotCenter.Style = hhCrossedEllipse
     Interaction.ChangeTextWithDoubleClick = False
     OnElementClick = TMSFNCBloxControl1ElementClick
-    OnElementMouseDown = TMSFNCBloxControl1ElementMouseDown
     OnElementRemove = TMSFNCBloxControl1ElementRemove
     object Edit1: TEdit
       Left = 321

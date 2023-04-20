@@ -8406,15 +8406,16 @@ object DesignerForm: TDesignerForm
     object Label4: TLabel
       Left = 144
       Top = 227
-      Width = 89
+      Width = 90
       Height = 18
-      Caption = 'Mashine Task'
+      Caption = 'Machine Task'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -15
       Font.Name = 'Avenir LT Pro 55 Roman'
       Font.Style = []
       ParentFont = False
+      OnClick = Label4Click
     end
     object Label5: TLabel
       Left = 8
@@ -8432,9 +8433,9 @@ object DesignerForm: TDesignerForm
     object Label6: TLabel
       Left = 136
       Top = 363
-      Width = 117
+      Width = 118
       Height = 18
-      Caption = 'Mashine Decision'
+      Caption = 'Machine Decision'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -15
