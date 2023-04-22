@@ -130,6 +130,67 @@ type
     procedure TestGetMethod(_Result: String);
   end;
 
+  [TestFixture]
+  TestTMachineTask = class
+  strict private
+    aMTNode : TMachineTask;
+  public
+    [Setup]
+    procedure Setup;
+    [TearDown]
+    procedure TearDown;
+    [TestCase('Test setze neue Start-ID','43298')]
+    procedure TestSetID(newID : Integer);
+    [Testcase('Test gebe Start-ID','900')]
+    procedure TestGetID(_Result: Integer);
+    [TestCase('Test setze neue Beschreibung','Send PDF')]
+    procedure TestSetDescription(newDescription: String);
+    [TestCase('Test Textfeld nach neuer Beschreibung','Send PDF')]
+    procedure TestSetDescription_Text(newDescription: String);
+    [TestCase('Test gebe Beschreibung','Send Mail')]
+    procedure TestGetDescription(_Result: String);
+    [TestCase('Test gebe Typ','MT')]
+    procedure TestGetType(_Result: String);
+    [TestCase('Test ','MTForm')]
+    procedure TestSetClassName(newClassName: String);
+    [TestCase(' Test ','MTClass')]
+    procedure TestGetClassName(_Result: String);
+    [TestCase('Test ','MTNewMethod')]
+    procedure TestSetMethod(newMethodName: String);
+    [TestCase(' Test ','MTMethod')]
+    procedure TestGetMethod(_Result: String);
+  end;
+
+[TestFixture]
+  TestTMachineDecision = class
+  strict private
+    aMDNode : TMachineDecision;
+  public
+    [Setup]
+    procedure Setup;
+    [TearDown]
+    procedure TearDown;
+    [TestCase('Test setze neue Start-ID','-100')]
+    procedure TestSetID(newID : Integer);
+    [Testcase('Test gebe Start-ID','-45')]
+    procedure TestGetID(_Result: Integer);
+    [TestCase('Test setze neue Beschreibung','')]
+    procedure TestSetDescription(newDescription: String);
+    [TestCase('Test Textfeld nach neuer Beschreibung','')]
+    procedure TestSetDescription_Text(newDescription: String);
+    [TestCase('Test gebe Beschreibung','Anmeldung')]
+    procedure TestGetDescription(_Result: String);
+    [TestCase('Test gebe Typ','MD')]
+    procedure TestGetType(_Result: String);
+    [TestCase('Test ','MDForm')]
+    procedure TestSetClassName(newClassName: String);
+    [TestCase(' Test ','MDClass')]
+    procedure TestGetClassName(_Result: String);
+    [TestCase('Test ','MDNewMethod')]
+    procedure TestSetMethod(newMethodName: String);
+    [TestCase(' Test ','MDMethod')]
+    procedure TestGetMethod(_Result: String);
+  end;
 
 implementation
 
@@ -530,6 +591,208 @@ var
   R : String;
 begin
   R := aHDNode.getMethodName;
+  Assert.AreEqual(R, _Result);
+end;
+
+
+
+ ///////////////////// TMachineTask ////////////////////////
+
+procedure TestTMachineTask.Setup;
+begin
+  aMTNode := TMachineTask.Create(900,'Send Mail');
+  aMTNode.setClassName('MTClass');
+  aMTNode.setMethodName('MTMethod');
+end;
+
+procedure TestTMachineTask.TearDown;
+begin
+end;
+
+{ Es wird die neue ID erwartet, die gesetzt wurde }
+procedure TestTMachineTask.TestSetID(newID : Integer);
+var
+  R : Integer;
+begin
+  aMTNode.setID(newID);
+  R := aMTNode.getID;
+  Assert.AreEqual(R,newID);
+end;
+
+{ Es wird die ID erwartet, die bei der Initialisierung uebergeben wurde }
+procedure TestTMachineTask.TestGetID(_Result: Integer);
+var
+  R : Integer;
+begin
+  R := aMTNode.getID;
+  Assert.AreEqual(R,_Result);
+end;
+
+procedure TestTMachineTask.TestSetDescription(newDescription: String);
+var
+  R : String;
+begin
+  aMTNode.setDescription(newDescription);
+  R := aMTNode.getDescription;
+  Assert.AreEqual(R, newDescription);
+end;
+
+procedure TestTMachineTask.TestSetDescription_Text(newDescription: String);
+var
+  R : String;
+begin
+  aMTNode.setDescription(newDescription);
+  R := aMTNode.getType + ': ' + newDescription;
+  Assert.AreEqual(R, aMTNode.Text);
+end;
+
+procedure TestTMachineTask.TestGetDescription(_Result: String);
+var
+  R : String;
+begin
+  R := aMTNode.getDescription;
+  Assert.AreEqual(R, _Result);
+end;
+
+procedure TestTMachineTask.TestGetType(_Result: String);
+var
+  R : String;
+begin
+  R := aMTNode.getType;
+  Assert.AreEqual(R, _Result);
+end;
+
+procedure TestTMachineTask.TestSetClassName(newClassName: String);
+var
+  R : String;
+begin
+  aMTNode.setClassName(newClassName);
+  R := aMTNode.getClassName;
+  Assert.AreEqual(R, newClassName);
+end;
+
+procedure TestTMachineTask.TestGetClassName(_Result: String);
+var
+  R : String;
+begin
+  R := aMTNode.getClassName;
+  Assert.AreEqual(R, _Result);
+end;
+
+procedure TestTMachineTask.TestSetMethod(newMethodName: String);
+var
+  R : String;
+begin
+  aMTNode.setMethodName(newMethodName);
+  R := aMTNode.getMethodName;
+  Assert.AreEqual(R, newMethodName);
+end;
+
+procedure TestTMachineTask.TestGetMethod(_Result: String);
+var
+  R : String;
+begin
+  R := aMTNode.getMethodName;
+  Assert.AreEqual(R, _Result);
+end;
+
+///////////////////////////// TMachineDecision ////////////////////////////
+
+procedure TestTMachineDecision.Setup;
+begin
+  aMDNode := TMachineDecision.Create(-45,'Anmeldung');
+  aMDNode.setClassName('MDClass');
+  aMDNode.setMethodName('MDMethod');
+end;
+
+procedure TestTMachineDecision.TearDown;
+begin
+end;
+
+{ Es wird die neue ID erwartet, die gesetzt wurde }
+procedure TestTMachineDecision.TestSetID(newID : Integer);
+var
+  R : Integer;
+begin
+  aMDNode.setID(newID);
+  R := aMDNode.getID;
+  Assert.AreEqual(R,newID);
+end;
+
+{ Es wird die ID erwartet, die bei der Initialisierung uebergeben wurde }
+procedure TestTMachineDecision.TestGetID(_Result: Integer);
+var
+  R : Integer;
+begin
+  R := aMDNode.getID;
+  Assert.AreEqual(R,_Result);
+end;
+
+procedure TestTMachineDecision.TestSetDescription(newDescription: String);
+var
+  R : String;
+begin
+  aMDNode.setDescription(newDescription);
+  R := aMDNode.getDescription;
+  Assert.AreEqual(R, newDescription);
+end;
+
+procedure TestTMachineDecision.TestSetDescription_Text(newDescription: String);
+var
+  R : String;
+begin
+  aMDNode.setDescription(newDescription);
+  R := aMDNode.getType + ': ' + newDescription;
+  Assert.AreEqual(R, aMDNode.Text);
+end;
+
+procedure TestTMachineDecision.TestGetDescription(_Result: String);
+var
+  R : String;
+begin
+  R := aMDNode.getDescription;
+  Assert.AreEqual(R, _Result);
+end;
+
+procedure TestTMachineDecision.TestGetType(_Result: String);
+var
+  R : String;
+begin
+  R := aMDNode.getType;
+  Assert.AreEqual(R, _Result);
+end;
+
+procedure TestTMachineDecision.TestSetClassName(newClassName: String);
+var
+  R : String;
+begin
+  aMDNode.setClassName(newClassName);
+  R := aMDNode.getClassName;
+  Assert.AreEqual(R, newClassName);
+end;
+
+procedure TestTMachineDecision.TestGetClassName(_Result: String);
+var
+  R : String;
+begin
+  R := aMDNode.getClassName;
+  Assert.AreEqual(R, _Result);
+end;
+
+procedure TestTMachineDecision.TestSetMethod(newMethodName: String);
+var
+  R : String;
+begin
+  aMDNode.setMethodName(newMethodName);
+  R := aMDNode.getMethodName;
+  Assert.AreEqual(R, newMethodName);
+end;
+
+procedure TestTMachineDecision.TestGetMethod(_Result: String);
+var
+  R : String;
+begin
+  R := aMDNode.getMethodName;
   Assert.AreEqual(R, _Result);
 end;
 
