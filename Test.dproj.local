@@ -11,5 +11,8 @@
     <Transaction>2023.04.22 12:13:17.404,C:\Users\som\Documents\Embarcadero\Studio\Projekte\UNodeTest.pas=</Transaction>
     <Transaction>2023.04.22 12:13:24.583,C:\Prozessdesigner\Prozessdesigner\UNodeTest.pas=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
     <Transaction>2023.04.22 12:13:51.440,=C:\Prozessdesigner\Prozessdesigner\UNodes.pas</Transaction>
-  </Transactions>
+  </Transactions>  <ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="UNodes.pas"/>
+    <File Path="UNodeTest.pas"/>
+  </ProjectSortOrder>
 </BorlandProject>
