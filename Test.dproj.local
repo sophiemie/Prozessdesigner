@@ -1,18 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.583,C:\Prozessdesigner\Prozessdesigner\Unit1.pas=C:\Prozessdesigner\Prozessdesigner\UNodeTest.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.404,C:\Users\som\Documents\Embarcadero\Studio\Projekte\UNodeTest.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.650,C:\Users\som\Documents\Embarcadero\Studio\Projekte\Project1.dproj=C:\Users\som\Documents\Embarcadero\Studio\Projekte\Test.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.835,C:\Users\som\Documents\Embarcadero\Studio\Projekte\Project1.dproj=C:\Prozessdesigner\Prozessdesigner\Test.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.679,C:\Users\som\Documents\Embarcadero\Studio\Projekte\Test.dproj=C:\Users\som\Documents\Embarcadero\Studio\Projekte\Project1.dproj</Transaction>
     <Transaction>1899.12.30 00:00:00.000.432,=C:\Users\som\Documents\Embarcadero\Studio\Projekte\Unit1.pas</Transaction>
-    <Transaction>2023.04.22 12:04:24.013,=C:\Users\som\Documents\Embarcadero\Studio\Projekte\Unit1.pas</Transaction>
-    <Transaction>2023.04.22 12:10:06.999,C:\Users\som\Documents\Embarcadero\Studio\Projekte\UNodeTest.pas=C:\Users\som\Documents\Embarcadero\Studio\Projekte\Unit1.pas</Transaction>
-    <Transaction>2023.04.22 12:10:40.650,C:\Users\som\Documents\Embarcadero\Studio\Projekte\Test.dproj=C:\Users\som\Documents\Embarcadero\Studio\Projekte\Project1.dproj</Transaction>
-    <Transaction>2023.04.22 12:10:40.679,C:\Users\som\Documents\Embarcadero\Studio\Projekte\Project1.dproj=C:\Users\som\Documents\Embarcadero\Studio\Projekte\Test.dproj</Transaction>
-    <Transaction>2023.04.22 12:11:07.835,C:\Prozessdesigner\Prozessdesigner\Test.dproj=C:\Users\som\Documents\Embarcadero\Studio\Projekte\Project1.dproj</Transaction>
-    <Transaction>2023.04.22 12:12:59.510,=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
-    <Transaction>2023.04.22 12:13:17.404,C:\Users\som\Documents\Embarcadero\Studio\Projekte\UNodeTest.pas=</Transaction>
-    <Transaction>2023.04.22 12:13:24.583,C:\Prozessdesigner\Prozessdesigner\UNodeTest.pas=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
-    <Transaction>2023.04.22 12:13:51.440,=C:\Prozessdesigner\Prozessdesigner\UNodes.pas</Transaction>
-  </Transactions>  <ProjectSortOrder AutoSort="0" SortType="0">
+    <Transaction>1899.12.30 00:00:00.000.013,=C:\Users\som\Documents\Embarcadero\Studio\Projekte\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.999,C:\Users\som\Documents\Embarcadero\Studio\Projekte\Unit1.pas=C:\Users\som\Documents\Embarcadero\Studio\Projekte\UNodeTest.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.440,=C:\Prozessdesigner\Prozessdesigner\UNodes.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.510,=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
+    <Transaction>2023.04.22 20:03:35.038,=C:\Prozessdesigner\Prozessdesigner\UEdge.pas</Transaction>
+  </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="UNodes.pas"/>
     <File Path="UNodeTest.pas"/>
+    <File Path="UEdge.pas"/>
   </ProjectSortOrder>
 </BorlandProject>

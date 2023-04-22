@@ -26,7 +26,7 @@ uses  { Verwendete Bibliotheken}
 
 type
   { Enum fuer verschiedene Entscheidungsformen }
-  TDecisionValue = (noDecision = 0, Approved = 1, Rejected = 2, Back = 3);
+  TDecisionValue = (noDecision = 0, Approved, Rejected, Back);
   { Klasse fuer die Kanten }
   TEdge = class(TTMSFNCBloxDFDDataFlowLine, IWorkflowComponent)
   public
@@ -42,8 +42,8 @@ type
     function getNodeID : Integer;
     procedure setNextNodeID(newNextNodeID : Integer);
     function getNextNodeID : Integer;
-    procedure setDecisionVal(newDecisionVal : TDecisionValue);
-    function getDecisionVal : TDecisionValue;
+    procedure setDecisionVal(newDecisionVal : Integer);
+    function getDecisionVal : Integer;
   private
     var nodeID : Integer; { ID des Knotens wo Kante herkommt }
     var nextNodeID : Integer; { ID des darauffolgenden Knotens }
@@ -83,12 +83,12 @@ begin
   Result := nextNodeID;
 end;
 
-procedure TEdge.setDecisionVal(newDecisionVal : TDecisionValue);
+procedure TEdge.setDecisionVal(newDecisionVal : Integer);
 begin
   decisionVal := newDecisionVal;
 end;
 
-function TEdge.getDecisionVal : TDecisionValue;
+function TEdge.getDecisionVal : Integer;
 begin
   Result := decisionVal;
 end;

@@ -26,7 +26,7 @@ uses  { Verwendete Bibliotheken}
 
 type
   { Enum fuer verschiedene Entscheidungsformen }
-  TDecisionValue = (noDecision = 0, Approved = 1, Rejected = 2, Back = 3);
+  TDecisionValue = (noDecision = 0, Approved, Rejected, Back);
   { Klasse fuer die Kanten }
   TEdge = class(TTMSFNCBloxDFDDataFlowLine, IWorkflowComponent)
   public
