@@ -1,0 +1,114 @@
+unit UEdgeTest;
+
+interface
+
+uses
+  DUnitX.TestFramework, UEdge;
+
+type
+  [TestFixture]
+  TestTEdge = class
+  strict private
+    aEdge : TEdge;
+  public
+    [Setup]
+    procedure Setup;
+    [TearDown]
+    procedure TearDown;
+    [TestCase('Test neue ID setzen','100')]
+    procedure TestSetID(newID: Integer);
+    [TestCase('Test aktuelle ID zurueckgeben','6')]
+    procedure TestGetID(_Result: Integer);
+    procedure TestSetNodeID(newNodeID: Integer);
+    procedure TestGetNodeID(_Result: Integer);
+    procedure TestSetNextNodeID(nextNodeID: Integer);
+    procedure TestGetNextNodeID(_Result: Integer);
+    procedure TestSetDecisionVal(newDecisionVal: TDecisionValue);
+    procedure TestGetDecisionVal(_Result: TDecisionValue);
+  end;
+
+//    procedure setNodeID(newNodeID : Integer);
+//    function getNodeID : Integer;
+//    procedure setNextNodeID(newNextNodeID : Integer);
+//    function getNextNodeID : Integer;
+//    procedure setDecisionVal(newDecisionVal : TDecisionValue);
+//    function getDecisionVal : TDecisionValue;
+
+implementation
+
+procedure TestTEdge.Setup;
+begin
+  aEdge := TEdge.Create(6,8);
+  aEdge.setNextNodeID(900);
+  aEdge.setDecisionVal(NoDecision);
+end;
+
+procedure TestTEdge.TearDown;
+begin
+end;
+
+procedure TestTEdge.TestSetID(newID: Integer);
+var
+  R : Integer;
+begin
+  aEdge.setID(newID);
+  R := aEdge.getID;
+  Assert.AreEqual(R,newID);
+end;
+
+procedure TestTEdge.TestGetID(_Result: Integer);
+var
+  R : Integer;
+begin
+  R := aEdge.getID;
+  Assert.AreEqual(R,_Result);
+end;
+
+
+procedure TestTEdge.TestSetNodeID(newNodeID: Integer);
+var
+  R : Integer;
+begin
+
+end;
+
+procedure TestTEdge.TestGetNodeID(_Result: Integer);
+var
+  R : Integer;
+begin
+
+end;
+
+procedure TestTEdge.TestSetNextNodeID(nextNodeID: Integer);
+var
+  R : Integer;
+begin
+
+end;
+
+procedure TestTEdge.TestGetNextNodeID(_Result: Integer);
+var
+  R : Integer;
+begin
+
+end;
+
+procedure TestTEdge.TestSetDecisionVal(newDecisionVal: TDecisionValue);
+var
+  R : Integer;
+begin
+
+end;
+
+procedure TestTEdge.TestGetDecisionVal(_Result: TDecisionValue);
+var
+  R : Integer;
+begin
+
+end;
+
+
+initialization
+  TDUnitX.RegisterTestFixture(TestTEdge);
+
+end.

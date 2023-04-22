@@ -1,0 +1,31 @@
+﻿unit Unit1;
+
+interface
+
+uses
+  DUnitX.TestFramework;
+
+type
+  [TestFixture]
+  UEdgeTest = class
+  public
+    [Setup]
+    procedure Setup;
+    [TearDown]
+    procedure TearDown;
+  end;
+
+implementation
+
+procedure UEdgeTest.Setup;
+begin
+end;
+
+procedure UEdgeTest.TearDown;
+begin
+end;
+
+initialization
+  TDUnitX.RegisterTestFixture(UEdgeTest);
+
+end.
