@@ -16,7 +16,11 @@ uses
   UNodeTest in 'UNodeTest.pas',
   UNodes in 'UNodes.pas',
   UEdge in 'UEdge.pas',
-  UEdgeTest in 'UEdgeTest.pas';
+  UEdgeTest in 'UEdgeTest.pas',
+  UDatabase in 'UDatabase.pas',
+  UDatabaseTest in 'UDatabaseTest.pas',
+  UDiagram in 'UDiagram.pas',
+  UDiagramTest in 'UDiagramTest.pas';
 
 {$IFNDEF TESTINSIGHT}
 var
