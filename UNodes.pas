@@ -319,6 +319,7 @@ end;
 procedure TStart.setDescription(newDescription : String);
 begin
   Description := newDescription;
+  Text := NODE_TYPE + ': ' + newDescription;
 end;
 function TStart.getDescription : String;
 begin
@@ -336,6 +337,7 @@ end;
 procedure TEnd.setDescription(newDescription : String);
 begin
   Description := newDescription;
+  Text := NODE_TYPE + ': ' + newDescription;
 end;
 function TEnd.getDescription : String;
 begin

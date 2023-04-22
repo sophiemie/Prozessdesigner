@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<test-results name="C:\Prozessdesigner\Prozessdesigner\Win32\Debug\Test.exe" total="4" errors="0" failures="0" ignored="0" inconclusive="0" not-run="0" skipped="0" invalid="0" date="2023-04-22" time="0.004">
+  <culture-info current-culture="en" current-uiculture="en" />
+  <test-suite type="Assembly" name="Test.exe" executed="true" result="Success" success="True" time="0.004" asserts="0">
+    <results>
+        <test-suite type="Namespace" name="UNodeTest" executed="true" result="Success" success="True" time="0.003" asserts="0" >
+          <results>
+              <test-suite type="Fixture" name="TestTStart" executed="True" result="Success" success="True" time="0.003" >
+                <results>
+                  <test-case name="TestSetID.Test setze neue Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestGetID.Test gebe Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSetDescription.Test setze neue Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSetDescription_Text.Test Textfeld nach neuer Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                </results>
+              </test-suite>
+          </results>
+        </test-suite>
+    </results>
+  </test-suite>
+</test-results>
