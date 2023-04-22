@@ -14,7 +14,9 @@ uses
   {$ENDIF }
   DUnitX.TestFramework,
   UNodeTest in 'UNodeTest.pas',
-  UNodes in 'UNodes.pas';
+  UNodes in 'UNodes.pas',
+  UEdge in 'UEdge.pas',
+  UEdgeTest in 'UEdgeTest.pas';
 
 {$IFNDEF TESTINSIGHT}
 var

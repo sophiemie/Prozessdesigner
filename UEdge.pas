@@ -25,8 +25,9 @@ uses  { Verwendete Bibliotheken}
   VCL.TMSFNCCustomScrollControl, System.Classes, UNodes; // Dort ist das Interface
 
 type
+  { Enum fuer verschiedene Entscheidungsformen }
+  TDecisionValue = (noDecision = 0, Approved = 1, Rejected = 2, Back = 3);
   { Klasse fuer die Kanten }
-  //TEdge = class(TTMSFNCBloxLine, IWorkflowComponent)
   TEdge = class(TTMSFNCBloxDFDDataFlowLine, IWorkflowComponent)
   public
     constructor Create(edgeID : Integer; newNodeID: Integer);
@@ -41,20 +42,13 @@ type
     function getNodeID : Integer;
     procedure setNextNodeID(newNextNodeID : Integer);
     function getNextNodeID : Integer;
-    procedure setDecisionVal(newDecisionVal : Integer);
-    function getDecisionVal : Integer;
+    procedure setDecisionVal(newDecisionVal : TDecisionValue);
+    function getDecisionVal : TDecisionValue;
   private
     var nodeID : Integer; { ID des Knotens wo Kante herkommt }
     var nextNodeID : Integer; { ID des darauffolgenden Knotens }
-    var decisionVal : Integer; { Entscheidungswert }
     { Verschiedene Arten von Entscheidungswerten}
-    const NO_DECISION = 0;
-    const DEC2 = 1;
-    const DEC7 = 3;
-    const DEC3 = 10;
-    const DEC4 = 20;
-    const DEC5 = 30;
-    const DEC6 = 40;
+    var decisionVal : TDecisionValue;
   end;
 
 implementation
@@ -89,12 +83,12 @@ begin
   Result := nextNodeID;
 end;
 
-procedure TEdge.setDecisionVal(newDecisionVal : Integer);
+procedure TEdge.setDecisionVal(newDecisionVal : TDecisionValue);
 begin
   decisionVal := newDecisionVal;
 end;
 
-function TEdge.getDecisionVal : Integer;
+function TEdge.getDecisionVal : TDecisionValue;
 begin
   Result := decisionVal;
 end;
