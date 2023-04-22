@@ -57,10 +57,6 @@ type
     Panel5: TPanel;
     Button1: TButton;
     BitBtnEdge: TBitBtn;
-    MainMenu1: TMainMenu;
-    Datei1: TMenuItem;
-    Datei2: TMenuItem;
-    Load1: TMenuItem;
     { Events }
     procedure FormCreate(Sender: TObject);
     procedure BitBtnStartClick(Sender: TObject);
@@ -79,7 +75,7 @@ type
     procedure TMSFNCBloxControl1MouseMove(Sender: TObject; Shift: TShiftState;
       X, Y: Integer);
     procedure FormShow(Sender: TObject);
-    procedure Load1Click(Sender: TObject);
+    procedure Label4Click(Sender: TObject);
   private
     { Private-Deklarationen }
 
@@ -285,7 +281,7 @@ begin
    end;
 end;
 
-procedure TDesignerForm.Load1Click(Sender: TObject);
+procedure TDesignerForm.Label4Click(Sender: TObject);
 begin
 
 end;

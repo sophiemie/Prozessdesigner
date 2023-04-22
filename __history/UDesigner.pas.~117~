@@ -57,10 +57,6 @@ type
     Panel5: TPanel;
     Button1: TButton;
     BitBtnEdge: TBitBtn;
-    MainMenu1: TMainMenu;
-    Datei1: TMenuItem;
-    Datei2: TMenuItem;
-    Load1: TMenuItem;
     { Events }
     procedure FormCreate(Sender: TObject);
     procedure BitBtnStartClick(Sender: TObject);
@@ -79,8 +75,7 @@ type
     procedure TMSFNCBloxControl1MouseMove(Sender: TObject; Shift: TShiftState;
       X, Y: Integer);
     procedure FormShow(Sender: TObject);
-    procedure Load1Click(Sender: TObject);
-    procedure Datei2Click(Sender: TObject);
+    procedure Label4Click(Sender: TObject);
   private
     { Private-Deklarationen }
 
@@ -161,11 +156,6 @@ begin
   NodeSelectionForm.ShowModal;
 end;
 
-procedure TDesignerForm.Datei2Click(Sender: TObject);
-begin
-  TMSFNCBloxControl1.Save;
-end;
-
 ///////////////////////// Toolbar-Funktionen ////////////////////////////////
 procedure TDesignerForm.BitBtnEndClick(Sender: TObject);
 var
@@ -211,13 +201,13 @@ end;
 
 procedure TDesignerForm.BitBtnMDClick(Sender: TObject);
 var
-  newMD : TMashineDecision;
+  newMD : TMachineDecision;
   newNodeID : Integer;
 begin
   NodeSelectionForm.FillList('TMashineDecision');
   createNodeForm();
   newNodeID := NodeDatabase.getHighestNodeID +1;
-  newMD := TMashineDecision.Create(newNodeID,
+  newMD := TMachineDecision.Create(newNodeID,
                                   NodeSelectionForm.getSelectedNodeDescription);
   TMSFNCBloxControl1.Blox.Add(newMD);
   NodeDatabase.addNewNode(diagram, newMD);
@@ -291,7 +281,7 @@ begin
    end;
 end;
 
-procedure TDesignerForm.Load1Click(Sender: TObject);
+procedure TDesignerForm.Label4Click(Sender: TObject);
 begin
 
 end;

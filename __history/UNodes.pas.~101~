@@ -3,18 +3,16 @@ unit UNodes;
 interface
 
 uses
-  VCL.TMSFNCTypes, VCL.TMSFNCUtils,
   VCL.TMSFNCGraphics, VCL.TMSFNCGraphicsTypes, VCL.TMSFNCBloxCoreTypes,
   VCL.TMSFNCBloxCoreUtils, VCL.TMSFNCBloxCoreLine, VCL.TMSFNCBloxCorePolygon,
-  VCL.TMSFNCBloxCoreTextCell, VCL.TMSFNCBloxCoreLineArrow,
-  VCL.TMSFNCBloxCoreLinkPoint, VCL.TMSFNCBloxCoreHandle,
+  VCL.TMSFNCBloxCoreTextCell, VCL.TMSFNCBloxCoreLineArrow, VCL.TMSFNCUtils,
+  VCL.TMSFNCBloxCoreLinkPoint, VCL.TMSFNCBloxCoreHandle, System.Classes,
   VCL.TMSFNCBloxCoreGroup, VCL.TMSFNCBloxUISnapGrid, VCL.TMSFNCBloxCoreBlock,
-  VCL.TMSFNCBloxCoreElement, VCL.TMSFNCBloxUIRegistration,
+  VCL.TMSFNCBloxCoreElement, VCL.TMSFNCBloxUIRegistration, VCL.TMSFNCTypes,
   VCL.TMSFNCBloxUIRenderer, VCL.TMSFNCBloxSelector,  VCL.TMSFNCStyles,
-  VCL.TMSFNCBloxShapesUML,
-  Vcl.Graphics, Vcl.Menus, Vcl.StdActnMenus,
+  VCL.TMSFNCBloxShapesUML, Vcl.Graphics, Vcl.Menus, Vcl.StdActnMenus,
   VCL.TMSFNCCustomControl, VCL.TMSFNCCustomScrollControl, VCL.TMSFNCBloxControl,
-  System.SysUtils, System.Variants, System.Classes, UZMTStandard;
+  System.SysUtils, System.Variants, UZMTStandard;
 var
   popUp :  TStandardMenuPopup;
   // https://stackoverflow.com/questions/18544127/creating-a-popup-menu-at-runtime
@@ -100,8 +98,7 @@ type
     procedure setDescription(newDescription : String);
     function getDescription : String;
     function getID : Integer;
-    function getType : String; virtual; //abstract; // soll erst in Childklasse
-    // beschrieben werden
+    function getType : String; virtual;
     procedure setClassName(newClassName: String);
     function getClassName : String;
     procedure setMethodName(newMethodName : String);
@@ -119,7 +116,7 @@ type
 
   THumanDecision = class(TDecision)
     constructor Create(nodeID: Integer; newDescription: String);
-    function getType : String;
+    function getType : String; override;
   private
     const
     NODE_TYPE = 'HD';
@@ -127,7 +124,7 @@ type
 
   TMashineDecision = class(TDecision)
     constructor Create(nodeID: Integer; newDescription: String);
-    function getType : String;
+    function getType : String; override;
   private
     const
     NODE_TYPE = 'MD';
@@ -141,7 +138,7 @@ type
     function getID : Integer;
     procedure setDescription(newDescription : String);
     function getDescription : String;
-    function getType : String; virtual; //abstract;
+    function getType : String; virtual;
     procedure setClassName(newClassName: String);
     function getClassName : String;
     procedure setMethodName(newMethodName : String);
@@ -175,7 +172,6 @@ type
  /////////////////////////////////////////////////////////////////////
 implementation
 
-/////////////////////////////
 procedure TTask.setID(newID : Integer);
 begin
   ID := newID.ToString();
@@ -277,22 +273,18 @@ end;
 {Destruktoren aller Knoten}
 destructor TStart.Destroy;
 begin
-
 end;
 
 destructor TEnd.Destroy;
 begin
-
 end;
 
 destructor TDecision.Destroy;
 begin
-
 end;
 
 destructor TTask.Destroy;
 begin
-
 end;
 
 ///////////////////////////
@@ -325,6 +317,7 @@ end;
 procedure TStart.setDescription(newDescription : String);
 begin
   Description := newDescription;
+  Text := NODE_TYPE + ': ' + newDescription;
 end;
 function TStart.getDescription : String;
 begin
@@ -342,6 +335,7 @@ end;
 procedure TEnd.setDescription(newDescription : String);
 begin
   Description := newDescription;
+  Text := NODE_TYPE + ': ' + newDescription;
 end;
 function TEnd.getDescription : String;
 begin

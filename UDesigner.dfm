@@ -29778,7 +29778,6 @@ object DesignerForm: TDesignerForm
       'User_Name=dbapp'
       'Password=Yv9i9OqHC8TRlCbE'
       'DriverID=MySQL')
-    Connected = True
     Left = 144
     Top = 256
   end
