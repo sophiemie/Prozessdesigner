@@ -1,17 +1,18 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<test-results name="C:\Prozessdesigner\Prozessdesigner\Win32\Debug\Test.exe" total="60" errors="0" failures="0" ignored="0" inconclusive="0" not-run="0" skipped="0" invalid="0" date="2023-04-22" time="0.048">
+<test-results name="C:\Prozessdesigner\Prozessdesigner\Win32\Debug\Test.exe" total="65" errors="0" failures="0" ignored="0" inconclusive="0" not-run="0" skipped="0" invalid="0" date="2023-04-22" time="0.025">
   <culture-info current-culture="en" current-uiculture="en" />
-  <test-suite type="Assembly" name="Test.exe" executed="true" result="Success" success="True" time="0.048" asserts="0">
+  <test-suite type="Assembly" name="Test.exe" executed="true" result="Success" success="True" time="0.025" asserts="0">
     <results>
-        <test-suite type="Namespace" name="UNodeTest" executed="true" result="Success" success="True" time="0.048" asserts="0" >
+        <test-suite type="Namespace" name="UNodeTest" executed="true" result="Success" success="True" time="0.025" asserts="0" >
           <results>
-              <test-suite type="Fixture" name="TestTHumanTask" executed="True" result="Success" success="True" time="0.048" >
+              <test-suite type="Fixture" name="TestTMachineTask" executed="True" result="Success" success="True" time="0.025" >
                 <results>
                   <test-case name="TestSetID.Test setze neue Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestGetID.Test gebe Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestSetDescription.Test setze neue Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestSetDescription_Text.Test Textfeld nach neuer Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestGetDescription.Test gebe Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestGetDescription_Text.Test gebe Textfeld Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestGetType.Test gebe Typ" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestSetClassName.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestGetClassName. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
@@ -21,7 +22,52 @@
               </test-suite>
           </results>
         </test-suite>
-        <test-suite type="Fixture" name="TestTMachineTask" executed="True" result="Success" success="True" time="0.044" >
+        <test-suite type="Fixture" name="TestTMachineDecision" executed="True" result="Success" success="True" time="0.020" >
+          <results>
+            <test-case name="TestSetID.Test setze neue Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetID.Test gebe Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestSetDescription.Test setze neue Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestSetDescription_Text.Test Textfeld nach neuer Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetDescription.Test gebe Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetDescription_Text.Test gebe Textfeld Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetType.Test gebe Typ" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestSetClassName.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetClassName. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestSetMethod.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetMethod. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
+          </results>
+        </test-suite>
+        <test-suite type="Fixture" name="TestTHumanDecision" executed="True" result="Success" success="True" time="0.017" >
+          <results>
+            <test-case name="TestSetID.Test setze neue Start-ID" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+            <test-case name="TestGetID.Test gebe Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestSetDescription.Test setze neue Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestSetDescription_Text.Test Textfeld nach neuer Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetDescription.Test gebe Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetDescription_Text.Test gebe Textfeld Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetType.Test gebe Typ" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestSetClassName.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetClassName. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestSetMethod.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetMethod. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
+          </results>
+        </test-suite>
+        <test-suite type="Fixture" name="TestTHumanTask" executed="True" result="Success" success="True" time="0.012" >
+          <results>
+            <test-case name="TestSetID.Test setze neue Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetID.Test gebe Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestSetDescription.Test setze neue Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestSetDescription_Text.Test Textfeld nach neuer Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetDescription.Test gebe Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetDescription_Text.Test gebe Textfeld Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetType.Test gebe Typ" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestSetClassName.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetClassName. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestSetMethod.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetMethod. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
+          </results>
+        </test-suite>
+        <test-suite type="Fixture" name="TestTStart" executed="True" result="Success" success="True" time="0.007" >
           <results>
             <test-case name="TestSetID.Test setze neue Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
             <test-case name="TestGetID.Test gebe Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
@@ -35,55 +81,14 @@
             <test-case name="TestGetMethod. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
           </results>
         </test-suite>
-        <test-suite type="Fixture" name="TestTMachineDecision" executed="True" result="Success" success="True" time="0.041" >
+        <test-suite type="Fixture" name="TestTEnd" executed="True" result="Success" success="True" time="0.003" >
           <results>
             <test-case name="TestSetID.Test setze neue Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
             <test-case name="TestGetID.Test gebe Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
             <test-case name="TestSetDescription.Test setze neue Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
             <test-case name="TestSetDescription_Text.Test Textfeld nach neuer Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
             <test-case name="TestGetDescription.Test gebe Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetType.Test gebe Typ" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestSetClassName.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetClassName. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestSetMethod.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetMethod. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
-          </results>
-        </test-suite>
-        <test-suite type="Fixture" name="TestTHumanDecision" executed="True" result="Success" success="True" time="0.037" >
-          <results>
-            <test-case name="TestSetID.Test setze neue Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetID.Test gebe Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestSetDescription.Test setze neue Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestSetDescription_Text.Test Textfeld nach neuer Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetDescription.Test gebe Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetType.Test gebe Typ" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestSetClassName.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetClassName. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestSetMethod.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetMethod. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
-          </results>
-        </test-suite>
-        <test-suite type="Fixture" name="TestTStart" executed="True" result="Success" success="True" time="0.033" >
-          <results>
-            <test-case name="TestSetID.Test setze neue Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetID.Test gebe Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestSetDescription.Test setze neue Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestSetDescription_Text.Test Textfeld nach neuer Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetDescription.Test gebe Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetType.Test gebe Typ" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestSetClassName.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetClassName. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestSetMethod.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetMethod. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
-          </results>
-        </test-suite>
-        <test-suite type="Fixture" name="TestTEnd" executed="True" result="Success" success="True" time="0.029" >
-          <results>
-            <test-case name="TestSetID.Test setze neue Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetID.Test gebe Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestSetDescription.Test setze neue Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestSetDescription_Text.Test Textfeld nach neuer Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetDescription.Test gebe Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetDescription_Text.Test gebe Textfeld Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
             <test-case name="TestGetType.Test gebe Typ" executed="True" result="Success" success="True" time="0.000" asserts="0" />
             <test-case name="TestSetClassName.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
             <test-case name="TestGetClassName. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />

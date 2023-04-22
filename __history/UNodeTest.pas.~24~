@@ -56,8 +56,6 @@ type
     procedure TestSetDescription_Text(newDescription: String);
     [TestCase('Test gebe Beschreibung','Abbruch')]
     procedure TestGetDescription(_Result: String);
-    [TestCase('Test gebe Textfeld Beschreibung','E: Abbruch')]
-    procedure TestGetDescription_Text(_Result: String);
     [TestCase('Test gebe Typ','E')]
     procedure TestGetType(_Result: String);
     [TestCase('Test ','EndForm')]
@@ -89,8 +87,6 @@ type
     procedure TestSetDescription_Text(newDescription: String);
     [TestCase('Test gebe Beschreibung','Reiseantrag')]
     procedure TestGetDescription(_Result: String);
-    [TestCase('Test gebe Textfeld Beschreibung','HT: Reiseantrag')]
-    procedure TestGetDescription_Text(_Result: String);
     [TestCase('Test gebe Typ','HT')]
     procedure TestGetType(_Result: String);
     [TestCase('Test ','HTForm')]
@@ -122,8 +118,6 @@ type
     procedure TestSetDescription_Text(newDescription: String);
     [TestCase('Test gebe Beschreibung','Leader')]
     procedure TestGetDescription(_Result: String);
-    [TestCase('Test gebe Textfeld Beschreibung','HD: Leader')]
-    procedure TestGetDescription_Text(_Result: String);
     [TestCase('Test gebe Typ','HD')]
     procedure TestGetType(_Result: String);
     [TestCase('Test ','HDForm')]
@@ -155,8 +149,6 @@ type
     procedure TestSetDescription_Text(newDescription: String);
     [TestCase('Test gebe Beschreibung','Send Mail')]
     procedure TestGetDescription(_Result: String);
-    [TestCase('Test gebe Textfeld Beschreibung','MT: Send Mail')]
-    procedure TestGetDescription_Text(_Result: String);
     [TestCase('Test gebe Typ','MT')]
     procedure TestGetType(_Result: String);
     [TestCase('Test ','MTForm')]
@@ -188,8 +180,6 @@ type
     procedure TestSetDescription_Text(newDescription: String);
     [TestCase('Test gebe Beschreibung','Anmeldung')]
     procedure TestGetDescription(_Result: String);
-    [TestCase('Test gebe Textfeld Beschreibung','MD: Anmeldung')]
-    procedure TestGetDescription_Text(_Result: String);
     [TestCase('Test gebe Typ','MD')]
     procedure TestGetType(_Result: String);
     [TestCase('Test ','MDForm')]
@@ -363,14 +353,6 @@ begin
   Assert.AreEqual(R, _Result);
 end;
 
-procedure TestTEnd.TestGetDescription_Text(_Result: String);
-var
-  R : String;
-begin
-  R := aEndNode.Text;
-  Assert.AreEqual(R, _Result);
-end;
-
 procedure TestTEnd.TestGetType(_Result: String);
 var
   R : String;
@@ -467,14 +449,6 @@ var
   R : String;
 begin
   R := aHTNode.getDescription;
-  Assert.AreEqual(R, _Result);
-end;
-
-procedure TestTHumanTask.TestGetDescription_Text(_Result: String);
-var
-  R : String;
-begin
-  R := aHTNode.Text;
   Assert.AreEqual(R, _Result);
 end;
 
@@ -575,14 +549,6 @@ var
   R : String;
 begin
   R := aHDNode.getDescription;
-  Assert.AreEqual(R, _Result);
-end;
-
-procedure TestTHumanDecision.TestGetDescription_Text(_Result: String);
-var
-  R : String;
-begin
-  R := aHDNode.Text;
   Assert.AreEqual(R, _Result);
 end;
 
@@ -688,14 +654,6 @@ begin
   Assert.AreEqual(R, _Result);
 end;
 
-procedure TestTMachineTask.TestGetDescription_Text(_Result: String);
-var
-  R : String;
-begin
-  R := aMTNode.Text;
-  Assert.AreEqual(R, _Result);
-end;
-
 procedure TestTMachineTask.TestGetType(_Result: String);
 var
   R : String;
@@ -793,14 +751,6 @@ var
   R : String;
 begin
   R := aMDNode.getDescription;
-  Assert.AreEqual(R, _Result);
-end;
-
-procedure TestTMachineDecision.TestGetDescription_Text(_Result: String);
-var
-  R : String;
-begin
-  R := aMDNode.Text;
   Assert.AreEqual(R, _Result);
 end;
 
