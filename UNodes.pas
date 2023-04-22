@@ -3,18 +3,16 @@ unit UNodes;
 interface
 
 uses
-  VCL.TMSFNCTypes, VCL.TMSFNCUtils,
   VCL.TMSFNCGraphics, VCL.TMSFNCGraphicsTypes, VCL.TMSFNCBloxCoreTypes,
   VCL.TMSFNCBloxCoreUtils, VCL.TMSFNCBloxCoreLine, VCL.TMSFNCBloxCorePolygon,
-  VCL.TMSFNCBloxCoreTextCell, VCL.TMSFNCBloxCoreLineArrow,
-  VCL.TMSFNCBloxCoreLinkPoint, VCL.TMSFNCBloxCoreHandle,
+  VCL.TMSFNCBloxCoreTextCell, VCL.TMSFNCBloxCoreLineArrow, VCL.TMSFNCUtils,
+  VCL.TMSFNCBloxCoreLinkPoint, VCL.TMSFNCBloxCoreHandle, System.Classes,
   VCL.TMSFNCBloxCoreGroup, VCL.TMSFNCBloxUISnapGrid, VCL.TMSFNCBloxCoreBlock,
-  VCL.TMSFNCBloxCoreElement, VCL.TMSFNCBloxUIRegistration,
+  VCL.TMSFNCBloxCoreElement, VCL.TMSFNCBloxUIRegistration, VCL.TMSFNCTypes,
   VCL.TMSFNCBloxUIRenderer, VCL.TMSFNCBloxSelector,  VCL.TMSFNCStyles,
-  VCL.TMSFNCBloxShapesUML,
-  Vcl.Graphics, Vcl.Menus, Vcl.StdActnMenus,
+  VCL.TMSFNCBloxShapesUML, Vcl.Graphics, Vcl.Menus, Vcl.StdActnMenus,
   VCL.TMSFNCCustomControl, VCL.TMSFNCCustomScrollControl, VCL.TMSFNCBloxControl,
-  System.SysUtils, System.Variants, System.Classes, UZMTStandard;
+  System.SysUtils, System.Variants, UZMTStandard;
 var
   popUp :  TStandardMenuPopup;
   // https://stackoverflow.com/questions/18544127/creating-a-popup-menu-at-runtime
@@ -97,7 +95,7 @@ type
     constructor Create(nodeID: Integer; newDescription: String);
     destructor Destroy;
     procedure setID(newID : Integer);
-    procedure setDescription(newDescription : String);
+    procedure setDescription(newDescription : String); virtual;
     function getDescription : String;
     function getID : Integer;
     function getType : String; virtual;
@@ -119,14 +117,16 @@ type
   THumanDecision = class(TDecision)
     constructor Create(nodeID: Integer; newDescription: String);
     function getType : String; override;
+    procedure setDescription(newDescription : String); override;
   private
     const
     NODE_TYPE = 'HD';
   end;
 
-  TMashineDecision = class(TDecision)
+  TMachineDecision = class(TDecision)
     constructor Create(nodeID: Integer; newDescription: String);
     function getType : String; override;
+    procedure setDescription(newDescription : String); override;
   private
     const
     NODE_TYPE = 'MD';
@@ -138,7 +138,7 @@ type
     destructor Destroy;
     procedure setID(newID : Integer);
     function getID : Integer;
-    procedure setDescription(newDescription : String);
+    procedure setDescription(newDescription : String); virtual;
     function getDescription : String;
     function getType : String; virtual;
     procedure setClassName(newClassName: String);
@@ -159,14 +159,16 @@ type
   THumanTask = class(TTask)
     constructor Create(nodeID: Integer; newDescription: String);
     function getType : String; override;
+    procedure setDescription(newDescription : String); override;
   private
     const
     NODE_TYPE = 'HT';
   end;
 
-  TMashineTask = class(TTask)
+  TMachineTask = class(TTask)
     constructor Create(nodeID: Integer; newDescription: String);
     function getType : String; override;
+    procedure setDescription(newDescription : String); override;
   private
     const
     NODE_TYPE = 'MT';
@@ -240,7 +242,7 @@ begin
   Text := NODE_TYPE + ': ' + newDescription;
 end;
 
-constructor TMashineDecision.Create(nodeID: Integer; newDescription: String);
+constructor TMachineDecision.Create(nodeID: Integer; newDescription: String);
 begin
   inherited Create(nodeID, newDescription);
   FillColor := lightGray;
@@ -264,7 +266,7 @@ begin
   Text := NODE_TYPE + ': ' + newDescription;
 end;
 
-constructor TMashineTask.Create(nodeID: Integer; newDescription: String);
+constructor TMachineTask.Create(nodeID: Integer; newDescription: String);
 begin
   inherited Create(nodeID, newDescription);
   FillColor := lightGray;
@@ -319,6 +321,7 @@ end;
 procedure TStart.setDescription(newDescription : String);
 begin
   Description := newDescription;
+  Text := NODE_TYPE + ': ' + newDescription;
 end;
 function TStart.getDescription : String;
 begin
@@ -336,6 +339,7 @@ end;
 procedure TEnd.setDescription(newDescription : String);
 begin
   Description := newDescription;
+  Text := NODE_TYPE + ': ' + newDescription;
 end;
 function TEnd.getDescription : String;
 begin
@@ -349,7 +353,7 @@ begin
 end;
 procedure TStart.setClassName(newClassName: String);
 begin
-
+  ClassName := newClassName;
 end;
 function TStart.getClassName : String;
 begin
@@ -371,7 +375,7 @@ begin
 end;
 procedure TEnd.setClassName(newClassName: String);
 begin
-
+  ClassName := newClassName;
 end;
 function TEnd.getClassName : String;
 begin
@@ -443,14 +447,38 @@ begin
   Result := NODE_TYPE;
 end;
 
-function TMashineTask.getType : String;
+function TMachineTask.getType : String;
 begin
   Result := NODE_TYPE;
 end;
 
-function TMashineDecision.getType : String;
+function TMachineDecision.getType : String;
 begin
   Result := NODE_TYPE;
+end;
+
+procedure THumanTask.setDescription(newDescription : String);
+begin
+  Description := newDescription;
+  Text := NODE_TYPE + ': ' + newDescription;
+end;
+
+procedure THumanDecision.setDescription(newDescription : String);
+begin
+  Description := newDescription;
+  Text := NODE_TYPE + ': ' + newDescription;
+end;
+
+procedure TMachineTask.setDescription(newDescription : String);
+begin
+  Description := newDescription;
+  Text := NODE_TYPE + ': ' + newDescription;
+end;
+
+procedure TMachineDecision.setDescription(newDescription : String);
+begin
+  Description := newDescription;
+  Text := NODE_TYPE + ': ' + newDescription;
 end;
 
 //////////////////////////////////////////////////////////////////////

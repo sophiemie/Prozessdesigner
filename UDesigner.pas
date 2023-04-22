@@ -201,13 +201,13 @@ end;
 
 procedure TDesignerForm.BitBtnMDClick(Sender: TObject);
 var
-  newMD : TMashineDecision;
+  newMD : TMachineDecision;
   newNodeID : Integer;
 begin
   NodeSelectionForm.FillList('TMashineDecision');
   createNodeForm();
   newNodeID := NodeDatabase.getHighestNodeID +1;
-  newMD := TMashineDecision.Create(newNodeID,
+  newMD := TMachineDecision.Create(newNodeID,
                                   NodeSelectionForm.getSelectedNodeDescription);
   TMSFNCBloxControl1.Blox.Add(newMD);
   NodeDatabase.addNewNode(diagram, newMD);
@@ -215,13 +215,13 @@ end;
 
 procedure TDesignerForm.BitBtnMTClick(Sender: TObject);
 var
-  newMT : TMashineTask;
+  newMT : TMachineTask;
   newNodeID : Integer;
 begin
   NodeSelectionForm.FillList('TMashineTask');
   createNodeForm();
   newNodeID := NodeDatabase.getHighestNodeID +1;
-  newMT := TMashineTask.Create(newNodeID,
+  newMT := TMachineTask.Create(newNodeID,
                                   NodeSelectionForm.getSelectedNodeDescription);
   TMSFNCBloxControl1.Blox.Add(newMT);
   NodeDatabase.addNewNode(diagram, newMT);
