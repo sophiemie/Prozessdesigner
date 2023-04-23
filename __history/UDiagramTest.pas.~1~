@@ -1,0 +1,114 @@
+unit UDiagramTest;
+
+interface
+
+uses
+  DUnitX.TestFramework, UDiagram;
+
+type
+  [TestFixture]
+  TestTDiagram = class
+  strict private
+    aDiagram : TDiagram;
+  public
+    [Setup]
+    procedure Setup;
+    [TearDown]
+    procedure TearDown;
+    procedure TestSetID(newID: Integer);
+    procedure TestSetName(newName: String);
+    procedure TestSetDescription(newDescription: String);
+    procedure TestSetInUse(value: boolean);
+    procedure TestSetClassName(newClassName : String);
+    procedure TestGetID(_Result: Integer);
+    procedure TestGetName(_Result: String);
+    procedure TestGetDescription(_Result: String);
+    procedure TestGetInUse(_Result: boolean);
+    procedure TestGetClassName(_Result: String);
+  end;
+
+implementation
+
+procedure TestTDiagram.Setup;
+begin
+  aDiagram := TDiagram.Create(1,'Testdiagramm','Dies ist ein Test');
+end;
+
+procedure TestTDiagram.TearDown;
+begin
+end;
+
+procedure TestTDiagram.TestSetID(newID: Integer);
+var
+  R : Integer;
+begin
+
+end;
+
+procedure TestTDiagram.TestSetName(newName: String);
+var
+  R : String;
+begin
+
+end;
+
+procedure TestTDiagram.TestSetDescription(newDescription: String);
+var
+  R : String;
+begin
+
+end;
+
+procedure TestTDiagram.TestSetInUse(value: boolean);
+var
+  R : boolean;
+begin
+
+end;
+
+procedure TestTDiagram.TestSetClassName(newClassName : String);
+var
+  R : String;
+begin
+
+end;
+
+procedure TestTDiagram.TestGetID(_Result: Integer);
+var
+  R : Integer;
+begin
+
+end;
+
+procedure TestTDiagram.TestGetName(_Result: String);
+var
+  R : String;
+begin
+
+end;
+
+procedure TestTDiagram.TestGetDescription(_Result: String);
+var
+  R : String;
+begin
+
+end;
+
+procedure TestTDiagram.TestGetInUse(_Result: boolean);
+var
+  R : boolean;
+begin
+
+end;
+
+procedure TestTDiagram.TestGetClassName(_Result: String);
+var
+  R : String;
+begin
+
+end;
+
+initialization
+  TDUnitX.RegisterTestFixture(TestTDiagram);
+
+end.
