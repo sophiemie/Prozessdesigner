@@ -19,8 +19,8 @@ uses
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TStartPageForm, StartPageForm);
   Application.CreateForm(TDesignerForm, DesignerForm);
+  Application.CreateForm(TStartPageForm, StartPageForm);
   Application.CreateForm(TNodeSelectionForm, NodeSelectionForm);
   Application.Run;
 end.

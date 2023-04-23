@@ -18,7 +18,7 @@ uses
   VCL.TMSFNCBloxUIRenderer, VCL.TMSFNCBloxSelector, FireDAC.Comp.Client,
   VCL.TMSFNCCustomComponent, VCL.TMSFNCCustomScrollControl, Vcl.Buttons,
   VCL.TMSFNCStateManager, VCL.TMSFNCResponsiveManager, Vcl.ExtCtrls, Vcl.Menus,
-  Vcl.ComCtrls, FireDAC.Phys, Vcl.ToolWin, VCL.TMSFNCBloxCoreGroup,
+  Vcl.ComCtrls, FireDAC.Phys, Vcl.ToolWin, VCL.TMSFNCBloxCoreGroup, ShellApi,
   VCL.TMSFNCBloxUIRegistration,UNodes, UNodeSelection, UDatabase, UToolBar,
   UEdge, UDesignerToolbar, UDiagram;  // Datenbank.pas einbinden
 
@@ -35,9 +35,6 @@ type
     TMSFNCBloxControl1: TTMSFNCBloxControl;
     FDConnection_wftest: TFDConnection;
     FDQuery_wftest: TFDQuery;
-    {Toolbar-Komponenten (aktuell wird noch nicht die vorhandene Klasse
-     verwendet)}
-    Edit1: TEdit;
     Panel1: TPanel;
     BitBtnStart: TBitBtn;
     Label1: TLabel;
@@ -57,6 +54,12 @@ type
     Panel5: TPanel;
     Button1: TButton;
     BitBtnEdge: TBitBtn;
+    MainMenu1: TMainMenu;
+    Datei1: TMenuItem;
+    Datei2: TMenuItem;
+    OpenDialog1: TOpenDialog;
+    SaveDialog1: TSaveDialog;
+    Label7: TLabel;
     { Events }
     procedure FormCreate(Sender: TObject);
     procedure BitBtnStartClick(Sender: TObject);
@@ -75,7 +78,9 @@ type
     procedure TMSFNCBloxControl1MouseMove(Sender: TObject; Shift: TShiftState;
       X, Y: Integer);
     procedure FormShow(Sender: TObject);
-    procedure Label4Click(Sender: TObject);
+    procedure Save1Click(Sender: TObject);
+    procedure Load1Click(Sender: TObject);
+    procedure ReplaceNodeNames(fileName: String);
   private
     { Private-Deklarationen }
 
@@ -99,6 +104,8 @@ var
   newEdgeCreatedWithoutTarget: boolean;
   newEdge : TEdge;
   diagram : TDiagram;
+  IsLoadedDiagram : boolean;
+  LoadedDiagramFileName : String;
 
 implementation
 {$R *.dfm}
@@ -165,6 +172,7 @@ begin
   NodeSelectionForm.FillList('TEnd');
   createNodeForm();
   newNodeID := NodeDatabase.getHighestNodeID +1;
+  newNodeID := 1;
   newEnd := TEnd.Create(newNodeID,
                           NodeSelectionForm.getSelectedNodeDescription);
   TMSFNCBloxControl1.Blox.Add(newEnd);
@@ -204,7 +212,7 @@ var
   newMD : TMachineDecision;
   newNodeID : Integer;
 begin
-  NodeSelectionForm.FillList('TMashineDecision');
+  NodeSelectionForm.FillList('TMachineDecision');
   createNodeForm();
   newNodeID := NodeDatabase.getHighestNodeID +1;
   newMD := TMachineDecision.Create(newNodeID,
@@ -218,7 +226,7 @@ var
   newMT : TMachineTask;
   newNodeID : Integer;
 begin
-  NodeSelectionForm.FillList('TMashineTask');
+  NodeSelectionForm.FillList('TMachineTask');
   createNodeForm();
   newNodeID := NodeDatabase.getHighestNodeID +1;
   newMT := TMachineTask.Create(newNodeID,
@@ -258,6 +266,7 @@ begin
    EdgeDatabase := TEdgeDatabase.Create(FDQuery_wftest, 'wf_edges');
    NodeDatabase := TNodeDatabase.Create(FDQuery_wftest, 'wf_nodes');
    DiagramDatabase := TDiagramDatabase.Create(FDQuery_wftest, 'wf_def');
+   IsLoadedDiagram := false;
 end;
 
 { Event beim neu Laden des Editors }
@@ -268,8 +277,10 @@ begin
    {Wenn ein neues Diagramm erstellt wurde}
    if not newDiagramName.Equals('') then
    begin
+    IsLoadedDiagram := false;
     diagram := TDiagram.Create(DiagramDatabase.getHighestDiagramID+1,
                                     newDiagramName, newDiagramDescription);
+    Label7.Caption := diagram.getName;
     DiagramDatabase.addNewDiagram(diagram);
     {Alle vorherigen Elemente im Editor entfernen}
     TMSFNCBloxControl1.Presenter.SelectAll;
@@ -277,14 +288,72 @@ begin
    end
    else {Wenn Diagramm geladen wird}
    begin
-
+    IsLoadedDiagram := true;
    end;
 end;
 
-procedure TDesignerForm.Label4Click(Sender: TObject);
+procedure TDesignerForm.Load1Click(Sender: TObject);
+var
+  openFile : TStringList;
 begin
-
+  OpenDialog1.InitialDir := IncludeTrailingPathDelimiter(GetCurrentDir)
+                              + 'Diagramme';
+  OpenDialog1.Execute;
+  ReplaceNodeNames(OpenDialog1.FileName);
+  IsLoadedDiagram := true;
+  LoadedDiagramFileName := OpenDialog1.Files[0].Remove(0,57);
+  Label7.Caption := LoadedDiagramFileName;
 end;
+
+procedure TDesignerForm.ReplaceNodeNames(fileName: String);
+var
+  openFile : TStringList;
+  I : Integer;
+begin
+  openFile := TStringList.Create;
+  openFile.LoadFromFile(fileName);
+
+  for I := 0 to openFile.Count-1 do
+  begin
+    openFile[I] := StringReplace(openFile[I], 'TEnd',
+              'TTMSFNCBloxUMLFinalStateBlock', [rfReplaceAll, rfIgnoreCase]);
+    openFile[I] := StringReplace(openFile[I], 'TStart',
+              'TTMSFNCBloxUMLInitialStateBlock', [rfReplaceAll, rfIgnoreCase]);
+    openFile[I] := StringReplace(openFile[I], 'THumanTask',
+              'TTMSFNCBloxUMLActionStateBlock', [rfReplaceAll, rfIgnoreCase]);
+    openFile[I] := StringReplace(openFile[I], 'THumanDecision',
+              'TTMSFNCBloxUMLDecisionBlock', [rfReplaceAll, rfIgnoreCase]);
+    openFile[I] := StringReplace(openFile[I], 'TMachineTask',
+              'TTMSFNCBloxUMLActionStateBlock', [rfReplaceAll, rfIgnoreCase]);
+    openFile[I] := StringReplace(openFile[I], 'TMachineDecision',
+              'TTMSFNCBloxUMLDecisionBlock', [rfReplaceAll, rfIgnoreCase]);
+    openFile[I] := StringReplace(openFile[I], 'TEdge',
+              'TTMSFNCBloxUMLActionStateBlock', [rfReplaceAll, rfIgnoreCase]);
+  end;
+  openFile.SaveToFile(OpenDialog1.FileName);
+  TMSFNCBloxControl1.LoadFromFile(OpenDialog1.Files[0]);
+end;
+
+procedure TDesignerForm.Save1Click(Sender: TObject); // Speichern
+var
+  stream : TStream;
+  fileName : String;
+begin
+  //diagram := TDiagram.Create(7,'Hallo','');  // Nur hier fuer Test!!
+  SaveDialog1.InitialDir := 'Win32/Debug/Diagramme';
+
+  if not IsLoadedDiagram then
+  begin
+    fileName := diagram.getID.ToString + '_' + diagram.getName;
+    if SaveDialog1.Execute then
+    begin
+      TMSFNCBloxControl1.SaveToFile(fileName + '.blox');
+    end;
+  end
+  else TMSFNCBloxControl1.SaveToFile((IncludeTrailingPathDelimiter
+                      (GetCurrentDir)+ '/Diagramme/' + LoadedDiagramFileName));
+end;
+
 
 { Event bei der Entfernung einer Komponente im Editor }
 procedure TDesignerForm.TMSFNCBloxControl1ElementRemove(Sender: TObject;

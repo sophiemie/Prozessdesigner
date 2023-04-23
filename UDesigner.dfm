@@ -8269,16 +8269,30 @@ object DesignerForm: TDesignerForm
     FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0FFFF
     FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0FFFF
     FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0}
+  Menu = MainMenu1
   OldCreateOrder = False
   OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
+  object Label7: TLabel
+    Left = 8
+    Top = 0
+    Width = 115
+    Height = 21
+    Caption = 'New Diagram'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clHighlightText
+    Font.Height = -19
+    Font.Name = 'Rockwell'
+    Font.Style = [fsItalic]
+    ParentFont = False
+  end
   object TMSFNCBloxControl1: TTMSFNCBloxControl
     Left = 0
-    Top = 0
+    Top = 24
     Width = 449
-    Height = 518
+    Height = 494
     ParentDoubleBuffered = False
     DoubleBuffered = True
     TabOrder = 0
@@ -8338,21 +8352,13 @@ object DesignerForm: TDesignerForm
     Interaction.ChangeTextWithDoubleClick = False
     OnElementClick = TMSFNCBloxControl1ElementClick
     OnElementRemove = TMSFNCBloxControl1ElementRemove
-    object Edit1: TEdit
-      Left = 321
-      Top = 23
-      Width = 121
-      Height = 21
-      TabOrder = 0
-      Text = 'Edit1'
-    end
     object Button1: TButton
-      Left = 344
-      Top = 136
+      Left = 352
+      Top = 77
       Width = 75
       Height = 25
       Caption = 'Button1'
-      TabOrder = 1
+      TabOrder = 0
       OnClick = Button1Click
     end
   end
@@ -8415,7 +8421,6 @@ object DesignerForm: TDesignerForm
       Font.Name = 'Avenir LT Pro 55 Roman'
       Font.Style = []
       ParentFont = False
-      OnClick = Label4Click
     end
     object Label5: TLabel
       Left = 8
@@ -25627,7 +25632,7 @@ object DesignerForm: TDesignerForm
     end
     object Panel4: TPanel
       Left = -7
-      Top = 0
+      Top = -1
       Width = 272
       Height = 25
       Caption = 'Start/End'
@@ -29813,5 +29818,30 @@ object DesignerForm: TDesignerForm
     Connection = FDConnection_wftest
     Left = 248
     Top = 424
+  end
+  object MainMenu1: TMainMenu
+    Left = 216
+    Top = 112
+    object Datei1: TMenuItem
+      Caption = 'Datei'
+      object Datei2: TMenuItem
+        Caption = 'Save'
+        OnClick = Save1Click
+      end
+      object Open1: TMenuItem
+        Caption = 'Open'
+        OnClick = Load1Click
+      end
+    end
+  end
+  object SaveDialog1: TSaveDialog
+    Filter = 'Blox|*.blox'
+    Left = 296
+    Top = 136
+  end
+  object OpenDialog1: TOpenDialog
+    Filter = 'Blox|*.blox'
+    Left = 104
+    Top = 112
   end
 end
