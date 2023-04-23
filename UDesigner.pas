@@ -347,6 +347,7 @@ begin
   begin
     diagram := TDiagram.Create(4,'Test','');
     fileName := diagram.getID.ToString + '_' + diagram.getName;
+    SaveDialog1.FileName := fileName;  // So wird Dateiname vorgeschlagen
     if SaveDialog1.Execute then
     begin
       TMSFNCBloxControl1.SaveToFile(IncludeTrailingPathDelimiter

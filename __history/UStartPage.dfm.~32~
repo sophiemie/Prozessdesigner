@@ -8270,6 +8270,7 @@ object StartPageForm: TStartPageForm
     FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0FFFF
     FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0}
   OldCreateOrder = False
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
@@ -8452,10 +8453,10 @@ object StartPageForm: TStartPageForm
         TabOrder = 0
       end
       object Button3: TButton
-        Left = 88
-        Top = 224
-        Width = 89
-        Height = 41
+        Left = 80
+        Top = 232
+        Width = 73
+        Height = 33
         Caption = 'Create'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
@@ -8464,6 +8465,7 @@ object StartPageForm: TStartPageForm
         Font.Style = []
         ParentFont = False
         TabOrder = 1
+        OnClick = Button3Click
       end
       object Memo1: TMemo
         Left = 14

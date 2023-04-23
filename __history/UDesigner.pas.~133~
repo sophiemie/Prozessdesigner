@@ -171,12 +171,12 @@ var
 begin
   NodeSelectionForm.FillList('TEnd');
   createNodeForm();
-  newNodeID := NodeDatabase.getHighestNodeID +1;
+  //newNodeID := NodeDatabase.getHighestNodeID +1;
   newNodeID := 1;
   newEnd := TEnd.Create(newNodeID,
                           NodeSelectionForm.getSelectedNodeDescription);
   TMSFNCBloxControl1.Blox.Add(newEnd);
-  NodeDatabase.addNewNode(diagram, newEnd);
+  //NodeDatabase.addNewNode(diagram, newEnd);
 end;
 
 procedure TDesignerForm.BitBtnHDClick(Sender: TObject);
@@ -186,11 +186,11 @@ var
 begin
   NodeSelectionForm.FillList('THumanDecision');
   createNodeForm();
-  newNodeID := NodeDatabase.getHighestNodeID +1;
+  //newNodeID := NodeDatabase.getHighestNodeID +1;
   newHD := THumanDecision.Create(newNodeID,
                                   NodeSelectionForm.getSelectedNodeDescription);
   TMSFNCBloxControl1.Blox.Add(newHD);
-  NodeDatabase.addNewNode(diagram, newHD);
+  //NodeDatabase.addNewNode(diagram, newHD);
 end;
 
 procedure TDesignerForm.BitBtnHTClick(Sender: TObject);
@@ -288,7 +288,7 @@ begin
    end
    else {Wenn Diagramm geladen wird}
    begin
-    IsLoadedDiagram := true;
+    //IsLoadedDiagram := true;
    end;
 end;
 
@@ -296,7 +296,8 @@ procedure TDesignerForm.Load1Click(Sender: TObject);
 var
   openFile : TStringList;
 begin
-  OpenDialog1.InitialDir := 'Win32/Debug/Diagramme';
+  OpenDialog1.InitialDir := IncludeTrailingPathDelimiter(GetCurrentDir)
+                              + 'Diagramme';
   OpenDialog1.Execute;
   ReplaceNodeNames(OpenDialog1.FileName);
   IsLoadedDiagram := true;
@@ -339,19 +340,21 @@ var
   fileName : String;
 begin
   //diagram := TDiagram.Create(7,'Hallo','');  // Nur hier fuer Test!!
-  SaveDialog1.InitialDir := 'Win32/Debug/Diagramme';
+  SaveDialog1.InitialDir := IncludeTrailingPathDelimiter
+                      (GetCurrentDir)+ 'Diagramme';
 
   if not IsLoadedDiagram then
   begin
+    diagram := TDiagram.Create(4,'Test','');
     fileName := diagram.getID.ToString + '_' + diagram.getName;
     if SaveDialog1.Execute then
     begin
-      TMSFNCBloxControl1.SaveToFile(fileName + '.blox');
+      TMSFNCBloxControl1.SaveToFile(IncludeTrailingPathDelimiter
+                      (GetCurrentDir)+ 'Diagramme/' + fileName + '.blox');
     end;
   end
   else TMSFNCBloxControl1.SaveToFile((IncludeTrailingPathDelimiter
-                      (GetCurrentDir)+ '/Diagramme/' + LoadedDiagramFileName));
-
+                      (GetCurrentDir)+ 'Diagramme/' + LoadedDiagramFileName));
 end;
 
 

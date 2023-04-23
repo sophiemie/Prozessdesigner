@@ -43,16 +43,15 @@ implementation
 
 procedure TStartPageForm.Button1Click(Sender: TObject);
 begin
+//  Panel1.Visible := true;
   Groupbox1.Visible := true;
   Groupbox2.Visible := false;
-  Panel2.Caption := 'Create New Diagram';
 end;
 
 procedure TStartPageForm.Button2Click(Sender: TObject);
 begin
   Groupbox1.Visible := false;
   Groupbox2.Visible := true;
-  Panel2.Caption := 'Load Diagram';
 end;
 
 procedure TStartPageForm.Button3Click(Sender: TObject);
@@ -70,9 +69,6 @@ procedure TStartPageForm.FormCreate(Sender: TObject);
 begin
   Edit1.Text := '';
   Memo1.Lines.Clear;
-  Panel2.Caption := 'Load Diagram';
-  Groupbox1.Visible := false;
-  Groupbox2.Visible := true;
 end;
 
 end.

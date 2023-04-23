@@ -2,8 +2,8 @@ object StartPageForm: TStartPageForm
   Left = 0
   Top = 0
   Caption = 'ZMT Prozessdesigner'
-  ClientHeight = 349
-  ClientWidth = 444
+  ClientHeight = 345
+  ClientWidth = 433
   Color = clBtnHighlight
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -8270,15 +8270,15 @@ object StartPageForm: TStartPageForm
     FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0FFFF
     FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0}
   OldCreateOrder = False
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
-    Left = 181
+    Left = 173
     Top = 0
-    Width = 268
-    Height = 353
+    Width = 260
+    Height = 345
     TabOrder = 0
-    Visible = False
     object Panel2: TPanel
       Left = 0
       Top = 0
@@ -8294,12 +8294,13 @@ object StartPageForm: TStartPageForm
       ParentBackground = False
       ParentFont = False
       TabOrder = 0
+      Visible = False
     end
     object GroupBox1: TGroupBox
-      Left = 7
+      Left = 11
       Top = 55
-      Width = 242
-      Height = 282
+      Width = 238
+      Height = 274
       Caption = 'Details'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
@@ -8392,7 +8393,7 @@ object StartPageForm: TStartPageForm
       end
       object Image1: TImage
         Left = 88
-        Top = 107
+        Top = 109
         Width = 25
         Height = 24
         Hint = 'A Description to the new Diagram. Its optional.'
@@ -8452,10 +8453,10 @@ object StartPageForm: TStartPageForm
         TabOrder = 0
       end
       object Button3: TButton
-        Left = 104
-        Top = 224
-        Width = 89
-        Height = 41
+        Left = 80
+        Top = 232
+        Width = 73
+        Height = 33
         Caption = 'Create'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
@@ -8464,6 +8465,7 @@ object StartPageForm: TStartPageForm
         Font.Style = []
         ParentFont = False
         TabOrder = 1
+        OnClick = Button3Click
       end
       object Memo1: TMemo
         Left = 14
@@ -8477,6 +8479,33 @@ object StartPageForm: TStartPageForm
         Font.Style = []
         ParentFont = False
         TabOrder = 2
+      end
+    end
+    object GroupBox2: TGroupBox
+      Left = 11
+      Top = 60
+      Width = 238
+      Height = 269
+      Caption = 'GroupBox2'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Rockwell'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 2
+      object StringGrid1: TStringGrid
+        Left = 14
+        Top = 33
+        Width = 193
+        Height = 176
+        TabOrder = 0
+        RowHeights = (
+          24
+          23
+          24
+          24
+          24)
       end
     end
   end
@@ -8508,5 +8537,6 @@ object StartPageForm: TStartPageForm
     Font.Style = []
     ParentFont = False
     TabOrder = 2
+    OnClick = Button2Click
   end
 end
