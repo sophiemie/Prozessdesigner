@@ -8273,6 +8273,19 @@ object StartPageForm: TStartPageForm
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
+  object Label3: TLabel
+    Left = 8
+    Top = 324
+    Width = 112
+    Height = 13
+    Caption = 'Sophie Miessner, 2023'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Avenir LT Pro 55 Roman'
+    Font.Style = []
+    ParentFont = False
+  end
   object Panel1: TPanel
     Left = 173
     Top = 0
@@ -8484,8 +8497,8 @@ object StartPageForm: TStartPageForm
       Left = 11
       Top = 55
       Width = 238
-      Height = 274
-      Caption = 'GroupBox2'
+      Height = 273
+      Caption = 'All Diagrams'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -8495,9 +8508,18 @@ object StartPageForm: TStartPageForm
       TabOrder = 2
       object StringGrid1: TStringGrid
         Left = 14
-        Top = 33
-        Width = 193
+        Top = 38
+        Width = 211
         Height = 176
+        ColCount = 4
+        DefaultColWidth = 50
+        FixedCols = 0
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Avenir LT Pro 55 Roman'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 0
         RowHeights = (
           24
@@ -8510,7 +8532,7 @@ object StartPageForm: TStartPageForm
   end
   object Button1: TButton
     Left = 40
-    Top = 32
+    Top = 162
     Width = 105
     Height = 40
     Caption = 'New'
@@ -8525,7 +8547,7 @@ object StartPageForm: TStartPageForm
   end
   object Button2: TButton
     Left = 40
-    Top = 96
+    Top = 81
     Width = 105
     Height = 40
     Caption = 'Load'
@@ -8537,5 +8559,35 @@ object StartPageForm: TStartPageForm
     ParentFont = False
     TabOrder = 2
     OnClick = Button2Click
+  end
+  object Button4: TButton
+    Left = 40
+    Top = 241
+    Width = 105
+    Height = 40
+    Caption = 'New Version'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Avenir LT Pro 55 Roman'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 3
+  end
+  object Panel3: TPanel
+    Left = -8
+    Top = -1
+    Width = 185
+    Height = 49
+    Caption = 'Designer'
+    Color = clGradientActiveCaption
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clHighlightText
+    Font.Height = -21
+    Font.Name = 'Rockwell'
+    Font.Style = []
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 4
   end
 end

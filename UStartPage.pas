@@ -24,6 +24,9 @@ type
     Image1: TImage;
     GroupBox2: TGroupBox;
     StringGrid1: TStringGrid;
+    Button4: TButton;
+    Label3: TLabel;
+    Panel3: TPanel;
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
