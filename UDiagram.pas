@@ -26,7 +26,7 @@ type
     var Description : String;
     var InUse : boolean;
     var ClassName : String;
-    var VersionNumber : Integer;   // Getter, Setter und Unittest schreiben
+    var VersionNumber : Integer;
   end;
 
 implementation

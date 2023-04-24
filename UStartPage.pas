@@ -27,13 +27,15 @@ type
     Image2: TImage;
     Image1: TImage;
     GroupBox2: TGroupBox;
-    StringGrid1: TStringGrid;  // Fuer Daten aus Datenbank lieber TDBGrid
-    Button4: TButton;
+    StringGrid1: TStringGrid;
     Panel3: TPanel;
     ToggleSwitch1: TToggleSwitch;
     FDQuery1: TFDQuery;
     FDConnection1: TFDConnection;
-    GroupBox3: TGroupBox;
+    Image3: TImage;
+    Edit2: TEdit;
+    Button5: TButton;
+    Button4: TButton;
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -60,6 +62,7 @@ type
     noDiagramName : String;
     activeText : String;
     diagramDatabase : TDiagramDatabase;
+    openButton : String;
   public
     { Public-Deklarationen }
   end;
@@ -75,7 +78,6 @@ procedure TStartPageForm.Button1Click(Sender: TObject);
 begin
   Groupbox1.Visible := true;
   Groupbox2.Visible := false;
-  Groupbox3.Visible := false;
   Panel2.Caption := createDiagramText;
 end;
 
@@ -83,7 +85,7 @@ procedure TStartPageForm.Button2Click(Sender: TObject);
 begin
   Groupbox1.Visible := false;
   Groupbox2.Visible := true;
-  Groupbox3.Visible := false;
+//  Groupbox3.Visible := false;
   Panel2.Caption := loadDiagamText;
 end;
 
@@ -121,10 +123,13 @@ end;
 
 procedure TStartPageForm.Button4Click(Sender: TObject);
 begin
-  Groupbox1.Visible := false;
-  Groupbox2.Visible := false;
-  Groupbox3.Visible := true;
-  Panel2.Caption := createNewVersion;
+//  Groupbox1.Visible := false;
+//  Groupbox2.Visible := false;
+//  Groupbox3.Visible := true;
+//  Panel2.Caption := createNewVersion;
+
+  {Diagramm in Datenbank kopieren}
+  //diagramDatabase.copyDiagram();
 end;
 
 procedure TStartPageForm.FormCreate(Sender: TObject);
@@ -140,7 +145,7 @@ begin
   Panel2.Caption := loadDiagamText;
   Groupbox1.Visible := false;
   Groupbox2.Visible := true;
-  Groupbox3.Visible := false;
+//  Groupbox3.Visible := false;
   diagramDatabase := TDiagramDatabase.Create(FDQuery1,'wf_def');
 
   StringGrid1.Cells[0,0] := 'ID';
@@ -184,18 +189,19 @@ begin
   button2.Caption := loadButtonText;
   button3.Caption := createButtonText;
   button4.Caption := newVersionButtonText;
+  button5.Caption := openButton;
   StartPageForm.Caption := formText;
   label2.Caption := descriptionText;
   Image1.Hint := descriptionHintText;
   Image2.Hint := nameHintText;
   GroupBox2.Caption := allDiagramText;
-  GroupBox3.Caption := allDiagramText;
+//  GroupBox3.Caption := allDiagramText;
   StringGrid1.Cells[2,0] := descriptionText;
   StringGrid1.Cells[4,0] := activeText;
 
   if GroupBox2.Visible then Panel2.Caption := loadDiagamText
-  else if GroupBox1.Visible then Panel2.Caption := createDiagramText
-  else if GroupBox3.Visible then Panel2.Caption := createNewVersion;
+  else if GroupBox1.Visible then Panel2.Caption := createDiagramText;
+//  else if GroupBox3.Visible then Panel2.Caption := createNewVersion;
 
 end;
 
@@ -219,6 +225,7 @@ begin
     createNewVersion := STARTPAGELABEL_VERSION_EN;
     noDiagramName := NODIAGRAM_NAME_EN;
     activeText := ACTIVE_EN;
+    openButton := OPEN_EN;
   end
   else {Ansonsten Deutsches Sprachpaket}
   begin
@@ -236,6 +243,7 @@ begin
     createNewVersion := STARTPAGELABEL_VERSION_DE;
     noDiagramName := NODIAGRAM_NAME_DE;
     activeText := ACTIVE_DE;
+    openButton := OPEN_DE;
   end;
   fillComponentText();
 end;

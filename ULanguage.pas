@@ -53,6 +53,8 @@ const
   NODIAGRAM_NAME_EN = 'Name can not be empty.';
   ACTIVE_EN = 'Active';
   ACTIVE_DE = 'Aktiv';
+  OPEN_EN = 'Open';
+  OPEN_DE = 'Öffnen';
 
   {Nodeselection}
   NODESELECTION_EN = 'Nodeselection';

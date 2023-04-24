@@ -61,6 +61,7 @@ type
     function getHighestDiagramID : Integer;
     procedure fillLoadlistWithDiagrams(list: TStringGrid);
     function giveDiagramSavedDatas(diagram: TDiagram) : TDiagram;
+    procedure copyDiagram(diagram: TDiagram);
   end;
 
 implementation
@@ -320,6 +321,11 @@ begin
   end;
 
   Result := diagram;
+end;
+
+procedure TDiagramDatabase.copyDiagram(diagram: TDiagram);
+begin
+  // IMPLEMENTIEREN
 end;
 
 end.
