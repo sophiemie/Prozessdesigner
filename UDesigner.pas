@@ -89,6 +89,8 @@ type
     var newDiagramName : String;
     var newDiagramDescription : String;
     var diagram : TDiagram;
+    var IsLoadedDiagram : boolean;
+    var LoadedDiagramFileName : String;
 //    var newNodeDescription : String;
   end;
 
@@ -104,8 +106,7 @@ var
   newEdgeButtonClicked: boolean;
   newEdgeCreatedWithoutTarget: boolean;
   newEdge : TEdge;
-  IsLoadedDiagram : boolean;
-  LoadedDiagramFileName : String;
+
 
 implementation
 {$R *.dfm}
@@ -275,13 +276,15 @@ var
   I : Integer;
 begin
    {Wenn ein neues Diagramm erstellt wurde}
-   if not newDiagramName.Equals('') then
+//   if not newDiagramName.Equals('') then  // VORHER, BITTE TESTEN SOBALD DB IN ORDNUNG
+   if not IsLoadedDiagram then
    begin
-    IsLoadedDiagram := false;
-    diagram := TDiagram.Create(DiagramDatabase.getHighestDiagramID+1,
-                                    newDiagramName, newDiagramDescription);
+    //IsLoadedDiagram := false;
+    // In Startpage
+    //diagram := TDiagram.Create(DiagramDatabase.getHighestDiagramID+1,
+    //                                newDiagramName, newDiagramDescription);
     Label7.Caption := diagram.getName;
-    DiagramDatabase.addNewDiagram(diagram);
+    //DiagramDatabase.addNewDiagram(diagram);   // In Startpage
     {Alle vorherigen Elemente im Editor entfernen}
     TMSFNCBloxControl1.Presenter.SelectAll;
     TMSFNCBloxControl1.Presenter.DeleteSelecteds;
@@ -289,6 +292,7 @@ begin
    else {Wenn Diagramm geladen wird}
    begin
     //IsLoadedDiagram := true;
+    TMSFNCBloxControl1.LoadFromFile(OpenDialog1.InitialDir + LoadedDiagramFileName);
    end;
 end;
 
@@ -345,7 +349,7 @@ begin
 
   if not IsLoadedDiagram then
   begin
-    diagram := TDiagram.Create(4,'Test','');
+    //diagram := TDiagram.Create(4,'Test','');
     fileName := diagram.getID.ToString + '_' + diagram.getName;
     SaveDialog1.FileName := fileName;  // So wird Dateiname vorgeschlagen
     if SaveDialog1.Execute then

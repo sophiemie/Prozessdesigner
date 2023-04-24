@@ -10,7 +10,7 @@ uses
     FireDAC.Phys.MySQL, FireDAC.Phys.MySQLDef, FireDAC.VCLUI.Wait, Data.DB,
     FireDAC.Comp.Client, FireDAC.Stan.Param, FireDAC.DApt.Intf, Vcl.StdCtrls,
     FireDAC.DApt, FireDAC.Comp.DataSet, Data.SqlExpr, System.Classes, UDiagram,
-    UNodes, UEdge;
+    UNodes, UEdge, Vcl.Grids;
 
 type
   {Klasse fuer normale Datenbankfunktionen}
@@ -59,6 +59,7 @@ type
     procedure deleteDiagram(diagram: TDiagram);
     procedure addNewDiagramVersion(diagram: TDiagram);
     function getHighestDiagramID : Integer;
+    procedure fillLoadlistWithDiagrams(list: TStringGrid);
   end;
 
 implementation
@@ -297,6 +298,11 @@ end;
 function TDiagramDatabase.getHighestDiagramID : Integer;
 begin
   Result := getHighestID('wf_type_id');
+end;
+
+procedure TDiagramDatabase.fillLoadlistWithDiagrams(list: TStringGrid);
+begin
+  // MUSS NOCH IMPLEMENTIERT WERDEN
 end;
 
 end.

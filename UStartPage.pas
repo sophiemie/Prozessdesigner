@@ -84,15 +84,30 @@ begin
 end;
 
 procedure TStartPageForm.Button3Click(Sender: TObject);
+var
+  newDiagramID : Integer;
 begin
   if Edit1.Text = '' then ShowMessage(noDiagramName)
   else
   begin
+    { Alle Diagramme aus Datenbank laden }
+    //diagramDatabase.fillLoadlistWithDiagrams(StringGrid1);
     DesignerForm.newDiagramName := Edit1.Text;
     DesignerForm.newDiagramDescription := Memo1.Text;
+
+    { Neues Diagramm erstellen }
+    newDiagramID := StringGrid1.RowCount;
+    DesignerForm.IsLoadedDiagram := false;
+    DesignerForm.diagram := TDiagram.Create(newDiagramID, Edit1.Text, Memo1.Text);
+
+    { Neues Diagramm in Datenbank eintragen }
+    //DiagramDatabase.addNewDiagram(diagram);
+
     DesignerForm.ShowModal;
+    { Textfelder vom Erstellen leeren }
     Edit1.Clear;
     Memo1.Clear;
+    { Ladeliste um neuen Diagramm ergaenzen }
     StringGrid1.RowCount := StringGrid1.RowCount +1;
     StringGrid1.Cells[0,StringGrid1.RowCount-1] := (StringGrid1.RowCount -1).ToString;
     StringGrid1.Cells[1,StringGrid1.RowCount-1] := DesignerForm.newDiagramName;
@@ -133,16 +148,19 @@ var
   diagramName : String;
   diagramID : Integer;
   diagramDescription : String;
-  diagramInUse : boolean;
-  diagramVersion : Integer;
 begin
   if not StringGrid1.Cells[ACol,ARow].IsEmpty then
   begin
     diagramID := StringGrid1.Cells[0,ARow].ToInteger;
     diagramName := StringGrid1.Cells[1,ARow];
     diagramDescription := StringGrid1.Cells[2,ARow];
-    diagramInUse := StringGrid1.Cells[4,ARow].ToBoolean();
-    diagramVersion := StringGrid1.Cells[3,ARow].ToInteger();
+//    diagramInUse := StringGrid1.Cells[4,ARow].ToBoolean();
+//    diagramVersion := StringGrid1.Cells[3,ARow].ToInteger();
+
+    DesignerForm.IsLoadedDiagram := true;
+    DesignerForm.LoadedDiagramFileName := 'Diagramme/' + diagramID.ToString
+                                              + '_' + diagramName + '.blox';
+    DesignerForm.diagram := TDiagram.Create(diagramID, diagramName, diagramDescription);
     DesignerForm.ShowModal;
   end;
 end;
