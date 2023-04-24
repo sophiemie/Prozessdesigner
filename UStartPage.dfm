@@ -8500,7 +8500,8 @@ object StartPageForm: TStartPageForm
         Height = 172
         DefaultColWidth = 50
         FixedCols = 0
-        RowCount = 7
+        RowCount = 1
+        FixedRows = 0
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
@@ -8510,12 +8511,6 @@ object StartPageForm: TStartPageForm
         TabOrder = 0
         OnSelectCell = StringGrid1SelectCell
         RowHeights = (
-          24
-          23
-          24
-          24
-          24
-          24
           24)
       end
     end
@@ -8598,5 +8593,13 @@ object StartPageForm: TStartPageForm
     TabOrder = 5
     ThumbColor = clSkyBlue
     OnClick = ToggleSwitch1Click
+  end
+  object FDQuery1: TFDQuery
+    Left = 455
+    Top = 270
+  end
+  object FDConnection1: TFDConnection
+    Left = 159
+    Top = 270
   end
 end

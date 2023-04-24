@@ -6,7 +6,11 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
   Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Imaging.pngimage, UDiagram, UDesigner,
-  Vcl.Grids, Data.DB, Vcl.WinXCtrls, Vcl.DBGrids, ULanguage;
+  Vcl.Grids, Data.DB, Vcl.WinXCtrls, Vcl.DBGrids, ULanguage, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.UI.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Phys,
+  FireDAC.VCLUI.Wait, FireDAC.Comp.Client, FireDAC.Comp.DataSet, UDatabase;
 
 type
   TStartPageForm = class(TForm)
@@ -27,6 +31,8 @@ type
     Button4: TButton;
     Panel3: TPanel;
     ToggleSwitch1: TToggleSwitch;
+    FDQuery1: TFDQuery;
+    FDConnection1: TFDConnection;
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -35,7 +41,6 @@ type
     procedure fillComponentText();
     procedure StringGrid1SelectCell(Sender: TObject; ACol, ARow: Integer;
       var CanSelect: Boolean);
-    function FindEmptyRowInList : Integer;
   private
     { Private-Deklarationen }
     newButtonText : String;
@@ -52,6 +57,7 @@ type
     createNewVersion : String;
     noDiagramName : String;
     activeText : String;
+    diagramDatabase : TDiagramDatabase;
   public
     { Public-Deklarationen }
   end;
@@ -85,18 +91,12 @@ begin
     DesignerForm.newDiagramName := Edit1.Text;
     DesignerForm.newDiagramDescription := Memo1.Text;
     DesignerForm.ShowModal;
-    StringGrid1.Cells[0,2] := DesignerForm.newDiagramName;
-    StringGrid1.Cells[0,3] := DesignerForm.newDiagramDescription;
-  end;
-end;
-
-function TStartPageForm.FindEmptyRowInList : Integer;
-var
-  I : Integer;
-begin
-  for I := 0 to StringGrid1.RowCount do
-  begin
-
+    Edit1.Clear;
+    Memo1.Clear;
+    StringGrid1.RowCount := StringGrid1.RowCount +1;
+    StringGrid1.Cells[0,1] := (StringGrid1.RowCount -1).ToString;
+    StringGrid1.Cells[1,1] := DesignerForm.newDiagramName;
+    StringGrid1.Cells[2,1] := DesignerForm.newDiagramDescription;
   end;
 end;
 
@@ -113,6 +113,7 @@ begin
   Panel2.Caption := loadDiagamText;
   Groupbox1.Visible := false;
   Groupbox2.Visible := true;
+  diagramDatabase := TDiagramDatabase.Create(FDQuery1,'wf_def');
 
   StringGrid1.Cells[0,0] := 'ID';
   StringGrid1.Cells[1,0] := 'Name';

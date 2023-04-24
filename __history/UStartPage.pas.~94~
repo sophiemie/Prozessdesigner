@@ -35,6 +35,7 @@ type
     procedure fillComponentText();
     procedure StringGrid1SelectCell(Sender: TObject; ACol, ARow: Integer;
       var CanSelect: Boolean);
+    procedure CreateNewRowLine;
   private
     { Private-Deklarationen }
     newButtonText : String;
@@ -84,7 +85,18 @@ begin
     DesignerForm.newDiagramName := Edit1.Text;
     DesignerForm.newDiagramDescription := Memo1.Text;
     DesignerForm.ShowModal;
+    Edit1.Clear;
+    Memo1.Clear;
+    StringGrid1.Cells[1,1] := DesignerForm.newDiagramName;
+    StringGrid1.Cells[2,1] := DesignerForm.newDiagramDescription;
   end;
+end;
+
+procedure TStartPageForm.CreateNewRowLine;
+var
+  I : Integer;
+begin
+  StringGrid1.RowCount := StringGrid1.RowCount +1;
 end;
 
 procedure TStartPageForm.FormCreate(Sender: TObject);
@@ -118,11 +130,18 @@ procedure TStartPageForm.StringGrid1SelectCell(Sender: TObject; ACol,
 var
   diagramName : String;
   diagramID : Integer;
+  diagramDescription : String;
+  diagramInUse : boolean;
+  diagramVersion : Integer;
 begin
   if not StringGrid1.Cells[ACol,ARow].IsEmpty then
   begin
     diagramID := StringGrid1.Cells[0,ARow].ToInteger;
     diagramName := StringGrid1.Cells[1,ARow];
+    diagramDescription := StringGrid1.Cells[2,ARow];
+    diagramInUse := StringGrid1.Cells[4,ARow].ToBoolean();
+    diagramVersion := StringGrid1.Cells[3,ARow].ToInteger();
+    DesignerForm.ShowModal;
   end;
 end;
 

@@ -88,6 +88,7 @@ type
     { Public-Deklarationen }
     var newDiagramName : String;
     var newDiagramDescription : String;
+    var diagram : TDiagram;
 //    var newNodeDescription : String;
   end;
 
@@ -103,7 +104,6 @@ var
   newEdgeButtonClicked: boolean;
   newEdgeCreatedWithoutTarget: boolean;
   newEdge : TEdge;
-  diagram : TDiagram;
   IsLoadedDiagram : boolean;
   LoadedDiagramFileName : String;
 

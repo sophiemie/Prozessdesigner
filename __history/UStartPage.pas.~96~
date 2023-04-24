@@ -84,6 +84,11 @@ begin
     DesignerForm.newDiagramName := Edit1.Text;
     DesignerForm.newDiagramDescription := Memo1.Text;
     DesignerForm.ShowModal;
+    Edit1.Clear;
+    Memo1.Clear;
+    StringGrid1.RowCount := StringGrid1.RowCount +1;
+    StringGrid1.Cells[1,1] := DesignerForm.newDiagramName;
+    StringGrid1.Cells[2,1] := DesignerForm.newDiagramDescription;
   end;
 end;
 

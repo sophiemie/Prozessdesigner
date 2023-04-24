@@ -35,6 +35,7 @@ type
     procedure fillComponentText();
     procedure StringGrid1SelectCell(Sender: TObject; ACol, ARow: Integer;
       var CanSelect: Boolean);
+    procedure CreateNewRowLine;
   private
     { Private-Deklarationen }
     newButtonText : String;
@@ -84,7 +85,19 @@ begin
     DesignerForm.newDiagramName := Edit1.Text;
     DesignerForm.newDiagramDescription := Memo1.Text;
     DesignerForm.ShowModal;
+    Edit1.Clear;
+    Memo1.Clear;
+    StringGrid1.RowCount := StringGrid1.RowCount +1;
+    StringGrid1.Cells[1,1] := DesignerForm.newDiagramName;
+    StringGrid1.Cells[2,1] := DesignerForm.newDiagramDescription;
   end;
+end;
+
+procedure TStartPageForm.CreateNewRowLine;
+var
+  I : Integer;
+begin
+  StringGrid1.RowCount := StringGrid1.RowCount +1;
 end;
 
 procedure TStartPageForm.FormCreate(Sender: TObject);
@@ -107,9 +120,10 @@ begin
   StringGrid1.Cells[2,0] := descriptionText;
   StringGrid1.Cells[4,0] := activeText;
   Stringgrid1.ColWidths[0] := 35;
-  Stringgrid1.ColWidths[3] := 80;
-  Stringgrid1.ColWidths[1] := 120;
-  Stringgrid1.ColWidths[2] := 260;
+  Stringgrid1.ColWidths[3] := 100;
+  Stringgrid1.ColWidths[4] := 80;
+  Stringgrid1.ColWidths[1] := 157;
+  Stringgrid1.ColWidths[2] := 280;
 end;
 
 procedure TStartPageForm.StringGrid1SelectCell(Sender: TObject; ACol,
@@ -117,9 +131,19 @@ procedure TStartPageForm.StringGrid1SelectCell(Sender: TObject; ACol,
 var
   diagramName : String;
   diagramID : Integer;
+  diagramDescription : String;
+  diagramInUse : boolean;
+  diagramVersion : Integer;
 begin
-  diagramID := StringGrid1.Cells[0,ARow].ToInteger;
-  diagramName := StringGrid1.Cells[1,ARow];
+  if not StringGrid1.Cells[ACol,ARow].IsEmpty then
+  begin
+    diagramID := StringGrid1.Cells[0,ARow].ToInteger;
+    diagramName := StringGrid1.Cells[1,ARow];
+    diagramDescription := StringGrid1.Cells[2,ARow];
+    diagramInUse := StringGrid1.Cells[4,ARow].ToBoolean();
+    diagramVersion := StringGrid1.Cells[3,ARow].ToInteger();
+    DesignerForm.ShowModal;
+  end;
 end;
 
 procedure TStartPageForm.fillComponentText();
