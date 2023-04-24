@@ -1,0 +1,141 @@
+unit UDiagramTest;
+
+interface
+
+uses
+  DUnitX.TestFramework, UDiagram;
+
+type
+  [TestFixture]
+  TestTDiagram = class
+  strict private
+    aDiagram : TDiagram;
+  public
+    [Setup]
+    procedure Setup;
+    [TearDown]
+    procedure TearDown;
+    [TestCase('Test setze neue ID', '5733')]
+    procedure TestSetID(newID: Integer);
+    [TestCase('Test setze neuen Namen', 'Neues Diagramm')]
+    procedure TestSetName(newName: String);
+    [TestCase('Test setze neue Beschreibung', 'Dies ist ein neuer Test')]
+    procedure TestSetDescription(newDescription: String);
+    [TestCase('Test setz in Benutzung', 'true')]
+    procedure TestSetInUse(value: boolean);
+    [TestCase('Test setze neuen Klassennamen', 'DiagrammForm')]
+    procedure TestSetClassName(newClassName : String);
+    [TestCase('Test geb ID', '1')]
+    procedure TestGetID(_Result: Integer);
+    [TestCase('Test geb Namen', 'Testdiagramm')]
+    procedure TestGetName(_Result: String);
+    [TestCase('Test geb Beschreibung', 'Dies ist ein Test')]
+    procedure TestGetDescription(_Result: String);
+    [TestCase('Test geb in Benutzung', 'false')]
+    procedure TestGetInUse(_Result: boolean);
+    [TestCase('Test geb Klassennamen', 'DiagramKlasse')]
+    procedure TestGetClassName(_Result: String);
+  end;
+
+implementation
+
+procedure TestTDiagram.Setup;
+begin
+  aDiagram := TDiagram.Create(1,'Testdiagramm','Dies ist ein Test');
+  aDiagram.setInUse(false);
+  aDiagram.setClassName('DiagramKlasse');
+end;
+
+procedure TestTDiagram.TearDown;
+begin
+end;
+
+procedure TestTDiagram.TestSetID(newID: Integer);
+var
+  R : Integer;
+begin
+  aDiagram.setID(newID);
+  R := aDiagram.getID;
+  Assert.AreEqual(R,newID);
+end;
+
+procedure TestTDiagram.TestSetName(newName: String);
+var
+  R : String;
+begin
+  aDiagram.setName(newName);
+  R := aDiagram.getName;
+  Assert.AreEqual(R,newName);
+end;
+
+procedure TestTDiagram.TestSetDescription(newDescription: String);
+var
+  R : String;
+begin
+  aDiagram.setDescription(newDescription);
+  R := aDiagram.getDescription;
+  Assert.AreEqual(R,newDescription);
+end;
+
+procedure TestTDiagram.TestSetInUse(value: boolean);
+var
+  R : boolean;
+begin
+  aDiagram.setInUse(value);
+  R := aDiagram.getInUse;
+  Assert.AreEqual(R,value);
+end;
+
+procedure TestTDiagram.TestSetClassName(newClassName : String);
+var
+  R : String;
+begin
+  aDiagram.setClassName(newClassName);
+  R := aDiagram.getClassName;
+  Assert.AreEqual(R,newClassName);
+end;
+
+procedure TestTDiagram.TestGetID(_Result: Integer);
+var
+  R : Integer;
+begin
+  R := aDiagram.getID;
+  Assert.AreEqual(R,_Result);
+end;
+
+procedure TestTDiagram.TestGetName(_Result: String);
+var
+  R : String;
+begin
+  R := aDiagram.getName;
+  Assert.AreEqual(R,_Result);
+end;
+
+procedure TestTDiagram.TestGetDescription(_Result: String);
+var
+  R : String;
+begin
+  R := aDiagram.getDescription;
+  Assert.AreEqual(R,_Result);
+end;
+
+procedure TestTDiagram.TestGetInUse(_Result: boolean);
+var
+  R : boolean;
+begin
+  R := aDiagram.getInUse;
+  Assert.AreEqual(R,_Result);
+end;
+
+procedure TestTDiagram.TestGetClassName(_Result: String);
+var
+  R : String;
+begin
+  R := aDiagram.getClassName;
+  Assert.AreEqual(R,_Result);
+end;
+
+initialization
+  TDUnitX.RegisterTestFixture(TestTDiagram);
+
+end.

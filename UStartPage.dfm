@@ -2,8 +2,8 @@ object StartPageForm: TStartPageForm
   Left = 0
   Top = 0
   Caption = 'ZMT Prozessdesigner'
-  ClientHeight = 344
-  ClientWidth = 515
+  ClientHeight = 336
+  ClientWidth = 516
   Color = clBtnHighlight
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -8277,7 +8277,7 @@ object StartPageForm: TStartPageForm
     Left = 127
     Top = 0
     Width = 389
-    Height = 345
+    Height = 497
     TabOrder = 0
     object Panel2: TPanel
       Left = 0
@@ -8514,6 +8514,20 @@ object StartPageForm: TStartPageForm
           24)
       end
     end
+    object GroupBox3: TGroupBox
+      Left = 16
+      Top = 54
+      Width = 361
+      Height = 275
+      Caption = 'All Diagrams'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Rockwell'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 3
+    end
   end
   object Button1: TButton
     Left = 16
@@ -8558,6 +8572,7 @@ object StartPageForm: TStartPageForm
     Font.Style = []
     ParentFont = False
     TabOrder = 3
+    OnClick = Button4Click
   end
   object Panel3: TPanel
     Left = -8
@@ -8599,7 +8614,7 @@ object StartPageForm: TStartPageForm
     Top = 270
   end
   object FDConnection1: TFDConnection
-    Left = 159
+    Left = 167
     Top = 270
   end
 end

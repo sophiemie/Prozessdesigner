@@ -33,6 +33,7 @@ type
     ToggleSwitch1: TToggleSwitch;
     FDQuery1: TFDQuery;
     FDConnection1: TFDConnection;
+    GroupBox3: TGroupBox;
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -41,6 +42,7 @@ type
     procedure fillComponentText();
     procedure StringGrid1SelectCell(Sender: TObject; ACol, ARow: Integer;
       var CanSelect: Boolean);
+    procedure Button4Click(Sender: TObject);
   private
     { Private-Deklarationen }
     newButtonText : String;
@@ -73,6 +75,7 @@ procedure TStartPageForm.Button1Click(Sender: TObject);
 begin
   Groupbox1.Visible := true;
   Groupbox2.Visible := false;
+  Groupbox3.Visible := false;
   Panel2.Caption := createDiagramText;
 end;
 
@@ -80,6 +83,7 @@ procedure TStartPageForm.Button2Click(Sender: TObject);
 begin
   Groupbox1.Visible := false;
   Groupbox2.Visible := true;
+  Groupbox3.Visible := false;
   Panel2.Caption := loadDiagamText;
 end;
 
@@ -115,6 +119,14 @@ begin
   end;
 end;
 
+procedure TStartPageForm.Button4Click(Sender: TObject);
+begin
+  Groupbox1.Visible := false;
+  Groupbox2.Visible := false;
+  Groupbox3.Visible := true;
+  Panel2.Caption := createNewVersion;
+end;
+
 procedure TStartPageForm.FormCreate(Sender: TObject);
 begin
   Edit1.Text := '';
@@ -128,6 +140,7 @@ begin
   Panel2.Caption := loadDiagamText;
   Groupbox1.Visible := false;
   Groupbox2.Visible := true;
+  Groupbox3.Visible := false;
   diagramDatabase := TDiagramDatabase.Create(FDQuery1,'wf_def');
 
   StringGrid1.Cells[0,0] := 'ID';
@@ -176,12 +189,13 @@ begin
   Image1.Hint := descriptionHintText;
   Image2.Hint := nameHintText;
   GroupBox2.Caption := allDiagramText;
+  GroupBox3.Caption := allDiagramText;
   StringGrid1.Cells[2,0] := descriptionText;
   StringGrid1.Cells[4,0] := activeText;
 
   if GroupBox2.Visible then Panel2.Caption := loadDiagamText
-  else if GroupBox1.Visible then Panel2.Caption := createDiagramText;
-//  else if GroupBox3.Visible then Panel2.Caption := createNewVersion;
+  else if GroupBox1.Visible then Panel2.Caption := createDiagramText
+  else if GroupBox3.Visible then Panel2.Caption := createNewVersion;
 
 end;
 
