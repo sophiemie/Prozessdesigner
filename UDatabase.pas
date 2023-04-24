@@ -301,8 +301,16 @@ begin
 end;
 
 procedure TDiagramDatabase.fillLoadlistWithDiagrams(list: TStringGrid);
+var
+  I : Integer;
 begin
   // MUSS NOCH IMPLEMENTIERT WERDEN
+  list.RowCount := getDataCount() +1;
+  for I := 0 to list.RowCount do
+  begin
+
+  end;
+
 end;
 
 end.

@@ -306,7 +306,9 @@ begin
   ReplaceNodeNames(OpenDialog1.FileName);
   IsLoadedDiagram := true;
   LoadedDiagramFileName := OpenDialog1.Files[0].Remove(0,57);
-  Label7.Caption := LoadedDiagramFileName;
+  // Mal mit Trim und CurrentDirectory probieren?
+  //Label7.Caption := LoadedDiagramFileName;
+  Label7.Caption := diagram.getName;
 end;
 
 procedure TDesignerForm.ReplaceNodeNames(fileName: String);
@@ -343,13 +345,11 @@ var
   stream : TStream;
   fileName : String;
 begin
-  //diagram := TDiagram.Create(7,'Hallo','');  // Nur hier fuer Test!!
   SaveDialog1.InitialDir := IncludeTrailingPathDelimiter
                       (GetCurrentDir)+ 'Diagramme';
 
   if not IsLoadedDiagram then
   begin
-    //diagram := TDiagram.Create(4,'Test','');
     fileName := diagram.getID.ToString + '_' + diagram.getName;
     SaveDialog1.FileName := fileName;  // So wird Dateiname vorgeschlagen
     if SaveDialog1.Execute then
