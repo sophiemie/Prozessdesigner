@@ -9,7 +9,8 @@ uses
     FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
     FireDAC.Phys.MySQL, FireDAC.Phys.MySQLDef, FireDAC.VCLUI.Wait, Data.DB,
     FireDAC.Comp.Client, FireDAC.Stan.Param, FireDAC.DApt.Intf, Vcl.StdCtrls,
-    FireDAC.DApt, FireDAC.Comp.DataSet, Data.SqlExpr, System.Classes, UDiagram;
+    FireDAC.DApt, FireDAC.Comp.DataSet, Data.SqlExpr, System.Classes, UDiagram,
+    UNodes, UEdge, Vcl.Grids;
 
 type
   {Klasse fuer normale Datenbankfunktionen}
@@ -31,18 +32,23 @@ type
   TNodeDatabase = class(TDatabase)
   public
     constructor Create(newQuery : TFDQuery; newTable : String);
-    procedure addNewNode(diagramID: Integer; nodeType: String); overload;
-    procedure addNewNode(diagramID: Integer; nodeID: Integer; nodeType: String); overload;
+    procedure addNewNode(diagram: TDiagram; node: TStart); overload;
+    procedure addNewNode(diagram: TDiagram; node: TEnd); overload;
+    procedure addNewNode(diagram: TDiagram; node: TDecision); overload;
+    procedure addNewNode(diagram: TDiagram; node: TTask); overload;
     procedure deleteNode(nodeID: Integer);
     function getHighestNodeID : Integer;
+  private
+    procedure addNewNode(diagramID : String; nodeID : String; nodeType : String;
+                          nodeDescription : String); overload;
   end;
 
   TEdgeDatabase = class(TDatabase)
   public
     constructor Create(newQuery : TFDQuery; newTable : String);
     function getHighestEdgeID : Integer;
-    procedure addNewEdge(edgeID: Integer; nodeID: Integer);
-    procedure addNextNode(edgeID: Integer; nodeID: Integer);
+    procedure addNewEdge(edge: TEdge);
+    procedure addNextNode(edge: TEdge);
     procedure deleteEdge(edgeID: Integer);
   end;
 
@@ -53,6 +59,8 @@ type
     procedure deleteDiagram(diagram: TDiagram);
     procedure addNewDiagramVersion(diagram: TDiagram);
     function getHighestDiagramID : Integer;
+    procedure fillLoadlistWithDiagrams(list: TStringGrid);
+    function giveDiagramSavedDatas(diagram: TDiagram) : TDiagram;
   end;
 
 implementation
@@ -150,27 +158,44 @@ begin
   Result := table;
 end;
 
-procedure TNodeDatabase.addNewNode(diagramID: Integer; nodeType: String);
+procedure TNodeDatabase.addNewNode(diagramID : String; nodeID : String;
+                                  nodeType : String; nodeDescription : String);
 var
-  newNodeID: Integer;
-  sqlString: String;
+  sqlString : String;
 begin
-  newNodeID := getHighestNodeID +1; //
-  sqlString := 'insert into ' + getTable + ' (node_id, wf_type_id, node_type) values (' + newNodeID.ToString + ',' + diagramID.ToString + ',"' + nodeType + '")';
+  sqlString := 'insert into ' + getTable
+                + ' (node_id, wf_type_id, node_type, note_label_de) values ('
+                + nodeID + ',' + diagramID + ',"' + nodeType + '","'
+                + nodeDescription + '")';
   write(sqlString);
   query.Close;
 end;
 
-procedure TNodeDatabase.addNewNode(diagramID: Integer; nodeID: Integer; nodeType: String);
+procedure TNodeDatabase.addNewNode(diagram: TDiagram; node: TStart);
 var
   sqlString: String;
 begin
-  sqlString := 'insert into ' + getTable + ' (node_id, wf_type_id, node_type) values ('
-            + nodeID.ToString + ',' + diagramID.ToString + ',"' + nodeType + '")';
-  write(sqlString);
-  query.Close;
+  addNewNode(diagram.getID.ToString, node.getID.ToString, node.getType,
+              node.getDescription);
 end;
 
+procedure TNodeDatabase.addNewNode(diagram: TDiagram; node: TEnd);
+begin
+  addNewNode(diagram.getID.ToString, node.getID.ToString, node.getType,
+              node.getDescription);
+end;
+
+procedure TNodeDatabase.addNewNode(diagram: TDiagram; node: TDecision);
+begin
+  addNewNode(diagram.getID.ToString, node.getID.ToString, node.getType,
+              node.getDescription);
+end;
+
+procedure TNodeDatabase.addNewNode(diagram: TDiagram; node: TTask);
+begin
+  addNewNode(diagram.getID.ToString, node.getID.ToString, node.getType,
+              node.getDescription);
+end;
 
 procedure TNodeDatabase.deleteNode(nodeID: Integer);
 var
@@ -197,13 +222,13 @@ begin
   Result := getHighestID('wf_edge_id');
 end;
 
-procedure TEdgeDatabase.addNewEdge(edgeID: Integer; nodeID: Integer);
+procedure TEdgeDatabase.addNewEdge(edge: TEdge);
 begin
 var
   sqlString: String;
 begin
   sqlString := 'insert into ' + getTable + ' (wf_edge_id, node_id) values ('
-                + edgeID.ToString + ',' + nodeID.ToString + ')';
+                + edge.getID.ToString + ',' + edge.getNodeID.ToString + ')';
   write(sqlString);
   query.Close;
 end;
@@ -220,12 +245,13 @@ begin
 end;
 
 
-procedure TEdgeDatabase.addNextNode(edgeID: Integer; nodeID: Integer);
+procedure TEdgeDatabase.addNextNode(edge: TEdge);
 var
   sqlString : String;
 begin
   sqlString := 'UPDATE ' + getTable + ' SET ' + ' next_node_id = '
-                + nodeID.ToString + ' WHERE wf_edge_id =' + edgeID.ToString;
+                + edge.getNextNodeID.ToString + ' WHERE wf_edge_id ='
+                + edge.getID.ToString;
   write(sqlString);
   query.Close;
 end;
@@ -267,6 +293,26 @@ end;
 function TDiagramDatabase.getHighestDiagramID : Integer;
 begin
   Result := getHighestID('wf_type_id');
+end;
+
+procedure TDiagramDatabase.fillLoadlistWithDiagrams(list: TStringGrid);
+var
+  I : Integer;
+begin
+  // MUSS NOCH IMPLEMENTIERT WERDEN
+  list.RowCount := getDataCount() +1;
+  for I := 0 to list.RowCount do
+  begin
+
+  end;
+
+end;
+
+function giveDiagramSavedDatas(diagram: TDiagram) : TDiagram;
+begin
+
+
+  Result := diagram;
 end;
 
 end.

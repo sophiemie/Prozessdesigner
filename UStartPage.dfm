@@ -3,7 +3,7 @@ object StartPageForm: TStartPageForm
   Top = 0
   Caption = 'ZMT Prozessdesigner'
   ClientHeight = 344
-  ClientWidth = 532
+  ClientWidth = 515
   Color = clBtnHighlight
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -8579,7 +8579,7 @@ object StartPageForm: TStartPageForm
     Left = 25
     Top = 303
     Width = 96
-    Height = 24
+    Height = 20
     Color = clWhite
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText

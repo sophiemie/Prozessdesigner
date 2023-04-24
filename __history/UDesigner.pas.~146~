@@ -88,6 +88,9 @@ type
     { Public-Deklarationen }
     var newDiagramName : String;
     var newDiagramDescription : String;
+    var diagram : TDiagram;
+    var IsLoadedDiagram : boolean;
+    var LoadedDiagramFileName : String;
 //    var newNodeDescription : String;
   end;
 
@@ -103,9 +106,7 @@ var
   newEdgeButtonClicked: boolean;
   newEdgeCreatedWithoutTarget: boolean;
   newEdge : TEdge;
-  diagram : TDiagram;
-  IsLoadedDiagram : boolean;
-  LoadedDiagramFileName : String;
+
 
 implementation
 {$R *.dfm}
@@ -275,13 +276,15 @@ var
   I : Integer;
 begin
    {Wenn ein neues Diagramm erstellt wurde}
-   if not newDiagramName.Equals('') then
+//   if not newDiagramName.Equals('') then  // VORHER, BITTE TESTEN SOBALD DB IN ORDNUNG
+   if not IsLoadedDiagram then
    begin
-    IsLoadedDiagram := false;
-    diagram := TDiagram.Create(DiagramDatabase.getHighestDiagramID+1,
-                                    newDiagramName, newDiagramDescription);
+    //IsLoadedDiagram := false;
+    // In Startpage
+    //diagram := TDiagram.Create(DiagramDatabase.getHighestDiagramID+1,
+    //                                newDiagramName, newDiagramDescription);
     Label7.Caption := diagram.getName;
-    DiagramDatabase.addNewDiagram(diagram);
+    //DiagramDatabase.addNewDiagram(diagram);   // In Startpage
     {Alle vorherigen Elemente im Editor entfernen}
     TMSFNCBloxControl1.Presenter.SelectAll;
     TMSFNCBloxControl1.Presenter.DeleteSelecteds;
@@ -289,20 +292,34 @@ begin
    else {Wenn Diagramm geladen wird}
    begin
     //IsLoadedDiagram := true;
+    TMSFNCBloxControl1.LoadFromFile(OpenDialog1.InitialDir + LoadedDiagramFileName);
    end;
 end;
 
 procedure TDesignerForm.Load1Click(Sender: TObject);
 var
+  I : Integer;
   openFile : TStringList;
+  idFromDatafile : String;
 begin
   OpenDialog1.InitialDir := IncludeTrailingPathDelimiter(GetCurrentDir)
                               + 'Diagramme';
   OpenDialog1.Execute;
   ReplaceNodeNames(OpenDialog1.FileName);
   IsLoadedDiagram := true;
-  LoadedDiagramFileName := OpenDialog1.Files[0].Remove(0,57);
-  Label7.Caption := LoadedDiagramFileName;
+//  LoadedDiagramFileName := OpenDialog1.Files[0].Remove(0,57);
+  LoadedDiagramFileName := OpenDialog1.Files[0].Remove(0,OpenDialog1.InitialDir.Length+1);
+  diagram.setName(LoadedDiagramFileName);
+  // Mal mit Trim und CurrentDirectory probieren?
+  //Label7.Caption := LoadedDiagramFileName;
+  I := 0;
+  while diagram.getName.Chars[I] <> '_' do
+  begin
+    idFromDatafile := idFromDatafile + diagram.getName.Chars[I];
+    I := I +1;
+  end;
+  ShowMessage(idFromDatafile);
+  Label7.Caption := diagram.getName;
 end;
 
 procedure TDesignerForm.ReplaceNodeNames(fileName: String);
@@ -339,15 +356,13 @@ var
   stream : TStream;
   fileName : String;
 begin
-  //diagram := TDiagram.Create(7,'Hallo','');  // Nur hier fuer Test!!
   SaveDialog1.InitialDir := IncludeTrailingPathDelimiter
                       (GetCurrentDir)+ 'Diagramme';
 
   if not IsLoadedDiagram then
   begin
-    diagram := TDiagram.Create(4,'Test','');
     fileName := diagram.getID.ToString + '_' + diagram.getName;
-    SaveDialog1.FileName := fileName;
+    SaveDialog1.FileName := fileName;  // So wird Dateiname vorgeschlagen
     if SaveDialog1.Execute then
     begin
       TMSFNCBloxControl1.SaveToFile(IncludeTrailingPathDelimiter

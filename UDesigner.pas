@@ -298,17 +298,29 @@ end;
 
 procedure TDesignerForm.Load1Click(Sender: TObject);
 var
+  I : Integer;
   openFile : TStringList;
+  idFromDatafile : String;
 begin
   OpenDialog1.InitialDir := IncludeTrailingPathDelimiter(GetCurrentDir)
                               + 'Diagramme';
   OpenDialog1.Execute;
   ReplaceNodeNames(OpenDialog1.FileName);
   IsLoadedDiagram := true;
-  LoadedDiagramFileName := OpenDialog1.Files[0].Remove(0,57);
-  // Mal mit Trim und CurrentDirectory probieren?
-  //Label7.Caption := LoadedDiagramFileName;
+  {Pfad aus Namen entfernen}
+  LoadedDiagramFileName := OpenDialog1.Files[0].Remove(0,
+                                              OpenDialog1.InitialDir.Length+1);
+  diagram.setName(LoadedDiagramFileName);
+  I := 0;
+  { ID aus Dateinamen bestimmen }
+  while diagram.getName.Chars[I] <> '_' do
+  begin
+    idFromDatafile := idFromDatafile + diagram.getName.Chars[I];
+    I := I +1;
+  end;
+  diagram.setID(idFromDatafile.ToInteger);
   Label7.Caption := diagram.getName;
+  diagram := DiagramDatabase.giveDiagramSavedDatas(diagram);
 end;
 
 procedure TDesignerForm.ReplaceNodeNames(fileName: String);

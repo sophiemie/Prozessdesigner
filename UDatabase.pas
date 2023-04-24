@@ -60,6 +60,7 @@ type
     procedure addNewDiagramVersion(diagram: TDiagram);
     function getHighestDiagramID : Integer;
     procedure fillLoadlistWithDiagrams(list: TStringGrid);
+    function giveDiagramSavedDatas(diagram: TDiagram) : TDiagram;
   end;
 
 implementation
@@ -174,12 +175,6 @@ procedure TNodeDatabase.addNewNode(diagram: TDiagram; node: TStart);
 var
   sqlString: String;
 begin
-//  sqlString := 'insert into ' + getTable
-//                + ' (node_id, wf_type_id, node_type) values ('
-//                + node.getID.ToString + ',' + diagram.getID.ToString + ',"'
-//                + node.getType + '")';
-//  write(sqlString);
-//  query.Close;
   addNewNode(diagram.getID.ToString, node.getID.ToString, node.getType,
               node.getDescription);
 end;
@@ -311,6 +306,20 @@ begin
 
   end;
 
+end;
+
+function TDiagramDatabase.giveDiagramSavedDatas(diagram: TDiagram) : TDiagram;
+begin
+  read('select  from ' + table + ' where wf_type_id ='  // ANPASSEN
+        + diagram.getID.ToString);
+
+  with query do
+  begin
+    diagram.setDescription(FieldByName('').AsString);  // ANPASSEN
+    diagram.setInUse(FieldByName('').AsBoolean);  // ANPASSEN
+  end;
+
+  Result := diagram;
 end;
 
 end.

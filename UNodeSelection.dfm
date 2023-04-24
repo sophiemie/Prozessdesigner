@@ -8366,7 +8366,7 @@ object NodeSelectionForm: TNodeSelectionForm
       Top = 232
       Width = 75
       Height = 33
-      Caption = 'Selected'
+      Caption = 'Select'
       TabOrder = 1
       OnClick = Button1Click
     end
