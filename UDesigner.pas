@@ -52,7 +52,6 @@ type
     Label5: TLabel;
     Label6: TLabel;
     Panel5: TPanel;
-    Button1: TButton;
     BitBtnEdge: TBitBtn;
     MainMenu1: TMainMenu;
     Datei1: TMenuItem;
@@ -68,7 +67,6 @@ type
     procedure BitBtnMTClick(Sender: TObject);
     procedure BitBtnHDClick(Sender: TObject);
     procedure BitBtnMDClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
     procedure createNodeForm();
     procedure TMSFNCBloxControl1ElementRemove(Sender: TObject;
       Element: TTMSFNCBloxElement);
@@ -172,12 +170,12 @@ var
 begin
   NodeSelectionForm.FillList('TEnd');
   createNodeForm();
-  //newNodeID := NodeDatabase.getHighestNodeID +1;
+  newNodeID := NodeDatabase.getHighestNodeID +1;
   newNodeID := 1;
   newEnd := TEnd.Create(newNodeID,
                           NodeSelectionForm.getSelectedNodeDescription);
   TMSFNCBloxControl1.Blox.Add(newEnd);
-  //NodeDatabase.addNewNode(diagram, newEnd);
+  NodeDatabase.addNewNode(diagram, newEnd);
 end;
 
 procedure TDesignerForm.BitBtnHDClick(Sender: TObject);
@@ -187,11 +185,11 @@ var
 begin
   NodeSelectionForm.FillList('THumanDecision');
   createNodeForm();
-  //newNodeID := NodeDatabase.getHighestNodeID +1;
+  newNodeID := NodeDatabase.getHighestNodeID +1;
   newHD := THumanDecision.Create(newNodeID,
                                   NodeSelectionForm.getSelectedNodeDescription);
   TMSFNCBloxControl1.Blox.Add(newHD);
-  //NodeDatabase.addNewNode(diagram, newHD);
+  NodeDatabase.addNewNode(diagram, newHD);
 end;
 
 procedure TDesignerForm.BitBtnHTClick(Sender: TObject);
@@ -245,15 +243,6 @@ begin
   newStart := TStart.Create(newNodeID);
   TMSFNCBloxControl1.Blox.Add(newStart);
   NodeDatabase.addNewNode(diagram, newStart);
-end;
-
-////////////////////////////// TEST
-procedure TDesignerForm.Button1Click(Sender: TObject);
-var
-  tabelle: String;
-begin
-  tabelle := 'wf_nodes';
-  ShowMessage(NodeDatabase.getDataCount.ToString);
 end;
 
 { Einmaliges Event bei Start der Applikation}
@@ -311,6 +300,7 @@ begin
   LoadedDiagramFileName := OpenDialog1.Files[0].Remove(0,
                                               OpenDialog1.InitialDir.Length+1);
   diagram.setName(LoadedDiagramFileName);
+  Label7.Caption := diagram.getName;
   I := 0;
   { ID aus Dateinamen bestimmen }
   while diagram.getName.Chars[I] <> '_' do
@@ -319,8 +309,8 @@ begin
     I := I +1;
   end;
   diagram.setID(idFromDatafile.ToInteger);
-  Label7.Caption := diagram.getName;
-  diagram := DiagramDatabase.giveDiagramSavedDatas(diagram);
+  { Restliche Diagrammdaten aus Datenbank beziehen}
+  //diagram := DiagramDatabase.giveDiagramSavedDatas(diagram);
 end;
 
 procedure TDesignerForm.ReplaceNodeNames(fileName: String);
