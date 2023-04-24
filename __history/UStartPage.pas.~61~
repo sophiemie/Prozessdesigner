@@ -106,10 +106,6 @@ begin
   Image1.Hint := descriptionHintText;
   Image2.Hint := nameHintText;
   GroupBox2.Caption := allDiagramText;
-  if GroupBox2.Visible then Panel2.Caption := loadDiagamText
-  else if GroupBox1.Visible then Panel2.Caption := createDiagramText;
-//  else if GroupBox3.Visible then Panel2.Caption := createNewVersion;
-
 end;
 
 procedure TStartPageForm.ToggleSwitch1Click(Sender: TObject);

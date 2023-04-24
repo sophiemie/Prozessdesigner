@@ -62,14 +62,14 @@ procedure TStartPageForm.Button1Click(Sender: TObject);
 begin
   Groupbox1.Visible := true;
   Groupbox2.Visible := false;
-  Panel2.Caption := createDiagramText;
+  Panel2.Caption := 'Create New Diagram';
 end;
 
 procedure TStartPageForm.Button2Click(Sender: TObject);
 begin
   Groupbox1.Visible := false;
   Groupbox2.Visible := true;
-  Panel2.Caption := loadDiagamText;
+  Panel2.Caption := 'Load Diagram';
 end;
 
 procedure TStartPageForm.Button3Click(Sender: TObject);
@@ -87,10 +87,7 @@ procedure TStartPageForm.FormCreate(Sender: TObject);
 begin
   Edit1.Text := '';
   Memo1.Lines.Clear;
-  loadDiagamText := STARTPAGELABEL_LOAD_EN;
-  createDiagramText := STARTPAGELABEL_CREATE_EN;
-  createNewVersion := STARTPAGELABEL_VERSION_EN;
-  Panel2.Caption := loadDiagamText;
+  Panel2.Caption := 'Load Diagram';
   Groupbox1.Visible := false;
   Groupbox2.Visible := true;
 end;
@@ -101,22 +98,11 @@ begin
   button2.Caption := loadButtonText;
   button3.Caption := createButtonText;
   button4.Caption := newVersionButtonText;
-  StartPageForm.Caption := formText;
-  label2.Caption := descriptionText;
-  Image1.Hint := descriptionHintText;
-  Image2.Hint := nameHintText;
-  GroupBox2.Caption := allDiagramText;
-  if GroupBox2.Visible then Panel2.Caption := loadDiagamText
-  else if GroupBox1.Visible then Panel2.Caption := createDiagramText;
-//  else if GroupBox3.Visible then Panel2.Caption := createNewVersion;
-
 end;
 
 procedure TStartPageForm.ToggleSwitch1Click(Sender: TObject);
 begin
-
-
-  if ToggleSwitch1.State = tssOff then
+  if ToggleSwitch1.StateCaptions.CaptionOff.Equals('English') then
   begin
     newButtonText := NEW_EN;
     loadButtonText := LOAD_EN;
@@ -125,10 +111,10 @@ begin
     descriptionText := DESCRIPTION_EN;
     descriptionHintText := DESCRIPTION_HINT_EN;
     nameHintText := NAME_HINT_EN;
-    createDiagramText := STARTPAGELABEL_CREATE_EN;
+    createDiagramText := CREATE_EN;
     loadDiagamText := STARTPAGELABEL_LOAD_EN;
     allDiagramText := ALLDIAGRAM_EN;
-    createButtonText := CREATE_EN;
+    createButtonText := STARTPAGELABEL_CREATE_EN;
     createNewVersion := STARTPAGELABEL_VERSION_EN;
   end
   else {Ansonsten Deutsches Sprachpaket}
@@ -140,10 +126,10 @@ begin
     descriptionText := DESCRIPTION_DE;
     descriptionHintText := DESCRIPTION_HINT_DE;
     nameHintText := NAME_HINT_DE;
-    createDiagramText := STARTPAGELABEL_CREATE_DE;
+    createDiagramText := CREATE_DE;
     loadDiagamText := STARTPAGELABEL_LOAD_DE;
     allDiagramText := ALLDIAGRAM_DE;
-    createButtonText := CREATE_DE;
+    createButtonText := STARTPAGELABEL_CREATE_DE;
     createNewVersion := STARTPAGELABEL_VERSION_DE;
   end;
   fillComponentText();
