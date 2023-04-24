@@ -10,7 +10,7 @@ uses
     FireDAC.Phys.MySQL, FireDAC.Phys.MySQLDef, FireDAC.VCLUI.Wait, Data.DB,
     FireDAC.Comp.Client, FireDAC.Stan.Param, FireDAC.DApt.Intf, Vcl.StdCtrls,
     FireDAC.DApt, FireDAC.Comp.DataSet, Data.SqlExpr, System.Classes, UDiagram,
-    UNodes, UEdge;
+    UNodes, UEdge, Vcl.Grids;
 
 type
   {Klasse fuer normale Datenbankfunktionen}
@@ -59,6 +59,8 @@ type
     procedure deleteDiagram(diagram: TDiagram);
     procedure addNewDiagramVersion(diagram: TDiagram);
     function getHighestDiagramID : Integer;
+    procedure fillLoadlistWithDiagrams(list: TStringGrid);
+    function giveDiagramSavedDatas(diagram: TDiagram) : TDiagram;
   end;
 
 implementation
@@ -173,12 +175,6 @@ procedure TNodeDatabase.addNewNode(diagram: TDiagram; node: TStart);
 var
   sqlString: String;
 begin
-//  sqlString := 'insert into ' + getTable
-//                + ' (node_id, wf_type_id, node_type) values ('
-//                + node.getID.ToString + ',' + diagram.getID.ToString + ',"'
-//                + node.getType + '")';
-//  write(sqlString);
-//  query.Close;
   addNewNode(diagram.getID.ToString, node.getID.ToString, node.getType,
               node.getDescription);
 end;
@@ -297,6 +293,33 @@ end;
 function TDiagramDatabase.getHighestDiagramID : Integer;
 begin
   Result := getHighestID('wf_type_id');
+end;
+
+procedure TDiagramDatabase.fillLoadlistWithDiagrams(list: TStringGrid);
+var
+  I : Integer;
+begin
+  // MUSS NOCH IMPLEMENTIERT WERDEN
+  list.RowCount := getDataCount() +1;
+  for I := 0 to list.RowCount do
+  begin
+
+  end;
+
+end;
+
+function TDiagramDatabase.giveDiagramSavedDatas(diagram: TDiagram) : TDiagram;
+begin
+  read('select  from ' + table + ' where wf_type_id ='  // ANPASSEN
+        + diagram.getID.ToString);
+
+  with query do
+  begin
+    diagram.setDescription(FieldByName('').AsString);  // ANPASSEN
+    diagram.setInUse(FieldByName('').AsBoolean);  // ANPASSEN
+  end;
+
+  Result := diagram;
 end;
 
 end.

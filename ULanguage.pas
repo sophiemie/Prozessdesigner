@@ -32,6 +32,8 @@ const
   LOAD_DE = 'Laden';
   DESCRIPTION_EN = 'Description';
   DESCRIPTION_DE = 'Beschreibung';
+  ALLDIAGRAM_EN = 'All Diagrams';
+  ALLDIAGRAM_DE = 'Alle Diagramme';
   CREATE_EN = 'Create';
   CREATE_DE = 'Erstellen';
   STARTPAGELABEL_CREATE_EN = 'Create New Diagram';
@@ -45,6 +47,12 @@ const
   DESCRIPTION_HINT_DE = 'Optional kann dem Diagramm eine Beschreibung hinzu '
                           + 'gefügt werden.';
   DESCRIPTION_HINT_EN = 'A Description to the new Diagram. Its optional.';
+  NEWVERSION_EN = 'New Version';
+  NEWVERSION_DE = 'Neue Version';
+  NODIAGRAM_NAME_DE = 'Name darf nicht leer sein.';
+  NODIAGRAM_NAME_EN = 'Name can not be empty.';
+  ACTIVE_EN = 'Active';
+  ACTIVE_DE = 'Aktiv';
 
   {Nodeselection}
   NODESELECTION_EN = 'Nodeselection';
