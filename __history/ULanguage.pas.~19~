@@ -16,11 +16,11 @@ const
   END_DE = 'Ende';
   HD_EN = 'Human Decision';
   HD_DE = 'Menschliche Entscheidung';
-  MD_EN = 'Mashine Decision';
+  MD_EN = 'Machine Decision';
   MD_DE = 'Maschinelle Entscheidung';
   HT_EN = 'Human Task';
   HT_DE = 'Menschliche Aufgabe';
-  MT_EN = 'Mashine Task';
+  MT_EN = 'Machine Task';
   MT_DE = 'Maschinelle Aufgabe';
   PROCESSDESIGNER_EN = 'Processdesigner';
   PROCESSDESIGNER_DE = 'Prozessdesigner';
@@ -32,6 +32,8 @@ const
   LOAD_DE = 'Laden';
   DESCRIPTION_EN = 'Description';
   DESCRIPTION_DE = 'Beschreibung';
+  ALLDIAGRAM_EN = 'All Diagrams';
+  ALLDIAGRAM_DE = 'Alle Diagramme';
   CREATE_EN = 'Create';
   CREATE_DE = 'Erstellen';
   STARTPAGELABEL_CREATE_EN = 'Create New Diagram';
@@ -40,6 +42,13 @@ const
   STARTPAGELABEL_LOAD_DE = 'Diagramm laden';
   STARTPAGELABEL_VERSION_EN = 'Create New Version';
   STARTPAGELABEL_VERSION_DE = 'Neue Version erstellen';
+  NAME_HINT_DE = 'Das Diagramm braucht einen Namen.';
+  NAME_HINT_EN = 'The Diagram needs a name.';
+  DESCRIPTION_HINT_DE = 'Optional kann dem Diagramm eine Beschreibung hinzu '
+                          + 'gefügt werden.';
+  DESCRIPTION_HINT_EN = 'A Description to the new Diagram. Its optional.';
+  NEWVERSION_EN = 'New Version';
+  NEWVERSION_DE = 'Neue Version';
 
   {Nodeselection}
   NODESELECTION_EN = 'Nodeselection';
@@ -91,17 +100,29 @@ const
   MT_SEL2_EN = 'Send PDF';
   MT_SEL3_EN = 'Send Info';
 
+  NO_DESCRIPTIONSELECT_DE = 'Bitte auswählen.';
+  NO_DESCRIPTIONSELECT_EN = 'Please choose.';
+
   END_HINT_DE = 'Standard ist für ein Prozess der erfolgreich geendet ist.'
                   + ' Sind bestimmte Kriterien nicht erfüllt kann ein Prozess'
                   + ' vorzeitig beendet werden, dies führt zu einem Abbruch.';
-  HD_HINT_DE = 'Es gibt verschiedene Arten von Anträgen die vom Auftrag'
-                  + 'steller ausgefüllt werden können. ';
+  HD_HINT_DE = 'Es gibt verschiedene Personen, die eine Entscheidung treffen '
+                + 'können.';
   MD_HINT_DE = 'Dies sind verschiedene Überprüfungen die das System bereits '
                   + 'überprüfen kann.';
   HT_HINT_DE = 'Es gibt verschidene Formulare, die der Auftragsteller bei einem'
                   + ' Prozess ausfüllen muss.';
   MT_HINT_DE = 'Dies sind Funktionen die bereits vom System durchgeführt werden'
                 + ' können.';
+  END_HINT_EN = 'Standard are for Processes which went successful. When they '
+                + ' are some unfulfilled criterias, then a process must be '
+                + ' abort.';
+  HD_HINT_EN = 'All people who can make a decision.';
+  MD_HINT_EN = 'They are different kinds of Verifications which can be done by '
+                + ' the system.';
+  HT_HINT_EN = 'They are different kinds of Formulars which must be filled by '
+                + 'the Appliant.';
+  MT_HINT_EN = 'These are functions which can be performed by the system.';
 
 implementation
 

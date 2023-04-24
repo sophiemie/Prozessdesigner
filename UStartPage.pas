@@ -33,6 +33,9 @@ type
     procedure Button2Click(Sender: TObject);
     procedure ToggleSwitch1Click(Sender: TObject);
     procedure fillComponentText();
+    procedure StringGrid1SelectCell(Sender: TObject; ACol, ARow: Integer;
+      var CanSelect: Boolean);
+    function FindEmptyRowInList : Integer;
   private
     { Private-Deklarationen }
     newButtonText : String;
@@ -47,6 +50,8 @@ type
     allDiagramText : String;
     createButtonText : String;
     createNewVersion : String;
+    noDiagramName : String;
+    activeText : String;
   public
     { Public-Deklarationen }
   end;
@@ -74,12 +79,26 @@ end;
 
 procedure TStartPageForm.Button3Click(Sender: TObject);
 begin
-  if Edit1.Text = '' then ShowMessage('Name can not be emty')
+  if Edit1.Text = '' then ShowMessage(noDiagramName)
   else
   begin
     DesignerForm.newDiagramName := Edit1.Text;
     DesignerForm.newDiagramDescription := Memo1.Text;
     DesignerForm.ShowModal;
+    Edit1.Clear;
+    Memo1.Clear;
+    StringGrid1.Cells[1,1] := DesignerForm.newDiagramName;
+    StringGrid1.Cells[2,1] := DesignerForm.newDiagramDescription;
+  end;
+end;
+
+function TStartPageForm.FindEmptyRowInList : Integer;
+var
+  I : Integer;
+begin
+  for I := 0 to StringGrid1.RowCount do
+  begin
+
   end;
 end;
 
@@ -90,9 +109,43 @@ begin
   loadDiagamText := STARTPAGELABEL_LOAD_EN;
   createDiagramText := STARTPAGELABEL_CREATE_EN;
   createNewVersion := STARTPAGELABEL_VERSION_EN;
+  noDiagramName := NODIAGRAM_NAME_EN;
+  descriptionText := DESCRIPTION_EN;
+  activeText := ACTIVE_EN;
   Panel2.Caption := loadDiagamText;
   Groupbox1.Visible := false;
   Groupbox2.Visible := true;
+
+  StringGrid1.Cells[0,0] := 'ID';
+  StringGrid1.Cells[1,0] := 'Name';
+  StringGrid1.Cells[3,0] := 'Version';
+  StringGrid1.Cells[2,0] := descriptionText;
+  StringGrid1.Cells[4,0] := activeText;
+  Stringgrid1.ColWidths[0] := 35;
+  Stringgrid1.ColWidths[3] := 100;
+  Stringgrid1.ColWidths[4] := 80;
+  Stringgrid1.ColWidths[1] := 157;
+  Stringgrid1.ColWidths[2] := 280;
+end;
+
+procedure TStartPageForm.StringGrid1SelectCell(Sender: TObject; ACol,
+  ARow: Integer; var CanSelect: Boolean);
+var
+  diagramName : String;
+  diagramID : Integer;
+  diagramDescription : String;
+  diagramInUse : boolean;
+  diagramVersion : Integer;
+begin
+  if not StringGrid1.Cells[ACol,ARow].IsEmpty then
+  begin
+    diagramID := StringGrid1.Cells[0,ARow].ToInteger;
+    diagramName := StringGrid1.Cells[1,ARow];
+    diagramDescription := StringGrid1.Cells[2,ARow];
+    diagramInUse := StringGrid1.Cells[4,ARow].ToBoolean();
+    diagramVersion := StringGrid1.Cells[3,ARow].ToInteger();
+    DesignerForm.ShowModal;
+  end;
 end;
 
 procedure TStartPageForm.fillComponentText();
@@ -106,6 +159,9 @@ begin
   Image1.Hint := descriptionHintText;
   Image2.Hint := nameHintText;
   GroupBox2.Caption := allDiagramText;
+  StringGrid1.Cells[2,0] := descriptionText;
+  StringGrid1.Cells[4,0] := activeText;
+
   if GroupBox2.Visible then Panel2.Caption := loadDiagamText
   else if GroupBox1.Visible then Panel2.Caption := createDiagramText;
 //  else if GroupBox3.Visible then Panel2.Caption := createNewVersion;
@@ -130,6 +186,8 @@ begin
     allDiagramText := ALLDIAGRAM_EN;
     createButtonText := CREATE_EN;
     createNewVersion := STARTPAGELABEL_VERSION_EN;
+    noDiagramName := NODIAGRAM_NAME_EN;
+    activeText := ACTIVE_EN;
   end
   else {Ansonsten Deutsches Sprachpaket}
   begin
@@ -145,6 +203,8 @@ begin
     allDiagramText := ALLDIAGRAM_DE;
     createButtonText := CREATE_DE;
     createNewVersion := STARTPAGELABEL_VERSION_DE;
+    noDiagramName := NODIAGRAM_NAME_DE;
+    activeText := ACTIVE_DE;
   end;
   fillComponentText();
 end;

@@ -49,6 +49,10 @@ const
   DESCRIPTION_HINT_EN = 'A Description to the new Diagram. Its optional.';
   NEWVERSION_EN = 'New Version';
   NEWVERSION_DE = 'Neue Version';
+  NODIAGRAM_NAME_DE = 'Name darf nicht leer sein.';
+  NODIAGRAM_NAME_EN = 'Name can not be empty.';
+  ACTIVE_EN = 'Active';
+  ACTIVE_DE = 'Aktiv';
 
   {Nodeselection}
   NODESELECTION_EN = 'Nodeselection';
