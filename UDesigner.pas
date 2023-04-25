@@ -81,15 +81,11 @@ type
     procedure ReplaceNodeNames(fileName: String);
   private
     { Private-Deklarationen }
-
   public
     { Public-Deklarationen }
-//    var newDiagramName : String;
-//    var newDiagramDescription : String;
     var diagram : TDiagram;
     var IsLoadedDiagram : boolean;
     var LoadedDiagramFileName : String;
-//    var newNodeDescription : String;
   end;
 
 var
@@ -104,7 +100,6 @@ var
   newEdgeButtonClicked: boolean;
   newEdgeCreatedWithoutTarget: boolean;
   newEdge : TEdge;
-
 
 implementation
 {$R *.dfm}
@@ -291,6 +286,7 @@ var
   openFile : TStringList;
   idFromDatafile : String;
   versionFromDatafile : String;
+  diagramName : String;
 begin
   OpenDialog1.InitialDir := IncludeTrailingPathDelimiter(GetCurrentDir)
                               + 'Diagramme';
@@ -298,9 +294,9 @@ begin
   ReplaceNodeNames(OpenDialog1.FileName);
   IsLoadedDiagram := true;
   {Pfad aus Namen entfernen}
-  LoadedDiagramFileName := OpenDialog1.Files[0].Remove(0,
+  diagramName := OpenDialog1.Files[0].Remove(0,
                                               OpenDialog1.InitialDir.Length+1);
-  diagram.setName(LoadedDiagramFileName);
+  diagram.setName(diagramName);
   Label7.Caption := diagram.getName;
   I := 0;
   { ID aus Dateinamen bestimmen }

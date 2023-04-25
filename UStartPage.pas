@@ -188,7 +188,7 @@ begin
 
     DesignerForm.IsLoadedDiagram := true;
     DesignerForm.LoadedDiagramFileName := 'Diagramme/' + diagramID.ToString
-                    + '_' + 'v' + diagramVersion.ToString + '_' + diagramName + '.blox';
+      + '_' + 'v' + diagramVersion.ToString + '_' + diagramName + '.blox';
     DesignerForm.diagram := TDiagram.Create(diagramID, diagramName, diagramDescription);
     DesignerForm.diagram.setInUse(diagramInUse);
     DesignerForm.diagram.setVersionNumber(diagramVersion);
