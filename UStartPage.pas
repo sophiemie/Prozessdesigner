@@ -46,6 +46,7 @@ type
       var CanSelect: Boolean);
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
+    procedure CreateOneMoreDiagramEntry(newDiagram : TDiagram);
   private
     { Private-Deklarationen }
     newButtonText : String;
@@ -94,6 +95,15 @@ begin
   Panel2.Caption := loadDiagamText;
 end;
 
+procedure TStartPageForm.CreateOneMoreDiagramEntry(newDiagram : TDiagram);
+begin
+  StringGrid1.RowCount := StringGrid1.RowCount +1;
+  StringGrid1.Cells[0,StringGrid1.RowCount-1] := (StringGrid1.RowCount -1).ToString;
+  StringGrid1.Cells[1,StringGrid1.RowCount-1] := newDiagram.getName;
+  StringGrid1.Cells[2,StringGrid1.RowCount-1] := newDiagram.getDescription;
+  StringGrid1.Cells[3,StringGrid1.RowCount-1] := newDiagram.getVersionNumber.ToString;
+end;
+
 procedure TStartPageForm.Button3Click(Sender: TObject);
 var
   newDiagramID : Integer;
@@ -121,11 +131,12 @@ begin
     Edit1.Clear;
     Memo1.Clear;
     { Ladeliste um neuen Diagramm ergaenzen }
-    StringGrid1.RowCount := StringGrid1.RowCount +1;
-    StringGrid1.Cells[0,StringGrid1.RowCount-1] := (StringGrid1.RowCount -1).ToString;
-    StringGrid1.Cells[1,StringGrid1.RowCount-1] := DesignerForm.diagram.getName;
-    StringGrid1.Cells[2,StringGrid1.RowCount-1] := DesignerForm.diagram.getDescription;
-    StringGrid1.Cells[3,StringGrid1.RowCount-1] := DesignerForm.Diagram.getVersionNumber.ToString;
+    CreateOneMoreDiagramEntry(DesignerForm.diagram);
+//    StringGrid1.RowCount := StringGrid1.RowCount +1;
+//    StringGrid1.Cells[0,StringGrid1.RowCount-1] := (StringGrid1.RowCount -1).ToString;
+//    StringGrid1.Cells[1,StringGrid1.RowCount-1] := DesignerForm.diagram.getName;
+//    StringGrid1.Cells[2,StringGrid1.RowCount-1] := DesignerForm.diagram.getDescription;
+//    StringGrid1.Cells[3,StringGrid1.RowCount-1] := DesignerForm.Diagram.getVersionNumber.ToString;
 
     { Umwandlun von Boolean zu String zeigt Zahl an, deswegen umkonvertieren }
     if DesignerForm.diagram.getInUse then
@@ -134,15 +145,24 @@ begin
   end;
 end;
 
-procedure TStartPageForm.Button4Click(Sender: TObject);
+procedure TStartPageForm.Button4Click(Sender: TObject); // Neue Version erstellen
+var
+  diagramCopy : TDiagram;
 begin
-//  Groupbox1.Visible := false;
-//  Groupbox2.Visible := false;
-//  Groupbox3.Visible := true;
-//  Panel2.Caption := createNewVersion;
-
-  {Diagramm in Datenbank kopieren}
-  //diagramDatabase.copyDiagram();
+  if diagramSelected then
+  begin
+    diagramCopy := TDiagram.Create(StringGrid1.RowCount,
+      DesignerForm.diagram.getName, DesignerForm.diagram.getDescription);
+    diagramCopy.setVersionNumber(DesignerForm.diagram.getVersionNumber+1);
+    DesignerForm.diagram := diagramCopy;
+    DesignerForm.IsLoadedDiagram := true;
+    DesignerForm.diagramIsSaved := false;
+    {Diagramm in Datenbank kopieren}
+    //diagramDatabase.copyDiagram(diagramCopy);
+    CreateOneMoreDiagramEntry(diagramCopy);
+    DesignerForm.ShowModal
+  end
+  else ShowMessage(noDiagramSelected);
 end;
 
 procedure TStartPageForm.Button5Click(Sender: TObject);
