@@ -88,7 +88,7 @@ begin
     ListBox1.Items.Add('Leader');
     ListBox1.Items.Add('Management');
   end
-  else if NodeClass.Equals('TMashineDecision') then
+  else if NodeClass.Equals('TMachineDecision') then
   begin
     Label1.Caption := 'What should be checked?';
     GroupBox1.Caption := 'Mashine Decision';
@@ -105,8 +105,9 @@ begin
     ListBox1.Items.Add('Urlaub');
     ListBox1.Items.Add('Drittmittel');
     ListBox1.Items.Add('MitarbeiterInnen und Gäste');
+    ListBox1.Items.Add('Reiseantrag');
   end
-  else if NodeClass.Equals('TMashineTask') then
+  else if NodeClass.Equals('TMachineTask') then
   begin
     Label1.Caption := 'Which method should be used?';
     GroupBox1.Caption := 'Mashine Task';

@@ -47,6 +47,7 @@ type
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure CreateOneMoreDiagramEntry(newDiagram : TDiagram);
+    procedure fillLoadingList();
   private
     { Private-Deklarationen }
     newButtonText : String;
@@ -54,7 +55,7 @@ type
     newVersionButtonText : String;
     formText : String;
     descriptionText : String;
-    descriptionHintText : String;
+    descriptionHintText : String;   //
     nameHintText : String;
     createDiagramText : String;
     loadDiagamText : String;
@@ -165,6 +166,44 @@ begin
   else ShowMessage(noDiagramSelected);
 end;
 
+//procedure TStartPageForm.Button6Click(Sender: TObject);
+//begin
+//  Edit3.Text := (Screen.PixelsPerInch*100 div 96).ToString; // Fuer die Skalierung bei verschiedenen Rechnern
+//end; // Loaded
+
+// Nur solange Datenbank nicht angebunden ist
+procedure TStartPageForm.fillLoadingList();
+var
+  dir, cellText : String;
+  searchRec : TSearchRec;
+  I : Integer;
+begin
+  dir := IncludeTrailingPathDelimiter(GetCurrentDir)+ 'Diagramme/';
+
+  if FindFirst(dir + '*.*', faAnyFile, searchRec) = 0 then
+  begin
+   repeat
+    if searchRec.Attr and faDirectory = 0 then
+     begin
+      StringGrid1.RowCount := StringGrid1.RowCount +1;
+      StringGrid1.Cells[1,StringGrid1.RowCount-1] := searchRec.Name;
+     end;
+   until FindNext(searchRec) <> 0;
+   FindClose(searchRec);
+  end;
+
+  for I := 1 to StringGrid1.RowCount-1 do
+  begin
+    cellText := StringGrid1.Cells[1,I];
+    StringGrid1.Cells[0,I] := cellText.Chars[0];
+    StringGrid1.Cells[3,I] := cellText.Chars[3];
+    cellText := cellText.Remove(0,5);
+    cellText := cellText.Remove(cellText.Length-5);
+    StringGrid1.Cells[1,I] := cellText;
+  end;
+end;
+
+
 procedure TStartPageForm.FormCreate(Sender: TObject);
 begin
   Edit1.Text := '';
@@ -193,16 +232,15 @@ begin
   Stringgrid1.ColWidths[4] := 80;
   Stringgrid1.ColWidths[1] := 157;
   Stringgrid1.ColWidths[2] := 280;
+  fillLoadingList();
 end;
 
 procedure TStartPageForm.StringGrid1SelectCell(Sender: TObject; ACol,
   ARow: Integer; var CanSelect: Boolean);    // LADEN
 var
-  name : String;
-  iD : Integer;
-  description : String;
+  name, description : String;
+  iD, version : Integer;
   inUse : boolean;
-  version : Integer;
 begin
   { Erste Zeile soll nicht beachtet werden }
   if ARow <> 0 then
@@ -225,12 +263,11 @@ begin
 
       { Daten an DesignerForm uebergeben }
       DesignerForm.IsLoadedDiagram := true;
-      DesignerForm.LoadedDiagramFileName := '/' + iD.ToString + '_' + 'v'
+      DesignerForm.LoadedDiagramFileName := iD.ToString + '_' + 'v'
                                       + version.ToString + '_' + name + '.blox';
       DesignerForm.diagram := TDiagram.Create(iD, name, description);
       DesignerForm.diagram.setInUse(inUse);
       DesignerForm.diagram.setVersionNumber(version);
-      //DesignerForm.ShowModal;
     end;
   end;
 end;

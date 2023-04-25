@@ -8279,8 +8279,8 @@ object DesignerForm: TDesignerForm
   object Label7: TLabel
     Left = 8
     Top = 0
-    Width = 115
-    Height = 21
+    Width = 119
+    Height = 23
     Caption = 'New Diagram'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clHighlightText
@@ -8366,7 +8366,7 @@ object DesignerForm: TDesignerForm
       Left = 56
       Top = 103
       Width = 31
-      Height = 18
+      Height = 17
       Caption = 'Start'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -8379,7 +8379,7 @@ object DesignerForm: TDesignerForm
       Left = 163
       Top = 103
       Width = 26
-      Height = 18
+      Height = 17
       Caption = 'End'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -8392,7 +8392,7 @@ object DesignerForm: TDesignerForm
       Left = 24
       Top = 227
       Width = 81
-      Height = 18
+      Height = 17
       Caption = 'Human Task'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -8404,8 +8404,8 @@ object DesignerForm: TDesignerForm
     object Label4: TLabel
       Left = 144
       Top = 227
-      Width = 90
-      Height = 18
+      Width = 88
+      Height = 17
       Caption = 'Machine Task'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -8417,8 +8417,8 @@ object DesignerForm: TDesignerForm
     object Label5: TLabel
       Left = 8
       Top = 363
-      Width = 109
-      Height = 18
+      Width = 108
+      Height = 17
       Caption = 'Human Decision'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -8430,8 +8430,8 @@ object DesignerForm: TDesignerForm
     object Label6: TLabel
       Left = 136
       Top = 363
-      Width = 118
-      Height = 18
+      Width = 115
+      Height = 17
       Caption = 'Machine Decision'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
