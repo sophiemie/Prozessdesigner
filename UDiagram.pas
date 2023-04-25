@@ -38,6 +38,8 @@ begin
   Name := newName;
   Description := newDescription;
   ClassName := Name + 'Form';
+  InUse := true;
+  VersionNumber := 5;  // Nur als Test
 end;
 
 {Getter und Setter}

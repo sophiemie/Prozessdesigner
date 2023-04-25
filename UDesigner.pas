@@ -290,6 +290,7 @@ var
   I : Integer;
   openFile : TStringList;
   idFromDatafile : String;
+  versionFromDatafile : String;
 begin
   OpenDialog1.InitialDir := IncludeTrailingPathDelimiter(GetCurrentDir)
                               + 'Diagramme';
@@ -309,6 +310,18 @@ begin
     I := I +1;
   end;
   diagram.setID(idFromDatafile.ToInteger);
+  I := I +1;
+  { Versionsnummer aus Dateinamen bestimmen }
+  // Da I nicht auf 0 gesetzt wird, wird erstes _ im Dateinamen ignoriert
+  while diagram.getName.Chars[I] <> '_' do
+  begin
+    versionFromDatafile := versionFromDatafile + diagram.getName.Chars[I];
+    I := I +1;
+  end;
+  { Buchstaben V entfernen, damit Nummer ueberbleibt und Diagramm uebergeben }
+  versionFromDatafile := versionFromDatafile.Remove(0,1);
+  diagram.setVersionNumber(versionFromDatafile.ToInteger);
+
   { Restliche Diagrammdaten aus Datenbank beziehen}
   //diagram := DiagramDatabase.giveDiagramSavedDatas(diagram);
 end;
@@ -352,7 +365,8 @@ begin
 
   if not IsLoadedDiagram then
   begin
-    fileName := diagram.getID.ToString + '_' + diagram.getName;
+    fileName := diagram.getID.ToString + '_' + 'v'
+                + diagram.getVersionNumber.ToString + '_' + diagram.getName;
     SaveDialog1.FileName := fileName;  // So wird Dateiname vorgeschlagen
     if SaveDialog1.Execute then
     begin
