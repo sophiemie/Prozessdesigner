@@ -280,13 +280,14 @@ var
 begin
    {Wenn ein neues Diagramm erstellt wurde}
 //   if not newDiagramName.Equals('') then  // VORHER, BITTE TESTEN SOBALD DB IN ORDNUNG
+   Label7.Caption := diagram.getName + ' Version:' + diagram.getVersionNumber.ToString;
    if not IsLoadedDiagram then
    begin
     //IsLoadedDiagram := false;
     // In Startpage
     //diagram := TDiagram.Create(DiagramDatabase.getHighestDiagramID+1,
     //                                newDiagramName, newDiagramDescription);
-    Label7.Caption := diagram.getName;
+
     //DiagramDatabase.addNewDiagram(diagram);   // In Startpage
     {Alle vorherigen Elemente im Editor entfernen}
     TMSFNCBloxControl1.Presenter.SelectAll;
@@ -315,7 +316,7 @@ begin
   {Pfad aus Namen entfernen}
   diagramName := OpenDialog1.Files[0].Remove(0,OpenDialog1.InitialDir.Length+1);
   diagram.setName(diagramName);
-  Label7.Caption := diagram.getName;
+  Label7.Caption := diagram.getName + ' Version:' + diagram.getVersionNumber.ToString;
   I := 0;
   { ID aus Dateinamen bestimmen }
   while diagram.getName.Chars[I] <> '_' do

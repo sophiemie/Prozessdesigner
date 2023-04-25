@@ -8547,6 +8547,7 @@ object StartPageForm: TStartPageForm
           3A30393A31352B30303A3030F3A3BB770000002874455874646174653A74696D
           657374616D7000323032332D30342D32345432313A30393A31352B30303A3030
           A4B69AA80000000049454E44AE426082}
+        Visible = False
       end
       object StringGrid1: TStringGrid
         Left = 14
@@ -8571,7 +8572,7 @@ object StartPageForm: TStartPageForm
       object Edit2: TEdit
         Left = 14
         Top = 185
-        Width = 121
+        Width = 187
         Height = 23
         Enabled = False
         Font.Charset = DEFAULT_CHARSET
@@ -8595,6 +8596,7 @@ object StartPageForm: TStartPageForm
         Font.Style = []
         ParentFont = False
         TabOrder = 2
+        OnClick = Button5Click
       end
       object Button4: TButton
         Left = 182

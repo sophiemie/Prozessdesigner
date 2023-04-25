@@ -45,6 +45,7 @@ type
     procedure StringGrid1SelectCell(Sender: TObject; ACol, ARow: Integer;
       var CanSelect: Boolean);
     procedure Button4Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
   private
     { Private-Deklarationen }
     newButtonText : String;
@@ -63,6 +64,10 @@ type
     activeText : String;
     diagramDatabase : TDiagramDatabase;
     openButton : String;
+    diagramSelected : boolean;
+    noDiagramSelected : String;
+    yes : String;
+    no : String;
   public
     { Public-Deklarationen }
   end;
@@ -124,8 +129,8 @@ begin
 
     { Umwandlun von Boolean zu String zeigt Zahl an, deswegen umkonvertieren }
     if DesignerForm.diagram.getInUse then
-      StringGrid1.Cells[4,StringGrid1.RowCount-1] := 'yes'
-    else StringGrid1.Cells[4,StringGrid1.RowCount-1] := 'no';
+      StringGrid1.Cells[4,StringGrid1.RowCount-1] := yes
+    else StringGrid1.Cells[4,StringGrid1.RowCount-1] := no;
   end;
 end;
 
@@ -140,6 +145,12 @@ begin
   //diagramDatabase.copyDiagram();
 end;
 
+procedure TStartPageForm.Button5Click(Sender: TObject);
+begin
+  if diagramSelected then DesignerForm.ShowModal
+  else ShowMessage(noDiagramSelected);
+end;
+
 procedure TStartPageForm.FormCreate(Sender: TObject);
 begin
   Edit1.Text := '';
@@ -150,10 +161,13 @@ begin
   noDiagramName := NODIAGRAM_NAME_EN;
   descriptionText := DESCRIPTION_EN;
   activeText := ACTIVE_EN;
+  yes := YES_EN;
+  no := NO_EN;
   Panel2.Caption := loadDiagamText;
   Groupbox1.Visible := false;
   Groupbox2.Visible := true;
 //  Groupbox3.Visible := false;
+  diagramSelected := false; // Zu Beginn ist kein Diagramm ausgewaehlt
   diagramDatabase := TDiagramDatabase.Create(FDQuery1,'wf_def');
 
   StringGrid1.Cells[0,0] := 'ID';
@@ -177,26 +191,38 @@ var
   diagramInUse : boolean;
   diagramVersion : Integer;
 begin
-  if not StringGrid1.Cells[ACol,ARow].IsEmpty then
+  { Erste Zeile soll nicht beachtet werden }
+  if ARow <> 0 then
   begin
-    diagramID := StringGrid1.Cells[0,ARow].ToInteger;
-    diagramName := StringGrid1.Cells[1,ARow];
-    diagramDescription := StringGrid1.Cells[2,ARow];
-    if StringGrid1.Cells[4,ARow].Equals('yes') then diagramInUse := true
-    else diagramInUse := false;
-    diagramVersion := StringGrid1.Cells[3,ARow].ToInteger();
+    { Sowie leere Zeilen nicht beachtet werden sollen }
+    if not StringGrid1.Cells[ACol,ARow].IsEmpty then
+    begin
+      diagramSelected := true;
+      { Daten aus der Zeile beziehen }
+      diagramID := StringGrid1.Cells[0,ARow].ToInteger;
+      diagramName := StringGrid1.Cells[1,ARow];
+      diagramDescription := StringGrid1.Cells[2,ARow];
+      if StringGrid1.Cells[4,ARow].Equals(yes) then diagramInUse := true
+      else diagramInUse := false;
+      diagramVersion := StringGrid1.Cells[3,ARow].ToInteger();
 
-    DesignerForm.IsLoadedDiagram := true;
-    DesignerForm.LoadedDiagramFileName := 'Diagramme/' + diagramID.ToString
-      + '_' + 'v' + diagramVersion.ToString + '_' + diagramName + '.blox';
-    DesignerForm.diagram := TDiagram.Create(diagramID, diagramName, diagramDescription);
-    DesignerForm.diagram.setInUse(diagramInUse);
-    DesignerForm.diagram.setVersionNumber(diagramVersion);
-    DesignerForm.ShowModal;
+      Edit2.Text := diagramID.ToString + '_v' + diagramVersion.ToString + '_' +
+                      diagramName;
+      { Daten an DesignerForm uebergeben }
+      DesignerForm.IsLoadedDiagram := true;
+      DesignerForm.LoadedDiagramFileName := 'Diagramme/' + diagramID.ToString
+        + '_' + 'v' + diagramVersion.ToString + '_' + diagramName + '.blox';
+      DesignerForm.diagram := TDiagram.Create(diagramID, diagramName, diagramDescription);
+      DesignerForm.diagram.setInUse(diagramInUse);
+      DesignerForm.diagram.setVersionNumber(diagramVersion);
+      //DesignerForm.ShowModal;
+    end;
   end;
 end;
 
 procedure TStartPageForm.fillComponentText();
+var
+  I : Integer;
 begin
   button1.Caption := newButtonText;
   button2.Caption := loadButtonText;
@@ -211,6 +237,14 @@ begin
 //  GroupBox3.Caption := allDiagramText;
   StringGrid1.Cells[2,0] := descriptionText;
   StringGrid1.Cells[4,0] := activeText;
+  { Aktivstatus der Diagramme uebersetzen }
+  for I := 1 to StringGrid1.RowCount do
+  begin
+    if StringGrid1.Cells[4,I].Equals(YES_EN) then StringGrid1.Cells[4,I] := YES_DE
+    else if StringGrid1.Cells[4,I].Equals(NO_EN) then StringGrid1.Cells[4,I] := NO_DE
+    else if StringGrid1.Cells[4,I].Equals(YES_DE) then StringGrid1.Cells[4,I] := YES_EN
+    else if StringGrid1.Cells[4,I].Equals(NO_DE) then StringGrid1.Cells[4,I] := NO_EN;
+  end;
 
   if GroupBox2.Visible then Panel2.Caption := loadDiagamText
   else if GroupBox1.Visible then Panel2.Caption := createDiagramText;
@@ -220,8 +254,6 @@ end;
 
 procedure TStartPageForm.ToggleSwitch1Click(Sender: TObject);
 begin
-
-
   if ToggleSwitch1.State = tssOff then
   begin
     newButtonText := NEW_EN;
@@ -239,6 +271,9 @@ begin
     noDiagramName := NODIAGRAM_NAME_EN;
     activeText := ACTIVE_EN;
     openButton := OPEN_EN;
+    noDiagramSelected := NODIAGRAM_SELECTED_EN;
+    yes := YES_EN;
+    no := NO_EN;
   end
   else {Ansonsten Deutsches Sprachpaket}
   begin
@@ -257,6 +292,9 @@ begin
     noDiagramName := NODIAGRAM_NAME_DE;
     activeText := ACTIVE_DE;
     openButton := OPEN_DE;
+    noDiagramSelected := NODIAGRAM_SELECTED_DE;
+    yes := YES_DE;
+    no := NO_DE;
   end;
   fillComponentText();
 end;

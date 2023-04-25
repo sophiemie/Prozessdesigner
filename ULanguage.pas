@@ -58,6 +58,12 @@ const
   ACTIVE_DE = 'Aktiv';
   OPEN_EN = 'Open';
   OPEN_DE = 'Öffnen';
+  NODIAGRAM_SELECTED_EN = 'No Diagram Selected.';
+  NODIAGRAM_SELECTED_DE = 'Kein Diagramm ausgewählt.';
+  YES_EN = 'yes';
+  NO_EN = 'no';
+  YES_DE = 'ja';
+  NO_DE = 'nein';
 
   {Nodeselection}
   NODESELECTION_EN = 'Nodeselection';
