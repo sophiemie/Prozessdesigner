@@ -84,8 +84,8 @@ type
 
   public
     { Public-Deklarationen }
-    var newDiagramName : String;
-    var newDiagramDescription : String;
+//    var newDiagramName : String;
+//    var newDiagramDescription : String;
     var diagram : TDiagram;
     var IsLoadedDiagram : boolean;
     var LoadedDiagramFileName : String;

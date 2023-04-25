@@ -92,19 +92,21 @@ end;
 procedure TStartPageForm.Button3Click(Sender: TObject);
 var
   newDiagramID : Integer;
+  newDiagramDescription : String;
 begin
   if Edit1.Text = '' then ShowMessage(noDiagramName)
   else
   begin
     { Alle Diagramme aus Datenbank laden }
     //diagramDatabase.fillLoadlistWithDiagrams(StringGrid1);
-    DesignerForm.newDiagramName := Edit1.Text;
-    DesignerForm.newDiagramDescription := Memo1.Text;
 
     { Neues Diagramm erstellen }
     newDiagramID := StringGrid1.RowCount;
     DesignerForm.IsLoadedDiagram := false;
-    DesignerForm.diagram := TDiagram.Create(newDiagramID, Edit1.Text, Memo1.Text);
+    if Memo1.Text = '' then  newDiagramDescription := ''
+    else newDiagramDescription := Memo1.Text;
+
+    DesignerForm.diagram := TDiagram.Create(newDiagramID, Edit1.Text, newDiagramDescription);
 
     { Neues Diagramm in Datenbank eintragen }
     //DiagramDatabase.addNewDiagram(diagram);
@@ -116,8 +118,14 @@ begin
     { Ladeliste um neuen Diagramm ergaenzen }
     StringGrid1.RowCount := StringGrid1.RowCount +1;
     StringGrid1.Cells[0,StringGrid1.RowCount-1] := (StringGrid1.RowCount -1).ToString;
-    StringGrid1.Cells[1,StringGrid1.RowCount-1] := DesignerForm.newDiagramName;
-    StringGrid1.Cells[2,StringGrid1.RowCount-1] := DesignerForm.newDiagramDescription;
+    StringGrid1.Cells[1,StringGrid1.RowCount-1] := DesignerForm.diagram.getName;
+    StringGrid1.Cells[2,StringGrid1.RowCount-1] := DesignerForm.diagram.getDescription;
+    StringGrid1.Cells[3,StringGrid1.RowCount-1] := DesignerForm.Diagram.getVersionNumber.ToString;
+
+    { Umwandlun von Boolean zu String zeigt Zahl an, deswegen umkonvertieren }
+    if DesignerForm.diagram.getInUse then
+      StringGrid1.Cells[4,StringGrid1.RowCount-1] := 'yes'
+    else StringGrid1.Cells[4,StringGrid1.RowCount-1] := 'no';
   end;
 end;
 
@@ -161,24 +169,29 @@ begin
 end;
 
 procedure TStartPageForm.StringGrid1SelectCell(Sender: TObject; ACol,
-  ARow: Integer; var CanSelect: Boolean);
+  ARow: Integer; var CanSelect: Boolean);    // LADEN
 var
   diagramName : String;
   diagramID : Integer;
   diagramDescription : String;
+  diagramInUse : boolean;
+  diagramVersion : Integer;
 begin
   if not StringGrid1.Cells[ACol,ARow].IsEmpty then
   begin
     diagramID := StringGrid1.Cells[0,ARow].ToInteger;
     diagramName := StringGrid1.Cells[1,ARow];
     diagramDescription := StringGrid1.Cells[2,ARow];
-//    diagramInUse := StringGrid1.Cells[4,ARow].ToBoolean();
-//    diagramVersion := StringGrid1.Cells[3,ARow].ToInteger();
+    if StringGrid1.Cells[4,ARow].Equals('yes') then diagramInUse := true
+    else diagramInUse := false;
+    diagramVersion := StringGrid1.Cells[3,ARow].ToInteger();
 
     DesignerForm.IsLoadedDiagram := true;
     DesignerForm.LoadedDiagramFileName := 'Diagramme/' + diagramID.ToString
-                                              + '_' + diagramName + '.blox';
+                    + '_' + 'v' + diagramVersion.ToString + '_' + diagramName + '.blox';
     DesignerForm.diagram := TDiagram.Create(diagramID, diagramName, diagramDescription);
+    DesignerForm.diagram.setInUse(diagramInUse);
+    DesignerForm.diagram.setVersionNumber(diagramVersion);
     DesignerForm.ShowModal;
   end;
 end;

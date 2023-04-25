@@ -39,7 +39,7 @@ begin
   Description := newDescription;
   ClassName := Name + 'Form';
   InUse := true;
-  VersionNumber := 5;  // Nur als Test
+  VersionNumber := 1;
 end;
 
 {Getter und Setter}
