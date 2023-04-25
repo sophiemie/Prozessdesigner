@@ -20,7 +20,7 @@ uses
   VCL.TMSFNCStateManager, VCL.TMSFNCResponsiveManager, Vcl.ExtCtrls, Vcl.Menus,
   Vcl.ComCtrls, FireDAC.Phys, Vcl.ToolWin, VCL.TMSFNCBloxCoreGroup, ShellApi,
   VCL.TMSFNCBloxUIRegistration,UNodes, UNodeSelection, UDatabase, UToolBar,
-  UEdge, UDesignerToolbar, UDiagram;  // Datenbank.pas einbinden
+  UEdge, UDesignerToolbar, UDiagram, ULanguage;  // Datenbank.pas einbinden
 
 type
   TDesignerForm = class(TForm)
@@ -79,6 +79,7 @@ type
     procedure Save1Click(Sender: TObject);
     procedure Load1Click(Sender: TObject);
     procedure ReplaceNodeNames(fileName: String);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
   private
     { Private-Deklarationen }
   public
@@ -86,6 +87,7 @@ type
     var diagram : TDiagram;
     var IsLoadedDiagram : boolean;
     var LoadedDiagramFileName : String;
+    var diagramIsSaved : boolean;
   end;
 
 var
@@ -101,7 +103,7 @@ var
   newEdgeCreatedWithoutTarget: boolean;
   newEdge : TEdge;
 
-implementation
+implementation ////////////////////////////////////////////////////////////////
 {$R *.dfm}
 
 { Event bei Anklicken einer Komponte im Editor }
@@ -240,6 +242,22 @@ begin
   NodeDatabase.addNewNode(diagram, newStart);
 end;
 
+
+{ Event beim Versuch vom Schliessen der Applikation }
+procedure TDesignerForm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+var
+  AMsg: String;
+begin
+  // Aktuell entsteht trotz des nicht Speicherns ein Eintrag bei der Startpage,
+  // dies wird nicht passieren wenn Datenbank angebunden ist
+  if not diagramIsSaved then
+  begin
+    AMsg := NOTSAVED_DE;
+    if MessageDlg(AMsg, mtConfirmation, [mbOk, mbCancel], 0) = mrCancel then
+      CanClose := false;
+  end;
+end;
+
 { Einmaliges Event bei Start der Applikation}
 procedure TDesignerForm.FormCreate(Sender: TObject);
 begin
@@ -252,6 +270,7 @@ begin
    NodeDatabase := TNodeDatabase.Create(FDQuery_wftest, 'wf_nodes');
    DiagramDatabase := TDiagramDatabase.Create(FDQuery_wftest, 'wf_def');
    IsLoadedDiagram := false;
+   diagramIsSaved := false;
 end;
 
 { Event beim neu Laden des Editors }
@@ -294,8 +313,7 @@ begin
   ReplaceNodeNames(OpenDialog1.FileName);
   IsLoadedDiagram := true;
   {Pfad aus Namen entfernen}
-  diagramName := OpenDialog1.Files[0].Remove(0,
-                                              OpenDialog1.InitialDir.Length+1);
+  diagramName := OpenDialog1.Files[0].Remove(0,OpenDialog1.InitialDir.Length+1);
   diagram.setName(diagramName);
   Label7.Caption := diagram.getName;
   I := 0;
@@ -356,6 +374,7 @@ var
   stream : TStream;
   fileName : String;
 begin
+  diagramIsSaved := true;
   SaveDialog1.InitialDir := IncludeTrailingPathDelimiter
                       (GetCurrentDir)+ 'Diagramme';
 

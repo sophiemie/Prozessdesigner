@@ -24,6 +24,9 @@ const
   MT_DE = 'Maschinelle Aufgabe';
   PROCESSDESIGNER_EN = 'Processdesigner';
   PROCESSDESIGNER_DE = 'Prozessdesigner';
+  NOTSAVED_EN = 'File is not saved. Close anyway?';
+  NOTSAVED_DE = 'Sie haben Ihre Änderungen nicht gespeichert. '
+                    + 'Wollen Sie wirklich beenden?';
 
   {Startpage}
   NEW_EN = 'New';
