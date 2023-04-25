@@ -236,10 +236,10 @@ var
   newStart : TStart;
   newNodeID: Integer;
 begin
-  newNodeID := NodeDatabase.getHighestNodeID +1;
+  //newNodeID := NodeDatabase.getHighestNodeID +1;
   newStart := TStart.Create(newNodeID);
   TMSFNCBloxControl1.Blox.Add(newStart);
-  NodeDatabase.addNewNode(diagram, newStart);
+  //NodeDatabase.addNewNode(diagram, newStart);
 end;
 
 
@@ -264,13 +264,17 @@ begin
    { Initialisierung von Anfrangswerten }
    newEdgeButtonClicked := false;
    newEdgeCreatedWithoutTarget := false;
-   //toolbar := TToolbar.Create;
+
    { Aufrufen von Konstruktoren der Datanbank-Objekte }
-   EdgeDatabase := TEdgeDatabase.Create(FDQuery_wftest, 'wf_edges');
-   NodeDatabase := TNodeDatabase.Create(FDQuery_wftest, 'wf_nodes');
-   DiagramDatabase := TDiagramDatabase.Create(FDQuery_wftest, 'wf_def');
+//   EdgeDatabase := TEdgeDatabase.Create(FDQuery_wftest, 'wf_edges');
+//   NodeDatabase := TNodeDatabase.Create(FDQuery_wftest, 'wf_nodes');
+//   DiagramDatabase := TDiagramDatabase.Create(FDQuery_wftest, 'wf_def');
    IsLoadedDiagram := false;
    diagramIsSaved := false;
+   SaveDialog1.InitialDir := IncludeTrailingPathDelimiter(GetCurrentDir)
+                                                              + 'Diagramme';
+   OpenDialog1.InitialDir := IncludeTrailingPathDelimiter(GetCurrentDir)
+                                                              + 'Diagramme';
 end;
 
 { Event beim neu Laden des Editors }
@@ -308,8 +312,6 @@ var
   versionFromDatafile : String;
   diagramName : String;
 begin
-  OpenDialog1.InitialDir := IncludeTrailingPathDelimiter(GetCurrentDir)
-                              + 'Diagramme';
   OpenDialog1.Execute;
   ReplaceNodeNames(OpenDialog1.FileName);
   IsLoadedDiagram := true;
@@ -372,13 +374,8 @@ end;
 
 procedure TDesignerForm.Save1Click(Sender: TObject); // Speichern
 var
-  stream : TStream;
   fileName : String;
 begin
-  diagramIsSaved := true;
-  SaveDialog1.InitialDir := IncludeTrailingPathDelimiter
-                      (GetCurrentDir)+ 'Diagramme';
-
   if not IsLoadedDiagram then
   begin
     fileName := diagram.getID.ToString + '_' + 'v'
@@ -388,8 +385,16 @@ begin
     begin
       TMSFNCBloxControl1.SaveToFile(IncludeTrailingPathDelimiter
                       (GetCurrentDir)+ 'Diagramme/' + fileName + '.blox');
-    end;
+      diagramIsSaved := true;
+    end
+    else diagramIsSaved := false;
   end
+//  else if diagram.getVersionNumber <> 1 then
+//  begin
+//    LoadedDiagramFileName := diagram.getID.ToString + '_v'
+//    + diagram.getVersionNumber.ToString + '_' + diagram.getName;
+//    ShowMessage(LoadedDiagramFileName)
+//  end
   else TMSFNCBloxControl1.SaveToFile((IncludeTrailingPathDelimiter
                       (GetCurrentDir)+ 'Diagramme/' + LoadedDiagramFileName));
 end;

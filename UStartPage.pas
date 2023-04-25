@@ -91,7 +91,6 @@ procedure TStartPageForm.Button2Click(Sender: TObject);
 begin
   Groupbox1.Visible := false;
   Groupbox2.Visible := true;
-//  Groupbox3.Visible := false;
   Panel2.Caption := loadDiagamText;
 end;
 
@@ -121,7 +120,8 @@ begin
     if Memo1.Text = '' then  newDiagramDescription := ''
     else newDiagramDescription := Memo1.Text;
 
-    DesignerForm.diagram := TDiagram.Create(newDiagramID, Edit1.Text, newDiagramDescription);
+    DesignerForm.diagram := TDiagram.Create(newDiagramID, Edit1.Text,
+                                                        newDiagramDescription);
 
     { Neues Diagramm in Datenbank eintragen }
     //DiagramDatabase.addNewDiagram(diagram);
@@ -132,13 +132,7 @@ begin
     Memo1.Clear;
     { Ladeliste um neuen Diagramm ergaenzen }
     CreateOneMoreDiagramEntry(DesignerForm.diagram);
-//    StringGrid1.RowCount := StringGrid1.RowCount +1;
-//    StringGrid1.Cells[0,StringGrid1.RowCount-1] := (StringGrid1.RowCount -1).ToString;
-//    StringGrid1.Cells[1,StringGrid1.RowCount-1] := DesignerForm.diagram.getName;
-//    StringGrid1.Cells[2,StringGrid1.RowCount-1] := DesignerForm.diagram.getDescription;
-//    StringGrid1.Cells[3,StringGrid1.RowCount-1] := DesignerForm.Diagram.getVersionNumber.ToString;
-
-    { Umwandlun von Boolean zu String zeigt Zahl an, deswegen umkonvertieren }
+    { Umwandlung von Boolean zu String zeigt Zahl an, deswegen umkonvertieren }
     if DesignerForm.diagram.getInUse then
       StringGrid1.Cells[4,StringGrid1.RowCount-1] := yes
     else StringGrid1.Cells[4,StringGrid1.RowCount-1] := no;
@@ -155,7 +149,7 @@ begin
       DesignerForm.diagram.getName, DesignerForm.diagram.getDescription);
     diagramCopy.setVersionNumber(DesignerForm.diagram.getVersionNumber+1);
     DesignerForm.diagram := diagramCopy;
-    DesignerForm.IsLoadedDiagram := true;
+    DesignerForm.IsLoadedDiagram := true; /////// oder doch true setzen?
     DesignerForm.diagramIsSaved := false;
     {Diagramm in Datenbank kopieren}
     //diagramDatabase.copyDiagram(diagramCopy);
@@ -186,7 +180,6 @@ begin
   Panel2.Caption := loadDiagamText;
   Groupbox1.Visible := false;
   Groupbox2.Visible := true;
-//  Groupbox3.Visible := false;
   diagramSelected := false; // Zu Beginn ist kein Diagramm ausgewaehlt
   diagramDatabase := TDiagramDatabase.Create(FDQuery1,'wf_def');
 
@@ -205,11 +198,11 @@ end;
 procedure TStartPageForm.StringGrid1SelectCell(Sender: TObject; ACol,
   ARow: Integer; var CanSelect: Boolean);    // LADEN
 var
-  diagramName : String;
-  diagramID : Integer;
-  diagramDescription : String;
-  diagramInUse : boolean;
-  diagramVersion : Integer;
+  name : String;
+  iD : Integer;
+  description : String;
+  inUse : boolean;
+  version : Integer;
 begin
   { Erste Zeile soll nicht beachtet werden }
   if ARow <> 0 then
@@ -217,24 +210,26 @@ begin
     { Sowie leere Zeilen nicht beachtet werden sollen }
     if not StringGrid1.Cells[ACol,ARow].IsEmpty then
     begin
-      diagramSelected := true;
-      { Daten aus der Zeile beziehen }
-      diagramID := StringGrid1.Cells[0,ARow].ToInteger;
-      diagramName := StringGrid1.Cells[1,ARow];
-      diagramDescription := StringGrid1.Cells[2,ARow];
-      if StringGrid1.Cells[4,ARow].Equals(yes) then diagramInUse := true
-      else diagramInUse := false;
-      diagramVersion := StringGrid1.Cells[3,ARow].ToInteger();
+      diagramSelected := true; // Damit keine selbsterstellte Fehlermeldung kommt
 
-      Edit2.Text := diagramID.ToString + '_v' + diagramVersion.ToString + '_' +
-                      diagramName;
+      { Daten aus der Zeile beziehen }
+      ID := StringGrid1.Cells[0,ARow].ToInteger;
+      Name := StringGrid1.Cells[1,ARow];
+      Description := StringGrid1.Cells[2,ARow];
+      Version := StringGrid1.Cells[3,ARow].ToInteger();
+      if StringGrid1.Cells[4,ARow].Equals(yes) then InUse := true
+      else InUse := false;
+
+      { Datei als Hilfestellung anzeigen lassen }
+      Edit2.Text := iD.ToString + '_v' + version.ToString + '_' + name;
+
       { Daten an DesignerForm uebergeben }
       DesignerForm.IsLoadedDiagram := true;
-      DesignerForm.LoadedDiagramFileName := 'Diagramme/' + diagramID.ToString
-        + '_' + 'v' + diagramVersion.ToString + '_' + diagramName + '.blox';
-      DesignerForm.diagram := TDiagram.Create(diagramID, diagramName, diagramDescription);
-      DesignerForm.diagram.setInUse(diagramInUse);
-      DesignerForm.diagram.setVersionNumber(diagramVersion);
+      DesignerForm.LoadedDiagramFileName := '/' + iD.ToString + '_' + 'v'
+                                      + version.ToString + '_' + name + '.blox';
+      DesignerForm.diagram := TDiagram.Create(iD, name, description);
+      DesignerForm.diagram.setInUse(inUse);
+      DesignerForm.diagram.setVersionNumber(version);
       //DesignerForm.ShowModal;
     end;
   end;
