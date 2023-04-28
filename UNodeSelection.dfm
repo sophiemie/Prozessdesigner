@@ -8289,8 +8289,8 @@ object NodeSelectionForm: TNodeSelectionForm
     object Label1: TLabel
       Left = 23
       Top = 32
-      Width = 171
-      Height = 15
+      Width = 170
+      Height = 16
       Caption = 'Which Form should be used?'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -8356,7 +8356,6 @@ object NodeSelectionForm: TNodeSelectionForm
       Font.Height = -13
       Font.Name = 'Avenir LT Pro 55 Roman'
       Font.Style = []
-      ItemHeight = 15
       ParentFont = False
       TabOrder = 0
       OnDblClick = ListBox1DblClick

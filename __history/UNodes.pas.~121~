@@ -12,7 +12,7 @@ uses
   VCL.TMSFNCBloxUIRenderer, VCL.TMSFNCBloxSelector,  VCL.TMSFNCStyles,
   VCL.TMSFNCBloxShapesUML, Vcl.Graphics, Vcl.Menus, Vcl.StdActnMenus,
   VCL.TMSFNCCustomControl, VCL.TMSFNCCustomScrollControl, VCL.TMSFNCBloxControl,
-  System.SysUtils, System.Variants, UZMTStandard;
+  System.SysUtils, System.Variants, UZMTStandard, Vcl.Dialogs;
 var
   popUp :  TStandardMenuPopup;
   // https://stackoverflow.com/questions/18544127/creating-a-popup-menu-at-runtime
@@ -20,6 +20,7 @@ const
   startEndSize = 80;
   FONT_SIZE = 25.0;
 type
+  TDescription = array of String;
 
   IWorkflowComponent = interface(IInterface)
     procedure setID(newID : Integer);
@@ -60,9 +61,9 @@ type
     Description : String;
     ClassName : String;
     Method : String;
-  class var classType : String;
   const
     NODE_TYPE = 'S';
+    CLASS_TYPE = 'TStart';
   end;
 
   TEnd = class(TTMSFNCBloxUMLFinalStateBlock, INodes)
@@ -78,6 +79,7 @@ type
     procedure setMethodName(newMethodName : String);
     function getMethodName : String;
     class function getClassType : String;
+    class function getAllDescription : TDescription;
     {Interface-Implementationen}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -87,9 +89,9 @@ type
     Description : String;
     ClassName : String;
     Method : String;
-  class var classType : String;
   const
     NODE_TYPE = 'E';
+    CLASS_TYPE = 'TEnd';
   end;
 
   // Entscheidungsknoten       // TInterfacedObject
@@ -105,7 +107,8 @@ type
     function getClassName : String;
     procedure setMethodName(newMethodName : String);
     function getMethodName : String;
-    class function getClassType : String; virtual;
+    class function getClassType : String; virtual; abstract;
+    class function getAllDescription : TArray<String>; virtual; abstract;
     {Interface-Implementationen}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -115,7 +118,8 @@ type
     Description : String;
     ClassName : String;
     Method : String;
-  class var classType : String;
+  const
+    CLASS_TYPE = 'TDecision';
   end;
 
   THumanDecision = class(TDecision)
@@ -123,9 +127,11 @@ type
     function getType : String; override;
     procedure setDescription(newDescription : String); override;
     class function getClassType : String; override;
+    class function getAllDescription : TArray<String>; override;
   private
     const
     NODE_TYPE = 'HD';
+    CLASS_TYPE = 'THumanDecision';
   end;
 
   TMachineDecision = class(TDecision)
@@ -133,9 +139,11 @@ type
     function getType : String; override;
     procedure setDescription(newDescription : String); override;
     class function getClassType : String; override;
+    class function getAllDescription : TArray<String>; override;
   private
     const
     NODE_TYPE = 'MD';
+    CLASS_TYPE = 'TMachineDecision';
   end;
 
   // Aktionsknoten
@@ -150,7 +158,8 @@ type
     function getClassName : String;
     procedure setMethodName(newMethodName : String);
     function getMethodName : String;
-    class function getClassType : String; virtual;
+    class function getClassType : String; virtual; abstract;
+    class function getAllDescription : TArray<String>; virtual; abstract;
     {Interface-Implementationen}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -161,7 +170,7 @@ type
     ClassName : String;
     Method : String;
   const
-    classType = 'TMachineTask';
+    CLASS_TYPE = 'TTask';
   end;
 
   THumanTask = class(TTask)
@@ -169,9 +178,11 @@ type
     function getType : String; override;
     procedure setDescription(newDescription : String); override;
     class function getClassType : String; override;
+    class function getAllDescription : TArray<String>; override;
   private
     const
     NODE_TYPE = 'HT';
+    CLASS_TYPE = 'THumanTask';
   end;
 
   TMachineTask = class(TTask)
@@ -179,9 +190,11 @@ type
     function getType : String; override;
     procedure setDescription(newDescription : String); override;
     class function getClassType : String; override;
+    class function getAllDescription : TArray<String>; override;
   private
     const
     NODE_TYPE = 'MT';
+    CLASS_TYPE = 'TMachineTask';
   end;
  /////////////////////////////////////////////////////////////////////
 implementation
@@ -221,7 +234,6 @@ begin
   Description := '';
   Text := NODE_TYPE;
   TextCells.Items[0].Font.Size := FONT_SIZE;
-  classType := 'TStart';
 end;
 
 constructor TEnd.Create(nodeID: Integer; newDescription: String);
@@ -234,7 +246,6 @@ begin
   Description := newDescription;
   Text := NODE_TYPE + ': ' + newDescription;
   TextCells.Items[0].Font.Size := FONT_SIZE;
-  classType := 'TEnd';
 end;
 
 constructor TDecision.Create(nodeID: Integer; newDescription: String);
@@ -252,7 +263,6 @@ begin
   inherited Create(nodeID, newDescription);
   FillColor := lightBlue;
   Text := NODE_TYPE + ': ' + newDescription;
-  classType := 'THumanDecision';
 end;
 
 constructor TMachineDecision.Create(nodeID: Integer; newDescription: String);
@@ -260,7 +270,6 @@ begin
   inherited Create(nodeID, newDescription);
   FillColor := lightGray;
   Text := NODE_TYPE + ': ' + newDescription;
-  classType := 'TMachineDecision';
 end;
 
 constructor TTask.Create(nodeID: Integer; newDescription: String);
@@ -479,43 +488,82 @@ end;
 
 class function TStart.getClassType : String;
 begin
-  Result := classType;
+  Result := CLASS_TYPE;
 end;
 
 class function TEnd.getClassType : String;
 begin
-  Result := classType;
+  Result := CLASS_TYPE;
 end;
 
 class function THumanTask.getClassType : String;
 begin
-  Result := classType;
+  Result := CLASS_TYPE;
 end;
 
 class function THumanDecision.getClassType : String;
 begin
-  Result := classType;
+  Result := CLASS_TYPE;
 end;
 
 class function TMachineDecision.getClassType : String;
 begin
-  Result := classType;
+  Result := CLASS_TYPE;
 end;
 
 class function TMachineTask.getClassType : String;
 begin
-  Result := classType;
+  Result := CLASS_TYPE;
 end;
 
-class function TTask.getClassType : String;
+
+
+class function TEnd.getAllDescription : TDescription;
+var
+  description: TDescription;
 begin
-  Result := classType;
+
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Standard';
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Abbruch';
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Abbruch';
+
+  ShowMessage(High(description).ToString);
+
+
+  Result := description;
 end;
 
-class function TDecision.getClassType : String;
+class function THumanTask.getAllDescription : TArray<String>;
+var
+  description: array of String;
 begin
-  Result := classType;
+
 end;
+
+class function THumanDecision.getAllDescription : TArray<String>;
+var
+  description: array of String;
+begin
+
+end;
+
+class function TMachineTask.getAllDescription : TArray<String>;
+var
+  description: array of String;
+begin
+
+end;
+
+class function TMachineDecision.getAllDescription : TArray<String>;
+var
+  description: array of String;
+begin
+
+end;
+
 
 //////////////////////////////////////////////////////////////////////
 {Kopierte Funktionen aus System fuer Interface-Implementierung}
