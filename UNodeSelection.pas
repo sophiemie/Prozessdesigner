@@ -71,16 +71,25 @@ begin
 end;
 
 procedure TNodeSelectionForm.FillList(NodeClass: String);
+var
+  I : Integer;
+  Item : TDescription;
 begin
   ListBox1.Clear;
-  if NodeClass.Equals('TEnd') then
+  if NodeClass.Equals(TEnd.getClassType) then  // Endknoten
   begin
     Image1.Hint := END_HINT_DE;
     GroupBox1.Caption := 'Endnode';
     ListBox1.Items.Add('Standard');
     ListBox1.Items.Add('Abbruch');
+
+    Item := TEnd.getAllDescription;
+    for I := Low(Item) to High(Item) do
+      ListBox1.Items.Add(Item[I]);
+
+
   end
-  else if NodeClass.Equals('THumanDecision') then
+  else if NodeClass.Equals(THumanDecision.getClassType) then  // HD
   begin
     Label1.Caption := 'Who should be asked?';
     GroupBox1.Caption := 'Human Decision';
@@ -88,7 +97,7 @@ begin
     ListBox1.Items.Add('Leader');
     ListBox1.Items.Add('Management');
   end
-  else if NodeClass.Equals('TMachineDecision') then
+  else if NodeClass.Equals(TMachineDecision.getClassType) then  // MD
   begin
     Label1.Caption := 'What should be checked?';
     GroupBox1.Caption := 'Mashine Decision';
@@ -98,7 +107,7 @@ begin
     ListBox1.Items.Add('Programmbereich');
     ListBox1.Items.Add('Position Antragsteller');
   end
-  else if NodeClass.Equals('THumanTask') then
+  else if NodeClass.Equals(THumanTask.getClassType) then // HT
   begin
     Label1.Caption := 'Which Formular should be filled?';
     GroupBox1.Caption := 'Human Task';
@@ -107,7 +116,7 @@ begin
     ListBox1.Items.Add('MitarbeiterInnen und Gäste');
     ListBox1.Items.Add('Reiseantrag');
   end
-  else if NodeClass.Equals('TMachineTask') then
+  else if NodeClass.Equals(TMachineTask.getClassType) then // MT
   begin
     Label1.Caption := 'Which method should be used?';
     GroupBox1.Caption := 'Mashine Task';

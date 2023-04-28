@@ -20,6 +20,7 @@ const
   startEndSize = 80;
   FONT_SIZE = 25.0;
 type
+  TDescription = array of String;
 
   IWorkflowComponent = interface(IInterface)
     procedure setID(newID : Integer);
@@ -78,6 +79,7 @@ type
     procedure setMethodName(newMethodName : String);
     function getMethodName : String;
     class function getClassType : String;
+    class function getAllDescription : TDescription;
     {Interface-Implementationen}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -105,7 +107,8 @@ type
     function getClassName : String;
     procedure setMethodName(newMethodName : String);
     function getMethodName : String;
-    class function getClassType : String; virtual;
+    class function getClassType : String; virtual; abstract;
+    class function getAllDescription : TArray<String>; virtual; abstract;
     {Interface-Implementationen}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -124,6 +127,7 @@ type
     function getType : String; override;
     procedure setDescription(newDescription : String); override;
     class function getClassType : String; override;
+    class function getAllDescription : TArray<String>; override;
   private
     const
     NODE_TYPE = 'HD';
@@ -135,6 +139,7 @@ type
     function getType : String; override;
     procedure setDescription(newDescription : String); override;
     class function getClassType : String; override;
+    class function getAllDescription : TArray<String>; override;
   private
     const
     NODE_TYPE = 'MD';
@@ -153,7 +158,8 @@ type
     function getClassName : String;
     procedure setMethodName(newMethodName : String);
     function getMethodName : String;
-    class function getClassType : String; virtual;
+    class function getClassType : String; virtual; abstract;
+    class function getAllDescription : TArray<String>; virtual; abstract;
     {Interface-Implementationen}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -172,6 +178,7 @@ type
     function getType : String; override;
     procedure setDescription(newDescription : String); override;
     class function getClassType : String; override;
+    class function getAllDescription : TArray<String>; override;
   private
     const
     NODE_TYPE = 'HT';
@@ -183,6 +190,7 @@ type
     function getType : String; override;
     procedure setDescription(newDescription : String); override;
     class function getClassType : String; override;
+    class function getAllDescription : TArray<String>; override;
   private
     const
     NODE_TYPE = 'MT';
@@ -508,15 +516,45 @@ begin
   Result := CLASS_TYPE;
 end;
 
-class function TTask.getClassType : String;
+
+
+class function TEnd.getAllDescription : TDescription;
+var
+  description: TDescription;
 begin
-  Result := CLASS_TYPE;
+  description[0] := 'Abbruch';
+  description[1] := 'Standard';
+  Result := description;
 end;
 
-class function TDecision.getClassType : String;
+class function THumanTask.getAllDescription : TArray<String>;
+var
+  description: array of String;
 begin
-  Result := CLASS_TYPE;
+
 end;
+
+class function THumanDecision.getAllDescription : TArray<String>;
+var
+  description: array of String;
+begin
+
+end;
+
+class function TMachineTask.getAllDescription : TArray<String>;
+var
+  description: array of String;
+begin
+
+end;
+
+class function TMachineDecision.getAllDescription : TArray<String>;
+var
+  description: array of String;
+begin
+
+end;
+
 
 //////////////////////////////////////////////////////////////////////
 {Kopierte Funktionen aus System fuer Interface-Implementierung}

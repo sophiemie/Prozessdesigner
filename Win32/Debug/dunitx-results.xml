@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<test-results name="C:\Prozessdesigner\Prozessdesigner\Win32\Debug\Test.exe" total="93" errors="0" failures="0" ignored="0" inconclusive="0" not-run="0" skipped="0" invalid="0" date="2023-04-28" time="0.043">
+<test-results name="C:\Prozessdesigner\Prozessdesigner\Win32\Debug\Test.exe" total="99" errors="0" failures="0" ignored="0" inconclusive="0" not-run="0" skipped="0" invalid="0" date="2023-04-28" time="0.033">
   <culture-info current-culture="en" current-uiculture="en" />
-  <test-suite type="Assembly" name="Test.exe" executed="true" result="Success" success="True" time="0.043" asserts="0">
+  <test-suite type="Assembly" name="Test.exe" executed="true" result="Success" success="True" time="0.033" asserts="0">
     <results>
-        <test-suite type="Namespace" name="UDatabaseTest" executed="true" result="Success" success="True" time="0.042" asserts="0" >
+        <test-suite type="Namespace" name="UDatabaseTest" executed="true" result="Success" success="True" time="0.032" asserts="0" >
           <results>
-              <test-suite type="Fixture" name="TestTEdgeDatabase" executed="True" result="Success" success="True" time="0.042" >
+              <test-suite type="Fixture" name="TestTDiagramDatabase" executed="True" result="Success" success="True" time="0.032" >
                 <results>
                   <test-case name="setTable.Test setze Tabellennamen" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="getTable.Test geb Tabellennamen" executed="True" result="Success" success="True" time="0.000" asserts="0" />
@@ -13,25 +13,15 @@
               </test-suite>
           </results>
         </test-suite>
-        <test-suite type="Namespace" name="UEdgeTest" executed="true" result="Success" success="True" time="0.040" asserts="0" >
+        <test-suite type="Fixture" name="TestTDatabase" executed="True" result="Success" success="True" time="0.031" >
           <results>
-              <test-suite type="Fixture" name="TestTEdge" executed="True" result="Success" success="True" time="0.040" >
-                <results>
-                  <test-case name="TestSetID.Test neue ID setzen" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-                  <test-case name="TestGetID.Test aktuelle ID zurueckgeben" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-                  <test-case name="TestSetNodeID.Test ID des Knoten setzen" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-                  <test-case name="TestGetNodeID.Test aktuelle Knoten ID zurueckgeben" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-                  <test-case name="TestSetNextNodeID.Test neue ID des naechsten Knotens setzen" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-                  <test-case name="TestGetNextNodeID.Test aktuelle ID des naechsten Knotens bekommen" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-                  <test-case name="TestSetDecisionVal.Test aktuellen Entscheidungswert setzen" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-                  <test-case name="TestGetDecisionVal.Test aktuellen Entscheidungswert ausgeben" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-                </results>
-              </test-suite>
+            <test-case name="setTable.Test setze Tabellennamen" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="getTable.Test geb Tabellennamen" executed="True" result="Success" success="True" time="0.000" asserts="0" />
           </results>
         </test-suite>
-        <test-suite type="Namespace" name="UNodeTest" executed="true" result="Success" success="True" time="0.037" asserts="0" >
+        <test-suite type="Namespace" name="UNodeTest" executed="true" result="Success" success="True" time="0.030" asserts="0" >
           <results>
-              <test-suite type="Fixture" name="TestTHumanTask" executed="True" result="Success" success="True" time="0.037" >
+              <test-suite type="Fixture" name="TestTEnd" executed="True" result="Success" success="True" time="0.030" >
                 <results>
                   <test-case name="TestSetID.Test setze neue Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestGetID.Test gebe Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
@@ -44,49 +34,58 @@
                   <test-case name="TestGetClassName. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestSetMethod.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestGetMethod. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestGetClassType.Test gebe Namen der Klasse wieder" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                 </results>
               </test-suite>
           </results>
         </test-suite>
-        <test-suite type="Fixture" name="TestTHumanDecision" executed="True" result="Success" success="True" time="0.033" >
-          <results>
-            <test-case name="TestSetID.Test setze neue Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetID.Test gebe Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestSetDescription.Test setze neue Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestSetDescription_Text.Test Textfeld nach neuer Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetDescription.Test gebe Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetDescription_Text.Test gebe Textfeld Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetType.Test gebe Typ" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestSetClassName.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetClassName. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestSetMethod.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetMethod. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
-          </results>
-        </test-suite>
-        <test-suite type="Fixture" name="TestTMachineTask" executed="True" result="Success" success="True" time="0.029" >
-          <results>
-            <test-case name="TestSetID.Test setze neue Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetID.Test gebe Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestSetDescription.Test setze neue Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestSetDescription_Text.Test Textfeld nach neuer Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetDescription.Test gebe Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetDescription_Text.Test gebe Textfeld Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetType.Test gebe Typ" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestSetClassName.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetClassName. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestSetMethod.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetMethod. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
-          </results>
-        </test-suite>
-        <test-suite type="Fixture" name="TestTDiagramDatabase" executed="True" result="Success" success="True" time="0.025" >
+        <test-suite type="Fixture" name="TestTEdgeDatabase" executed="True" result="Success" success="True" time="0.027" >
           <results>
             <test-case name="setTable.Test setze Tabellennamen" executed="True" result="Success" success="True" time="0.000" asserts="0" />
             <test-case name="getTable.Test geb Tabellennamen" executed="True" result="Success" success="True" time="0.000" asserts="0" />
           </results>
         </test-suite>
-        <test-suite type="Namespace" name="UDiagramTest" executed="true" result="Success" success="True" time="0.024" asserts="0" >
+        <test-suite type="Fixture" name="TestTHumanDecision" executed="True" result="Success" success="True" time="0.026" >
           <results>
-              <test-suite type="Fixture" name="TestTDiagram" executed="True" result="Success" success="True" time="0.024" >
+            <test-case name="TestSetID.Test setze neue Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetID.Test gebe Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestSetDescription.Test setze neue Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestSetDescription_Text.Test Textfeld nach neuer Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetDescription.Test gebe Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetDescription_Text.Test gebe Textfeld Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetType.Test gebe Typ" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestSetClassName.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetClassName. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestSetMethod.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetMethod. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetClassType.Test gebe Namen der Klasse wieder" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+          </results>
+        </test-suite>
+        <test-suite type="Fixture" name="TestTNodeDatabase" executed="True" result="Success" success="True" time="0.022" >
+          <results>
+            <test-case name="setTable.Test setze Tabellennamen" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="getTable.Test geb Tabellennamen" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+          </results>
+        </test-suite>
+        <test-suite type="Fixture" name="TestTMachineTask" executed="True" result="Success" success="True" time="0.022" >
+          <results>
+            <test-case name="TestSetID.Test setze neue Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetID.Test gebe Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestSetDescription.Test setze neue Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestSetDescription_Text.Test Textfeld nach neuer Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetDescription.Test gebe Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetDescription_Text.Test gebe Textfeld Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetType.Test gebe Typ" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestSetClassName.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetClassName. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestSetMethod.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetMethod. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetClassType.Test gebe Namen der Klasse wieder" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+          </results>
+        </test-suite>
+        <test-suite type="Namespace" name="UDiagramTest" executed="true" result="Success" success="True" time="0.017" asserts="0" >
+          <results>
+              <test-suite type="Fixture" name="TestTDiagram" executed="True" result="Success" success="True" time="0.017" >
                 <results>
                   <test-case name="TestSetID.Test setze neue ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestSetName.Test setze neuen Namen" executed="True" result="Success" success="True" time="0.000" asserts="0" />
@@ -104,13 +103,22 @@
               </test-suite>
           </results>
         </test-suite>
-        <test-suite type="Fixture" name="TestTNodeDatabase" executed="True" result="Success" success="True" time="0.020" >
+        <test-suite type="Fixture" name="TestTStart" executed="True" result="Success" success="True" time="0.014" >
           <results>
-            <test-case name="setTable.Test setze Tabellennamen" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="getTable.Test geb Tabellennamen" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestSetID.Test setze neue Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetID.Test gebe Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestSetDescription.Test setze neue Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestSetDescription_Text.Test Textfeld nach neuer Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetDescription.Test gebe Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetType.Test gebe Typ" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestSetClassName.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetClassName. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestSetMethod.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetMethod. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetClassType.Test gebe Namen der Klasse wieder" executed="True" result="Success" success="True" time="0.000" asserts="0" />
           </results>
         </test-suite>
-        <test-suite type="Fixture" name="TestTMachineDecision" executed="True" result="Success" success="True" time="0.019" >
+        <test-suite type="Fixture" name="TestTMachineDecision" executed="True" result="Success" success="True" time="0.010" >
           <results>
             <test-case name="TestSetID.Test setze neue Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
             <test-case name="TestGetID.Test gebe Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
@@ -123,23 +131,10 @@
             <test-case name="TestGetClassName. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
             <test-case name="TestSetMethod.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
             <test-case name="TestGetMethod. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetClassType.Test gebe Namen der Klasse wieder" executed="True" result="Success" success="True" time="0.000" asserts="0" />
           </results>
         </test-suite>
-        <test-suite type="Fixture" name="TestTStart" executed="True" result="Success" success="True" time="0.016" >
-          <results>
-            <test-case name="TestSetID.Test setze neue Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetID.Test gebe Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestSetDescription.Test setze neue Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestSetDescription_Text.Test Textfeld nach neuer Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetDescription.Test gebe Beschreibung" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetType.Test gebe Typ" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestSetClassName.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetClassName. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestSetMethod.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="TestGetMethod. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
-          </results>
-        </test-suite>
-        <test-suite type="Fixture" name="TestTEnd" executed="True" result="Success" success="True" time="0.006" >
+        <test-suite type="Fixture" name="TestTHumanTask" executed="True" result="Success" success="True" time="0.006" >
           <results>
             <test-case name="TestSetID.Test setze neue Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
             <test-case name="TestGetID.Test gebe Start-ID" executed="True" result="Success" success="True" time="0.000" asserts="0" />
@@ -152,12 +147,23 @@
             <test-case name="TestGetClassName. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
             <test-case name="TestSetMethod.Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
             <test-case name="TestGetMethod. Test " executed="True" result="Success" success="True" time="0.000" asserts="0" />
+            <test-case name="TestGetClassType.Test gebe Namen der Klasse wieder" executed="True" result="Success" success="True" time="0.000" asserts="0" />
           </results>
         </test-suite>
-        <test-suite type="Fixture" name="TestTDatabase" executed="True" result="Success" success="True" time="0.001" >
+        <test-suite type="Namespace" name="UEdgeTest" executed="true" result="Success" success="True" time="0.002" asserts="0" >
           <results>
-            <test-case name="setTable.Test setze Tabellennamen" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-            <test-case name="getTable.Test geb Tabellennamen" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+              <test-suite type="Fixture" name="TestTEdge" executed="True" result="Success" success="True" time="0.002" >
+                <results>
+                  <test-case name="TestSetID.Test neue ID setzen" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestGetID.Test aktuelle ID zurueckgeben" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSetNodeID.Test ID des Knoten setzen" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestGetNodeID.Test aktuelle Knoten ID zurueckgeben" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSetNextNodeID.Test neue ID des naechsten Knotens setzen" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestGetNextNodeID.Test aktuelle ID des naechsten Knotens bekommen" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSetDecisionVal.Test aktuellen Entscheidungswert setzen" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestGetDecisionVal.Test aktuellen Entscheidungswert ausgeben" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                </results>
+              </test-suite>
           </results>
         </test-suite>
     </results>
