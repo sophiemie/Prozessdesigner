@@ -72,6 +72,8 @@ type
     procedure TestGetMethod(_Result: String);
     [TestCase('Test gebe Namen der Klasse wieder','TEnd')]
     procedure TestGetClassType(_Result: String);
+    [TestCase('Test gebe Anzahl Beschreibungen wieder','2')]
+    procedure TestGetAllDescriptions_Count(_Result: Integer);
   end;
 
 [TestFixture]
@@ -107,6 +109,8 @@ type
     procedure TestGetMethod(_Result: String);
     [TestCase('Test gebe Namen der Klasse wieder','THumanTask')]
     procedure TestGetClassType(_Result: String);
+    [TestCase('Test gebe Anzahl Beschreibungen wieder','4')]
+    procedure TestGetAllDescriptions_Count(_Result: Integer);
   end;
 
 [TestFixture]
@@ -142,6 +146,8 @@ type
     procedure TestGetMethod(_Result: String);
     [TestCase('Test gebe Namen der Klasse wieder','THumanDecision')]
     procedure TestGetClassType(_Result: String);
+    [TestCase('Test gebe Anzahl Beschreibungen wieder','3')]
+    procedure TestGetAllDescriptions_Count(_Result: Integer);
   end;
 
   [TestFixture]
@@ -177,6 +183,8 @@ type
     procedure TestGetMethod(_Result: String);
     [TestCase('Test gebe Namen der Klasse wieder','TMachineTask')]
     procedure TestGetClassType(_Result: String);
+    [TestCase('Test gebe Anzahl Beschreibungen wieder','3')]
+    procedure TestGetAllDescriptions_Count(_Result: Integer);
   end;
 
 [TestFixture]
@@ -212,6 +220,8 @@ type
     procedure TestGetMethod(_Result: String);
     [TestCase('Test gebe Namen der Klasse wieder','TMachineDecision')]
     procedure TestGetClassType(_Result: String);
+    [TestCase('Test gebe Anzahl Beschreibungen wieder','5')]
+    procedure TestGetAllDescriptions_Count(_Result: Integer);
   end;
 
 implementation
@@ -440,6 +450,15 @@ begin
   R := aEndNode.getClassType;
   Assert.AreEqual(R,_Result);
 end;
+
+procedure TestTEnd.TestGetAllDescriptions_Count(_Result: Integer);
+var
+  R : Integer;
+begin
+  R := High(TEnd.getAllDescription)+1;
+  Assert.AreEqual(R,_Result);
+end;
+
  ///////////////////// THumanTask ////////////////////////
 
 procedure TestTHumanTask.Setup;
@@ -555,6 +574,15 @@ begin
   R := aHTNode.getClassType;
   Assert.AreEqual(R,_Result);
 end;
+
+procedure TestTHumanTask.TestGetAllDescriptions_Count(_Result: Integer);
+var
+  R : Integer;
+begin
+  R := High(THumanTask.getAllDescription)+1;
+  Assert.AreEqual(R,_Result);
+end;
+
 ///////////////////////////// THumanDecision ////////////////////////////
 
 procedure TestTHumanDecision.Setup;
@@ -668,6 +696,14 @@ var
   R : String;
 begin
   R := aHDNode.getClassType;
+  Assert.AreEqual(R,_Result);
+end;
+
+procedure TestTHumanDecision.TestGetAllDescriptions_Count(_Result: Integer);
+var
+  R : Integer;
+begin
+  R := High(THumanDecision.getAllDescription)+1;
   Assert.AreEqual(R,_Result);
 end;
 
@@ -787,6 +823,14 @@ begin
   Assert.AreEqual(R,_Result);
 end;
 
+procedure TestTMachineTask.TestGetAllDescriptions_Count(_Result: Integer);
+var
+  R : Integer;
+begin
+  R := High(TMachineTask.getAllDescription)+1;
+  Assert.AreEqual(R,_Result);
+end;
+
 ///////////////////////////// TMachineDecision ////////////////////////////
 
 procedure TestTMachineDecision.Setup;
@@ -900,6 +944,14 @@ var
   R : String;
 begin
   R := aMDNode.getClassType;
+  Assert.AreEqual(R,_Result);
+end;
+
+procedure TestTMachineDecision.TestGetAllDescriptions_Count(_Result: Integer);
+var
+  R : Integer;
+begin
+  R := High(TMachineDecision.getAllDescription)+1;
   Assert.AreEqual(R,_Result);
 end;
 
