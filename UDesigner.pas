@@ -227,7 +227,7 @@ var
   newMT : TMachineTask;
   newNodeID : Integer;
 begin
-  NodeSelectionForm.FillList('TMachineTask');
+  NodeSelectionForm.FillList(TMachineTask.getClassType);
   createNodeForm();
   //newNodeID := NodeDatabase.getHighestNodeID +1;
   newNodeID := 1; // LOESCHEN SOBALD DB WIEDER FUNKTIONIERT

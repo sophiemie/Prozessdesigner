@@ -34,13 +34,13 @@ type
     procedure setMethodName(newMethodName : String);
     function getMethodName : String;
     function getType : String;
+    //function getClassType : String;
   end;
 
   // Start- und Endknoten
   TStart = class(TTMSFNCBloxUMLInitialStateBlock, INodes)
     popUp : TPopupMenu;
     constructor Create(nodeID: Integer);
-    destructor Destroy;
     procedure setID(newID : Integer);
     function getID : Integer;
     procedure setDescription(newDescription : String);
@@ -50,6 +50,7 @@ type
     function getClassName : String;
     procedure setMethodName(newMethodName : String);
     function getMethodName : String;
+    class function getClassType : String;
      {Interface-Implementationen}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -59,6 +60,7 @@ type
     Description : String;
     ClassName : String;
     Method : String;
+  class var classType : String;
   const
     NODE_TYPE = 'S';
   end;
@@ -66,7 +68,6 @@ type
   TEnd = class(TTMSFNCBloxUMLFinalStateBlock, INodes)
   public
     constructor Create(nodeID: Integer; newDescription: String);
-    destructor Destroy;
     procedure setID(newID : Integer);
     function getID : Integer;
     procedure setDescription(newDescription : String);
@@ -76,6 +77,7 @@ type
     function getClassName : String;
     procedure setMethodName(newMethodName : String);
     function getMethodName : String;
+    class function getClassType : String;
     {Interface-Implementationen}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -85,6 +87,7 @@ type
     Description : String;
     ClassName : String;
     Method : String;
+  class var classType : String;
   const
     NODE_TYPE = 'E';
   end;
@@ -93,7 +96,6 @@ type
   //TDecision = class abstract(TTMSFNCBloxUMLDecisionBlock, IworkflowComponent)
   TDecision = class abstract (TTMSFNCBloxUMLDecisionBlock, INodes)
     constructor Create(nodeID: Integer; newDescription: String);
-    destructor Destroy;
     procedure setID(newID : Integer);
     procedure setDescription(newDescription : String); virtual;
     function getDescription : String;
@@ -103,6 +105,7 @@ type
     function getClassName : String;
     procedure setMethodName(newMethodName : String);
     function getMethodName : String;
+    class function getClassType : String; virtual;
     {Interface-Implementationen}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -112,12 +115,14 @@ type
     Description : String;
     ClassName : String;
     Method : String;
+  class var classType : String;
   end;
 
   THumanDecision = class(TDecision)
     constructor Create(nodeID: Integer; newDescription: String);
     function getType : String; override;
     procedure setDescription(newDescription : String); override;
+    class function getClassType : String; override;
   private
     const
     NODE_TYPE = 'HD';
@@ -127,6 +132,7 @@ type
     constructor Create(nodeID: Integer; newDescription: String);
     function getType : String; override;
     procedure setDescription(newDescription : String); override;
+    class function getClassType : String; override;
   private
     const
     NODE_TYPE = 'MD';
@@ -135,7 +141,6 @@ type
   // Aktionsknoten
   TTask = class abstract(TTMSFNCBloxUMLActionStateBlock, INodes)
     constructor Create(nodeID: Integer; newDescription: String);
-    destructor Destroy;
     procedure setID(newID : Integer);
     function getID : Integer;
     procedure setDescription(newDescription : String); virtual;
@@ -145,6 +150,7 @@ type
     function getClassName : String;
     procedure setMethodName(newMethodName : String);
     function getMethodName : String;
+    class function getClassType : String; virtual;
     {Interface-Implementationen}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -154,21 +160,24 @@ type
     Description : String;
     ClassName : String;
     Method : String;
+    class var classType : String;
   end;
 
   THumanTask = class(TTask)
     constructor Create(nodeID: Integer; newDescription: String);
     function getType : String; override;
     procedure setDescription(newDescription : String); override;
+    class function getClassType : String; override;
   private
     const
     NODE_TYPE = 'HT';
   end;
 
-  TMashineTask = class(TTask)
+  TMachineTask = class(TTask)
     constructor Create(nodeID: Integer; newDescription: String);
     function getType : String; override;
     procedure setDescription(newDescription : String); override;
+    class function getClassType : String; override;
   private
     const
     NODE_TYPE = 'MT';
@@ -211,6 +220,7 @@ begin
   Description := '';
   Text := NODE_TYPE;
   TextCells.Items[0].Font.Size := FONT_SIZE;
+  classType := 'TStart';
 end;
 
 constructor TEnd.Create(nodeID: Integer; newDescription: String);
@@ -223,6 +233,7 @@ begin
   Description := newDescription;
   Text := NODE_TYPE + ': ' + newDescription;
   TextCells.Items[0].Font.Size := FONT_SIZE;
+  classType := 'TEnd';
 end;
 
 constructor TDecision.Create(nodeID: Integer; newDescription: String);
@@ -240,6 +251,7 @@ begin
   inherited Create(nodeID, newDescription);
   FillColor := lightBlue;
   Text := NODE_TYPE + ': ' + newDescription;
+  classType := 'THumanDecision';
 end;
 
 constructor TMachineDecision.Create(nodeID: Integer; newDescription: String);
@@ -247,6 +259,7 @@ begin
   inherited Create(nodeID, newDescription);
   FillColor := lightGray;
   Text := NODE_TYPE + ': ' + newDescription;
+  classType := 'TMachineDecision';
 end;
 
 constructor TTask.Create(nodeID: Integer; newDescription: String);
@@ -264,31 +277,15 @@ begin
   inherited Create(nodeID, newDescription);
   FillColor := lightBlue;
   Text := NODE_TYPE + ': ' + newDescription;
+  classType := 'THumanTask';
 end;
 
-constructor TMashineTask.Create(nodeID: Integer; newDescription: String);
+constructor TMachineTask.Create(nodeID: Integer; newDescription: String);
 begin
   inherited Create(nodeID, newDescription);
   FillColor := lightGray;
   Text := NODE_TYPE + ': ' + newDescription;
-end;
-
-//////////////////////////////////
-{Destruktoren aller Knoten}
-destructor TStart.Destroy;
-begin
-end;
-
-destructor TEnd.Destroy;
-begin
-end;
-
-destructor TDecision.Destroy;
-begin
-end;
-
-destructor TTask.Destroy;
-begin
+  classType := 'TMachineTask';
 end;
 
 ///////////////////////////
@@ -353,7 +350,7 @@ begin
 end;
 procedure TStart.setClassName(newClassName: String);
 begin
-
+  ClassName := newClassName;
 end;
 function TStart.getClassName : String;
 begin
@@ -375,7 +372,7 @@ begin
 end;
 procedure TEnd.setClassName(newClassName: String);
 begin
-
+  ClassName := newClassName;
 end;
 function TEnd.getClassName : String;
 begin
@@ -447,7 +444,7 @@ begin
   Result := NODE_TYPE;
 end;
 
-function TMashineTask.getType : String;
+function TMachineTask.getType : String;
 begin
   Result := NODE_TYPE;
 end;
@@ -469,7 +466,7 @@ begin
   Text := NODE_TYPE + ': ' + newDescription;
 end;
 
-procedure TMashineTask.setDescription(newDescription : String);
+procedure TMachineTask.setDescription(newDescription : String);
 begin
   Description := newDescription;
   Text := NODE_TYPE + ': ' + newDescription;
@@ -479,6 +476,46 @@ procedure TMachineDecision.setDescription(newDescription : String);
 begin
   Description := newDescription;
   Text := NODE_TYPE + ': ' + newDescription;
+end;
+
+class function TStart.getClassType : String;
+begin
+  Result := classType;
+end;
+
+class function TEnd.getClassType : String;
+begin
+  Result := classType;
+end;
+
+class function THumanTask.getClassType : String;
+begin
+  Result := classType;
+end;
+
+class function THumanDecision.getClassType : String;
+begin
+  Result := classType;
+end;
+
+class function TMachineDecision.getClassType : String;
+begin
+  Result := classType;
+end;
+
+class function TMachineTask.getClassType : String;
+begin
+  Result := classType;
+end;
+
+class function TTask.getClassType : String;
+begin
+  Result := classType;
+end;
+
+class function TDecision.getClassType : String;
+begin
+  Result := classType;
 end;
 
 //////////////////////////////////////////////////////////////////////

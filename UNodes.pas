@@ -34,6 +34,7 @@ type
     procedure setMethodName(newMethodName : String);
     function getMethodName : String;
     function getType : String;
+    //function getClassType : String;
   end;
 
   // Start- und Endknoten
@@ -49,7 +50,7 @@ type
     function getClassName : String;
     procedure setMethodName(newMethodName : String);
     function getMethodName : String;
-    function getClassType : String;
+    class function getClassType : String;
      {Interface-Implementationen}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -59,9 +60,9 @@ type
     Description : String;
     ClassName : String;
     Method : String;
-  class var classType : String;
   const
     NODE_TYPE = 'S';
+    CLASS_TYPE = 'TStart';
   end;
 
   TEnd = class(TTMSFNCBloxUMLFinalStateBlock, INodes)
@@ -76,7 +77,7 @@ type
     function getClassName : String;
     procedure setMethodName(newMethodName : String);
     function getMethodName : String;
-    function getClassType : String;
+    class function getClassType : String;
     {Interface-Implementationen}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -86,9 +87,9 @@ type
     Description : String;
     ClassName : String;
     Method : String;
-  class var classType : String;
   const
     NODE_TYPE = 'E';
+    CLASS_TYPE = 'TEnd';
   end;
 
   // Entscheidungsknoten       // TInterfacedObject
@@ -104,7 +105,7 @@ type
     function getClassName : String;
     procedure setMethodName(newMethodName : String);
     function getMethodName : String;
-    function getClassType : String; virtual;
+    class function getClassType : String; virtual;
     {Interface-Implementationen}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -114,27 +115,30 @@ type
     Description : String;
     ClassName : String;
     Method : String;
-  class var classType : String;
+  const
+    CLASS_TYPE = 'TDecision';
   end;
 
   THumanDecision = class(TDecision)
     constructor Create(nodeID: Integer; newDescription: String);
     function getType : String; override;
     procedure setDescription(newDescription : String); override;
-    function getClassType : String; override;
+    class function getClassType : String; override;
   private
     const
     NODE_TYPE = 'HD';
+    CLASS_TYPE = 'THumanDecision';
   end;
 
   TMachineDecision = class(TDecision)
     constructor Create(nodeID: Integer; newDescription: String);
     function getType : String; override;
     procedure setDescription(newDescription : String); override;
-    function getClassType : String; override;
+    class function getClassType : String; override;
   private
     const
     NODE_TYPE = 'MD';
+    CLASS_TYPE = 'TMachineDecision';
   end;
 
   // Aktionsknoten
@@ -149,7 +153,7 @@ type
     function getClassName : String;
     procedure setMethodName(newMethodName : String);
     function getMethodName : String;
-    function getClassType : String; virtual;
+    class function getClassType : String; virtual;
     {Interface-Implementationen}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -159,27 +163,30 @@ type
     Description : String;
     ClassName : String;
     Method : String;
-    class var classType : String;
+  const
+    CLASS_TYPE = 'TTask';
   end;
 
   THumanTask = class(TTask)
     constructor Create(nodeID: Integer; newDescription: String);
     function getType : String; override;
     procedure setDescription(newDescription : String); override;
-    function getClassType : String; override;
+    class function getClassType : String; override;
   private
     const
     NODE_TYPE = 'HT';
+    CLASS_TYPE = 'THumanTask';
   end;
 
   TMachineTask = class(TTask)
     constructor Create(nodeID: Integer; newDescription: String);
     function getType : String; override;
     procedure setDescription(newDescription : String); override;
-    function getClassType : String; override;
+    class function getClassType : String; override;
   private
     const
     NODE_TYPE = 'MT';
+    CLASS_TYPE = 'TMachineTask';
   end;
  /////////////////////////////////////////////////////////////////////
 implementation
@@ -471,44 +478,44 @@ begin
   Text := NODE_TYPE + ': ' + newDescription;
 end;
 
-function TStart.getClassType : String;
+class function TStart.getClassType : String;
 begin
-  Result := classType;
+  Result := CLASS_TYPE;
 end;
 
-function TEnd.getClassType : String;
+class function TEnd.getClassType : String;
 begin
-  Result := classType;
+  Result := CLASS_TYPE;
 end;
 
-function THumanTask.getClassType : String;
+class function THumanTask.getClassType : String;
 begin
-  Result := classType;
+  Result := CLASS_TYPE;
 end;
 
-function THumanDecision.getClassType : String;
+class function THumanDecision.getClassType : String;
 begin
-  Result := classType;
+  Result := CLASS_TYPE;
 end;
 
-function TMachineDecision.getClassType : String;
+class function TMachineDecision.getClassType : String;
 begin
-  Result := classType;
+  Result := CLASS_TYPE;
 end;
 
-function TMachineTask.getClassType : String;
+class function TMachineTask.getClassType : String;
 begin
-  Result := classType;
+  Result := CLASS_TYPE;
 end;
 
-function TTask.getClassType : String;
+class function TTask.getClassType : String;
 begin
-  Result := classType;
+  Result := CLASS_TYPE;
 end;
 
-function TDecision.getClassType : String;
+class function TDecision.getClassType : String;
 begin
-  Result := classType;
+  Result := CLASS_TYPE;
 end;
 
 //////////////////////////////////////////////////////////////////////

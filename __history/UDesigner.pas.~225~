@@ -80,7 +80,7 @@ type
     procedure Load1Click(Sender: TObject);
     procedure ReplaceNodeNames(fileName: String);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-    procedure OpenDiagramFromLocal();
+    procedure OpenDiagramFromLocal(fileName : String);
   private
     { Private-Deklarationen }
   public
@@ -129,12 +129,13 @@ begin
     begin
       newEdgeButtonClicked := false;
       newEdgeCreatedWithoutTarget := true;
-      newEdgeID := EdgeDatabase.getHighestEdgeID +1;
+      //newEdgeID := EdgeDatabase.getHighestEdgeID +1;
+      newEdgeID := 1; // LOESCHEN SOBALD DB WIEDER FUNKTIONIERT
       newEdge := TEdge.Create(newEdgeID, selectedID);
       newEdge.SourceLinkPoint.AnchorLink :=
         TMSFNCBloxControl1.Presenter.Selecteds[0].LinkPoints[1];
       TMSFNCBloxControl1.Blox.Add(newEdge);
-      EdgeDatabase.addNewEdge(newEdge);
+      //EdgeDatabase.addNewEdge(newEdge);
     end;
   end { Kante einem zweiten Knoten zuweisen }
   else if newEdgeCreatedWithoutTarget and not
@@ -149,7 +150,7 @@ begin
         TMSFNCBloxControl1.Presenter.Selecteds[0].LinkPoints[0];
       newEdge.RequiresConnections := true;
       newEdge.setNextNodeID(selectedID);
-      EdgeDatabase.addNextNode(newEdge);
+//      EdgeDatabase.addNextNode(newEdge);
     end;
   end;
 end;
@@ -168,12 +169,12 @@ var
 begin
   NodeSelectionForm.FillList('TEnd');
   createNodeForm();
-  newNodeID := NodeDatabase.getHighestNodeID +1;
-  newNodeID := 1;
+  //newNodeID := NodeDatabase.getHighestNodeID +1;
+  newNodeID := 1; // LOESCHEN SOBALF DB WIEDER FUNKTIONIERT
   newEnd := TEnd.Create(newNodeID,
                           NodeSelectionForm.getSelectedNodeDescription);
   TMSFNCBloxControl1.Blox.Add(newEnd);
-  NodeDatabase.addNewNode(diagram, newEnd);
+  //NodeDatabase.addNewNode(diagram, newEnd);
 end;
 
 procedure TDesignerForm.BitBtnHDClick(Sender: TObject);
@@ -183,11 +184,12 @@ var
 begin
   NodeSelectionForm.FillList('THumanDecision');
   createNodeForm();
-  newNodeID := NodeDatabase.getHighestNodeID +1;
+  //newNodeID := NodeDatabase.getHighestNodeID +1;
+  newNodeID := 1; // LOESCHEN SOBALD DB WIEDER FUNKTIONIERT
   newHD := THumanDecision.Create(newNodeID,
                                   NodeSelectionForm.getSelectedNodeDescription);
   TMSFNCBloxControl1.Blox.Add(newHD);
-  NodeDatabase.addNewNode(diagram, newHD);
+//  NodeDatabase.addNewNode(diagram, newHD);
 end;
 
 procedure TDesignerForm.BitBtnHTClick(Sender: TObject);
@@ -197,11 +199,12 @@ var
 begin
   NodeSelectionForm.FillList('THumanTask');
   createNodeForm();
-  newNodeID := NodeDatabase.getHighestNodeID +1;
+  //newNodeID := NodeDatabase.getHighestNodeID +1;
+  newNodeID := 1; // LOESCHEN SOBALD DB WIEDER FUNKTIONIERT
   newHT := THumanTask.Create(newNodeID,
                               NodeSelectionForm.getSelectedNodeDescription);
   TMSFNCBloxControl1.Blox.Add(newHT);
-  NodeDatabase.addNewNode(diagram, newHT);
+//  NodeDatabase.addNewNode(diagram, newHT);
 end;
 
 procedure TDesignerForm.BitBtnMDClick(Sender: TObject);
@@ -211,11 +214,12 @@ var
 begin
   NodeSelectionForm.FillList('TMachineDecision');
   createNodeForm();
-  newNodeID := NodeDatabase.getHighestNodeID +1;
+  //newNodeID := NodeDatabase.getHighestNodeID +1;
+  newNodeID := 1; // LOESCHEN SOBALD DB WIEDER FUNKTIONIERT
   newMD := TMachineDecision.Create(newNodeID,
                                   NodeSelectionForm.getSelectedNodeDescription);
   TMSFNCBloxControl1.Blox.Add(newMD);
-  NodeDatabase.addNewNode(diagram, newMD);
+//  NodeDatabase.addNewNode(diagram, newMD);
 end;
 
 procedure TDesignerForm.BitBtnMTClick(Sender: TObject);
@@ -223,13 +227,14 @@ var
   newMT : TMachineTask;
   newNodeID : Integer;
 begin
-  NodeSelectionForm.FillList('TMachineTask');
-  createNodeForm();
-  newNodeID := NodeDatabase.getHighestNodeID +1;
+  //newNodeID := NodeDatabase.getHighestNodeID +1;
+  newNodeID := 1; // LOESCHEN SOBALD DB WIEDER FUNKTIONIERT
   newMT := TMachineTask.Create(newNodeID,
                                   NodeSelectionForm.getSelectedNodeDescription);
+  NodeSelectionForm.FillList('TMachineTask');
+  createNodeForm();
   TMSFNCBloxControl1.Blox.Add(newMT);
-  NodeDatabase.addNewNode(diagram, newMT);
+//  NodeDatabase.addNewNode(diagram, newMT);
 end;
 
 procedure TDesignerForm.BitBtnStartClick(Sender: TObject);
@@ -293,14 +298,16 @@ begin
    end
    else {Wenn Diagramm geoeffnet wird}
    begin
-    OpenDiagramFromLocal();
+    OpenDiagramFromLocal(LoadedDiagramFileName);
    end;
 end;
 
-procedure TDesignerForm.OpenDiagramFromLocal();
+{ WARNUNG: Zugriffsfehler beim oeffnen}
+procedure TDesignerForm.OpenDiagramFromLocal(fileName : String);
 begin
-  ReplaceNodeNames(OpenDialog1.InitialDir + LoadedDiagramFileName);
-  TMSFNCBloxControl1.LoadFromFile(OpenDialog1.InitialDir + LoadedDiagramFileName);
+  ReplaceNodeNames(OpenDialog1.InitialDir + fileName);
+  // Die Funktion aus dem Framework fuehrt zu Zugriffsverletzung
+  TMSFNCBloxControl1.LoadFromFile(OpenDialog1.InitialDir + fileName);
 end;
 
 procedure TDesignerForm.Load1Click(Sender: TObject);
@@ -312,9 +319,13 @@ begin
   OpenDialog1.Execute;
   ReplaceNodeNames(OpenDialog1.FileName);
   IsLoadedDiagram := true;
+
   {Pfad aus Namen entfernen}
   diagramName := OpenDialog1.Files[0];
   diagramName := diagramName.Remove(0,OpenDialog1.InitialDir.Length);
+
+  OpenDiagramFromLocal(diagramName);
+
   diagram.setName(diagramName); // Voruebergehend damit Schleifen genutzt werdem koennen
   I := 0;
   { ID aus Dateinamen bestimmen }
@@ -353,7 +364,6 @@ var
 begin
   openFile := TStringList.Create;
   openFile.LoadFromFile(fileName);
-
   for I := 0 to openFile.Count-1 do
   begin
     openFile[I] := StringReplace(openFile[I], 'TEnd',
@@ -369,7 +379,7 @@ begin
     openFile[I] := StringReplace(openFile[I], 'TMachineDecision',
               'TTMSFNCBloxUMLDecisionBlock', [rfReplaceAll, rfIgnoreCase]);
     openFile[I] := StringReplace(openFile[I], 'TEdge',
-              'TTMSFNCBloxUMLActionStateBlock', [rfReplaceAll, rfIgnoreCase]);
+              'TTMSFNCBloxDFDDataFlowLine', [rfReplaceAll, rfIgnoreCase]);
   end;
   openFile.SaveToFile(fileName);
 //  TMSFNCBloxControl1.LoadFromFile(OpenDialog1.Files[0]);
@@ -408,9 +418,9 @@ procedure TDesignerForm.TMSFNCBloxControl1ElementRemove(Sender: TObject;
   Element: TTMSFNCBloxElement);
 begin
   { Ueberpruefung ob ein Knoten oder eine Kante geloescht wird }
-  if selectedWorkflowComponent.Equals('TEdge')
-  then EdgeDatabase.deleteEdge(selectedID)
-  else NodeDatabase.deleteNode(selectedID);
+//  if selectedWorkflowComponent.Equals('TEdge')
+//  then EdgeDatabase.deleteEdge(selectedID)
+//  else NodeDatabase.deleteNode(selectedID);
 end;
 
 procedure TDesignerForm.TMSFNCBloxControl1MouseMove(Sender: TObject;
