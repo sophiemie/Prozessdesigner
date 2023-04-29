@@ -53,8 +53,8 @@
     <File Path="UZMTStandard.pas"/>
     <File Path="UStartPage.pas"/>
     <File Path="UStartPage.dfm"/>
-    <File Path="UDiagram.pas"/>
     <File Path="ULanguage.pas"/>
+    <File Path="UDiagram.pas"/>
     <File Path="UDiagramController.pas"/>
   </ProjectSortOrder>
 </BorlandProject>

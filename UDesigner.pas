@@ -20,7 +20,7 @@ uses
   VCL.TMSFNCStateManager, VCL.TMSFNCResponsiveManager, Vcl.ExtCtrls, Vcl.Menus,
   Vcl.ComCtrls, FireDAC.Phys, Vcl.ToolWin, VCL.TMSFNCBloxCoreGroup, ShellApi,
   VCL.TMSFNCBloxUIRegistration,UNodes, UNodeSelection, UDatabase, UToolBar,
-  UEdge, UDesignerToolbar, UDiagram, ULanguage;  // Datenbank.pas einbinden
+  UEdge, UDesignerToolbar, UDiagram, ULanguage, UDiagramController;
 
 type
   TDesignerForm = class(TForm)
