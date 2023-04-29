@@ -12,7 +12,8 @@ uses
   UZMTStandard in 'UZMTStandard.pas',
   UStartPage in 'UStartPage.pas' {StartPageForm},
   UDiagram in 'UDiagram.pas',
-  ULanguage in 'ULanguage.pas';
+  ULanguage in 'ULanguage.pas',
+  UDiagramController in 'UDiagramController.pas';
 
 {$R *.res}
 
