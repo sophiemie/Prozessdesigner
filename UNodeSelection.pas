@@ -80,49 +80,41 @@ begin
   begin
     Image1.Hint := END_HINT_DE;
     GroupBox1.Caption := 'Endnode';
-    ListBox1.Items.Add('Standard');
-    ListBox1.Items.Add('Abbruch');
-
     Item := TEnd.getAllDescription;
     for I := Low(Item) to High(Item) do
       ListBox1.Items.Add(Item[I]);
-
-
   end
   else if NodeClass.Equals(THumanDecision.getClassType) then  // HD
   begin
     Label1.Caption := 'Who should be asked?';
     GroupBox1.Caption := 'Human Decision';
-    ListBox1.Items.Add('Supervisor');
-    ListBox1.Items.Add('Leader');
-    ListBox1.Items.Add('Management');
+    Item := THumanDecision.getAllDescription;
+    for I := Low(Item) to High(Item) do
+      ListBox1.Items.Add(Item[I]);
   end
   else if NodeClass.Equals(TMachineDecision.getClassType) then  // MD
   begin
     Label1.Caption := 'What should be checked?';
     GroupBox1.Caption := 'Mashine Decision';
-    ListBox1.Items.Add('Stellungnahme');
-    ListBox1.Items.Add('Genügend/Überschneidete Tage');
-    ListBox1.Items.Add('Anmeldung');
-    ListBox1.Items.Add('Programmbereich');
-    ListBox1.Items.Add('Position Antragsteller');
+    Item := TMachineDecision.getAllDescription;
+    for I := Low(Item) to High(Item) do
+      ListBox1.Items.Add(Item[I]);
   end
   else if NodeClass.Equals(THumanTask.getClassType) then // HT
   begin
     Label1.Caption := 'Which Formular should be filled?';
     GroupBox1.Caption := 'Human Task';
-    ListBox1.Items.Add('Urlaub');
-    ListBox1.Items.Add('Drittmittel');
-    ListBox1.Items.Add('MitarbeiterInnen und Gäste');
-    ListBox1.Items.Add('Reiseantrag');
+    Item := THumanTask.getAllDescription;
+    for I := Low(Item) to High(Item) do
+      ListBox1.Items.Add(Item[I]);
   end
   else if NodeClass.Equals(TMachineTask.getClassType) then // MT
   begin
     Label1.Caption := 'Which method should be used?';
     GroupBox1.Caption := 'Mashine Task';
-    ListBox1.Items.Add('Generate PDF');
-    ListBox1.Items.Add('Send PDF');
-    ListBox1.Items.Add('Send Info');
+    Item := TMachineTask.getAllDescription;
+    for I := Low(Item) to High(Item) do
+      ListBox1.Items.Add(Item[I]);
   end;
 
 end;

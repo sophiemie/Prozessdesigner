@@ -103,6 +103,7 @@ var
   newEdgeButtonClicked: boolean;
   newEdgeCreatedWithoutTarget: boolean;
   newEdge : TEdge;
+  id_ohne_datenbank : Integer;  // LOESCHEN WENN DATENBANK WIEDER GEHT
 
 implementation ////////////////////////////////////////////////////////////////
 {$R *.dfm}
@@ -170,7 +171,8 @@ begin
   NodeSelectionForm.FillList('TEnd');
   createNodeForm();
   //newNodeID := NodeDatabase.getHighestNodeID +1;
-  newNodeID := 1; // LOESCHEN SOBALF DB WIEDER FUNKTIONIERT
+  newNodeID := id_ohne_datenbank; // LOESCHEN SOBALF DB WIEDER FUNKTIONIERT
+  id_ohne_datenbank := id_ohne_datenbank +1;
   newEnd := TEnd.Create(newNodeID,
                           NodeSelectionForm.getSelectedNodeDescription);
   TMSFNCBloxControl1.Blox.Add(newEnd);
@@ -185,7 +187,8 @@ begin
   NodeSelectionForm.FillList('THumanDecision');
   createNodeForm();
   //newNodeID := NodeDatabase.getHighestNodeID +1;
-  newNodeID := 1; // LOESCHEN SOBALD DB WIEDER FUNKTIONIERT
+  newNodeID := id_ohne_datenbank; // LOESCHEN SOBALD DB WIEDER FUNKTIONIERT
+  id_ohne_datenbank := id_ohne_datenbank +1;
   newHD := THumanDecision.Create(newNodeID,
                                   NodeSelectionForm.getSelectedNodeDescription);
   TMSFNCBloxControl1.Blox.Add(newHD);
@@ -200,7 +203,8 @@ begin
   NodeSelectionForm.FillList('THumanTask');
   createNodeForm();
   //newNodeID := NodeDatabase.getHighestNodeID +1;
-  newNodeID := 1; // LOESCHEN SOBALD DB WIEDER FUNKTIONIERT
+  newNodeID := id_ohne_datenbank; // LOESCHEN SOBALD DB WIEDER FUNKTIONIERT
+  id_ohne_datenbank := id_ohne_datenbank +1;
   newHT := THumanTask.Create(newNodeID,
                               NodeSelectionForm.getSelectedNodeDescription);
   TMSFNCBloxControl1.Blox.Add(newHT);
@@ -215,7 +219,8 @@ begin
   NodeSelectionForm.FillList('TMachineDecision');
   createNodeForm();
   //newNodeID := NodeDatabase.getHighestNodeID +1;
-  newNodeID := 1; // LOESCHEN SOBALD DB WIEDER FUNKTIONIERT
+  newNodeID := id_ohne_datenbank; // LOESCHEN SOBALD DB WIEDER FUNKTIONIERT
+  id_ohne_datenbank := id_ohne_datenbank +1;
   newMD := TMachineDecision.Create(newNodeID,
                                   NodeSelectionForm.getSelectedNodeDescription);
   TMSFNCBloxControl1.Blox.Add(newMD);
@@ -230,7 +235,8 @@ begin
   NodeSelectionForm.FillList(TMachineTask.getClassType);
   createNodeForm();
   //newNodeID := NodeDatabase.getHighestNodeID +1;
-  newNodeID := 1; // LOESCHEN SOBALD DB WIEDER FUNKTIONIERT
+  newNodeID := id_ohne_datenbank; // LOESCHEN SOBALD DB WIEDER FUNKTIONIERT
+  id_ohne_datenbank := id_ohne_datenbank +1;
   newMT := TMachineTask.Create(newNodeID,
                                   NodeSelectionForm.getSelectedNodeDescription);
   TMSFNCBloxControl1.Blox.Add(newMT);
@@ -281,6 +287,7 @@ begin
                                                               + 'Diagramme/';
    OpenDialog1.InitialDir := IncludeTrailingPathDelimiter(GetCurrentDir)
                                                               + 'Diagramme/';
+   id_ohne_datenbank := 1; // LOESCHEN WENN DB WIEDER GEHT
 end;
 
 { Event beim neu Laden des Editors }

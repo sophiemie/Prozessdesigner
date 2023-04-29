@@ -12,7 +12,7 @@ uses
   VCL.TMSFNCBloxUIRenderer, VCL.TMSFNCBloxSelector,  VCL.TMSFNCStyles,
   VCL.TMSFNCBloxShapesUML, Vcl.Graphics, Vcl.Menus, Vcl.StdActnMenus,
   VCL.TMSFNCCustomControl, VCL.TMSFNCCustomScrollControl, VCL.TMSFNCBloxControl,
-  System.SysUtils, System.Variants, UZMTStandard;
+  System.SysUtils, System.Variants, UZMTStandard, Vcl.Dialogs;
 var
   popUp :  TStandardMenuPopup;
   // https://stackoverflow.com/questions/18544127/creating-a-popup-menu-at-runtime
@@ -94,8 +94,7 @@ type
     CLASS_TYPE = 'TEnd';
   end;
 
-  // Entscheidungsknoten       // TInterfacedObject
-  //TDecision = class abstract(TTMSFNCBloxUMLDecisionBlock, IworkflowComponent)
+  // Entscheidungsknoten
   TDecision = class abstract (TTMSFNCBloxUMLDecisionBlock, INodes)
     constructor Create(nodeID: Integer; newDescription: String);
     procedure setID(newID : Integer);
@@ -108,7 +107,7 @@ type
     procedure setMethodName(newMethodName : String);
     function getMethodName : String;
     class function getClassType : String; virtual; abstract;
-    class function getAllDescription : TArray<String>; virtual; abstract;
+    class function getAllDescription : TDescription; virtual; abstract;
     {Interface-Implementationen}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -127,7 +126,7 @@ type
     function getType : String; override;
     procedure setDescription(newDescription : String); override;
     class function getClassType : String; override;
-    class function getAllDescription : TArray<String>; override;
+    class function getAllDescription : TDescription; override;
   private
     const
     NODE_TYPE = 'HD';
@@ -139,7 +138,7 @@ type
     function getType : String; override;
     procedure setDescription(newDescription : String); override;
     class function getClassType : String; override;
-    class function getAllDescription : TArray<String>; override;
+    class function getAllDescription : TDescription; override;
   private
     const
     NODE_TYPE = 'MD';
@@ -159,7 +158,7 @@ type
     procedure setMethodName(newMethodName : String);
     function getMethodName : String;
     class function getClassType : String; virtual; abstract;
-    class function getAllDescription : TArray<String>; virtual; abstract;
+    class function getAllDescription : TDescription; virtual; abstract;
     {Interface-Implementationen}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -178,7 +177,7 @@ type
     function getType : String; override;
     procedure setDescription(newDescription : String); override;
     class function getClassType : String; override;
-    class function getAllDescription : TArray<String>; override;
+    class function getAllDescription : TDescription; override;
   private
     const
     NODE_TYPE = 'HT';
@@ -190,7 +189,7 @@ type
     function getType : String; override;
     procedure setDescription(newDescription : String); override;
     class function getClassType : String; override;
-    class function getAllDescription : TArray<String>; override;
+    class function getAllDescription : TDescription; override;
   private
     const
     NODE_TYPE = 'MT';
@@ -522,37 +521,69 @@ class function TEnd.getAllDescription : TDescription;
 var
   description: TDescription;
 begin
-  description[0] := 'Abbruch';
-  description[1] := 'Standard';
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Standard';
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Abbruch';
   Result := description;
 end;
 
-class function THumanTask.getAllDescription : TArray<String>;
+class function THumanTask.getAllDescription : TDescription;
 var
-  description: array of String;
+  description: TDescription;
 begin
-
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Urlaub';
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Drittmittel';
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'MitarbeiterInnen und Gäste';
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Reiseantrag';
+  Result := description;
 end;
 
-class function THumanDecision.getAllDescription : TArray<String>;
+class function THumanDecision.getAllDescription : TDescription;
 var
-  description: array of String;
+  description: TDescription;
 begin
-
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Supervisor';
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Leader';
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Management';
+  Result := description;
 end;
 
-class function TMachineTask.getAllDescription : TArray<String>;
+class function TMachineTask.getAllDescription : TDescription;
 var
-  description: array of String;
+  description: TDescription;
 begin
-
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Generate PDF';
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Send PDF';
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Send Info';
+  Result := description;
 end;
 
-class function TMachineDecision.getAllDescription : TArray<String>;
+class function TMachineDecision.getAllDescription : TDescription;
 var
-  description: array of String;
+  description: TDescription;
 begin
-
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Stellungnahme';
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Genügend/Überschneidete Tage';
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Anmeldung';
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Programmbereich';
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Position Antragsteller';
+  Result := description;
 end;
 
 
