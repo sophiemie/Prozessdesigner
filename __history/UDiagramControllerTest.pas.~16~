@@ -1,0 +1,90 @@
+unit UDiagramControllerTest;
+
+interface
+
+uses
+  DUnitX.TestFramework, UDiagramController;
+
+type
+  [TestFixture]
+  TestTDiagramController = class
+  public
+    [Setup]
+    procedure Setup;
+    [TearDown]
+    procedure TearDown;
+    [TestCase('Test1','1_v1_Testname.blox','1')]
+    procedure TestFilterIDFromFileName(fileName : String; _Result : String);
+    [TestCase('Test2','1_v1_Testname.blox','1')]
+    procedure TestFilterVersionFromFileName(fileName : String; _Result : String);
+    [TestCase('Test3','1_v1_Testname.blox','Testname')]
+    procedure TestFilterNameFromFileName(fileName : String; _Result : String);
+  end;
+
+  TDiagramControllerTester = class(TDiagramController)
+  public
+    class function filterNameFromFileName(fileName : String) : String;
+    class function filterIDFromFileName(fileName : String) : String;
+    class function filterVersionFromFileName(fileName : String) : String;
+  end;
+
+implementation
+
+{ Um auf die protected Funktionen zugreifen zu koennen }
+class function TDiagramControllerTester.filterIDFromFileName(fileName : String) : String;
+begin
+  Result := filterIDFromFileName(fileName);
+end;
+
+class function TDiagramControllerTester.filterVersionFromFileName(fileName : String) : String;
+begin
+  Result := filterVersionFromFileName(fileName);
+end;
+
+class function TDiagramControllerTester.filterNameFromFileName(fileName : String) : String;
+begin
+  Result := filterNameFromFileName(fileName);
+end;
+
+
+
+{ Unit Tests}
+procedure TestTDiagramController.Setup;
+begin
+end;
+
+procedure TestTDiagramController.TearDown;
+begin
+end;
+
+procedure TestTDiagramController.TestFilterNameFromFileName(fileName : String; _Result : String);
+var
+  R : String;
+begin
+  R := TDiagramController.filterNameFromFileName(fileName);
+  Assert.AreEqual(R, _Result);
+end;
+
+procedure TestTDiagramController.TestFilterIDFromFileName(fileName : String; _Result : String);
+var
+  R : String;
+begin
+  R := TDiagramController.filterIDFromFileName(fileName);
+  Assert.AreEqual(R, _Result);
+end;
+
+procedure TestTDiagramController.TestFilterVersionFromFileName(fileName : String; _Result : String);
+var
+  R : String;
+begin
+  R := TDiagramController.filterVersionFromFileName(fileName);
+  Assert.AreEqual(R, _Result);
+end;
+
+
+
+
+initialization
+  TDUnitX.RegisterTestFixture(TestTDiagramController);
+
+end.

@@ -78,9 +78,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure Save1Click(Sender: TObject);
     procedure Load1Click(Sender: TObject);
-    procedure ReplaceNodeNames(fileName: String);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-    procedure OpenDiagramFromLocal(fileName : String);
   private
     { Private-Deklarationen }
   public
@@ -121,10 +119,11 @@ begin
     TMSFNCBloxControl1.Presenter.Selecteds[0].GetNamePath;
   selectedID := (TMSFNCBloxControl1.Presenter.Selecteds[0].Id).ToInteger();
   { Wenn eine Kante gesetzt werden will }
-  if newEdgeButtonClicked and not selectedWorkflowComponent.Equals('TEdge') then
+  if newEdgeButtonClicked
+    and not selectedWorkflowComponent.Equals(TEdge.getClassType) then
   begin
     { Und es kein Endknoten ist }
-    if selectedWorkflowComponent.Equals('TEnd')
+    if selectedWorkflowComponent.Equals(TEnd.getClassType)
     then ShowMessage('Endknoten kann keine Weiterführung haben.')
     else { Dann soll Kante erstellt und eingetragen werden }
     begin
@@ -140,9 +139,9 @@ begin
     end;
   end { Kante einem zweiten Knoten zuweisen }
   else if newEdgeCreatedWithoutTarget and not
-    selectedWorkflowComponent.Equals('TEdge') then
+    selectedWorkflowComponent.Equals(TEdge.getClassType) then
   begin
-    if selectedWorkflowComponent.Equals('TStart')
+    if selectedWorkflowComponent.Equals(TStart.getClassType)
     then ShowMessage('Startknoten kann keine Weiterführung sein.')
     else
     begin
@@ -168,7 +167,7 @@ var
   newEnd : TEnd;
   newNodeID : Integer;
 begin
-  NodeSelectionForm.FillList('TEnd');
+  NodeSelectionForm.FillList(TEnd.getClassType);
   createNodeForm();
   //newNodeID := NodeDatabase.getHighestNodeID +1;
   newNodeID := id_ohne_datenbank; // LOESCHEN SOBALF DB WIEDER FUNKTIONIERT
@@ -184,7 +183,7 @@ var
   newHD : THumanDecision;
   newNodeID : Integer;
 begin
-  NodeSelectionForm.FillList('THumanDecision');
+  NodeSelectionForm.FillList(THumanDecision.getClassType);
   createNodeForm();
   //newNodeID := NodeDatabase.getHighestNodeID +1;
   newNodeID := id_ohne_datenbank; // LOESCHEN SOBALD DB WIEDER FUNKTIONIERT
@@ -200,7 +199,7 @@ var
   newHT : THumanTask;
   newNodeID : Integer;
 begin
-  NodeSelectionForm.FillList('THumanTask');
+  NodeSelectionForm.FillList(THumanTask.getClassType);
   createNodeForm();
   //newNodeID := NodeDatabase.getHighestNodeID +1;
   newNodeID := id_ohne_datenbank; // LOESCHEN SOBALD DB WIEDER FUNKTIONIERT
@@ -216,7 +215,7 @@ var
   newMD : TMachineDecision;
   newNodeID : Integer;
 begin
-  NodeSelectionForm.FillList('TMachineDecision');
+  NodeSelectionForm.FillList(TMachineDecision.getClassType);
   createNodeForm();
   //newNodeID := NodeDatabase.getHighestNodeID +1;
   newNodeID := id_ohne_datenbank; // LOESCHEN SOBALD DB WIEDER FUNKTIONIERT
@@ -260,8 +259,6 @@ procedure TDesignerForm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 var
   AMsg: String;
 begin
-  // Aktuell entsteht trotz des nicht Speicherns ein Eintrag bei der Startpage,
-  // dies wird nicht passieren wenn Datenbank angebunden ist
   if not diagramIsSaved then
   begin
     AMsg := NOTSAVED_DE;
@@ -296,7 +293,8 @@ var
   I : Integer;
 begin
    {Wenn ein neues Diagramm erstellt wurde}
-   Label7.Caption := diagram.getName + ' Version:' + diagram.getVersionNumber.ToString;
+   Label7.Caption := diagram.getName + ' Version:'
+                                          + diagram.getVersionNumber.ToString;
    if not IsLoadedDiagram then
    begin
     {Alle vorherigen Elemente im Editor entfernen}
@@ -305,118 +303,28 @@ begin
    end
    else {Wenn Diagramm geoeffnet wird}
    begin
-    OpenDiagramFromLocal(LoadedDiagramFileName);
+      TDiagramController.loadDiagramToFile(diagram, TMSFNCBloxControl1,
+                                                        LoadedDiagramFileName);
    end;
 end;
 
-{ WARNUNG: Zugriffsfehler beim oeffnen}
-procedure TDesignerForm.OpenDiagramFromLocal(fileName : String);
-begin
-  ReplaceNodeNames(OpenDialog1.InitialDir + fileName);
-  // Die Funktion aus dem Framework fuehrt zu Zugriffsverletzung
-  TMSFNCBloxControl1.LoadFromFile(OpenDialog1.InitialDir + fileName);
-end;
 
 procedure TDesignerForm.Load1Click(Sender: TObject);
-var
-  I : Integer;
-  openFile : TStringList;
-  idFromDatafile, versionFromDatafile, diagramName : String;
 begin
-  OpenDialog1.Execute;
-  ReplaceNodeNames(OpenDialog1.FileName);
-  IsLoadedDiagram := true;
-
-  {Pfad aus Namen entfernen}
-  diagramName := OpenDialog1.Files[0];
-  diagramName := diagramName.Remove(0,OpenDialog1.InitialDir.Length);
-
-  OpenDiagramFromLocal(diagramName);
-
-  diagram.setName(diagramName); // Voruebergehend damit Schleifen genutzt werdem koennen
-  I := 0;
-  { ID aus Dateinamen bestimmen }
-  while diagram.getName.Chars[I] <> '_' do
-  begin
-    idFromDatafile := idFromDatafile + diagram.getName.Chars[I];
-    I := I +1;
-  end;
-  diagram.setID(idFromDatafile.ToInteger);
-  I := I +1;
-  { Versionsnummer aus Dateinamen bestimmen }
-  // Da I nicht auf 0 gesetzt wird, wird erstes _ im Dateinamen ignoriert
-  while diagram.getName.Chars[I] <> '_' do
-  begin
-    versionFromDatafile := versionFromDatafile + diagram.getName.Chars[I];
-    I := I +1;
-  end;
-  { Buchstaben V entfernen, damit Nummer ueberbleibt und Diagramm uebergeben }
-  versionFromDatafile := versionFromDatafile.Remove(0,1);
-  diagram.setVersionNumber(versionFromDatafile.ToInteger);
-
-  { Versionsnummer, ID-Nummer und Dateiendung aus Namen entfernen }
-  diagramName := diagramName.Remove(0,I+1);
-  diagram.setName(diagramName);
-  diagramName := diagramName.Remove(diagram.getName.Length-5);
-  diagram.setName(diagramName);
-  Label7.Caption := diagram.getName + ' Version:' + diagram.getVersionNumber.ToString;
+  isLoadedDiagram := true;
+  TDiagramController.loadDiagramToFile(diagram, OpenDialog1, TMSFNCBloxControl1);
+  Label7.Caption := diagram.getName + ' Version:'
+                                          + diagram.getVersionNumber.ToString;
   { Restliche Diagrammdaten aus Datenbank beziehen}
   //diagram := DiagramDatabase.giveDiagramSavedDatas(diagram);
-end;
-
-procedure TDesignerForm.ReplaceNodeNames(fileName: String);
-var
-  openFile : TStringList;
-  I : Integer;
-begin
-  openFile := TStringList.Create;
-  openFile.LoadFromFile(fileName);
-  for I := 0 to openFile.Count-1 do
-  begin
-    openFile[I] := StringReplace(openFile[I], 'TEnd',
-              'TTMSFNCBloxUMLFinalStateBlock', [rfReplaceAll, rfIgnoreCase]);
-    openFile[I] := StringReplace(openFile[I], 'TStart',
-              'TTMSFNCBloxUMLInitialStateBlock', [rfReplaceAll, rfIgnoreCase]);
-    openFile[I] := StringReplace(openFile[I], 'THumanTask',
-              'TTMSFNCBloxUMLActionStateBlock', [rfReplaceAll, rfIgnoreCase]);
-    openFile[I] := StringReplace(openFile[I], 'THumanDecision',
-              'TTMSFNCBloxUMLDecisionBlock', [rfReplaceAll, rfIgnoreCase]);
-    openFile[I] := StringReplace(openFile[I], 'TMachineTask',
-              'TTMSFNCBloxUMLActionStateBlock', [rfReplaceAll, rfIgnoreCase]);
-    openFile[I] := StringReplace(openFile[I], 'TMachineDecision',
-              'TTMSFNCBloxUMLDecisionBlock', [rfReplaceAll, rfIgnoreCase]);
-    openFile[I] := StringReplace(openFile[I], 'TEdge',
-              'TTMSFNCBloxDFDDataFlowLine', [rfReplaceAll, rfIgnoreCase]);
-  end;
-  openFile.SaveToFile(fileName);
-//  TMSFNCBloxControl1.LoadFromFile(OpenDialog1.Files[0]);
 end;
 
 procedure TDesignerForm.Save1Click(Sender: TObject); // Speichern
 var
   fileName : String;
 begin
-//  if not IsLoadedDiagram then
-//  begin
-    fileName := diagram.getID.ToString + '_' + 'v'
-                + diagram.getVersionNumber.ToString + '_' + diagram.getName;
-    SaveDialog1.FileName := fileName;  // So wird Dateiname vorgeschlagen
-    if SaveDialog1.Execute then
-    begin
-      TMSFNCBloxControl1.SaveToFile(IncludeTrailingPathDelimiter
-                      (GetCurrentDir)+ 'Diagramme/' + fileName + '.blox');
-      diagramIsSaved := true;
-    end
-    else diagramIsSaved := false;
-//  end
-//  else if diagram.getVersionNumber <> 1 then
-//  begin
-//    LoadedDiagramFileName := diagram.getID.ToString + '_v'
-//    + diagram.getVersionNumber.ToString + '_' + diagram.getName;
-//    ShowMessage(LoadedDiagramFileName)
-//  end
-//  else TMSFNCBloxControl1.SaveToFile((IncludeTrailingPathDelimiter
-//                      (GetCurrentDir)+ 'Diagramme/' + LoadedDiagramFileName + '.blox'));
+  diagramIsSaved := TDiagramController.saveDiagramToFile(diagram, SaveDialog1,
+                                                    TMSFNCBloxControl1);
 end;
 
 

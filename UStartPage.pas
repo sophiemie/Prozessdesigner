@@ -10,7 +10,8 @@ uses
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   FireDAC.UI.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Phys,
-  FireDAC.VCLUI.Wait, FireDAC.Comp.Client, FireDAC.Comp.DataSet, UDatabase;
+  FireDAC.VCLUI.Wait, FireDAC.Comp.Client, FireDAC.Comp.DataSet, UDatabase,
+  UDiagramController;
 
 type
   TStartPageForm = class(TForm)
@@ -47,7 +48,6 @@ type
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure CreateOneMoreDiagramEntry(newDiagram : TDiagram);
-    procedure fillLoadingList();
   private
     { Private-Deklarationen }
     newButtonText : String;
@@ -171,38 +171,6 @@ end;
 //  Edit3.Text := (Screen.PixelsPerInch*100 div 96).ToString; // Fuer die Skalierung bei verschiedenen Rechnern
 //end; // Loaded
 
-// Nur solange Datenbank nicht angebunden ist
-procedure TStartPageForm.fillLoadingList();
-var
-  dir, cellText : String;
-  searchRec : TSearchRec;
-  I : Integer;
-begin
-  dir := IncludeTrailingPathDelimiter(GetCurrentDir)+ 'Diagramme/';
-
-  if FindFirst(dir + '*.*', faAnyFile, searchRec) = 0 then
-  begin
-   repeat
-    if searchRec.Attr and faDirectory = 0 then
-     begin
-      StringGrid1.RowCount := StringGrid1.RowCount +1;
-      StringGrid1.Cells[1,StringGrid1.RowCount-1] := searchRec.Name;
-     end;
-   until FindNext(searchRec) <> 0;
-   FindClose(searchRec);
-  end;
-
-  for I := 1 to StringGrid1.RowCount-1 do
-  begin
-    cellText := StringGrid1.Cells[1,I];
-    StringGrid1.Cells[0,I] := cellText.Chars[0];
-    StringGrid1.Cells[3,I] := cellText.Chars[3];
-    cellText := cellText.Remove(0,5);
-    cellText := cellText.Remove(cellText.Length-5);
-    StringGrid1.Cells[1,I] := cellText;
-  end;
-end;
-
 
 procedure TStartPageForm.FormCreate(Sender: TObject);
 begin
@@ -232,7 +200,8 @@ begin
   Stringgrid1.ColWidths[4] := 80;
   Stringgrid1.ColWidths[1] := 157;
   Stringgrid1.ColWidths[2] := 280;
-  fillLoadingList();
+  // Solange DB nicht angebunden
+  TDiagramController.fillLoadingList(StringGrid1);
 end;
 
 procedure TStartPageForm.StringGrid1SelectCell(Sender: TObject; ACol,
@@ -250,24 +219,21 @@ begin
     begin
       diagramSelected := true; // Damit keine selbsterstellte Fehlermeldung kommt
 
-      { Daten aus der Zeile beziehen }
-      ID := StringGrid1.Cells[0,ARow].ToInteger;
-      Name := StringGrid1.Cells[1,ARow];
-      Description := StringGrid1.Cells[2,ARow];
-      Version := StringGrid1.Cells[3,ARow].ToInteger();
-      if StringGrid1.Cells[4,ARow].Equals(yes) then InUse := true
-      else InUse := false;
+      // OHNE DB
+      DesignerForm.diagram := TDiagramController.selectDiagramFromList
+                                      (StringGrid1, DesignerForm.diagram, ARow);
 
       { Datei als Hilfestellung anzeigen lassen }
-      Edit2.Text := iD.ToString + '_v' + version.ToString + '_' + name;
+      Edit2.Text := DesignerForm.diagram.getID.ToString + '_v'
+                    + DesignerForm.diagram.getVersionNumber.ToString + '_'
+                    + DesignerForm.diagram.getName;
 
       { Daten an DesignerForm uebergeben }
       DesignerForm.IsLoadedDiagram := true;
-      DesignerForm.LoadedDiagramFileName := iD.ToString + '_' + 'v'
-                                      + version.ToString + '_' + name + '.blox';
-      DesignerForm.diagram := TDiagram.Create(iD, name, description);
-      DesignerForm.diagram.setInUse(inUse);
-      DesignerForm.diagram.setVersionNumber(version);
+      DesignerForm.LoadedDiagramFileName :=
+        DesignerForm.diagram.getID.ToString + '_' + 'v'
+      + DesignerForm.diagram.getVersionNumber.ToString + '_'
+      + DesignerForm.diagram.getName + '.blox';
     end;
   end;
 end;
@@ -286,22 +252,23 @@ begin
   Image1.Hint := descriptionHintText;
   Image2.Hint := nameHintText;
   GroupBox2.Caption := allDiagramText;
-//  GroupBox3.Caption := allDiagramText;
   StringGrid1.Cells[2,0] := descriptionText;
   StringGrid1.Cells[4,0] := activeText;
   { Aktivstatus der Diagramme uebersetzen }
   for I := 1 to StringGrid1.RowCount do
   begin
-    if StringGrid1.Cells[4,I].Equals(YES_EN) then StringGrid1.Cells[4,I] := YES_DE
-    else if StringGrid1.Cells[4,I].Equals(NO_EN) then StringGrid1.Cells[4,I] := NO_DE
-    else if StringGrid1.Cells[4,I].Equals(YES_DE) then StringGrid1.Cells[4,I] := YES_EN
-    else if StringGrid1.Cells[4,I].Equals(NO_DE) then StringGrid1.Cells[4,I] := NO_EN;
+    if StringGrid1.Cells[4,I].Equals(YES_EN) then StringGrid1.Cells[4,I] :=
+                                                                          YES_DE
+    else if StringGrid1.Cells[4,I].Equals(NO_EN) then StringGrid1.Cells[4,I] :=
+                                                                          NO_DE
+    else if StringGrid1.Cells[4,I].Equals(YES_DE) then StringGrid1.Cells[4,I] :=
+                                                                          YES_EN
+    else if StringGrid1.Cells[4,I].Equals(NO_DE) then StringGrid1.Cells[4,I] :=
+                                                                          NO_EN;
   end;
 
   if GroupBox2.Visible then Panel2.Caption := loadDiagamText
   else if GroupBox1.Visible then Panel2.Caption := createDiagramText;
-//  else if GroupBox3.Visible then Panel2.Caption := createNewVersion;
-
 end;
 
 procedure TStartPageForm.ToggleSwitch1Click(Sender: TObject);

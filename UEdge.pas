@@ -44,11 +44,14 @@ type
     function getNextNodeID : Integer;
     procedure setDecisionVal(newDecisionVal : TDecisionValue);
     function getDecisionVal : TDecisionValue;
+    class function getClassType : String;
   private
     var nodeID : Integer; { ID des Knotens wo Kante herkommt }
     var nextNodeID : Integer; { ID des darauffolgenden Knotens }
     { Verschiedene Arten von Entscheidungswerten}
     var decisionVal : TDecisionValue;
+  const
+    CLASS_TYPE = 'TEdge';
   end;
 
 implementation
@@ -91,6 +94,11 @@ end;
 function TEdge.getDecisionVal : TDecisionValue;
 begin
   Result := decisionVal;
+end;
+
+class function TEdge.getClassType : String;
+begin
+  Result := CLASS_TYPE;
 end;
 
 { Interface Methoden }

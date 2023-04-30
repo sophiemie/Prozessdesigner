@@ -31,6 +31,8 @@ type
     procedure TestSetDecisionVal(newDecisionVal: TDecisionValue);
     [TestCase('Test aktuellen Entscheidungswert ausgeben','NoDecision')]
     procedure TestGetDecisionVal(_Result: TDecisionValue);
+    [TestCase('Test Klassennamen ausgeben','TEdge')]
+    procedure TestGetClassType(_Result: String);
   end;
 
 implementation
@@ -113,6 +115,14 @@ var
 begin
   R := aEdge.getDecisionVal;
   Assert.AreEqual(R,_Result);
+end;
+
+procedure TestTEdge.TestGetClassType(_Result: String);
+var
+  R : String;
+begin
+  R := TEdge.getClassType;
+  Assert.AreEqual(R, _Result);
 end;
 
 initialization
