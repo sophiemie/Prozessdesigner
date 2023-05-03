@@ -1,0 +1,14 @@
+unit UEdgeController;
+
+interface
+
+uses UEdge, UDatabase, UNodes;
+
+implementation
+
+type
+  TEdgeController = class abstract
+
+  end;
+
+end.

@@ -1,7 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
-  <Transactions>
-    <Transaction>2023.05.03 13:59:07.232,=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
-    <Transaction>2023.05.03 14:00:40.432,C:\Prozessdesigner\Prozessdesigner\UNodeController.pas=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.831,C:\Prozessdesigner\Prozessdesigner\Unit1.pas=C:\Prozessdesigner\Prozessdesigner\UEdgeController.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.852,=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.432,C:\Prozessdesigner\Prozessdesigner\Unit1.pas=C:\Prozessdesigner\Prozessdesigner\UNodeController.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.232,=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
   </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="UDatabase.pas"/>
+    <File Path="UDesigner.pas"/>
+    <File Path="UDesigner.dfm"/>
+    <File Path="UDesignerToolbar.pas"/>
+    <File Path="UDiagram.pas"/>
+    <File Path="UDiagramController.pas"/>
+    <File Path="UEdge.pas"/>
+    <File Path="UEdgeController.pas"/>
+    <File Path="ULanguage.pas"/>
+    <File Path="UNodeController.pas"/>
+    <File Path="UNodes.pas"/>
+    <File Path="UNodeSelection.pas"/>
+    <File Path="UNodeSelection.dfm"/>
+    <File Path="UStartPage.pas"/>
+    <File Path="UStartPage.dfm"/>
+    <File Path="UToolBar.pas"/>
+    <File Path="UZMTStandard.pas"/>
+  </ProjectSortOrder>
 </BorlandProject>

@@ -27,6 +27,10 @@ const
   NOTSAVED_EN = 'File is not saved. Close anyway?';
   NOTSAVED_DE = 'Sie haben Ihre Änderungen nicht gespeichert. '
                     + 'Wollen Sie wirklich beenden?';
+  ENDNODE_FAIL_DE = 'Endknoten kann keine Weiterführung sein';
+  ENDNODE_FAIL_EN = 'Endnode can not be a source node';
+  STARTNODE_FAIL_DE = 'Startknoten kann keine Weiterführung sein';
+  STARTNODE_FAIL_EN = 'Startnode can not be target node';
 
   {Startpage}
   NEW_EN = 'New';

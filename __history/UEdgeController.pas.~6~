@@ -1,0 +1,63 @@
+unit UEdgeController;
+
+interface
+
+uses UEdge, UDatabase, UNodes, VCL.TMSFNCBloxControl, System.SysUtils,
+Vcl.Dialogs, ULanguage;
+
+type
+  TEdgeController = class abstract
+    class function createNewEdge(control : TTMSFNCBloxControl; edge : TEdge;
+                                            database : TEdgeDatabase) : TEdge;
+    class procedure checkFirstNode(control : TTMSFNCBloxControl;
+                                edge : TEdge; database : TEdgeDatabase);
+    class var newEdgeClick : boolean;
+    class var newEdgeWithoutTarget : boolean;
+    class var IDohneDB : Integer;
+  private
+    class function getNewID(database : TEdgeDatabase) : Integer; overload;
+    class function getNewID : Integer; overload;
+    class var selectedComponent : String;
+    class var selectedID : Integer;
+  end;
+
+implementation
+
+class function TEdgeController.createNewEdge(control : TTMSFNCBloxControl;
+                                edge : TEdge; database : TEdgeDatabase) : TEdge;
+begin
+  selectedComponent := control.Presenter.Selecteds[0].GetNamePath;
+  selectedID := (control.Presenter.Selecteds[0].Id).ToInteger();
+
+  { Wenn eine Kante gesetzt werden will }
+  if newEdgeClick and not selectedComponent.Equals(TEdge.getClassType) then
+  begin
+
+
+
+  end;
+end;
+
+class procedure TEdgeController.checkFirstNode(control : TTMSFNCBloxControl;
+                                edge : TEdge; database : TEdgeDatabase);
+begin
+  if selectedComponent.Equals(TEnd.getClassType) then
+    ShowMessage(ENDNODE_FAIL_DE)
+  else
+  begin
+    newEdgeClick := false;
+    newEdgeWithoutTarget := true;
+  end;
+end;
+
+class function TEdgeController.getNewID(database : TEdgeDatabase) : Integer;
+begin
+  Result := database.getHighestEdgeID +1;
+end;
+
+class function TEdgeController.getNewID : Integer;
+begin
+  Result := IDohneDB +1;
+end;
+
+end.

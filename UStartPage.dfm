@@ -8271,6 +8271,7 @@ object StartPageForm: TStartPageForm
     FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0}
   OldCreateOrder = False
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
@@ -8681,10 +8682,16 @@ object StartPageForm: TStartPageForm
     OnClick = ToggleSwitch1Click
   end
   object FDQuery1: TFDQuery
+    Connection = FDConnection1
     Left = 407
     Top = 238
   end
   object FDConnection1: TFDConnection
+    Params.Strings = (
+      'Database=wf_test'
+      'User_Name=dbapp'
+      'Password=Yv9i9OqHC8TRlCbE'
+      'DriverID=MySQL')
     Left = 351
     Top = 238
   end

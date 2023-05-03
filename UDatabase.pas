@@ -59,7 +59,6 @@ type
     procedure deleteDiagram(diagram: TDiagram);
     procedure addNewDiagramVersion(diagram: TDiagram);
     function getHighestDiagramID : Integer;
-    procedure fillLoadlistWithDiagrams(list: TStringGrid);
     function giveDiagramSavedDatas(diagram: TDiagram) : TDiagram;
     procedure copyDiagram(diagram: TDiagram);
   end;
@@ -90,15 +89,15 @@ end;
 
 procedure TDatabase.write(sqlString: String);
 begin
-try
-  query.SQL.Clear;
-  query.SQL.Add(sqlString);
-  query.ExecSQL;
-  except on E: EFDDBEngineException do
-    ShowMessage(E.Message);
+  try
+    query.SQL.Clear;
+    query.SQL.Add(sqlString);
+    query.ExecSQL;
+    except on E: EFDDBEngineException do
+      ShowMessage(E.Message);
+  end;
 end;
 
-end;
 
 function TDatabase.getDataCount(): Integer;
 begin
@@ -296,31 +295,31 @@ begin
   Result := getHighestID('wf_type_id');
 end;
 
-procedure TDiagramDatabase.fillLoadlistWithDiagrams(list: TStringGrid);
-var
-  I : Integer;
-begin
-  // MUSS NOCH IMPLEMENTIERT WERDEN
-  list.RowCount := getDataCount() +1;
-  for I := 0 to list.RowCount do
-  begin
-
-  end;
-
-end;
 
 function TDiagramDatabase.giveDiagramSavedDatas(diagram: TDiagram) : TDiagram;
+var
+  currentID : String;
 begin
-  read('select  from ' + table + ' where wf_type_id ='  // ANPASSEN
+  read('select * from ' + table + ' where wf_type_id ='
         + diagram.getID.ToString);
 
   with query do
   begin
-    diagram.setDescription(FieldByName('').AsString);  // ANPASSEN
-    diagram.setInUse(FieldByName('').AsBoolean);  // ANPASSEN
-  end;
+    currentID := FieldByName('wf_type_id').ToString;
+    if currentID.IsEmpty then
+    begin
+      diagram.setID(0); // Ungueltige ID eintragen wenn nicht vorhanden
+    end
+    else
+    begin
+      //diagram.setID(currentID.ToInteger());
+      diagram.setName(FieldByName('name_en').AsString);
+      diagram.setDescription(FieldByName('description_en').AsString);
+      //diagram.setInUse(FieldByName('in_use').AsBoolean);
+    end;
 
-  Result := diagram;
+    Result := diagram;
+  end;
 end;
 
 procedure TDiagramDatabase.copyDiagram(diagram: TDiagram);

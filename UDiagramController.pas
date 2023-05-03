@@ -4,9 +4,11 @@ interface
 
 uses
   UDiagram, VCL.TMSFNCBloxControl, Vcl.Dialogs, System.Classes, System.SysUtils,
-  Vcl.Grids, ULanguage;
+  Vcl.Grids, ULanguage, UDatabase;
 
 type
+  TDiagramEntry = array of TDiagram;
+
   TDiagramController = class abstract
   public
     class procedure loadDiagramToFile(diagram : TDiagram; openDialog:
@@ -15,9 +17,13 @@ type
                               TTMSFNCBloxControl; fileName : String); overload;
     class function saveDiagramToFile(diagram : TDiagram; saveDialog:
                           TSaveDialog; control : TTMSFNCBloxControl) : boolean;
-    class procedure fillLoadingList(list : TStringGrid);
+    class procedure fillLoadingList(list : TStringGrid); overload;
+    class procedure fillLoadingList(list : TStringGrid; database :
+                                      TDiagramDatabase); overload;
     class function selectDiagramFromList(list: TStringGrid; diagram: TDiagram;
                                             row : Integer) : TDiagram;
+    class function getNewID(list : TStringGrid) : Integer; overload;
+    class function getNewID(database : TDiagramDatabase) : Integer; overload;
     var IsLoadesDiagram : boolean;
   protected { Damit die in den Unittests verwendet werden koennen }
     class procedure replaceNodeNames(fileName : String);
@@ -154,7 +160,7 @@ begin
 end;
 
 
-
+{ Fuelle Ladeliste mit lokalen Dateien, ohne Anbindung der Datenbank }
 class procedure TDiagramController.fillLoadingList(list : TStringGrid);
 var
   dir, cellText : String;
@@ -186,6 +192,33 @@ begin
   end;
 end;
 
+
+class procedure TDiagramController.fillLoadingList(list : TStringGrid;
+                                                  database : TDiagramDatabase);
+var
+  I : Integer;
+  entry : TDiagramEntry;
+  diagram : TDiagram;
+begin
+  list.RowCount := database.getDataCount() +1;
+  SetLength(entry,list.RowCount);
+  for I := 0 to database.getHighestDiagramID do
+  begin
+    diagram := TDiagram.Create(I,'','');
+    diagram := database.giveDiagramSavedDatas(diagram);
+    if diagram.getID <> 0 then
+      entry[I] := TDiagram.Create(diagram.getID, diagram.getName, diagram.getDescription);
+  end;
+
+  for I := 1 to list.RowCount-1 do
+  begin
+    list.Cells[1,I] := entry[I].getName;
+    list.Cells[2,I] := entry[I].getDescription;
+   // list.Cells[3,I] := entry[I].getVersionNumber.ToString;
+  end;
+end;
+
+
 class function TDiagramController.selectDiagramFromList(list : TStringGrid;
                   diagram : TDiagram; row : Integer) : TDiagram;
 var
@@ -207,6 +240,16 @@ begin
   diagram.setInUse(InUse);
   diagram.setVersionNumber(version);
   Result := diagram;
+end;
+
+class function TDiagramController.getNewID(list : TStringGrid) : Integer;
+begin
+  Result := list.RowCount;
+end;
+
+class function TDiagramController.getNewID(database : TDiagramDatabase) : Integer;
+begin
+  Result := database.getHighestDiagramID +1;
 end;
 
 end.

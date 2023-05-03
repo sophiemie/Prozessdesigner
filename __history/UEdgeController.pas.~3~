@@ -1,0 +1,23 @@
+unit UEdgeController;
+
+interface
+
+uses UEdge, UDatabase, UNodes, VCL.TMSFNCBloxControl, System.SysUtils;
+
+type
+  TEdgeController = class abstract
+    class function createNewEdge(control : TTMSFNCBloxControl) : TEdge;
+  private
+    class var selectedComponent : String;
+    class var selectedID : Integer;
+  end;
+
+implementation
+
+class function TEdgeController.createNewEdge(control : TTMSFNCBloxControl) : TEdge;
+begin
+  selectedComponent := control.Presenter.Selecteds[0].GetNamePath;
+  selectedID := (control.Presenter.Selecteds[0].Id).ToInteger();
+end;
+
+end.
