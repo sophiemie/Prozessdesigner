@@ -7,6 +7,8 @@ uses
   Vcl.Grids, ULanguage, UDatabase;
 
 type
+  TDiagramEntry = array of TDiagram;
+
   TDiagramController = class abstract
   public
     class procedure loadDiagramToFile(diagram : TDiagram; openDialog:
@@ -193,8 +195,27 @@ end;
 
 class procedure TDiagramController.fillLoadingList(list : TStringGrid;
                                                   database : TDiagramDatabase);
+var
+  I : Integer;
+  entry : TDiagramEntry;
+  diagram : TDiagram;
 begin
+  list.RowCount := database.getDataCount() +1;
+  SetLength(entry,list.RowCount);
+  for I := 0 to database.getHighestDiagramID do
+  begin
+    diagram := TDiagram.Create(I,'','');
+    diagram := database.giveDiagramSavedDatas(diagram);
+    if diagram.getID <> 0 then
+      entry[I] := TDiagram.Create(diagram.getID, diagram.getName, diagram.getDescription);
+  end;
 
+  for I := 1 to list.RowCount-1 do
+  begin
+    list.Cells[1,I] := entry[I].getName;
+    list.Cells[2,I] := entry[I].getDescription;
+   // list.Cells[3,I] := entry[I].getVersionNumber.ToString;
+  end;
 end;
 
 
@@ -223,12 +244,12 @@ end;
 
 class function TDiagramController.getNewID(list : TStringGrid) : Integer;
 begin
-
+  Result := list.RowCount;
 end;
 
 class function TDiagramController.getNewID(database : TDiagramDatabase) : Integer;
 begin
-
+  Result := database.getHighestDiagramID +1;
 end;
 
 end.

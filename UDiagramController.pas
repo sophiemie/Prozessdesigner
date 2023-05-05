@@ -21,7 +21,9 @@ type
     class procedure fillLoadingList(list : TStringGrid; database :
                                       TDiagramDatabase); overload;
     class function selectDiagramFromList(list: TStringGrid; diagram: TDiagram;
-                                            row : Integer) : TDiagram;
+                                        row : Integer) : TDiagram; overload;
+    class function selectDiagramFromList(list : TStringGrid; diagram : TDiagram;
+      row : Integer; database : TDiagramDatabase) : TDiagram; overload;
     class function getNewID(list : TStringGrid) : Integer; overload;
     class function getNewID(database : TDiagramDatabase) : Integer; overload;
     var IsLoadesDiagram : boolean;
@@ -239,6 +241,17 @@ begin
   diagram := TDiagram.Create(ID, name, description);
   diagram.setInUse(InUse);
   diagram.setVersionNumber(version);
+  Result := diagram;
+end;
+
+class function TDiagramController.selectDiagramFromList(list : TStringGrid;
+    diagram : TDiagram; row : Integer; database : TDiagramDatabase) : TDiagram;
+var
+  ID : Integer;
+begin
+  ID := list.Cells[0,row].ToInteger;
+  diagram := TDiagram.Create(ID,'','');
+  diagram := database.giveDiagramSavedDatas(diagram);
   Result := diagram;
 end;
 

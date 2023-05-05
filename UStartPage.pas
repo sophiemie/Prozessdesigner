@@ -147,11 +147,12 @@ begin
     diagramCopy := TDiagram.Create(StringGrid1.RowCount,
       DesignerForm.diagram.getName, DesignerForm.diagram.getDescription);
     diagramCopy.setVersionNumber(DesignerForm.diagram.getVersionNumber+1);
-    DesignerForm.diagram := diagramCopy;
-    DesignerForm.IsLoadedDiagram := true; /////// oder doch true setzen?
-    DesignerForm.diagramIsSaved := false;
+
     {Diagramm in Datenbank kopieren}
-    //diagramDatabase.copyDiagram(diagramCopy);
+    diagramCopy := diagramDatabase.copyDiagram(DesignerForm.diagram);
+    DesignerForm.diagram := diagramCopy;
+    DesignerForm.IsLoadedDiagram := true;
+    DesignerForm.diagramIsSaved := false;
     //CreateOneMoreDiagramEntry(diagramCopy);
     DesignerForm.ShowModal
   end
@@ -186,7 +187,7 @@ begin
   Groupbox1.Visible := false;
   Groupbox2.Visible := true;
   diagramSelected := false; // Zu Beginn ist kein Diagramm ausgewaehlt
-  diagramDatabase := TDiagramDatabase.Create(FDQuery1,'wf_test');
+  diagramDatabase := TDiagramDatabase.Create(FDQuery1,'wf_def');
 
   StringGrid1.Cells[0,0] := 'ID';
   StringGrid1.Cells[1,0] := 'Name';
@@ -223,9 +224,8 @@ begin
     begin
       diagramSelected := true; // Damit keine selbsterstellte Fehlermeldung kommt
 
-      // OHNE DB
       DesignerForm.diagram := TDiagramController.selectDiagramFromList
-                                      (StringGrid1, DesignerForm.diagram, ARow);
+      (StringGrid1, DesignerForm.diagram, ARow, diagramDatabase);
 
       { Datei als Hilfestellung anzeigen lassen }
       Edit2.Text := DesignerForm.diagram.getID.ToString + '_v'

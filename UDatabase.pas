@@ -22,7 +22,7 @@ type
     function getHighestID(idName : String) : Integer;
     procedure setTable(newTable : String);
     function getTable : String;
-  private
+  protected
     var query: TFDQuery;
     var table : String;
     procedure read(sqlString: String);
@@ -60,7 +60,7 @@ type
     procedure addNewDiagramVersion(diagram: TDiagram);
     function getHighestDiagramID : Integer;
     function giveDiagramSavedDatas(diagram: TDiagram) : TDiagram;
-    procedure copyDiagram(diagram: TDiagram);
+    function copyDiagram(diagram: TDiagram) : TDiagram;
   end;
 
 implementation
@@ -96,6 +96,7 @@ begin
     except on E: EFDDBEngineException do
       ShowMessage(E.Message);
   end;
+  query.Close;
 end;
 
 
@@ -168,7 +169,7 @@ begin
                 + nodeID + ',' + diagramID + ',"' + nodeType + '","'
                 + nodeDescription + '")';
   write(sqlString);
-  query.Close;
+//  query.Close;
 end;
 
 procedure TNodeDatabase.addNewNode(diagram: TDiagram; node: TStart);
@@ -203,7 +204,7 @@ var
 begin
   sqlString := 'DELETE FROM ' + getTable + ' WHERE node_id = ' + nodeID.ToString;
   write(sqlString);
-  query.Close;
+//  query.Close;
 end;
 
 {}
@@ -230,7 +231,7 @@ begin
   sqlString := 'insert into ' + getTable + ' (wf_edge_id, node_id) values ('
                 + edge.getID.ToString + ',' + edge.getNodeID.ToString + ')';
   write(sqlString);
-  query.Close;
+//  query.Close;
 end;
 end;
 
@@ -241,7 +242,7 @@ begin
   sqlString := 'DELETE FROM ' + getTable + ' WHERE wf_edge_id = '
                 + edgeID.ToString;
   write(sqlString);
-  query.Close;
+//  query.Close;
 end;
 
 
@@ -253,7 +254,7 @@ begin
                 + edge.getNextNodeID.ToString + ' WHERE wf_edge_id ='
                 + edge.getID.ToString;
   write(sqlString);
-  query.Close;
+//  query.Close;
 end;
 
 
@@ -272,7 +273,7 @@ begin
                 + '","' + diagram.getDescription + '","' + diagram.getClassName
                 + '")';
   write(sqlString);
-  query.Close;
+//  query.Close;
 end;
 
 procedure TDiagramDatabase.deleteDiagram(diagram: TDiagram);
@@ -282,7 +283,7 @@ begin
   sqlString := 'DELETE FROM ' + getTable + ' WHERE wf_type_id = '
                 + diagram.getID.ToString;
   write(sqlString);
-  query.Close;
+//  query.Close;
 end;
 
 procedure TDiagramDatabase.addNewDiagramVersion(diagram: TDiagram);
@@ -299,14 +300,16 @@ end;
 function TDiagramDatabase.giveDiagramSavedDatas(diagram: TDiagram) : TDiagram;
 var
   currentID : String;
+  id : Integer;
 begin
-  read('select * from ' + table + ' where wf_type_id ='
-        + diagram.getID.ToString);
+  currentID := diagram.getID.ToString;
+  // FEHLER gibt immer TFDAutoIncField  bei ID zurueck weil FireDAC ID erkennt aber nicht zurueckgibt
+  read('select * from '+ table +' where wf_type_id =' + currentID);
 
   with query do
   begin
     currentID := FieldByName('wf_type_id').ToString;
-    if currentID.IsEmpty then
+    if currentID.StartsWith('T') or currentID.IsEmpty then   // Speichert keine ID sondern was anderes????
     begin
       diagram.setID(0); // Ungueltige ID eintragen wenn nicht vorhanden
     end
@@ -317,14 +320,27 @@ begin
       diagram.setDescription(FieldByName('description_en').AsString);
       //diagram.setInUse(FieldByName('in_use').AsBoolean);
     end;
-
     Result := diagram;
   end;
 end;
 
-procedure TDiagramDatabase.copyDiagram(diagram: TDiagram);
+function TDiagramDatabase.copyDiagram(diagram: TDiagram) : TDiagram;
+var
+  sqlString : String;
+  newID : Integer;
 begin
-  // IMPLEMENTIEREN
+  newID := getHighestDiagramID  +1;
+  // INSERT INTO wf_def(name_en) SELECT (name_en) FROM wf_def WHERE wf_type_id = 3
+  sqlString := 'INSERT INTO ' + table +'(name_en) SELECT (name_en) FROM ' +
+    table + ' WHERE wf_type_id =' +diagram.getID.ToString;
+  write(sqlString);
+  sqlString := 'UPDATE ' + table + ' SET wf_type_id =' + newID.ToString +
+    ', description_en ="' + diagram.getDescription + '"' + ' WHERE wf_type_id =' +
+    diagram.getID.ToString;
+  write(sqlString);
+  diagram.setID(newID);
+  diagram.setVersionNumber(diagram.getVersionNumber +1);
+  Result := diagram;
 end;
 
 end.

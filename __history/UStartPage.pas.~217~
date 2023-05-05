@@ -11,7 +11,7 @@ uses
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   FireDAC.UI.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Phys,
   FireDAC.VCLUI.Wait, FireDAC.Comp.Client, FireDAC.Comp.DataSet, UDatabase,
-  UDiagramController;
+  UDiagramController, FireDAC.Phys.MySQL, FireDAC.Phys.MySQLDef;
 
 type
   TStartPageForm = class(TForm)
@@ -48,6 +48,7 @@ type
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure CreateOneMoreDiagramEntry(newDiagram : TDiagram);
+    procedure FormShow(Sender: TObject);
   private
     { Private-Deklarationen }
     newButtonText : String;
@@ -55,7 +56,7 @@ type
     newVersionButtonText : String;
     formText : String;
     descriptionText : String;
-    descriptionHintText : String;   //
+    descriptionHintText : String;
     nameHintText : String;
     createDiagramText : String;
     loadDiagamText : String;
@@ -106,7 +107,6 @@ end;
 
 procedure TStartPageForm.Button3Click(Sender: TObject);
 var
-  newDiagramID : Integer;
   newDiagramDescription : String;
 begin
   if Edit1.Text = '' then ShowMessage(noDiagramName)
@@ -116,23 +116,21 @@ begin
     //diagramDatabase.fillLoadlistWithDiagrams(StringGrid1);
 
     { Neues Diagramm erstellen }
-    newDiagramID := StringGrid1.RowCount;
     DesignerForm.IsLoadedDiagram := false;
     if Memo1.Text = '' then  newDiagramDescription := ''
     else newDiagramDescription := Memo1.Text;
 
-    DesignerForm.diagram := TDiagram.Create(newDiagramID, Edit1.Text,
-                                                        newDiagramDescription);
+    DesignerForm.diagram := TDiagram.Create(TDiagramController.getNewID(diagramDatabase),
+      Edit1.Text, newDiagramDescription);
 
     { Neues Diagramm in Datenbank eintragen }
     DiagramDatabase.addNewDiagram(DesignerForm.diagram);
-
     DesignerForm.ShowModal;
     { Textfelder vom Erstellen leeren }
     Edit1.Clear;
     Memo1.Clear;
     { Ladeliste um neuen Diagramm ergaenzen }
-    CreateOneMoreDiagramEntry(DesignerForm.diagram);
+    //CreateOneMoreDiagramEntry(DesignerForm.diagram);
     { Umwandlung von Boolean zu String zeigt Zahl an, deswegen umkonvertieren }
     if DesignerForm.diagram.getInUse then
       StringGrid1.Cells[4,StringGrid1.RowCount-1] := yes
@@ -154,7 +152,7 @@ begin
     DesignerForm.diagramIsSaved := false;
     {Diagramm in Datenbank kopieren}
     //diagramDatabase.copyDiagram(diagramCopy);
-    CreateOneMoreDiagramEntry(diagramCopy);
+    //CreateOneMoreDiagramEntry(diagramCopy);
     DesignerForm.ShowModal
   end
   else ShowMessage(noDiagramSelected);
@@ -200,8 +198,14 @@ begin
   Stringgrid1.ColWidths[4] := 80;
   Stringgrid1.ColWidths[1] := 157;
   Stringgrid1.ColWidths[2] := 280;
+
   // Solange DB nicht angebunden
   TDiagramController.fillLoadingList(StringGrid1);
+end;
+
+procedure TStartPageForm.FormShow(Sender: TObject);
+begin
+  TDiagramController.fillLoadingList(StringGrid1, diagramDatabase);
 end;
 
 procedure TStartPageForm.StringGrid1SelectCell(Sender: TObject; ACol,

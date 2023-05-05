@@ -21,7 +21,9 @@ type
     class procedure fillLoadingList(list : TStringGrid; database :
                                       TDiagramDatabase); overload;
     class function selectDiagramFromList(list: TStringGrid; diagram: TDiagram;
-                                            row : Integer) : TDiagram;
+                                        row : Integer) : TDiagram; overload;
+    class function selectDiagramFromList(list : TStringGrid; diagram : TDiagram;
+      row : Integer; database : TDiagramDatabase) : TDiagram; overload;
     class function getNewID(list : TStringGrid) : Integer; overload;
     class function getNewID(database : TDiagramDatabase) : Integer; overload;
     var IsLoadesDiagram : boolean;
@@ -198,14 +200,24 @@ class procedure TDiagramController.fillLoadingList(list : TStringGrid;
 var
   I : Integer;
   entry : TDiagramEntry;
+  diagram : TDiagram;
 begin
-  // MUSS NOCH IMPLEMENTIERT WERDEN
   list.RowCount := database.getDataCount() +1;
-  for I := 0 to list.RowCount do
+  SetLength(entry,list.RowCount);
+  for I := 0 to database.getHighestDiagramID do
   begin
-
+    diagram := TDiagram.Create(I,'','');
+    diagram := database.giveDiagramSavedDatas(diagram);
+    if diagram.getID <> 0 then
+      entry[I] := TDiagram.Create(diagram.getID, diagram.getName, diagram.getDescription);
   end;
 
+  for I := 1 to list.RowCount-1 do
+  begin
+    list.Cells[1,I] := entry[I].getName;
+    list.Cells[2,I] := entry[I].getDescription;
+   // list.Cells[3,I] := entry[I].getVersionNumber.ToString;
+  end;
 end;
 
 
@@ -230,6 +242,15 @@ begin
   diagram.setInUse(InUse);
   diagram.setVersionNumber(version);
   Result := diagram;
+end;
+
+class function TDiagramController.selectDiagramFromList(list : TStringGrid;
+    diagram : TDiagram; row : Integer; database : TDiagramDatabase) : TDiagram;
+var
+  ID : Integer;
+begin
+  ID := list.Cells[0,row].ToInteger;
+
 end;
 
 class function TDiagramController.getNewID(list : TStringGrid) : Integer;
