@@ -70,6 +70,7 @@ begin
   end;
 end;
 
+{ Fuelle Liste mit Eintraegen je nach Knotenart }
 procedure TNodeSelectionForm.FillList(NodeClass: String);
 var
   I : Integer;

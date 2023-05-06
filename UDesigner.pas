@@ -99,7 +99,7 @@ var
   selectedWorkflowComponent: String;
   newEdge : TEdge;
 
-implementation ////////////////////////////////////////////////////////////////
+implementation
 {$R *.dfm}
 
 { Event bei Anklicken einer Komponte im Editor }
@@ -112,6 +112,7 @@ begin
 end;
 
 ///////////////////////// Toolbar-Funktionen ////////////////////////////////
+{ Neuen Endknoten erstellen }
 procedure TDesignerForm.BitBtnEndClick(Sender: TObject);
 var
   newEnd : TEnd;
@@ -121,6 +122,7 @@ begin
   NodeDatabase.addNewNode(diagram, newEnd);
 end;
 
+{ Neuen menschlichen Entscheidungsknoten erstellen }
 procedure TDesignerForm.BitBtnHDClick(Sender: TObject);
 var
   newHD : THumanDecision;
@@ -130,6 +132,7 @@ begin
   NodeDatabase.addNewNode(diagram, newHD);
 end;
 
+{ Neuen menschlichen Aufgabenknoten erstellen }
 procedure TDesignerForm.BitBtnHTClick(Sender: TObject);
 var
   newHT : THumanTask;
@@ -139,6 +142,7 @@ begin
   NodeDatabase.addNewNode(diagram, newHT);
 end;
 
+{ Neuen maschinellen Entscheidungsknoten erstellen }
 procedure TDesignerForm.BitBtnMDClick(Sender: TObject);
 var
   newMD : TMachineDecision;
@@ -148,6 +152,7 @@ begin
   NodeDatabase.addNewNode(diagram, newMD);
 end;
 
+{ Neuen maschinellen Aufgabenknoten erstellen }
 procedure TDesignerForm.BitBtnMTClick(Sender: TObject);
 var
   newMT : TMachineTask;
@@ -158,6 +163,7 @@ begin
   NodeDatabase.addNewNode(diagram, newMT);
 end;
 
+{ Neuen Startknoten erstellen }
 procedure TDesignerForm.BitBtnStartClick(Sender: TObject);
 var
   newStart : TStart;
@@ -167,7 +173,7 @@ begin
   NodeDatabase.addNewNode(diagram, newStart);
 end;
 
-
+////////////////////////////////////////////////////////////////////////////
 { Event beim Versuch vom Schliessen der Applikation }
 procedure TDesignerForm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 var
@@ -221,7 +227,7 @@ begin
    end;
 end;
 
-
+{ Laden eines Diagrammes ueber MainMenue}
 procedure TDesignerForm.Load1Click(Sender: TObject);
 begin
   isLoadedDiagram := true;
@@ -232,7 +238,8 @@ begin
   diagram := DiagramDatabase.giveDiagramSavedDatas(diagram);
 end;
 
-procedure TDesignerForm.Save1Click(Sender: TObject); // Speichern
+{ Speichern eines Diagrammes ueber MainMenue}
+procedure TDesignerForm.Save1Click(Sender: TObject);
 begin
   diagramIsSaved := TDiagramController.saveDiagramToFile(diagram, SaveDialog1,
                                                           TMSFNCBloxControl1);

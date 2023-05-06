@@ -302,13 +302,14 @@ var
   currentID : String;
   id : Integer;
 begin
-  id := diagram.getID;
-  read('select * from '+ table +' where wf_type_id ='+ id.ToString);
+  currentID := diagram.getID.ToString;
+  // FEHLER gibt immer TFDAutoIncField  bei ID zurueck weil FireDAC ID erkennt aber nicht zurueckgibt
+  read('select * from '+ table +' where wf_type_id =' + currentID);
 
   with query do
   begin
     currentID := FieldByName('wf_type_id').ToString;
-    if currentID.IsEmpty then
+    if currentID.StartsWith('T') or currentID.IsEmpty then   // Speichert keine ID sondern was anderes????
     begin
       diagram.setID(0); // Ungueltige ID eintragen wenn nicht vorhanden
     end
@@ -333,8 +334,8 @@ begin
   sqlString := 'INSERT INTO ' + table +'(name_en) SELECT (name_en) FROM ' +
     table + ' WHERE wf_type_id =' +diagram.getID.ToString;
   write(sqlString);
-  sqlString := 'UPDATE ' + table + ' SET' + 'wf_type_id =' + newID.ToString +
-    ',description_en ="' + diagram.getDescription + '"' + ' WHERE wf_type_id =' +
+  sqlString := 'UPDATE ' + table + ' SET wf_type_id =' + newID.ToString +
+    ', description_en ="' + diagram.getDescription + '"' + ' WHERE wf_type_id =' +
     diagram.getID.ToString;
   write(sqlString);
   diagram.setID(newID);

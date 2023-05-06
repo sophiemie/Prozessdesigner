@@ -65,6 +65,7 @@ type
 
 implementation
 
+{ Konstruktor der Klasse TDatabase}
 constructor TDatabase.Create(newQuery : TFDQuery; newTable: String);
 begin
   inherited Create();
@@ -72,6 +73,7 @@ begin
   table := newTable;
 end;
 
+{ Datensatz schreiben }
 procedure TDatabase.read(sqlString: String);
 begin
   try
@@ -87,6 +89,7 @@ begin
   end;
 end;
 
+{ Datensatz auslesen }
 procedure TDatabase.write(sqlString: String);
 begin
   try
@@ -302,14 +305,14 @@ var
   currentID : String;
   id : Integer;
 begin
-  id := diagram.getID;
-  ////////////////////////////// FEHLER ////////////////////////////////////
-  read('select * from '+ table +' where wf_type_id ='+ id.ToString);
+  currentID := diagram.getID.ToString;
+  // FEHLER gibt immer TFDAutoIncField  bei ID zurueck weil FireDAC ID erkennt aber nicht zurueckgibt
+  read('select * from '+ table +' where wf_type_id =' + currentID);
 
   with query do
   begin
     currentID := FieldByName('wf_type_id').ToString;
-    if currentID.IsEmpty then   // Speichert keine ID sondern was anderes????
+    if currentID.StartsWith('T') or currentID.IsEmpty then   // Speichert keine ID sondern was anderes????
     begin
       diagram.setID(0); // Ungueltige ID eintragen wenn nicht vorhanden
     end

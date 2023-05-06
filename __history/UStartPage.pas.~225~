@@ -48,6 +48,7 @@ type
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure CreateOneMoreDiagramEntry(newDiagram : TDiagram);
+    procedure FormShow(Sender: TObject);
   private
     { Private-Deklarationen }
     newButtonText : String;
@@ -55,7 +56,7 @@ type
     newVersionButtonText : String;
     formText : String;
     descriptionText : String;
-    descriptionHintText : String;   //
+    descriptionHintText : String;
     nameHintText : String;
     createDiagramText : String;
     loadDiagamText : String;
@@ -106,7 +107,6 @@ end;
 
 procedure TStartPageForm.Button3Click(Sender: TObject);
 var
-  newDiagramID : Integer;
   newDiagramDescription : String;
 begin
   if Edit1.Text = '' then ShowMessage(noDiagramName)
@@ -116,13 +116,12 @@ begin
     //diagramDatabase.fillLoadlistWithDiagrams(StringGrid1);
 
     { Neues Diagramm erstellen }
-    newDiagramID := StringGrid1.RowCount;
     DesignerForm.IsLoadedDiagram := false;
     if Memo1.Text = '' then  newDiagramDescription := ''
     else newDiagramDescription := Memo1.Text;
 
-    DesignerForm.diagram := TDiagram.Create(newDiagramID, Edit1.Text,
-                                                        newDiagramDescription);
+    DesignerForm.diagram := TDiagram.Create(TDiagramController.getNewID(diagramDatabase),
+      Edit1.Text, newDiagramDescription);
 
     { Neues Diagramm in Datenbank eintragen }
     DiagramDatabase.addNewDiagram(DesignerForm.diagram);
@@ -131,7 +130,7 @@ begin
     Edit1.Clear;
     Memo1.Clear;
     { Ladeliste um neuen Diagramm ergaenzen }
-    CreateOneMoreDiagramEntry(DesignerForm.diagram);
+    //CreateOneMoreDiagramEntry(DesignerForm.diagram);
     { Umwandlung von Boolean zu String zeigt Zahl an, deswegen umkonvertieren }
     if DesignerForm.diagram.getInUse then
       StringGrid1.Cells[4,StringGrid1.RowCount-1] := yes
@@ -148,12 +147,13 @@ begin
     diagramCopy := TDiagram.Create(StringGrid1.RowCount,
       DesignerForm.diagram.getName, DesignerForm.diagram.getDescription);
     diagramCopy.setVersionNumber(DesignerForm.diagram.getVersionNumber+1);
-    DesignerForm.diagram := diagramCopy;
-    DesignerForm.IsLoadedDiagram := true; /////// oder doch true setzen?
-    DesignerForm.diagramIsSaved := false;
+
     {Diagramm in Datenbank kopieren}
-    //diagramDatabase.copyDiagram(diagramCopy);
-    CreateOneMoreDiagramEntry(diagramCopy);
+    diagramCopy := diagramDatabase.copyDiagram(DesignerForm.diagram);
+    DesignerForm.diagram := diagramCopy;
+    DesignerForm.IsLoadedDiagram := true;
+    DesignerForm.diagramIsSaved := false;
+    //CreateOneMoreDiagramEntry(diagramCopy);
     DesignerForm.ShowModal
   end
   else ShowMessage(noDiagramSelected);
@@ -204,12 +204,14 @@ begin
   TDiagramController.fillLoadingList(StringGrid1);
 end;
 
+procedure TStartPageForm.FormShow(Sender: TObject);
+begin
+  TDiagramController.fillLoadingList(StringGrid1, diagramDatabase);
+end;
+
+{ Lade gewaehltes Diagramm aus der Liste }
 procedure TStartPageForm.StringGrid1SelectCell(Sender: TObject; ACol,
-  ARow: Integer; var CanSelect: Boolean);    // LADEN
-var
-  name, description : String;
-  iD, version : Integer;
-  inUse : boolean;
+  ARow: Integer; var CanSelect: Boolean);
 begin
   { Erste Zeile soll nicht beachtet werden }
   if ARow <> 0 then
@@ -219,9 +221,8 @@ begin
     begin
       diagramSelected := true; // Damit keine selbsterstellte Fehlermeldung kommt
 
-      // OHNE DB
       DesignerForm.diagram := TDiagramController.selectDiagramFromList
-                                      (StringGrid1, DesignerForm.diagram, ARow);
+      (StringGrid1, DesignerForm.diagram, ARow, diagramDatabase);
 
       { Datei als Hilfestellung anzeigen lassen }
       Edit2.Text := DesignerForm.diagram.getID.ToString + '_v'

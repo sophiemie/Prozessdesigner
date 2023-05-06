@@ -105,6 +105,7 @@ begin
   StringGrid1.Cells[3,StringGrid1.RowCount-1] := newDiagram.getVersionNumber.ToString;
 end;
 
+{ Neues Diagramm erstellen }
 procedure TStartPageForm.Button3Click(Sender: TObject);
 var
   newDiagramDescription : String;
@@ -129,8 +130,7 @@ begin
     { Textfelder vom Erstellen leeren }
     Edit1.Clear;
     Memo1.Clear;
-    { Ladeliste um neuen Diagramm ergaenzen }
-    //CreateOneMoreDiagramEntry(DesignerForm.diagram);
+
     { Umwandlung von Boolean zu String zeigt Zahl an, deswegen umkonvertieren }
     if DesignerForm.diagram.getInUse then
       StringGrid1.Cells[4,StringGrid1.RowCount-1] := yes
@@ -138,7 +138,8 @@ begin
   end;
 end;
 
-procedure TStartPageForm.Button4Click(Sender: TObject); // Neue Version erstellen
+{ Neue Version eines Diagrammes erstellen }
+procedure TStartPageForm.Button4Click(Sender: TObject);
 var
   diagramCopy : TDiagram;
 begin
@@ -153,8 +154,10 @@ begin
     DesignerForm.diagram := diagramCopy;
     DesignerForm.IsLoadedDiagram := true;
     DesignerForm.diagramIsSaved := false;
-    //CreateOneMoreDiagramEntry(diagramCopy);
     DesignerForm.ShowModal
+
+    { Alle Diagramme aus Datenbank laden }
+    //diagramDatabase.fillLoadlistWithDiagrams(StringGrid1);
   end
   else ShowMessage(noDiagramSelected);
 end;
@@ -209,12 +212,9 @@ begin
   TDiagramController.fillLoadingList(StringGrid1, diagramDatabase);
 end;
 
+{ Lade gewaehltes Diagramm aus der Liste }
 procedure TStartPageForm.StringGrid1SelectCell(Sender: TObject; ACol,
-  ARow: Integer; var CanSelect: Boolean);    // LADEN
-var
-  name, description : String;
-  iD, version : Integer;
-  inUse : boolean;
+  ARow: Integer; var CanSelect: Boolean);
 begin
   { Erste Zeile soll nicht beachtet werden }
   if ARow <> 0 then

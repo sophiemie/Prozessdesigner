@@ -21,11 +21,10 @@ uses
   Vcl.ComCtrls, FireDAC.Phys, Vcl.ToolWin, VCL.TMSFNCBloxCoreGroup, ShellApi,
   VCL.TMSFNCBloxUIRegistration,UNodes, UNodeSelection, UDatabase, UToolBar,
   UEdge, UDesignerToolbar, UDiagram, ULanguage, UDiagramController,
-  UNodeController;
+  UNodeController, UEdgeController;
 
 type
   TDesignerForm = class(TForm)
-    //toolbar: TToolbar; //Zugriffsverletzung?
     {Datenbank-Komponenten}
     FDConnection_forms: TFDConnection;
     FDQuery_forms: TFDQuery;
@@ -68,7 +67,6 @@ type
     procedure BitBtnMTClick(Sender: TObject);
     procedure BitBtnHDClick(Sender: TObject);
     procedure BitBtnMDClick(Sender: TObject);
-    procedure createNodeForm();
     procedure TMSFNCBloxControl1ElementRemove(Sender: TObject;
       Element: TTMSFNCBloxElement);
     procedure TMSFNCBloxControl1ElementClick(Sender: TObject;
@@ -99,10 +97,7 @@ var
   { Variablen fuer die Bestimmung der aktuell ausgewaehlten Komponente }
   selectedID: Integer;
   selectedWorkflowComponent: String;
-  newEdgeButtonClicked: boolean;
-  newEdgeCreatedWithoutTarget: boolean;
   newEdge : TEdge;
-  id_ohne_datenbank : Integer;  // LOESCHEN WENN DATENBANK WIEDER GEHT
 
 implementation ////////////////////////////////////////////////////////////////
 {$R *.dfm}
@@ -110,50 +105,10 @@ implementation ////////////////////////////////////////////////////////////////
 { Event bei Anklicken einer Komponte im Editor }
 procedure TDesignerForm.TMSFNCBloxControl1ElementClick(Sender: TObject;
   Element: TTMSFNCBloxElement);
-var
-//  newEdge : TEdge;
-  newEdgeID : Integer;
-  component : TObject;
 begin
-  { Klasse und ID der angeklickten Komponente bestimmen }
-  selectedWorkflowComponent :=
-    TMSFNCBloxControl1.Presenter.Selecteds[0].GetNamePath;
+  selectedWorkflowComponent := TMSFNCBloxControl1.Presenter.Selecteds[0].GetNamePath;
   selectedID := (TMSFNCBloxControl1.Presenter.Selecteds[0].Id).ToInteger();
-  { Wenn eine Kante gesetzt werden will }
-  if newEdgeButtonClicked
-    and not selectedWorkflowComponent.Equals(TEdge.getClassType) then
-  begin
-    { Und es kein Endknoten ist }
-    if selectedWorkflowComponent.Equals(TEnd.getClassType)
-    then ShowMessage('Endknoten kann keine Weiterführung haben.')
-    else { Dann soll Kante erstellt und eingetragen werden }
-    begin
-      newEdgeButtonClicked := false;
-      newEdgeCreatedWithoutTarget := true;
-      newEdgeID := EdgeDatabase.getHighestEdgeID +1;
-      //newEdgeID := 1; // Nur fuer Testversion ohne DB
-      newEdge := TEdge.Create(newEdgeID, selectedID);
-      newEdge.SourceLinkPoint.AnchorLink :=
-        TMSFNCBloxControl1.Presenter.Selecteds[0].LinkPoints[1];
-      TMSFNCBloxControl1.Blox.Add(newEdge);
-      EdgeDatabase.addNewEdge(newEdge);
-    end;
-  end { Kante einem zweiten Knoten zuweisen }
-  else if newEdgeCreatedWithoutTarget and not
-    selectedWorkflowComponent.Equals(TEdge.getClassType) then
-  begin
-    if selectedWorkflowComponent.Equals(TStart.getClassType)
-    then ShowMessage('Startknoten kann keine Weiterführung sein.')
-    else
-    begin
-      newEdgeCreatedWithoutTarget := false;
-      newEdge.TargetLinkPoint.AnchorLink :=
-        TMSFNCBloxControl1.Presenter.Selecteds[0].LinkPoints[0];
-      newEdge.RequiresConnections := true;
-      newEdge.setNextNodeID(selectedID);
-      EdgeDatabase.addNextNode(newEdge);
-    end;
-  end;
+  newEdge := TEdgeController.createNewEdge(TMSFNCBloxControl1, newEdge, EdgeDatabase);
 end;
 
 ///////////////////////// Toolbar-Funktionen ////////////////////////////////
@@ -230,8 +185,8 @@ end;
 procedure TDesignerForm.FormCreate(Sender: TObject);
 begin
    { Initialisierung von Anfrangswerten }
-   newEdgeButtonClicked := false;
-   newEdgeCreatedWithoutTarget := false;
+   TEdgeController.newEdgeClick := false;
+   TEdgeController.newEdgeWithoutTarget := false;
 
    { Aufrufen von Konstruktoren der Datanbank-Objekte }
    EdgeDatabase := TEdgeDatabase.Create(FDQuery_wftest, 'wf_edges');
@@ -244,13 +199,11 @@ begin
    OpenDialog1.InitialDir := IncludeTrailingPathDelimiter(GetCurrentDir)
                                                               + 'Diagramme/';
    TNodeController.IDohneDB := 0;
-   //id_ohne_datenbank := 1; // Nur fuer Testversion ohne DB
+   TEdgeController.IDohneDB := 0;
 end;
 
 { Event beim neu Laden des Editors }
 procedure TDesignerForm.FormShow(Sender: TObject);
-var
-  I : Integer;
 begin
    {Wenn ein neues Diagramm erstellt wurde}
    Label7.Caption := diagram.getName + ' Version:'
@@ -280,11 +233,9 @@ begin
 end;
 
 procedure TDesignerForm.Save1Click(Sender: TObject); // Speichern
-var
-  fileName : String;
 begin
   diagramIsSaved := TDiagramController.saveDiagramToFile(diagram, SaveDialog1,
-                                                    TMSFNCBloxControl1);
+                                                          TMSFNCBloxControl1);
 end;
 
 
@@ -305,15 +256,15 @@ var
 begin
   point.X := X;
   point.Y := Y;
-  if newEdgeCreatedWithoutTarget then newEdge.TargetHandle.ChangePoint(point);
+  if TEdgeController.newEdgeWithoutTarget then
+                                      newEdge.TargetHandle.ChangePoint(point);
 end;
-
 
 { Event bei Anklicken des Edge-Buttons }
 procedure TDesignerForm.BitBtnEdgeClick(Sender: TObject);
 begin
   { Zwischenspeichern vom Betaetigen des Buttons }
-  newEdgeButtonClicked := true;
+  TEdgeController.newEdgeClick := true;
 end;
 
 

@@ -65,6 +65,7 @@ type
 
 implementation
 
+{ Konstruktor der Klasse TDatabase}
 constructor TDatabase.Create(newQuery : TFDQuery; newTable: String);
 begin
   inherited Create();
@@ -72,6 +73,7 @@ begin
   table := newTable;
 end;
 
+{ Datensatz schreiben }
 procedure TDatabase.read(sqlString: String);
 begin
   try
@@ -80,21 +82,18 @@ begin
     query.Active := True;
     query.Active := False;
     query.Open;
-    except on e: Exception do
-    begin
-      ShowMessage(e.Message);
-    end;
+    except on e: Exception do ShowMessage(e.Message);
   end;
 end;
 
+{ Datensatz auslesen }
 procedure TDatabase.write(sqlString: String);
 begin
   try
     query.SQL.Clear;
     query.SQL.Add(sqlString);
     query.ExecSQL;
-    except on E: EFDDBEngineException do
-      ShowMessage(E.Message);
+    except on E: EFDDBEngineException do ShowMessage(E.Message);
   end;
   query.Close;
 end;
@@ -159,6 +158,8 @@ begin
   Result := table;
 end;
 
+
+{ Traegt neuen Knoten in die Datenbank ein }
 procedure TNodeDatabase.addNewNode(diagramID : String; nodeID : String;
                                   nodeType : String; nodeDescription : String);
 var
@@ -169,7 +170,6 @@ begin
                 + nodeID + ',' + diagramID + ',"' + nodeType + '","'
                 + nodeDescription + '")';
   write(sqlString);
-//  query.Close;
 end;
 
 procedure TNodeDatabase.addNewNode(diagram: TDiagram; node: TStart);
@@ -204,7 +204,6 @@ var
 begin
   sqlString := 'DELETE FROM ' + getTable + ' WHERE node_id = ' + nodeID.ToString;
   write(sqlString);
-//  query.Close;
 end;
 
 {}
@@ -231,7 +230,6 @@ begin
   sqlString := 'insert into ' + getTable + ' (wf_edge_id, node_id) values ('
                 + edge.getID.ToString + ',' + edge.getNodeID.ToString + ')';
   write(sqlString);
-//  query.Close;
 end;
 end;
 
@@ -242,7 +240,6 @@ begin
   sqlString := 'DELETE FROM ' + getTable + ' WHERE wf_edge_id = '
                 + edgeID.ToString;
   write(sqlString);
-//  query.Close;
 end;
 
 
@@ -254,7 +251,6 @@ begin
                 + edge.getNextNodeID.ToString + ' WHERE wf_edge_id ='
                 + edge.getID.ToString;
   write(sqlString);
-//  query.Close;
 end;
 
 
@@ -273,7 +269,6 @@ begin
                 + '","' + diagram.getDescription + '","' + diagram.getClassName
                 + '")';
   write(sqlString);
-//  query.Close;
 end;
 
 procedure TDiagramDatabase.deleteDiagram(diagram: TDiagram);
@@ -283,7 +278,6 @@ begin
   sqlString := 'DELETE FROM ' + getTable + ' WHERE wf_type_id = '
                 + diagram.getID.ToString;
   write(sqlString);
-//  query.Close;
 end;
 
 procedure TDiagramDatabase.addNewDiagramVersion(diagram: TDiagram);
@@ -302,13 +296,14 @@ var
   currentID : String;
   id : Integer;
 begin
-  id := diagram.getID;
-  read('select * from '+ table +' where wf_type_id ='+ id.ToString);
+  currentID := diagram.getID.ToString;
+  // FEHLER gibt immer TFDAutoIncField  bei ID zurueck weil FireDAC ID erkennt aber nicht zurueckgibt
+  read('select * from '+ table +' where wf_type_id =' + currentID);
 
   with query do
   begin
     currentID := FieldByName('wf_type_id').ToString;
-    if currentID.IsEmpty then
+    if currentID.StartsWith('T') or currentID.IsEmpty then   // Speichert keine ID sondern was anderes????
     begin
       diagram.setID(0); // Ungueltige ID eintragen wenn nicht vorhanden
     end

@@ -96,7 +96,7 @@ type
     CLASS_TYPE = 'TEnd';
   end;
 
-  { Abstrakte Klasse der Entscheidungsknoten }
+  // Entscheidungsknoten
   TDecision = class abstract (TTMSFNCBloxUMLDecisionBlock, INodes)
     constructor Create(nodeID: Integer; newDescription: String);
     procedure setID(newID : Integer);
@@ -123,7 +123,6 @@ type
     CLASS_TYPE = 'TDecision';
   end;
 
-  { Klasse der menschlichen Entscheidungsknoten}
   THumanDecision = class(TDecision)
     constructor Create(nodeID: Integer; newDescription: String);
     function getType : String; override;
@@ -136,7 +135,6 @@ type
     CLASS_TYPE = 'THumanDecision';
   end;
 
-  { Klasse der mascxhinellen Entscheidungsknoten}
   TMachineDecision = class(TDecision)
     constructor Create(nodeID: Integer; newDescription: String);
     function getType : String; override;

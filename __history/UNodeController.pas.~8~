@@ -39,7 +39,8 @@ class function TNodeController.createNewNode(database : TNodeDatabase;
 endNode : TEnd) : TEnd;
 begin
   openNodeSelection(TEnd.getClassType);
-  endNode := TEnd.Create(getNewID(database), NodeSelectionForm.getSelectedNodeDescription);
+  endNode := TEnd.Create(getNewID(database),
+                    NodeSelectionForm.getSelectedNodeDescription);
   Result := endNode;
 end;
 

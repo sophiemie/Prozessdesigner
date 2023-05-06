@@ -65,6 +65,7 @@ type
 
 implementation
 
+{ Konstruktor der Klasse TDatabase}
 constructor TDatabase.Create(newQuery : TFDQuery; newTable: String);
 begin
   inherited Create();
@@ -72,6 +73,7 @@ begin
   table := newTable;
 end;
 
+{ Datensatz schreiben }
 procedure TDatabase.read(sqlString: String);
 begin
   try
@@ -80,21 +82,18 @@ begin
     query.Active := True;
     query.Active := False;
     query.Open;
-    except on e: Exception do
-    begin
-      ShowMessage(e.Message);
-    end;
+    except on e: Exception do ShowMessage(e.Message);
   end;
 end;
 
+{ Datensatz auslesen }
 procedure TDatabase.write(sqlString: String);
 begin
   try
     query.SQL.Clear;
     query.SQL.Add(sqlString);
     query.ExecSQL;
-    except on E: EFDDBEngineException do
-      ShowMessage(E.Message);
+    except on E: EFDDBEngineException do ShowMessage(E.Message);
   end;
   query.Close;
 end;
@@ -107,21 +106,6 @@ begin
   with query do
   begin
     Result := FieldByName('count(*)').AsString.ToInteger();
-  end;
-end;
-
-procedure TDatabase.fillList(list: TListBox);
-begin
-  read('select * from wf_def');
-
-  with query do
-  begin
-    First;
-    while not EOF do
-    begin
-      list.Items.Add(FieldByName('name_en').AsString);
-      Next;
-    end;
   end;
 end;
 
@@ -143,6 +127,21 @@ begin
 end;
 
 
+procedure TDatabase.fillList(list: TListBox);
+begin
+  read('select * from wf_def');
+
+  with query do
+  begin
+    First;
+    while not EOF do
+    begin
+      list.Items.Add(FieldByName('name_en').AsString);
+      Next;
+    end;
+  end;
+end;
+
 
 constructor TNodeDatabase.Create(newQuery : TFDQuery; newTable : String);
 begin
@@ -159,6 +158,8 @@ begin
   Result := table;
 end;
 
+
+{ Traegt neuen Knoten in die Datenbank ein }
 procedure TNodeDatabase.addNewNode(diagramID : String; nodeID : String;
                                   nodeType : String; nodeDescription : String);
 var
@@ -169,9 +170,9 @@ begin
                 + nodeID + ',' + diagramID + ',"' + nodeType + '","'
                 + nodeDescription + '")';
   write(sqlString);
-//  query.Close;
 end;
 
+{ Neuen Startknoten eintragen}
 procedure TNodeDatabase.addNewNode(diagram: TDiagram; node: TStart);
 var
   sqlString: String;
@@ -180,18 +181,21 @@ begin
               node.getDescription);
 end;
 
+{ Neuen Endknoten eintragen}
 procedure TNodeDatabase.addNewNode(diagram: TDiagram; node: TEnd);
 begin
   addNewNode(diagram.getID.ToString, node.getID.ToString, node.getType,
               node.getDescription);
 end;
 
+{ Neuen Entscheidungsknoten eintragen}
 procedure TNodeDatabase.addNewNode(diagram: TDiagram; node: TDecision);
 begin
   addNewNode(diagram.getID.ToString, node.getID.ToString, node.getType,
               node.getDescription);
 end;
 
+{ Neuen Aufgabenknoten eintragen}
 procedure TNodeDatabase.addNewNode(diagram: TDiagram; node: TTask);
 begin
   addNewNode(diagram.getID.ToString, node.getID.ToString, node.getType,
@@ -204,7 +208,6 @@ var
 begin
   sqlString := 'DELETE FROM ' + getTable + ' WHERE node_id = ' + nodeID.ToString;
   write(sqlString);
-//  query.Close;
 end;
 
 {}
@@ -231,7 +234,6 @@ begin
   sqlString := 'insert into ' + getTable + ' (wf_edge_id, node_id) values ('
                 + edge.getID.ToString + ',' + edge.getNodeID.ToString + ')';
   write(sqlString);
-//  query.Close;
 end;
 end;
 
@@ -242,7 +244,6 @@ begin
   sqlString := 'DELETE FROM ' + getTable + ' WHERE wf_edge_id = '
                 + edgeID.ToString;
   write(sqlString);
-//  query.Close;
 end;
 
 
@@ -254,7 +255,6 @@ begin
                 + edge.getNextNodeID.ToString + ' WHERE wf_edge_id ='
                 + edge.getID.ToString;
   write(sqlString);
-//  query.Close;
 end;
 
 
@@ -273,7 +273,6 @@ begin
                 + '","' + diagram.getDescription + '","' + diagram.getClassName
                 + '")';
   write(sqlString);
-//  query.Close;
 end;
 
 procedure TDiagramDatabase.deleteDiagram(diagram: TDiagram);
@@ -283,7 +282,6 @@ begin
   sqlString := 'DELETE FROM ' + getTable + ' WHERE wf_type_id = '
                 + diagram.getID.ToString;
   write(sqlString);
-//  query.Close;
 end;
 
 procedure TDiagramDatabase.addNewDiagramVersion(diagram: TDiagram);
