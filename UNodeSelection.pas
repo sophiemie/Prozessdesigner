@@ -79,6 +79,7 @@ begin
   ListBox1.Clear;
   if NodeClass.Equals(TEnd.getClassType) then  // Endknoten
   begin
+    Label1.Caption := 'Which form should be used?';
     Image1.Hint := END_HINT_DE;
     GroupBox1.Caption := 'Endnode';
     Item := TEnd.getAllDescription;

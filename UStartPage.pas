@@ -81,14 +81,14 @@ var
 implementation
 
 {$R *.dfm}
-
+{Ansicht Neues Diagramm}
 procedure TStartPageForm.Button1Click(Sender: TObject);
 begin
   Groupbox1.Visible := true;
   Groupbox2.Visible := false;
   Panel2.Caption := createDiagramText;
 end;
-
+{Ansicht Diagramm laden}
 procedure TStartPageForm.Button2Click(Sender: TObject);
 begin
   Groupbox1.Visible := false;

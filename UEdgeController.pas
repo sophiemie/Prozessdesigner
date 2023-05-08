@@ -9,10 +9,7 @@ type
   TEdgeController = class abstract
     class function createNewEdge(control : TTMSFNCBloxControl; edge : TEdge;
                                             database : TEdgeDatabase) : TEdge;
-    class function checkFirstNode(control : TTMSFNCBloxControl;
-                                edge : TEdge; database : TEdgeDatabase) : TEdge;
-    class function checkSecondNode(control : TTMSFNCBloxControl;
-                                edge : TEdge; database : TEdgeDatabase) : TEdge;
+
     class var newEdgeClick : boolean;
     class var newEdgeWithoutTarget : boolean;
     class var IDohneDB : Integer;
@@ -22,6 +19,10 @@ type
   private
     class var selectedComponent : String;
     class var selectedID : Integer;
+    class function checkFirstNode(control : TTMSFNCBloxControl;
+                                edge : TEdge; database : TEdgeDatabase) : TEdge;
+    class function checkSecondNode(control : TTMSFNCBloxControl;
+                                edge : TEdge; database : TEdgeDatabase) : TEdge;
   end;
 
 implementation
