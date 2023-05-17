@@ -106,7 +106,6 @@
         </DCCReference>
         <DCCReference Include="UDatabase.pas"/>
         <DCCReference Include="UNodes.pas"/>
-        <DCCReference Include="UToolBar.pas"/>
         <DCCReference Include="UNodeSelection.pas">
             <Form>NodeSelectionForm</Form>
             <FormType>dfm</FormType>
@@ -120,6 +119,9 @@
         </DCCReference>
         <DCCReference Include="UDiagram.pas"/>
         <DCCReference Include="ULanguage.pas"/>
+        <DCCReference Include="UDiagramController.pas"/>
+        <DCCReference Include="UNodeController.pas"/>
+        <DCCReference Include="UEdgeController.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

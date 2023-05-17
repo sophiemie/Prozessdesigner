@@ -1,0 +1,157 @@
+{
+  Bachelorthesis ueber die Entwicklung einer grafischen Oberflaeche zur
+  Erstellung von Workflows am ZMT (Leibniz-Zentrum fuer Marine Tropenforschung)
+  Duales Studium Informatik, Hochschule Bremen
+  Sophie Miessner 5046830, 2023
+
+  Unit UDiagramControllerTest: Testunit des Diagram Controllers
+}
+unit UDiagramControllerTest;
+
+interface
+
+uses
+  DUnitX.TestFramework, UDiagramController;
+
+type
+  [TestFixture]
+  TestTDiagramController = class
+  public
+    [Setup]
+    procedure Setup;
+    [TearDown]
+    procedure TearDown;
+    [TestCase('Test 1_v3_Test.blox','1')]
+    procedure TestFilterIDFromFileName(_Result : String);
+    [TestCase('Test 1_v3_Test.blox','3')]
+    procedure TestFilterVersionFromFileName( _Result : String);
+    [TestCase('Test 1_v3_Test.blox','Test')]
+    procedure TestFilterNameFromFileName(_Result : String);
+    [TestCase('Test 372974_v3_Test_v3_Test.blox','372974')]
+    procedure TestFilterIDFromFileName_LongID(_Result : String);
+    [TestCase('Test 372974_v3_Test.blox','3')]
+    procedure TestFilterVersionFromFileName_LongID( _Result : String);
+    [TestCase('Test 372974_v3_Test.blox','Test')]
+    procedure TestFilterNameFromFileName_LongID(_Result : String);
+    [TestCase('Test 372974_v683493_Test_v3_Test.blox','372974')]
+    procedure TestFilterIDFromFileName_LongVersion(_Result : String);
+    [TestCase('Test 372974_v683493_Test.blox','683493')]
+    procedure TestFilterVersionFromFileName_LongVersion( _Result : String);
+    [TestCase('Test 372974_v683493_Test.blox','Test')]
+    procedure TestFilterNameFromFileName_LongVersion(_Result : String);
+  end;
+
+  TDiagramControllerTester = class(TDiagramController)
+  public
+    class function filterNameFromFileName(fileName : String) : String;
+    class function filterIDFromFileName(fileName : String) : String;
+    class function filterVersionFromFileName(fileName : String) : String;
+  end;
+
+implementation
+
+{ Um auf die protected Funktionen zugreifen zu koennen }
+class function TDiagramControllerTester.filterIDFromFileName(fileName : String) : String;
+begin
+  Result := inherited filterIDFromFileName(fileName);
+end;
+
+class function TDiagramControllerTester.filterVersionFromFileName(fileName : String) : String;
+begin
+  Result := inherited filterVersionFromFileName(fileName);
+end;
+
+class function TDiagramControllerTester.filterNameFromFileName(fileName : String) : String;
+begin
+  Result := inherited filterNameFromFileName(fileName);
+end;
+
+
+{ Unit Tests}
+procedure TestTDiagramController.Setup;
+begin
+end;
+
+procedure TestTDiagramController.TearDown;
+begin
+end;
+
+procedure TestTDiagramController.TestFilterNameFromFileName(_Result : String);
+var
+  R : String;
+begin
+  R := TDiagramControllerTester.filterNameFromFileName('1_v3_Test.blox');
+  Assert.AreEqual(R, _Result);
+end;
+
+procedure TestTDiagramController.TestFilterIDFromFileName(_Result : String);
+var
+  R : String;
+begin
+  R := TDiagramControllerTester.filterIDFromFileName('1_v3_Test.blox');
+  Assert.AreEqual(R, _Result);
+end;
+
+procedure TestTDiagramController.TestFilterVersionFromFileName(_Result : String);
+var
+  R : String;
+begin
+  R := TDiagramControllerTester.filterVersionFromFileName('1_v3_Test.blox');
+  Assert.AreEqual(R, _Result);
+end;
+
+
+procedure TestTDiagramController.TestFilterNameFromFileName_LongID(_Result : String);
+var
+  R : String;
+begin
+  R := TDiagramControllerTester.filterNameFromFileName('372974_v3_Test.blox');
+  Assert.AreEqual(R, _Result);
+end;
+
+procedure TestTDiagramController.TestFilterIDFromFileName_LongID(_Result : String);
+var
+  R : String;
+begin
+  R := TDiagramControllerTester.filterIDFromFileName('372974_v3_Test.blox');
+  Assert.AreEqual(R, _Result);
+end;
+
+procedure TestTDiagramController.TestFilterVersionFromFileName_LongID(_Result : String);
+var
+  R : String;
+begin
+  R := TDiagramControllerTester.filterVersionFromFileName('372974_v3_Test.blox');
+  Assert.AreEqual(R, _Result);
+end;
+
+
+procedure TestTDiagramController.TestFilterNameFromFileName_LongVersion(_Result : String);
+var
+  R : String;
+begin
+  R := TDiagramControllerTester.filterNameFromFileName('372974_v683493_Test.blox');
+  Assert.AreEqual(R, _Result);
+end;
+
+procedure TestTDiagramController.TestFilterIDFromFileName_LongVersion(_Result : String);
+var
+  R : String;
+begin
+  R := TDiagramControllerTester.filterIDFromFileName('372974_v683493_Test.blox');
+  Assert.AreEqual(R, _Result);
+end;
+
+procedure TestTDiagramController.TestFilterVersionFromFileName_LongVersion(_Result : String);
+var
+  R : String;
+begin
+  R := TDiagramControllerTester.filterVersionFromFileName('372974_v683493_Test.blox');
+  Assert.AreEqual(R, _Result);
+end;
+
+
+initialization
+  TDUnitX.RegisterTestFixture(TestTDiagramController);
+
+end.

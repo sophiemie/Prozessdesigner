@@ -1,0 +1,65 @@
+unit UNodeController;
+
+interface
+
+uses UNodes, UNodeSelection, UDatabase;
+
+type
+  TNodeController = class abstract
+  public
+    class procedure createNewNode(database : TNodeDatabase; start : TStart); overload;
+    class procedure createNewNode(database : TNodeDatabase; endNode : TEnd); overload;
+    class procedure createNewNode(database : TNodeDatabase; MT : TMachineTask); overload;
+    class procedure createNewNode(database : TNodeDatabase; MD : TMachineDecision); overload;
+    class procedure createNewNode(database : TNodeDatabase; HT : THumanTask); overload;
+    class procedure createNewNode(database : TNodeDatabase; HD : THumanDecision); overload;
+  private
+    class procedure openNodeSelection(classType : String);
+  end;
+
+implementation
+
+class procedure TNodeController.createNewNode(database : TNodeDatabase;
+                                                                start : TStart);
+begin
+
+end;
+
+class procedure TNodeController.createNewNode(database : TNodeDatabase;
+                                                                endNode : TEnd);
+begin
+  openNodeSelection(TEnd.getClassType);
+end;
+
+class procedure TNodeController.createNewNode(database : TNodeDatabase;
+                                                            MT : TMachineTask);
+begin
+  openNodeSelection(TMachineTask.getClassType);
+end;
+
+class procedure TNodeController.createNewNode(database : TNodeDatabase;
+                                                        MD : TMachineDecision);
+begin
+  openNodeSelection(TMachineDecision.getClassType);
+end;
+
+class procedure TNodeController.createNewNode(database : TNodeDatabase;
+                                                              HT : THumanTask);
+begin
+  openNodeSelection(THumanTask.getClassType);
+end;
+
+class procedure TNodeController.createNewNode(database : TNodeDatabase;
+                                                          HD : THumanDecision);
+begin
+  openNodeSelection(THumanDecision.getClassType);
+end;
+
+
+class procedure TNodeController.openNodeSelection(classType : String);
+begin
+  NodeSelectionForm.FillList(classType);
+  NodeSelectionForm.ShowModal;
+end;
+
+end.

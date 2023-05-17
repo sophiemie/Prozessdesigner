@@ -1,3 +1,11 @@
+{
+  Bachelorthesis ueber die Entwicklung einer grafischen Oberflaeche zur
+  Erstellung von Workflows am ZMT (Leibniz-Zentrum fuer Marine Tropenforschung)
+  Duales Studium Informatik, Hochschule Bremen
+  Sophie Miessner 5046830, 2023
+
+  Unit UNodeTest: Testunit der Knotenklassen
+}
 unit UNodeTest;
 
 interface
@@ -35,6 +43,8 @@ type
     procedure TestSetMethod(newMethodName: String);
     [TestCase(' Test ','StartMethod')]
     procedure TestGetMethod(_Result: String);
+    [TestCase('Test gebe Namen der Klasse wieder','TStart')]
+    procedure TestGetClassType(_Result: String);
   end;
 
 [TestFixture]
@@ -68,6 +78,10 @@ type
     procedure TestSetMethod(newMethodName: String);
     [TestCase(' Test ','EndMethod')]
     procedure TestGetMethod(_Result: String);
+    [TestCase('Test gebe Namen der Klasse wieder','TEnd')]
+    procedure TestGetClassType(_Result: String);
+    [TestCase('Test gebe Anzahl Beschreibungen wieder','2')]
+    procedure TestGetAllDescriptions_Count(_Result: Integer);
   end;
 
 [TestFixture]
@@ -101,6 +115,10 @@ type
     procedure TestSetMethod(newMethodName: String);
     [TestCase(' Test ','HTMethod')]
     procedure TestGetMethod(_Result: String);
+    [TestCase('Test gebe Namen der Klasse wieder','THumanTask')]
+    procedure TestGetClassType(_Result: String);
+    [TestCase('Test gebe Anzahl Beschreibungen wieder','4')]
+    procedure TestGetAllDescriptions_Count(_Result: Integer);
   end;
 
 [TestFixture]
@@ -134,6 +152,10 @@ type
     procedure TestSetMethod(newMethodName: String);
     [TestCase(' Test ','HDMethod')]
     procedure TestGetMethod(_Result: String);
+    [TestCase('Test gebe Namen der Klasse wieder','THumanDecision')]
+    procedure TestGetClassType(_Result: String);
+    [TestCase('Test gebe Anzahl Beschreibungen wieder','3')]
+    procedure TestGetAllDescriptions_Count(_Result: Integer);
   end;
 
   [TestFixture]
@@ -167,6 +189,10 @@ type
     procedure TestSetMethod(newMethodName: String);
     [TestCase(' Test ','MTMethod')]
     procedure TestGetMethod(_Result: String);
+    [TestCase('Test gebe Namen der Klasse wieder','TMachineTask')]
+    procedure TestGetClassType(_Result: String);
+    [TestCase('Test gebe Anzahl Beschreibungen wieder','3')]
+    procedure TestGetAllDescriptions_Count(_Result: Integer);
   end;
 
 [TestFixture]
@@ -200,6 +226,10 @@ type
     procedure TestSetMethod(newMethodName: String);
     [TestCase(' Test ','MDMethod')]
     procedure TestGetMethod(_Result: String);
+    [TestCase('Test gebe Namen der Klasse wieder','TMachineDecision')]
+    procedure TestGetClassType(_Result: String);
+    [TestCase('Test gebe Anzahl Beschreibungen wieder','5')]
+    procedure TestGetAllDescriptions_Count(_Result: Integer);
   end;
 
 implementation
@@ -303,6 +333,14 @@ var
 begin
   R := aStartNode.getMethodName;
   Assert.AreEqual(R, _Result);
+end;
+
+procedure TestTStart.TestGetClassType(_Result: String);
+var
+  R : String;
+begin
+  R := aStartNode.getClassType;
+  Assert.AreEqual(R,_Result);
 end;
 
 ///////////////////////////////   END   /////////////////////////////////////
@@ -412,6 +450,23 @@ begin
   R := aEndNode.getMethodName;
   Assert.AreEqual(R, _Result);
 end;
+
+procedure TestTEnd.TestGetClassType(_Result: String);
+var
+  R : String;
+begin
+  R := aEndNode.getClassType;
+  Assert.AreEqual(R,_Result);
+end;
+
+procedure TestTEnd.TestGetAllDescriptions_Count(_Result: Integer);
+var
+  R : Integer;
+begin
+  R := High(TEnd.getAllDescription)+1;
+  Assert.AreEqual(R,_Result);
+end;
+
  ///////////////////// THumanTask ////////////////////////
 
 procedure TestTHumanTask.Setup;
@@ -518,6 +573,22 @@ var
 begin
   R := aHTNode.getMethodName;
   Assert.AreEqual(R, _Result);
+end;
+
+procedure TestTHumanTask.TestGetClassType(_Result: String);
+var
+  R : String;
+begin
+  R := aHTNode.getClassType;
+  Assert.AreEqual(R,_Result);
+end;
+
+procedure TestTHumanTask.TestGetAllDescriptions_Count(_Result: Integer);
+var
+  R : Integer;
+begin
+  R := High(THumanTask.getAllDescription)+1;
+  Assert.AreEqual(R,_Result);
 end;
 
 ///////////////////////////// THumanDecision ////////////////////////////
@@ -628,7 +699,21 @@ begin
   Assert.AreEqual(R, _Result);
 end;
 
+ procedure TestTHumanDecision.TestGetClassType(_Result: String);
+var
+  R : String;
+begin
+  R := aHDNode.getClassType;
+  Assert.AreEqual(R,_Result);
+end;
 
+procedure TestTHumanDecision.TestGetAllDescriptions_Count(_Result: Integer);
+var
+  R : Integer;
+begin
+  R := High(THumanDecision.getAllDescription)+1;
+  Assert.AreEqual(R,_Result);
+end;
 
  ///////////////////// TMachineTask ////////////////////////
 
@@ -738,6 +823,22 @@ begin
   Assert.AreEqual(R, _Result);
 end;
 
+procedure TestTMachineTask.TestGetClassType(_Result: String);
+var
+  R : String;
+begin
+  R := aMTNode.getClassType;
+  Assert.AreEqual(R,_Result);
+end;
+
+procedure TestTMachineTask.TestGetAllDescriptions_Count(_Result: Integer);
+var
+  R : Integer;
+begin
+  R := High(TMachineTask.getAllDescription)+1;
+  Assert.AreEqual(R,_Result);
+end;
+
 ///////////////////////////// TMachineDecision ////////////////////////////
 
 procedure TestTMachineDecision.Setup;
@@ -844,6 +945,22 @@ var
 begin
   R := aMDNode.getMethodName;
   Assert.AreEqual(R, _Result);
+end;
+
+procedure TestTMachineDecision.TestGetClassType(_Result: String);
+var
+  R : String;
+begin
+  R := aMDNode.getClassType;
+  Assert.AreEqual(R,_Result);
+end;
+
+procedure TestTMachineDecision.TestGetAllDescriptions_Count(_Result: Integer);
+var
+  R : Integer;
+begin
+  R := High(TMachineDecision.getAllDescription)+1;
+  Assert.AreEqual(R,_Result);
 end;
 
 ////////////////////////////////////////

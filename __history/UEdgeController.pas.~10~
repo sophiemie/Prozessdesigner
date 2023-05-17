@@ -1,0 +1,92 @@
+unit UEdgeController;
+
+interface
+
+uses UEdge, UDatabase, UNodes, VCL.TMSFNCBloxControl, System.SysUtils,
+Vcl.Dialogs, ULanguage;
+
+type
+  TEdgeController = class abstract
+    class function createNewEdge(control : TTMSFNCBloxControl; edge : TEdge;
+                                            database : TEdgeDatabase) : TEdge;
+    class function checkFirstNode(control : TTMSFNCBloxControl;
+                                edge : TEdge; database : TEdgeDatabase) : TEdge;
+    class function checkSecondNode(control : TTMSFNCBloxControl;
+                                edge : TEdge; database : TEdgeDatabase) : TEdge;
+    class var newEdgeClick : boolean;
+    class var newEdgeWithoutTarget : boolean;
+    class var IDohneDB : Integer;
+  private
+    class function getNewID(database : TEdgeDatabase) : Integer; overload;
+    class function getNewID : Integer; overload;
+    class var selectedComponent : String;
+    class var selectedID : Integer;
+  end;
+
+implementation
+
+class function TEdgeController.createNewEdge(control : TTMSFNCBloxControl;
+                  edge : TEdge; database : TEdgeDatabase) : TEdge;
+begin
+  selectedComponent := control.Presenter.Selecteds[0].GetNamePath;
+  selectedID := (control.Presenter.Selecteds[0].Id).ToInteger();
+
+  { Wenn eine Kante an ersten Knoten gesetzt wird }
+  if newEdgeClick and not selectedComponent.Equals(TEdge.getClassType) then
+  begin
+    Result := checkFirstNode(control, edge, database);
+  end
+  { Wenn Kante an zweiten Knoten gesetzt wird }
+  else if newEdgeWithoutTarget  and not
+    selectedComponent.Equals(TEdge.getClassType) then
+  begin
+    Result := checkSecondNode(control, edge, database);
+  end;
+end;
+
+class function TEdgeController.checkFirstNode(control : TTMSFNCBloxControl;
+                                edge : TEdge; database : TEdgeDatabase) : TEdge;
+begin
+  if selectedComponent.Equals(TEnd.getClassType) then
+    ShowMessage(ENDNODE_FAIL_DE)
+  else
+  begin
+    newEdgeClick := false;
+    newEdgeWithoutTarget := true;
+    edge := TEdge.Create(getNewID(database),selectedID);
+    edge.SourceLinkPoint.AnchorLink :=
+                                  control.Presenter.Selecteds[0].LinkPoints[1];
+    control.Blox.Add(edge);
+    database.addNewEdge(edge);
+    Result := edge;
+  end;
+end;
+
+class function TEdgeController.checkSecondNode(control : TTMSFNCBloxControl;
+                                edge : TEdge; database : TEdgeDatabase) : TEdge;
+begin
+  if selectedComponent.Equals(TStart.getClassType) then
+    ShowMessage(STARTNODE_FAIL_DE)
+  else
+  begin
+    newEdgeWithoutTarget := false;
+    edge.TargetLinkPoint.AnchorLink :=
+                                  control.Presenter.Selecteds[0].LinkPoints[0];
+    edge.RequiresConnections := true;
+    edge.setNextNodeID(selectedID);
+    database.addNextNode(edge);
+    Result := edge;
+  end;
+end;
+
+class function TEdgeController.getNewID(database : TEdgeDatabase) : Integer;
+begin
+  Result := database.getHighestEdgeID +1;
+end;
+
+class function TEdgeController.getNewID : Integer;
+begin
+  Result := IDohneDB +1;
+end;
+
+end.

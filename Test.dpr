@@ -20,7 +20,9 @@ uses
   UDatabase in 'UDatabase.pas',
   UDatabaseTest in 'UDatabaseTest.pas',
   UDiagram in 'UDiagram.pas',
-  UDiagramTest in 'UDiagramTest.pas';
+  UDiagramTest in 'UDiagramTest.pas',
+  UDiagramControllerTest in 'UDiagramControllerTest.pas',
+  UDiagramController in 'UDiagramController.pas';
 
 {$IFNDEF TESTINSIGHT}
 var

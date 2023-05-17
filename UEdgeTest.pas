@@ -1,3 +1,11 @@
+{
+  Bachelorthesis ueber die Entwicklung einer grafischen Oberflaeche zur
+  Erstellung von Workflows am ZMT (Leibniz-Zentrum fuer Marine Tropenforschung)
+  Duales Studium Informatik, Hochschule Bremen
+  Sophie Miessner 5046830, 2023
+
+  Unit UEdgeTest: Testunit der Kantenklasse
+}
 unit UEdgeTest;
 
 interface
@@ -31,6 +39,8 @@ type
     procedure TestSetDecisionVal(newDecisionVal: TDecisionValue);
     [TestCase('Test aktuellen Entscheidungswert ausgeben','NoDecision')]
     procedure TestGetDecisionVal(_Result: TDecisionValue);
+    [TestCase('Test Klassennamen ausgeben','TEdge')]
+    procedure TestGetClassType(_Result: String);
   end;
 
 implementation
@@ -113,6 +123,14 @@ var
 begin
   R := aEdge.getDecisionVal;
   Assert.AreEqual(R,_Result);
+end;
+
+procedure TestTEdge.TestGetClassType(_Result: String);
+var
+  R : String;
+begin
+  R := TEdge.getClassType;
+  Assert.AreEqual(R, _Result);
 end;
 
 initialization

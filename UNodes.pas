@@ -1,3 +1,11 @@
+{
+  Bachelorthesis ueber die Entwicklung einer grafischen Oberflaeche zur
+  Erstellung von Workflows am ZMT (Leibniz-Zentrum fuer Marine Tropenforschung)
+  Duales Studium Informatik, Hochschule Bremen
+  Sophie Miessner 5046830, 2023
+
+  Unit UNodes: Model-Klassen der Knoten
+}
 unit UNodes;
 
 interface
@@ -12,7 +20,7 @@ uses
   VCL.TMSFNCBloxUIRenderer, VCL.TMSFNCBloxSelector,  VCL.TMSFNCStyles,
   VCL.TMSFNCBloxShapesUML, Vcl.Graphics, Vcl.Menus, Vcl.StdActnMenus,
   VCL.TMSFNCCustomControl, VCL.TMSFNCCustomScrollControl, VCL.TMSFNCBloxControl,
-  System.SysUtils, System.Variants, UZMTStandard;
+  System.SysUtils, System.Variants, UZMTStandard, Vcl.Dialogs;
 var
   popUp :  TStandardMenuPopup;
   // https://stackoverflow.com/questions/18544127/creating-a-popup-menu-at-runtime
@@ -20,12 +28,16 @@ const
   startEndSize = 80;
   FONT_SIZE = 25.0;
 type
+  { Array für die verschiedenen Knotenspezifikation }
+  TDescription = array of String;
 
+  { Interface fuer Knoten, Kanten und Diagramme }
   IWorkflowComponent = interface(IInterface)
     procedure setID(newID : Integer);
     function getID : Integer;
   end;
 
+  { Interface fuer alle Knoten }
   INodes = interface(IWorkflowComponent)
     procedure setDescription(newDescription : String);
     function getDescription : String;
@@ -33,14 +45,12 @@ type
     function getClassName : String;
     procedure setMethodName(newMethodName : String);
     function getMethodName : String;
-    function getType : String;
+    function getType : String; //function getClassType : String;
   end;
 
-  // Start- und Endknoten
+  { Klasse der Startknoten }
   TStart = class(TTMSFNCBloxUMLInitialStateBlock, INodes)
-    popUp : TPopupMenu;
     constructor Create(nodeID: Integer);
-    destructor Destroy;
     procedure setID(newID : Integer);
     function getID : Integer;
     procedure setDescription(newDescription : String);
@@ -50,6 +60,7 @@ type
     function getClassName : String;
     procedure setMethodName(newMethodName : String);
     function getMethodName : String;
+    class function getClassType : String;
      {Interface-Implementationen}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -61,12 +72,13 @@ type
     Method : String;
   const
     NODE_TYPE = 'S';
+    CLASS_TYPE = 'TStart';
   end;
 
+  { Klasse der Endknoten }
   TEnd = class(TTMSFNCBloxUMLFinalStateBlock, INodes)
   public
     constructor Create(nodeID: Integer; newDescription: String);
-    destructor Destroy;
     procedure setID(newID : Integer);
     function getID : Integer;
     procedure setDescription(newDescription : String);
@@ -76,6 +88,8 @@ type
     function getClassName : String;
     procedure setMethodName(newMethodName : String);
     function getMethodName : String;
+    class function getClassType : String;
+    class function getAllDescription : TDescription;
     {Interface-Implementationen}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -87,13 +101,12 @@ type
     Method : String;
   const
     NODE_TYPE = 'E';
+    CLASS_TYPE = 'TEnd';
   end;
 
-  // Entscheidungsknoten       // TInterfacedObject
-  //TDecision = class abstract(TTMSFNCBloxUMLDecisionBlock, IworkflowComponent)
+  { Abstrakte Klasse der Entscheidungsknoten }
   TDecision = class abstract (TTMSFNCBloxUMLDecisionBlock, INodes)
     constructor Create(nodeID: Integer; newDescription: String);
-    destructor Destroy;
     procedure setID(newID : Integer);
     procedure setDescription(newDescription : String); virtual;
     function getDescription : String;
@@ -103,6 +116,8 @@ type
     function getClassName : String;
     procedure setMethodName(newMethodName : String);
     function getMethodName : String;
+    class function getClassType : String; virtual; abstract;
+    class function getAllDescription : TDescription; virtual; abstract;
     {Interface-Implementationen}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -112,30 +127,39 @@ type
     Description : String;
     ClassName : String;
     Method : String;
+  const
+    CLASS_TYPE = 'TDecision';
   end;
 
+  { Klasse der menschlichen Entscheidungsknoten}
   THumanDecision = class(TDecision)
     constructor Create(nodeID: Integer; newDescription: String);
     function getType : String; override;
     procedure setDescription(newDescription : String); override;
+    class function getClassType : String; override;
+    class function getAllDescription : TDescription; override;
   private
     const
     NODE_TYPE = 'HD';
+    CLASS_TYPE = 'THumanDecision';
   end;
 
+  { Klasse der maschinellen Entscheidungsknoten}
   TMachineDecision = class(TDecision)
     constructor Create(nodeID: Integer; newDescription: String);
     function getType : String; override;
     procedure setDescription(newDescription : String); override;
+    class function getClassType : String; override;
+    class function getAllDescription : TDescription; override;
   private
     const
     NODE_TYPE = 'MD';
+    CLASS_TYPE = 'TMachineDecision';
   end;
 
-  // Aktionsknoten
+  { Abstrakte Klasse der Aufgabenknoten }
   TTask = class abstract(TTMSFNCBloxUMLActionStateBlock, INodes)
     constructor Create(nodeID: Integer; newDescription: String);
-    destructor Destroy;
     procedure setID(newID : Integer);
     function getID : Integer;
     procedure setDescription(newDescription : String); virtual;
@@ -145,6 +169,8 @@ type
     function getClassName : String;
     procedure setMethodName(newMethodName : String);
     function getMethodName : String;
+    class function getClassType : String; virtual; abstract;
+    class function getAllDescription : TDescription; virtual; abstract;
     {Interface-Implementationen}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -154,24 +180,34 @@ type
     Description : String;
     ClassName : String;
     Method : String;
+  const
+    CLASS_TYPE = 'TTask';
   end;
 
+  { Klasse der menschlichen Aufgabenknoten}
   THumanTask = class(TTask)
     constructor Create(nodeID: Integer; newDescription: String);
     function getType : String; override;
     procedure setDescription(newDescription : String); override;
+    class function getClassType : String; override;
+    class function getAllDescription : TDescription; override;
   private
     const
     NODE_TYPE = 'HT';
+    CLASS_TYPE = 'THumanTask';
   end;
 
+  { Klasse der maschinellen Aufgabenknoten}
   TMachineTask = class(TTask)
     constructor Create(nodeID: Integer; newDescription: String);
     function getType : String; override;
     procedure setDescription(newDescription : String); override;
+    class function getClassType : String; override;
+    class function getAllDescription : TDescription; override;
   private
     const
     NODE_TYPE = 'MT';
+    CLASS_TYPE = 'TMachineTask';
   end;
  /////////////////////////////////////////////////////////////////////
 implementation
@@ -271,24 +307,6 @@ begin
   inherited Create(nodeID, newDescription);
   FillColor := lightGray;
   Text := NODE_TYPE + ': ' + newDescription;
-end;
-
-//////////////////////////////////
-{Destruktoren aller Knoten}
-destructor TStart.Destroy;
-begin
-end;
-
-destructor TEnd.Destroy;
-begin
-end;
-
-destructor TDecision.Destroy;
-begin
-end;
-
-destructor TTask.Destroy;
-begin
 end;
 
 ///////////////////////////
@@ -480,6 +498,109 @@ begin
   Description := newDescription;
   Text := NODE_TYPE + ': ' + newDescription;
 end;
+
+class function TStart.getClassType : String;
+begin
+  Result := CLASS_TYPE;
+end;
+
+class function TEnd.getClassType : String;
+begin
+  Result := CLASS_TYPE;
+end;
+
+class function THumanTask.getClassType : String;
+begin
+  Result := CLASS_TYPE;
+end;
+
+class function THumanDecision.getClassType : String;
+begin
+  Result := CLASS_TYPE;
+end;
+
+class function TMachineDecision.getClassType : String;
+begin
+  Result := CLASS_TYPE;
+end;
+
+class function TMachineTask.getClassType : String;
+begin
+  Result := CLASS_TYPE;
+end;
+
+
+///////////// Fest kodierte Spezifikationen //////////////////////////////
+
+class function TEnd.getAllDescription : TDescription;
+var
+  description: TDescription;
+begin
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Standard';
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Abbruch';
+  Result := description;
+end;
+
+class function THumanTask.getAllDescription : TDescription;
+var
+  description: TDescription;
+begin
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Urlaub';
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Drittmittel';
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'MitarbeiterInnen und Gäste';
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Reiseantrag';
+  Result := description;
+end;
+
+class function THumanDecision.getAllDescription : TDescription;
+var
+  description: TDescription;
+begin
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Supervisor';
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Leader';
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Management';
+  Result := description;
+end;
+
+class function TMachineTask.getAllDescription : TDescription;
+var
+  description: TDescription;
+begin
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Generate PDF';
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Send PDF';
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Send Info';
+  Result := description;
+end;
+
+class function TMachineDecision.getAllDescription : TDescription;
+var
+  description: TDescription;
+begin
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Stellungnahme';
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Genügend/Überschneidete Tage';
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Anmeldung';
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Programmbereich';
+  SetLength(description, Length(description)+1);
+  description[High(description)] := 'Position Antragsteller';
+  Result := description;
+end;
+
 
 //////////////////////////////////////////////////////////////////////
 {Kopierte Funktionen aus System fuer Interface-Implementierung}

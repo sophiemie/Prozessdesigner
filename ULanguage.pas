@@ -1,3 +1,12 @@
+{
+  Bachelorthesis ueber die Entwicklung einer grafischen Oberflaeche zur
+  Erstellung von Workflows am ZMT (Leibniz-Zentrum fuer Marine Tropenforschung)
+  Duales Studium Informatik, Hochschule Bremen
+  Sophie Miessner 5046830, 2023
+
+  Unit ULanguage: Zur Verwaltung der englischen und deutschen Begriffe. Aktuell
+  werden diese nur in der Startseite verwendet.
+}
 unit ULanguage;
 
 interface
@@ -24,6 +33,13 @@ const
   MT_DE = 'Maschinelle Aufgabe';
   PROCESSDESIGNER_EN = 'Processdesigner';
   PROCESSDESIGNER_DE = 'Prozessdesigner';
+  NOTSAVED_EN = 'File is not saved. Close anyway?';
+  NOTSAVED_DE = 'Sie haben Ihre Änderungen nicht gespeichert. '
+                    + 'Wollen Sie wirklich beenden?';
+  ENDNODE_FAIL_DE = 'Endknoten kann keine Weiterführung sein';
+  ENDNODE_FAIL_EN = 'Endnode can not be a source node';
+  STARTNODE_FAIL_DE = 'Startknoten kann keine Weiterführung sein';
+  STARTNODE_FAIL_EN = 'Startnode can not be target node';
 
   {Startpage}
   NEW_EN = 'New';
@@ -53,6 +69,14 @@ const
   NODIAGRAM_NAME_EN = 'Name can not be empty.';
   ACTIVE_EN = 'Active';
   ACTIVE_DE = 'Aktiv';
+  OPEN_EN = 'Open';
+  OPEN_DE = 'Öffnen';
+  NODIAGRAM_SELECTED_EN = 'No Diagram Selected.';
+  NODIAGRAM_SELECTED_DE = 'Kein Diagramm ausgewählt.';
+  YES_EN = 'yes';
+  NO_EN = 'no';
+  YES_DE = 'ja';
+  NO_DE = 'nein';
 
   {Nodeselection}
   NODESELECTION_EN = 'Nodeselection';

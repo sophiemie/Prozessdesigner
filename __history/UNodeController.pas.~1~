@@ -1,0 +1,57 @@
+unit UNodeController;
+
+interface
+
+uses UNodes, UNodeSelection, UDatabase;
+
+type
+  TNodeController = class abstract
+    class procedure createNewNode(database : TNodeDatabase; start : TStart); overload;
+    class procedure createNewNode(database : TNodeDatabase; endNode : TEnd); overload;
+    class procedure createNewNode(database : TNodeDatabase; MT : TMachineTask); overload;
+    class procedure createNewNode(database : TNodeDatabase; MD : TMachineDecision); overload;
+    class procedure createNewNode(database : TNodeDatabase; HT : THumanTask); overload;
+    class procedure createNewNode(database : TNodeDatabase; HD : THumanDecision); overload;
+  end;
+
+implementation
+
+class procedure TNodeController.createNewNode(database : TNodeDatabase;
+                                                                start : TStart);
+begin
+
+end;
+
+class procedure TNodeController.createNewNode(database : TNodeDatabase;
+                                                                endNode : TEnd);
+begin
+
+end;
+
+class procedure TNodeController.createNewNode(database : TNodeDatabase;
+                                                            MT : TMachineTask);
+begin
+
+end;
+
+class procedure TNodeController.createNewNode(database : TNodeDatabase;
+                                                        MD : TMachineDecision);
+begin
+
+end;
+
+class procedure TNodeController.createNewNode(database : TNodeDatabase;
+                                                              HT : THumanTask);
+begin
+
+end;
+
+class procedure TNodeController.createNewNode(database : TNodeDatabase;
+                                                          HD : THumanDecision);
+begin
+
+end;
+
+
+
+end.

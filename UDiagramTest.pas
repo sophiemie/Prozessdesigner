@@ -25,6 +25,8 @@ type
     procedure TestSetInUse(value: boolean);
     [TestCase('Test setze neuen Klassennamen', 'DiagrammForm')]
     procedure TestSetClassName(newClassName : String);
+    [TestCase('Teste setze neue Versionsnummer','3')]
+    procedure TestSetVersionNumber(newVersion: Integer);
     [TestCase('Test geb ID', '1')]
     procedure TestGetID(_Result: Integer);
     [TestCase('Test geb Namen', 'Testdiagramm')]
@@ -35,6 +37,8 @@ type
     procedure TestGetInUse(_Result: boolean);
     [TestCase('Test geb Klassennamen', 'DiagramKlasse')]
     procedure TestGetClassName(_Result: String);
+    [TestCase('Teste geb Versionsnummer','5')]
+    procedure TestGetVersionNumber(_Result: Integer);
   end;
 
 implementation
@@ -44,6 +48,7 @@ begin
   aDiagram := TDiagram.Create(1,'Testdiagramm','Dies ist ein Test');
   aDiagram.setInUse(false);
   aDiagram.setClassName('DiagramKlasse');
+  aDiagram.setVersionNumber(5);
 end;
 
 procedure TestTDiagram.TearDown;
@@ -95,6 +100,15 @@ begin
   Assert.AreEqual(R,newClassName);
 end;
 
+procedure TestTDiagram.TestSetVersionNumber(newVersion: Integer);
+var
+  R : Integer;
+begin
+  aDiagram.setVersionNumber(newVersion);
+  R := aDiagram.getVersionNumber;
+  Assert.AreEqual(R,newVersion);
+end;
+
 procedure TestTDiagram.TestGetID(_Result: Integer);
 var
   R : Integer;
@@ -132,6 +146,14 @@ var
   R : String;
 begin
   R := aDiagram.getClassName;
+  Assert.AreEqual(R,_Result);
+end;
+
+procedure TestTDiagram.TestGetVersionNumber(_Result: Integer);
+var
+  R : Integer;
+begin
+  R := aDiagram.getVersionNumber;
   Assert.AreEqual(R,_Result);
 end;
 

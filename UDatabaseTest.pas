@@ -1,3 +1,11 @@
+{
+  Bachelorthesis ueber die Entwicklung einer grafischen Oberflaeche zur
+  Erstellung von Workflows am ZMT (Leibniz-Zentrum fuer Marine Tropenforschung)
+  Duales Studium Informatik, Hochschule Bremen
+  Sophie Miessner 5046830, 2023
+
+  Unit UDatabaseTest: Testunit der Datenbankklassen
+}
 unit UDatabaseTest;
 
 interface
@@ -6,6 +14,7 @@ uses
   DUnitX.TestFramework, UDatabase;
 
 type
+  { Testklasse der Klasse TDatabase}
   [TestFixture]
   TestTDatabase = class
   strict private
@@ -21,6 +30,7 @@ type
     procedure getTable(_Result: String);
   end;
 
+  { Testklasse der Klasse TNodeDatabase}
   [TestFixture]
   TestTNodeDatabase = class
   strict private
@@ -36,6 +46,7 @@ type
     procedure getTable(_Result: String);
   end;
 
+  { Testklasse der Klasse TEdgeDatabase}
   [TestFixture]
   TestTEdgeDatabase = class
   strict private
@@ -51,6 +62,7 @@ type
     procedure getTable(_Result: String);
   end;
 
+  { Testklasse der Klasse TDiagramDatabase}
   [TestFixture]
   TestTDiagramDatabase = class
   strict private

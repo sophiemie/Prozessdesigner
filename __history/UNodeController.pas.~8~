@@ -1,0 +1,100 @@
+unit UNodeController;
+
+interface
+
+uses UNodes, UNodeSelection, UDatabase;
+
+type
+  TNodeController = class abstract
+  public
+    class function createNewNode(database : TNodeDatabase; start : TStart) :
+                                                              TStart; overload;
+    class function createNewNode(database : TNodeDatabase; endNode : TEnd) :
+                                                                TEnd; overload;
+    class function createNewNode(database : TNodeDatabase; MT : TMachineTask) :
+                                                        TMachineTask; overload;
+    class function createNewNode(database : TNodeDatabase; MD: TMachineDecision)
+                                                  : TMachineDecision; overload;
+    class function createNewNode(database : TNodeDatabase; HT : THumanTask) :
+                                                          THumanTask; overload;
+    class function createNewNode(database : TNodeDatabase; HD : THumanDecision)
+                                                    : THumanDecision; overload;
+    class var IDohneDB : Integer;
+  private
+    class procedure openNodeSelection(classType : String);
+    class function getNewID : Integer; overload;
+    class function getNewID(database : TNodeDatabase) : Integer; overload;
+  end;
+
+implementation
+
+class function TNodeController.createNewNode(database : TNodeDatabase;
+start : TStart) : TStart;
+begin
+  start := TStart.Create(getNewID(database));
+  Result := start;
+end;
+
+class function TNodeController.createNewNode(database : TNodeDatabase;
+endNode : TEnd) : TEnd;
+begin
+  openNodeSelection(TEnd.getClassType);
+  endNode := TEnd.Create(getNewID(database),
+                    NodeSelectionForm.getSelectedNodeDescription);
+  Result := endNode;
+end;
+
+class function TNodeController.createNewNode(database : TNodeDatabase;
+MT : TMachineTask) : TMachineTask;
+begin
+  openNodeSelection(TMachineTask.getClassType);
+  MT := TMachineTask.Create(getNewID(database),
+                    NodeSelectionForm.getSelectedNodeDescription);
+  Result := MT;
+end;
+
+class function TNodeController.createNewNode(database : TNodeDatabase;
+MD : TMachineDecision) : TMachineDecision;
+begin
+  openNodeSelection(TMachineDecision.getClassType);
+  MD := TMachineDecision.Create(getNewID(database),
+                    NodeSelectionForm.getSelectedNodeDescription);
+  Result := MD;
+end;
+
+class function TNodeController.createNewNode(database : TNodeDatabase;
+HT : THumanTask) : THumanTask;
+begin
+  openNodeSelection(THumanTask.getClassType);
+  HT := THumanTask.Create(getNewID(database),
+                    NodeSelectionForm.getSelectedNodeDescription);
+  Result := HT;
+end;
+
+class function TNodeController.createNewNode(database : TNodeDatabase;
+HD : THumanDecision) : THumanDecision;
+begin
+  openNodeSelection(THumanDecision.getClassType);
+  HD := THumanDecision.Create(getNewID(database),
+                    NodeSelectionForm.getSelectedNodeDescription);
+  Result := HD;
+end;
+
+
+class procedure TNodeController.openNodeSelection(classType : String);
+begin
+  NodeSelectionForm.FillList(classType);
+  NodeSelectionForm.ShowModal;
+end;
+
+class function TNodeController.getNewID : Integer;
+begin
+  Result := IDohneDB +1;
+end;
+
+class function TNodeController.getNewID(database : TNodeDatabase) : Integer;
+begin
+  Result := database.getHighestNodeID +1;
+end;
+
+end.
