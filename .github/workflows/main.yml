@@ -1,0 +1,11 @@
+name: Prozessdesigner CI
+on:
+  pull_request:
+    branches:
+      - master
+obs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Start Unittest
+        run: Test.exe
