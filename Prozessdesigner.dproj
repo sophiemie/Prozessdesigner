@@ -106,7 +106,6 @@
         </DCCReference>
         <DCCReference Include="UDatabase.pas"/>
         <DCCReference Include="UNodes.pas"/>
-        <DCCReference Include="UToolBar.pas"/>
         <DCCReference Include="UNodeSelection.pas">
             <Form>NodeSelectionForm</Form>
             <FormType>dfm</FormType>

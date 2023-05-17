@@ -1,3 +1,14 @@
+{
+  Bachelorthesis ueber die Entwicklung einer grafischen Oberflaeche zur
+  Erstellung von Workflows am ZMT (Leibniz-Zentrum fuer Marine Tropenforschung)
+  Duales Studium Informatik, Hochschule Bremen
+  Sophie Miessner 5046830, 2023
+
+  Unit UDesignerToolbar: Klasse in der Toolbar-Komponenten aufgefuehrt sind. Aktuell
+  werden diese noch nicht genutzt, da es einfacher war die Komponenten im
+  Design-Formular über den Inspektor hinzuzufuegen. In Zukunft soll jedoch
+  diese Klasse verwendet werden.
+}
 unit UDesignerToolbar;
 
 interface

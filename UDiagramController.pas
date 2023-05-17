@@ -1,3 +1,12 @@
+{
+  Bachelorthesis ueber die Entwicklung einer grafischen Oberflaeche zur
+  Erstellung von Workflows am ZMT (Leibniz-Zentrum fuer Marine Tropenforschung)
+  Duales Studium Informatik, Hochschule Bremen
+  Sophie Miessner 5046830, 2023
+
+  Unit UDiagramController: Hier wird die Controller Klasse der Diagramme
+  verwaltet.
+}
 unit UDiagramController;
 
 interface
@@ -7,8 +16,10 @@ uses
   Vcl.Grids, ULanguage, UDatabase;
 
 type
+  { Dynamisches Array fuer die Eintraege der Diagramme in der Liste der Startseite }
   TDiagramEntry = array of TDiagram;
 
+  { Klasse des Diagramm-Controllers}
   TDiagramController = class abstract
   public
     class procedure loadDiagramToFile(diagram : TDiagram; openDialog:
@@ -36,6 +47,7 @@ type
 
 implementation
 
+{ Diagramm von Designer-Formular laden}
 class procedure TDiagramController.loadDiagramToFile(diagram : TDiagram;
                       openDialog : TOpenDialog; control : TTMSFNCBloxControl);
 var
@@ -61,7 +73,7 @@ begin
   control.LoadFromFile('Diagramme/' + fileName); {In Editor Diagramm laden}
 end;
 
-
+ { Diagramm in lokaler Datei speichern }
 class function TDiagramController.saveDiagramToFile(diagram : TDiagram;
   saveDialog : TSaveDialog; control : TTMSFNCBloxControl) : boolean;
 var
@@ -107,7 +119,7 @@ begin
   openFile.SaveToFile(fileName);
 end;
 
-
+{ Aus Dateinamen ID bestimmen, verwendet fuer die Version ohne DB-Anbindung }
 class function TDiagramController.filterIDFromFileName(fileName : String)
                                                                       : String;
 var
@@ -123,6 +135,7 @@ begin
   Result := id;
 end;
 
+{ Aus Dateinamen Version bestimmen, verwendet fuer die Version ohne DB-Anbindung }
 class function TDiagramController.filterVersionFromFileName(fileName : String)
                                                                       : String;
 var
@@ -141,6 +154,7 @@ begin
   Result := version;
 end;
 
+{ Aus Dateinamen Namen bestimmen, verwendet fuer die Version ohne DB-Anbindung }
 class function TDiagramController.filterNameFromFileName(fileName : String)
                                                                       : String;
 var
@@ -194,33 +208,40 @@ begin
   end;
 end;
 
-
+{ Fuelle Ladeliste mit Diagrammen aus der Datenbank }
 class procedure TDiagramController.fillLoadingList(list : TStringGrid;
                                                   database : TDiagramDatabase);
 var
-  I : Integer;
+  I, entryNumber : Integer;
   entry : TDiagramEntry;
   diagram : TDiagram;
 begin
+  entryNumber := 0;
   list.RowCount := database.getDataCount() +1;
-  SetLength(entry,list.RowCount);
+  SetLength(entry,list.RowCount-1);
   for I := 0 to database.getHighestDiagramID do
   begin
     diagram := TDiagram.Create(I,'','');
     diagram := database.giveDiagramSavedDatas(diagram);
     if diagram.getID <> 0 then
-      entry[I] := TDiagram.Create(diagram.getID, diagram.getName, diagram.getDescription);
+    begin
+      entry[entryNumber] := TDiagram.Create
+                      (diagram.getID, diagram.getName, diagram.getDescription);
+      entry[entryNumber].setVersionNumber(diagram.getVersionNumber);
+      entryNumber := entryNumber +1;
+    end;
   end;
 
-  for I := 1 to list.RowCount-1 do
+  for I := 0 to Length(entry)-1 do //list.RowCount-1 do
   begin
-    list.Cells[1,I] := entry[I].getName;
-    list.Cells[2,I] := entry[I].getDescription;
-   // list.Cells[3,I] := entry[I].getVersionNumber.ToString;
+      list.Cells[0,I+1] := entry[I].getID.ToString;
+      list.Cells[1,I+1] := entry[I].getName;
+      list.Cells[2,I+1] := entry[I].getDescription;
+      list.Cells[3,I+1] := entry[I].getVersionNumber.ToString;
   end;
 end;
 
-
+{ Waehle Diagramm aus Liste, ohne Datenbankanbindung }
 class function TDiagramController.selectDiagramFromList(list : TStringGrid;
                   diagram : TDiagram; row : Integer) : TDiagram;
 var
@@ -244,6 +265,7 @@ begin
   Result := diagram;
 end;
 
+{ Waehle Diagramm aus Liste }
 class function TDiagramController.selectDiagramFromList(list : TStringGrid;
     diagram : TDiagram; row : Integer; database : TDiagramDatabase) : TDiagram;
 var
@@ -255,11 +277,13 @@ begin
   Result := diagram;
 end;
 
+{ Ermittle neue Diagramm-ID, ohne Datenbankanbindung }
 class function TDiagramController.getNewID(list : TStringGrid) : Integer;
 begin
   Result := list.RowCount;
 end;
 
+{ Ermittle neue Diagramm-ID }
 class function TDiagramController.getNewID(database : TDiagramDatabase) : Integer;
 begin
   Result := database.getHighestDiagramID +1;

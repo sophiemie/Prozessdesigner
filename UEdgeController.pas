@@ -1,3 +1,12 @@
+{
+  Bachelorthesis ueber die Entwicklung einer grafischen Oberflaeche zur
+  Erstellung von Workflows am ZMT (Leibniz-Zentrum fuer Marine Tropenforschung)
+  Duales Studium Informatik, Hochschule Bremen
+  Sophie Miessner 5046830, 2023
+
+  Unit UEdgeController: In der Unit wird die Controller-Klasse der Kanten
+  verwaltet.
+}
 unit UEdgeController;
 
 interface
@@ -6,6 +15,7 @@ uses UEdge, UDatabase, UNodes, VCL.TMSFNCBloxControl, System.SysUtils,
 Vcl.Dialogs, ULanguage;
 
 type
+  { Klasse des Kanten-Controllers}
   TEdgeController = class abstract
     class function createNewEdge(control : TTMSFNCBloxControl; edge : TEdge;
                                             database : TEdgeDatabase) : TEdge;
@@ -27,6 +37,7 @@ type
 
 implementation
 
+{ Neue Kante erstellen }
 class function TEdgeController.createNewEdge(control : TTMSFNCBloxControl;
                   edge : TEdge; database : TEdgeDatabase) : TEdge;
 begin
@@ -46,6 +57,7 @@ begin
   end;
 end;
 
+{ Ersten Knoten ueberpruefen beim erstellen einer Kante }
 class function TEdgeController.checkFirstNode(control : TTMSFNCBloxControl;
                                 edge : TEdge; database : TEdgeDatabase) : TEdge;
 begin
@@ -64,6 +76,7 @@ begin
   end;
 end;
 
+{ Zweiten Knoten ueberpruefen beim erstellen einer Kante }
 class function TEdgeController.checkSecondNode(control : TTMSFNCBloxControl;
                                 edge : TEdge; database : TEdgeDatabase) : TEdge;
 begin
@@ -81,11 +94,13 @@ begin
   end;
 end;
 
+{ Neue ID ueber Datenbank ermitteln }
 class function TEdgeController.getNewID(database : TEdgeDatabase) : Integer;
 begin
   Result := database.getHighestEdgeID +1;
 end;
 
+{ Neue ID ohne Datenbank ermitteln }
 class function TEdgeController.getNewID : Integer;
 begin
   Result := IDohneDB +1;

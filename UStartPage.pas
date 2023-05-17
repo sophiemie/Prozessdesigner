@@ -1,3 +1,11 @@
+{
+  Bachelorthesis ueber die Entwicklung einer grafischen Oberflaeche zur
+  Erstellung von Workflows am ZMT (Leibniz-Zentrum fuer Marine Tropenforschung)
+  Duales Studium Informatik, Hochschule Bremen
+  Sophie Miessner 5046830, 2023
+
+  Unit UStartPage: Formular fuer die Startseite
+}
 unit UStartPage;
 
 interface
@@ -96,6 +104,7 @@ begin
   Panel2.Caption := loadDiagamText;
 end;
 
+{ Diagrammeintrag hinzufuegen ohne Datenbankanbindung }
 procedure TStartPageForm.CreateOneMoreDiagramEntry(newDiagram : TDiagram);
 begin
   StringGrid1.RowCount := StringGrid1.RowCount +1;
@@ -123,6 +132,7 @@ begin
 
     DesignerForm.diagram := TDiagram.Create(TDiagramController.getNewID(diagramDatabase),
       Edit1.Text, newDiagramDescription);
+    DesignerForm.diagram.setVersionNumber(1);
 
     { Neues Diagramm in Datenbank eintragen }
     DiagramDatabase.addNewDiagram(DesignerForm.diagram);
@@ -136,6 +146,7 @@ begin
       StringGrid1.Cells[4,StringGrid1.RowCount-1] := yes
     else StringGrid1.Cells[4,StringGrid1.RowCount-1] := no;
   end;
+  TDiagramController.fillLoadingList(StringGrid1, diagramDatabase);
 end;
 
 { Neue Version eines Diagrammes erstellen }
@@ -160,6 +171,7 @@ begin
     //diagramDatabase.fillLoadlistWithDiagrams(StringGrid1);
   end
   else ShowMessage(noDiagramSelected);
+  TDiagramController.fillLoadingList(StringGrid1, diagramDatabase);
 end;
 
 procedure TStartPageForm.Button5Click(Sender: TObject);
@@ -203,8 +215,8 @@ begin
   Stringgrid1.ColWidths[1] := 157;
   Stringgrid1.ColWidths[2] := 280;
 
-  // Solange DB nicht angebunden
-  TDiagramController.fillLoadingList(StringGrid1);
+  // Ohne Anbindung der Datenbank
+  //TDiagramController.fillLoadingList(StringGrid1);
 end;
 
 procedure TStartPageForm.FormShow(Sender: TObject);
@@ -242,6 +254,7 @@ begin
   end;
 end;
 
+{ Texte neu zuweisen bei Sprachaenderung}
 procedure TStartPageForm.fillComponentText();
 var
   I : Integer;
@@ -275,6 +288,7 @@ begin
   else if GroupBox1.Visible then Panel2.Caption := createDiagramText;
 end;
 
+{ Sprache aendern }
 procedure TStartPageForm.ToggleSwitch1Click(Sender: TObject);
 begin
   if ToggleSwitch1.State = tssOff then

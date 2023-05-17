@@ -5,7 +5,6 @@ uses
   UDesigner in 'UDesigner.pas' {DesignerForm},
   UDatabase in 'UDatabase.pas',
   UNodes in 'UNodes.pas',
-  UToolBar in 'UToolBar.pas',
   UNodeSelection in 'UNodeSelection.pas' {NodeSelectionForm},
   UEdge in 'UEdge.pas',
   UDesignerToolbar in 'UDesignerToolbar.pas',

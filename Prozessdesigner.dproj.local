@@ -4,8 +4,9 @@
     <Transaction>1899.12.30 00:00:00.000.432,C:\Prozessdesigner\Prozessdesigner\UNodeController.pas=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.819,=C:\Designer\Prozessdesigner\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.232,=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.852,=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.831,C:\Prozessdesigner\Prozessdesigner\UEdgeController.pas=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.852,=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
+    <Transaction>2023.05.10 00:29:42.755,C:\Prozessdesigner\Prozessdesigner\UToolBar.pas=</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="UDatabase.pas"/>
@@ -23,7 +24,6 @@
     <File Path="UNodeSelection.dfm"/>
     <File Path="UStartPage.pas"/>
     <File Path="UStartPage.dfm"/>
-    <File Path="UToolBar.pas"/>
     <File Path="UZMTStandard.pas"/>
   </ProjectSortOrder>
 </BorlandProject>

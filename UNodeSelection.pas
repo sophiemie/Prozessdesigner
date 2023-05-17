@@ -1,3 +1,11 @@
+{
+  Bachelorthesis ueber die Entwicklung einer grafischen Oberflaeche zur
+  Erstellung von Workflows am ZMT (Leibniz-Zentrum fuer Marine Tropenforschung)
+  Duales Studium Informatik, Hochschule Bremen
+  Sophie Miessner 5046830, 2023
+
+  Unit UNodeSelection: Formular fuer die Auswahl einer Knotenspezifikation
+}
 unit UNodeSelection;
 
 interface
@@ -47,19 +55,22 @@ begin
   Result := NodeDescription;
 end;
 
+{ Bei Erstellung der Form }
 procedure TNodeSelectionForm.FormCreate(Sender: TObject);
 begin
+{ Funktionen falls in Zukunft aus Datenbank gelesen werden sollte }
 //  Database := TNodeDatabase.Create(FDQuery1, 'wf_nodes');
 //  Database.fillList(ListBox1);
 end;
 
-
+{ Eine Spezifikation auswaehlen }
 procedure TNodeSelectionForm.ListBox1DblClick(Sender: TObject);
 begin
   NodeDescription := Listbox1.Items[Listbox1.ItemIndex];
   Close;
 end;
 
+{ Zweite Moeglichkeit eine Spezifikation auszuwaehlen }
 procedure TNodeSelectionForm.Button1Click(Sender: TObject);
 begin
   if ListBox1.ItemIndex = -1 then ShowMessage(NO_DESCRIPTIONSELECT_DE)

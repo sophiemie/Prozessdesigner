@@ -1,3 +1,12 @@
+{
+  Bachelorthesis ueber die Entwicklung einer grafischen Oberflaeche zur
+  Erstellung von Workflows am ZMT (Leibniz-Zentrum fuer Marine Tropenforschung)
+  Duales Studium Informatik, Hochschule Bremen
+  Sophie Miessner 5046830, 2023
+
+  Unit UNodeController: In der Unit wird die Controller-Klasse der Knoten
+  verwaltet.
+}
 unit UNodeController;
 
 interface
@@ -28,6 +37,7 @@ type
 
 implementation
 
+{ Erstellung eines neuen Startknotens }
 class function TNodeController.createNewNode(database : TNodeDatabase;
 start : TStart) : TStart;
 begin
@@ -35,6 +45,7 @@ begin
   Result := start;
 end;
 
+{ Erstellung eines neuen Endknotens }
 class function TNodeController.createNewNode(database : TNodeDatabase;
 endNode : TEnd) : TEnd;
 begin
@@ -43,6 +54,7 @@ begin
   Result := endNode;
 end;
 
+{ Erstellung einer neuen maschinellen Aufgabe }
 class function TNodeController.createNewNode(database : TNodeDatabase;
 MT : TMachineTask) : TMachineTask;
 begin
@@ -52,6 +64,7 @@ begin
   Result := MT;
 end;
 
+{ Erstellung eines neuen maschinellen Entscheidung }
 class function TNodeController.createNewNode(database : TNodeDatabase;
 MD : TMachineDecision) : TMachineDecision;
 begin
@@ -61,6 +74,7 @@ begin
   Result := MD;
 end;
 
+{ Erstellung eines neuen menschlichen Aufgabe }
 class function TNodeController.createNewNode(database : TNodeDatabase;
 HT : THumanTask) : THumanTask;
 begin
@@ -70,6 +84,7 @@ begin
   Result := HT;
 end;
 
+{ Erstellung eines neuen menschlichen Entscheidung }
 class function TNodeController.createNewNode(database : TNodeDatabase;
 HD : THumanDecision) : THumanDecision;
 begin
@@ -79,18 +94,20 @@ begin
   Result := HD;
 end;
 
-
+{ Formular fuer Auswahl der Kontenspezifikation oeffnen }
 class procedure TNodeController.openNodeSelection(classType : String);
 begin
   NodeSelectionForm.FillList(classType);
   NodeSelectionForm.ShowModal;
 end;
 
+{ Bestimmung neuer Knoten ID ohne Datenbankanbindung }
 class function TNodeController.getNewID : Integer;
 begin
   Result := IDohneDB +1;
 end;
 
+{ Bestimmung neuer Knoten ID mit Datenbankanbindung }
 class function TNodeController.getNewID(database : TNodeDatabase) : Integer;
 begin
   Result := database.getHighestNodeID +1;

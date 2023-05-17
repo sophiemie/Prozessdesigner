@@ -1,3 +1,12 @@
+{
+  Bachelorthesis ueber die Entwicklung einer grafischen Oberflaeche zur
+  Erstellung von Workflows am ZMT (Leibniz-Zentrum fuer Marine Tropenforschung)
+  Duales Studium Informatik, Hochschule Bremen
+  Sophie Miessner 5046830, 2023
+
+  Unit ULanguage: Zur Verwaltung der englischen und deutschen Begriffe. Aktuell
+  werden diese nur in der Startseite verwendet.
+}
 unit ULanguage;
 
 interface

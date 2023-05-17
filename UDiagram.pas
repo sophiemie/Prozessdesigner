@@ -1,3 +1,11 @@
+{
+  Bachelorthesis ueber die Entwicklung einer grafischen Oberflaeche zur
+  Erstellung von Workflows am ZMT (Leibniz-Zentrum fuer Marine Tropenforschung)
+  Duales Studium Informatik, Hochschule Bremen
+  Sophie Miessner 5046830, 2023
+
+  Unit UDiagram: Hier wird die Modelklasse des Diagramms festgehalten.
+}
 unit UDiagram;
 
 interface
@@ -5,6 +13,7 @@ interface
 uses UNodes;
 
 type
+  { Klasse der Diagramme }
   TDiagram = class(TInterfacedObject, IWorkflowComponent)
   public
     constructor Create(newID: Integer; newName: String; newDescription: String);
@@ -31,6 +40,7 @@ type
 
 implementation
 
+{ Konstruktor der Klasse TDiagram }
 constructor TDiagram.Create(newID: Integer; newName: String;
   newDescription: String);
 begin
@@ -73,7 +83,7 @@ begin
   VersionNumber := newVersion;
 end;
 
-function TDiagram.getID : Integer;  // Zugriffsfehler
+function TDiagram.getID : Integer;
 begin
   Result := ID;
 end;

@@ -1,3 +1,11 @@
+{
+  Bachelorthesis ueber die Entwicklung einer grafischen Oberflaeche zur
+  Erstellung von Workflows am ZMT (Leibniz-Zentrum fuer Marine Tropenforschung)
+  Duales Studium Informatik, Hochschule Bremen
+  Sophie Miessner 5046830, 2023
+
+  Unit UNodes: Model-Klassen der Knoten
+}
 unit UNodes;
 
 interface
@@ -136,7 +144,7 @@ type
     CLASS_TYPE = 'THumanDecision';
   end;
 
-  { Klasse der mascxhinellen Entscheidungsknoten}
+  { Klasse der maschinellen Entscheidungsknoten}
   TMachineDecision = class(TDecision)
     constructor Create(nodeID: Integer; newDescription: String);
     function getType : String; override;
@@ -149,7 +157,7 @@ type
     CLASS_TYPE = 'TMachineDecision';
   end;
 
-  // Aktionsknoten
+  { Abstrakte Klasse der Aufgabenknoten }
   TTask = class abstract(TTMSFNCBloxUMLActionStateBlock, INodes)
     constructor Create(nodeID: Integer; newDescription: String);
     procedure setID(newID : Integer);
@@ -176,6 +184,7 @@ type
     CLASS_TYPE = 'TTask';
   end;
 
+  { Klasse der menschlichen Aufgabenknoten}
   THumanTask = class(TTask)
     constructor Create(nodeID: Integer; newDescription: String);
     function getType : String; override;
@@ -188,6 +197,7 @@ type
     CLASS_TYPE = 'THumanTask';
   end;
 
+  { Klasse der maschinellen Aufgabenknoten}
   TMachineTask = class(TTask)
     constructor Create(nodeID: Integer; newDescription: String);
     function getType : String; override;
@@ -520,6 +530,7 @@ begin
 end;
 
 
+///////////// Fest kodierte Spezifikationen //////////////////////////////
 
 class function TEnd.getAllDescription : TDescription;
 var

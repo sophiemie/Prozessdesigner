@@ -8312,8 +8312,8 @@ object StartPageForm: TStartPageForm
       object Label1: TLabel
         Left = 14
         Top = 38
-        Width = 34
-        Height = 16
+        Width = 35
+        Height = 15
         Hint = 'The new Diagram need a name'
         Caption = 'Name'
         Font.Charset = DEFAULT_CHARSET
@@ -8328,8 +8328,8 @@ object StartPageForm: TStartPageForm
       object Label2: TLabel
         Left = 14
         Top = 107
-        Width = 65
-        Height = 16
+        Width = 68
+        Height = 15
         Hint = 'A Description to the new Diagram. Its optional.'
         Caption = 'Description'
         Color = -1
@@ -8443,7 +8443,7 @@ object StartPageForm: TStartPageForm
         Left = 14
         Top = 59
         Width = 331
-        Height = 24
+        Height = 23
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
@@ -8574,7 +8574,7 @@ object StartPageForm: TStartPageForm
         Left = 14
         Top = 185
         Width = 187
-        Height = 24
+        Height = 23
         Enabled = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText

@@ -1,3 +1,12 @@
+{
+  Bachelorthesis ueber die Entwicklung einer grafischen Oberflaeche zur
+  Erstellung von Workflows am ZMT (Leibniz-Zentrum fuer Marine Tropenforschung)
+  Duales Studium Informatik, Hochschule Bremen
+  Sophie Miessner 5046830, 2023
+
+  Unit UDesigner: Es handelt sich um das Formular womit Prozesse erstellt und
+  bearbeitet werden können.
+}
 unit UDesigner;
 
 interface
@@ -35,6 +44,7 @@ type
     TMSFNCBloxControl1: TTMSFNCBloxControl;
     FDConnection_wftest: TFDConnection;
     FDQuery_wftest: TFDQuery;
+    { Toolbar-Komponenten } // aktuell noch hier, sollen verlagert werden
     Panel1: TPanel;
     BitBtnStart: TBitBtn;
     Label1: TLabel;
@@ -53,6 +63,7 @@ type
     Label6: TLabel;
     Panel5: TPanel;
     BitBtnEdge: TBitBtn;
+    { Menue-, Open-, und Savedialoge}
     MainMenu1: TMainMenu;
     Datei1: TMenuItem;
     Datei2: TMenuItem;
@@ -273,6 +284,5 @@ begin
   { Zwischenspeichern vom Betaetigen des Buttons }
   TEdgeController.newEdgeClick := true;
 end;
-
 
 end.

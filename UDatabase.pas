@@ -1,3 +1,12 @@
+{
+  Bachelorthesis ueber die Entwicklung einer grafischen Oberflaeche zur
+  Erstellung von Workflows am ZMT (Leibniz-Zentrum fuer Marine Tropenforschung)
+  Duales Studium Informatik, Hochschule Bremen
+  Sophie Miessner 5046830, 2023
+
+  Unit UDatabase: In der Unit sind die Klassen TDatabase, TNodeDatabase,
+  TEdgeDatabase sowie TDiagramDatabase enthalten.
+}
 unit UDatabase;
 
 interface
@@ -29,6 +38,7 @@ type
     procedure write(sqlString: String);
   end;
 
+  { Klasse fuer die Datenzugriffe von Knoten }
   TNodeDatabase = class(TDatabase)
   public
     constructor Create(newQuery : TFDQuery; newTable : String);
@@ -43,6 +53,7 @@ type
                           nodeDescription : String); overload;
   end;
 
+  { Klasse fuer die Datenzugriffe von Kanten }
   TEdgeDatabase = class(TDatabase)
   public
     constructor Create(newQuery : TFDQuery; newTable : String);
@@ -52,12 +63,12 @@ type
     procedure deleteEdge(edgeID: Integer);
   end;
 
+  { Klasse fuer die Datenzugriffe von Diagrammen }
   TDiagramDatabase = class(TDatabase)
   public
     constructor Create(newQuery : TFDQuery; newTable : String);
     procedure addNewDiagram(diagram: TDiagram);
     procedure deleteDiagram(diagram: TDiagram);
-    procedure addNewDiagramVersion(diagram: TDiagram);
     function getHighestDiagramID : Integer;
     function giveDiagramSavedDatas(diagram: TDiagram) : TDiagram;
     function copyDiagram(diagram: TDiagram) : TDiagram;
@@ -98,7 +109,7 @@ begin
   query.Close;
 end;
 
-
+{ Anzahl der Datensaetze auswerten }
 function TDatabase.getDataCount(): Integer;
 begin
   read('select count(*) from ' + table);
@@ -109,6 +120,7 @@ begin
   end;
 end;
 
+{ Hoechste ID einer Tabelle ermitteln }
 function TDatabase.getHighestID(idName : String) : Integer;
 var
   sqlString: String;
@@ -121,12 +133,11 @@ begin
   begin
     highestID := FieldByName('MAX(' + idName + ')').AsString;
     if highestID.IsEmpty then Result := 0
-    //else Result := FieldByName('MAX(' + idName + ')').AsString.ToInteger();
     else Result := highestID.ToInteger;
   end;
 end;
 
-
+{ Liste mit Namenseintraege fuellen }
 procedure TDatabase.fillList(list: TListBox);
 begin
   read('select * from wf_def');
@@ -142,12 +153,7 @@ begin
   end;
 end;
 
-
-constructor TNodeDatabase.Create(newQuery : TFDQuery; newTable : String);
-begin
-  inherited Create(newQuery, newTable);
-end;
-
+{ Getter- und Setter }
 procedure TDatabase.setTable(newTable : String);
 begin
   table := newTable;
@@ -158,6 +164,11 @@ begin
   Result := table;
 end;
 
+{ Konstruktor der fuer die Verwaltung der Knoteneintraege }
+constructor TNodeDatabase.Create(newQuery : TFDQuery; newTable : String);
+begin
+  inherited Create(newQuery, newTable);
+end;
 
 { Traegt neuen Knoten in die Datenbank ein }
 procedure TNodeDatabase.addNewNode(diagramID : String; nodeID : String;
@@ -202,6 +213,7 @@ begin
               node.getDescription);
 end;
 
+{ Einen Knoten aus der Datenbank entfernen }
 procedure TNodeDatabase.deleteNode(nodeID: Integer);
 var
   sqlString : String;
@@ -210,22 +222,25 @@ begin
   write(sqlString);
 end;
 
-{}
+{ Hoechste Knoten-ID ermitteln }
 function TNodeDatabase.getHighestNodeID : Integer;
 begin
   Result := getHighestID('node_id');
 end;
 
+{ Konstruktor der fuer die Verwaltung der Kanteneintraege }
 constructor TEdgeDatabase.Create(newQuery: TFDQuery; newTable : String);
 begin
   inherited Create(newQuery, newTable);
 end;
 
+{ Hoechste Kanten-ID ermitteln }
 function TEdgeDatabase.getHighestEdgeID : Integer;
 begin
   Result := getHighestID('wf_edge_id');
 end;
 
+{ Neue Kante in Datenbank eintragen }
 procedure TEdgeDatabase.addNewEdge(edge: TEdge);
 begin
 var
@@ -237,6 +252,7 @@ begin
 end;
 end;
 
+{ Eintrag einer Kante aus Datenbank entfernen }
 procedure TEdgeDatabase.deleteEdge(edgeID: Integer);
 var
   sqlString : String;
@@ -246,7 +262,7 @@ begin
   write(sqlString);
 end;
 
-
+{ Zielknoten einer Kante eintragen }
 procedure TEdgeDatabase.addNextNode(edge: TEdge);
 var
   sqlString : String;
@@ -257,24 +273,26 @@ begin
   write(sqlString);
 end;
 
-
+{ Konstruktor der fuer die Verwaltung der Diagrammeintraege }
 constructor TDiagramDatabase.Create(newQuery : TFDQuery; newTable : String);
 begin
   inherited Create(newQuery, newTable);
 end;
 
+{ Neues Diagramm in Datenbank eintragen}
 procedure TDiagramDatabase.addNewDiagram(diagram: TDiagram);
 var
   sqlString: String;
 begin
   sqlString := 'insert into ' + getTable
-              + ' (wf_type_id, name_en, description_en, class)'
+              + ' (wf_type_id, name_en, description_en, class, name_de)'
                 + 'values (' + diagram.getID.ToString + ',"' + diagram.getName
                 + '","' + diagram.getDescription + '","' + diagram.getClassName
-                + '")';
+                + '","'+ diagram.getVersionNumber.ToString + '")';
   write(sqlString);
 end;
 
+{ Eintrag eines Diagrammes aus Datenbank entfernen }
 procedure TDiagramDatabase.deleteDiagram(diagram: TDiagram);
 var
   sqlString: String;
@@ -284,57 +302,61 @@ begin
   write(sqlString);
 end;
 
-procedure TDiagramDatabase.addNewDiagramVersion(diagram: TDiagram);
-begin
-
-end;
-
+{ Hoechste Diagramm-ID ermitteln }
 function TDiagramDatabase.getHighestDiagramID : Integer;
 begin
   Result := getHighestID('wf_type_id');
 end;
 
-
+{ Diagramm aus Datenbank ermitteln und Daten ergaenzen }
 function TDiagramDatabase.giveDiagramSavedDatas(diagram: TDiagram) : TDiagram;
 var
   currentID : String;
   id : Integer;
 begin
   currentID := diagram.getID.ToString;
-  // FEHLER gibt immer TFDAutoIncField  bei ID zurueck weil FireDAC ID erkennt aber nicht zurueckgibt
   read('select * from '+ table +' where wf_type_id =' + currentID);
 
   with query do
   begin
-    currentID := FieldByName('wf_type_id').ToString;
-    if currentID.StartsWith('T') or currentID.IsEmpty then   // Speichert keine ID sondern was anderes????
+    currentID := FieldByName('name_en').AsString;
+    if currentID.IsEmpty then
     begin
       diagram.setID(0); // Ungueltige ID eintragen wenn nicht vorhanden
     end
     else
     begin
-      //diagram.setID(currentID.ToInteger());
+      diagram.setID(FieldByName('wf_type_id').AsString.ToInteger);
       diagram.setName(FieldByName('name_en').AsString);
       diagram.setDescription(FieldByName('description_en').AsString);
+      // Versionnummer voruebergehend in Name_de
+      diagram.setVersionNumber(FieldByName('name_de').AsString.ToInteger);
       //diagram.setInUse(FieldByName('in_use').AsBoolean);
     end;
     Result := diagram;
   end;
 end;
 
+{ Bestehendes Diagramm kopieren und neu eintragen }
 function TDiagramDatabase.copyDiagram(diagram: TDiagram) : TDiagram;
 var
   sqlString : String;
-  newID : Integer;
+  newID, newVersion : Integer;
 begin
   newID := getHighestDiagramID  +1;
+  newVersion := diagram.getVersionNumber +1;
   // INSERT INTO wf_def(name_en) SELECT (name_en) FROM wf_def WHERE wf_type_id = 3
-  sqlString := 'INSERT INTO ' + table +'(name_en) SELECT (name_en) FROM ' +
-    table + ' WHERE wf_type_id =' +diagram.getID.ToString;
+//  sqlString := 'INSERT INTO ' + table +'(name_en) SELECT (name_en) FROM ' +
+//    table + ' WHERE wf_type_id =' +diagram.getID.ToString;
+
+  // INSERT INTO wfdef(wf_type_id, name_en) VALUES (2, name)
+  sqlString := 'INSERT INTO ' + table +'(wf_type_id, name_en, name_de) VALUES ('
+                + newID.ToString + ',"' + diagram.getName + '","' + newVersion.ToString + '")';
+
   write(sqlString);
   sqlString := 'UPDATE ' + table + ' SET wf_type_id =' + newID.ToString +
-    ', description_en ="' + diagram.getDescription + '"' + ' WHERE wf_type_id =' +
-    diagram.getID.ToString;
+    ', description_en ="' + diagram.getDescription + '"' + ' WHERE name_en = "' +
+    diagram.getName + '" AND name_de =' + newVersion.ToString ;
   write(sqlString);
   diagram.setID(newID);
   diagram.setVersionNumber(diagram.getVersionNumber +1);
