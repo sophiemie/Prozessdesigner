@@ -2,10 +2,10 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>1899.12.30 00:00:00.000.440,=C:\Prozessdesigner\Prozessdesigner\UNodes.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.030,=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.191,=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.223,C:\Prozessdesigner\Prozessdesigner\Unit1.pas=C:\Prozessdesigner\Prozessdesigner\UDiagramControllerTest.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.510,=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.566,=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.777,=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.030,=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.404,C:\Users\som\Documents\Embarcadero\Studio\Projekte\UNodeTest.pas=</Transaction>
     <Transaction>1899.12.30 00:00:00.000.338,=C:\Prozessdesigner\Prozessdesigner\UDiagramController.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.231,=C:\Prozessdesigner\Prozessdesigner\UDiagram.pas</Transaction>
@@ -18,8 +18,8 @@
     <Transaction>1899.12.30 00:00:00.000.013,=C:\Users\som\Documents\Embarcadero\Studio\Projekte\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.748,=C:\Prozessdesigner\Prozessdesigner\UDatabase.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.766,C:\Prozessdesigner\Prozessdesigner\UEdgeTest.pas=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.777,=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.191,=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.510,=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.566,=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.781,C:\Prozessdesigner\Prozessdesigner\Unit1.pas=C:\Prozessdesigner\Prozessdesigner\UDiagramTest.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.583,C:\Prozessdesigner\Prozessdesigner\Unit1.pas=C:\Prozessdesigner\Prozessdesigner\UNodeTest.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.414,C:\Prozessdesigner\Prozessdesigner\Unit1.pas=C:\Prozessdesigner\Prozessdesigner\UDatabaseTest.pas</Transaction>

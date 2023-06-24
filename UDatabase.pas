@@ -50,7 +50,7 @@ type
     function getHighestNodeID : Integer;
   private
     procedure addNewNode(diagramID : String; nodeID : String; nodeType : String;
-                          nodeDescription : String); overload;
+                          nodeDescription : String; classType : String); overload;
   end;
 
   { Klasse fuer die Datenzugriffe von Kanten }
@@ -172,14 +172,20 @@ end;
 
 { Traegt neuen Knoten in die Datenbank ein }
 procedure TNodeDatabase.addNewNode(diagramID : String; nodeID : String;
-                                  nodeType : String; nodeDescription : String);
+              nodeType : String; nodeDescription : String; classType : String);
 var
   sqlString : String;
 begin
-  sqlString := 'insert into ' + getTable
-                + ' (node_id, wf_type_id, node_type, note_label_de) values ('
-                + nodeID + ',' + diagramID + ',"' + nodeType + '","'
-                + nodeDescription + '")';
+//  sqlString := 'insert into ' + getTable
+//                + ' (node_id, wf_type_id, node_type, note_label_de) values ('
+//                + nodeID + ',' + diagramID + ',"' + nodeType + '","'
+//                + nodeDescription + '")';
+//  write(sqlString);
+  sqlString := 'INSERT INTO ' + getTable
+    + ' (node_id, wf_type_id, node_type, note_label_de, label_de, label_en,' +
+    'explanation_de, explanation_en, note_en) VALUES (' + nodeID + ',' + diagramID + ',"'
+    + classType + '","' + nodeDescription + '","' + nodeType + '","' + nodeType
+    + '","' + nodeDescription + '","' + nodeDescription + '","' + nodeDescription +'")';
   write(sqlString);
 end;
 
@@ -188,29 +194,30 @@ procedure TNodeDatabase.addNewNode(diagram: TDiagram; node: TStart);
 var
   sqlString: String;
 begin
+  node.setDescription('Start');
   addNewNode(diagram.getID.ToString, node.getID.ToString, node.getType,
-              node.getDescription);
+              node.getDescription, node.getClassName);
 end;
 
 { Neuen Endknoten eintragen}
 procedure TNodeDatabase.addNewNode(diagram: TDiagram; node: TEnd);
 begin
   addNewNode(diagram.getID.ToString, node.getID.ToString, node.getType,
-              node.getDescription);
+              node.getDescription, node.getClassName);
 end;
 
 { Neuen Entscheidungsknoten eintragen}
 procedure TNodeDatabase.addNewNode(diagram: TDiagram; node: TDecision);
 begin
   addNewNode(diagram.getID.ToString, node.getID.ToString, node.getType,
-              node.getDescription);
+              node.getDescription, node.getClassName);
 end;
 
 { Neuen Aufgabenknoten eintragen}
 procedure TNodeDatabase.addNewNode(diagram: TDiagram; node: TTask);
 begin
   addNewNode(diagram.getID.ToString, node.getID.ToString, node.getType,
-              node.getDescription);
+              node.getDescription, node.getClassName);
 end;
 
 { Einen Knoten aus der Datenbank entfernen }

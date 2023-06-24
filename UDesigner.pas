@@ -205,10 +205,11 @@ begin
    TEdgeController.newEdgeClick := false;
    TEdgeController.newEdgeWithoutTarget := false;
 
+   // HIER AENDERN FUER TEST
    { Aufrufen von Konstruktoren der Datanbank-Objekte }
-   EdgeDatabase := TEdgeDatabase.Create(FDQuery_wftest, 'wf_edges');
-   NodeDatabase := TNodeDatabase.Create(FDQuery_wftest, 'wf_nodes');
-   DiagramDatabase := TDiagramDatabase.Create(FDQuery_wftest, 'wf_def');
+   EdgeDatabase := TEdgeDatabase.Create(FDQuery_wf, 'wf_edges');
+   NodeDatabase := TNodeDatabase.Create(FDQuery_wf, 'wf_nodes');
+   DiagramDatabase := TDiagramDatabase.Create(FDQuery_wf, 'wf_def');
    IsLoadedDiagram := false;
    diagramIsSaved := false;
    SaveDialog1.InitialDir := IncludeTrailingPathDelimiter(GetCurrentDir)

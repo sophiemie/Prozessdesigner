@@ -8688,7 +8688,7 @@ object StartPageForm: TStartPageForm
   end
   object FDConnection1: TFDConnection
     Params.Strings = (
-      'Database=wf_test'
+      'Database=wf'
       'User_Name=dbapp'
       'Password=Yv9i9OqHC8TRlCbE'
       'DriverID=MySQL')

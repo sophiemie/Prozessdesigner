@@ -46,6 +46,8 @@ type
     procedure setMethodName(newMethodName : String);
     function getMethodName : String;
     function getType : String; //function getClassType : String;
+    procedure setExplanation(newExplanation : String);
+    function getExplanation : String;
   end;
 
   { Klasse der Startknoten }
@@ -61,6 +63,8 @@ type
     procedure setMethodName(newMethodName : String);
     function getMethodName : String;
     class function getClassType : String;
+    procedure setExplanation(newExplanation : String);
+    function getExplanation : String;
      {Interface-Implementationen}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -70,6 +74,7 @@ type
     Description : String;
     ClassName : String;
     Method : String;
+    Explanation : String;
   const
     NODE_TYPE = 'S';
     CLASS_TYPE = 'TStart';
@@ -90,6 +95,8 @@ type
     function getMethodName : String;
     class function getClassType : String;
     class function getAllDescription : TDescription;
+    procedure setExplanation(newExplanation : String);
+    function getExplanation : String;
     {Interface-Implementationen}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -99,6 +106,7 @@ type
     Description : String;
     ClassName : String;
     Method : String;
+    Explanation : String;
   const
     NODE_TYPE = 'E';
     CLASS_TYPE = 'TEnd';
@@ -118,6 +126,8 @@ type
     function getMethodName : String;
     class function getClassType : String; virtual; abstract;
     class function getAllDescription : TDescription; virtual; abstract;
+    procedure setExplanation(newExplanation : String);
+    function getExplanation : String;
     {Interface-Implementationen}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -127,6 +137,7 @@ type
     Description : String;
     ClassName : String;
     Method : String;
+    Explanation : String;
   const
     CLASS_TYPE = 'TDecision';
   end;
@@ -171,6 +182,8 @@ type
     function getMethodName : String;
     class function getClassType : String; virtual; abstract;
     class function getAllDescription : TDescription; virtual; abstract;
+    procedure setExplanation(newExplanation : String);
+    function getExplanation : String;
     {Interface-Implementationen}
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
     function _AddRef: Integer; stdcall;
@@ -180,6 +193,7 @@ type
     Description : String;
     ClassName : String;
     Method : String;
+    Explanation : String;
   const
     CLASS_TYPE = 'TTask';
   end;
@@ -247,6 +261,7 @@ begin
   Description := '';
   Text := NODE_TYPE;
   TextCells.Items[0].Font.Size := FONT_SIZE;
+  Explanation := 'New process begins.';
 end;
 
 constructor TEnd.Create(nodeID: Integer; newDescription: String);
@@ -259,6 +274,7 @@ begin
   Description := newDescription;
   Text := NODE_TYPE + ': ' + newDescription;
   TextCells.Items[0].Font.Size := FONT_SIZE;
+  Explanation := 'Process ends.';
 end;
 
 constructor TDecision.Create(nodeID: Integer; newDescription: String);
@@ -310,6 +326,48 @@ begin
 end;
 
 ///////////////////////////
+
+procedure TStart.setExplanation(newExplanation : String);
+begin
+  Explanation := newExplanation;
+end;
+
+function TStart.getExplanation : String;
+begin
+  Result := Explanation;
+end;
+
+procedure TEnd.setExplanation(newExplanation : String);
+begin
+  Explanation := newExplanation;
+end;
+
+function TEnd.getExplanation : String;
+begin
+  Result := Explanation;
+end;
+
+procedure TDecision.setExplanation(newExplanation : String);
+begin
+  Explanation := newExplanation;
+end;
+
+function TDecision.getExplanation : String;
+begin
+  Result := Explanation;
+end;
+
+procedure TTask.setExplanation(newExplanation : String);
+begin
+  Explanation := newExplanation;
+end;
+
+function TTask.getExplanation : String;
+begin
+  Result := Explanation;
+end;
+
+///////
 procedure TDecision.setID(newID : Integer);
 begin
   Id := newID.ToString;
