@@ -1,0 +1,28 @@
+unit UFormController;
+
+interface
+
+uses Vcl.Forms, Vcl.ExtCtrls;
+
+type
+
+TFormController = class abstract
+public
+  class procedure changeWindowSize(form: TForm); overload;
+  class procedure changeWindowSize(form: TForm; panel: TPanel); overload;
+end;
+
+
+implementation
+
+  class procedure TFormController.changeWindowSize(form: TForm);
+  begin
+
+  end;
+
+  class procedure TFormController.changeWindowSize(form: TForm; panel: TPanel);
+  begin
+    panel.Left := form.Width - panel.Width;
+  end;
+
+end.

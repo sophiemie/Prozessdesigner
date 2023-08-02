@@ -1,0 +1,36 @@
+unit UFormController;
+
+interface
+
+type
+
+TFormController = class abstract
+public
+  procedure changeWindowSize; virtual; abstract;
+end;
+
+TStartPageFormController = class(TFormController)
+public
+  procedure changeWindowSize; override;
+end;
+
+TDesignerFormController = class(TFormController)
+public
+  procedure changeWindowSize; override;
+end;
+
+
+implementation
+
+  procedure TStartPageFormController.changeWindowSize;
+  begin
+
+  end;
+
+  procedure TDesignerFormController.changeWindowSize;
+  begin
+
+  end;
+
+
+end.

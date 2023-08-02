@@ -14,7 +14,8 @@ uses
   ULanguage in 'ULanguage.pas',
   UDiagramController in 'UDiagramController.pas',
   UNodeController in 'UNodeController.pas',
-  UEdgeController in 'UEdgeController.pas';
+  UEdgeController in 'UEdgeController.pas',
+  UFormController in 'UFormController.pas';
 
 {$R *.res}
 
