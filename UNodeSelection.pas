@@ -18,7 +18,7 @@ uses
   FireDAC.Stan.Async, FireDAC.DApt, FireDAC.UI.Intf, FireDAC.Stan.Def,
   FireDAC.Stan.Pool, FireDAC.Phys, FireDAC.VCLUI.Wait, Vcl.Imaging.pngimage,
   FireDAC.Comp.Client, FireDAC.Comp.DataSet, FireDAC.Phys.MySQL, Vcl.Graphics,
-  FireDAC.Phys.MySQLDef, ULanguage, UDatabase, UNodes;
+  FireDAC.Phys.MySQLDef, ULanguage, UDatabase, UNodes, UFormController;
 
 type
   TNodeSelectionForm = class(TForm)
@@ -34,6 +34,7 @@ type
     procedure ListBox1DblClick(Sender: TObject);
     function getSelectedNodeDescription : String;
     procedure Button1Click(Sender: TObject);
+    procedure FormResize(Sender: TObject);
   private
     { Private-Deklarationen }
     var
@@ -61,6 +62,12 @@ begin
 { Funktionen falls in Zukunft aus Datenbank gelesen werden sollte }
 //  Database := TNodeDatabase.Create(FDQuery1, 'wf_nodes');
 //  Database.fillList(ListBox1);
+end;
+
+procedure TNodeSelectionForm.FormResize(Sender: TObject);
+begin
+  TFormController.changeWindowSize(NodeSelectionForm, GroupBox1, ListBox1,
+                                    Button1);
 end;
 
 { Eine Spezifikation auswaehlen }

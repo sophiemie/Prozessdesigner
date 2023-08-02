@@ -8271,6 +8271,7 @@ object NodeSelectionForm: TNodeSelectionForm
     FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0}
   OldCreateOrder = False
   OnCreate = FormCreate
+  OnResize = FormResize
   PixelsPerInch = 96
   TextHeight = 13
   object GroupBox1: TGroupBox
