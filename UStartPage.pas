@@ -19,13 +19,11 @@ uses
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   FireDAC.UI.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Phys,
   FireDAC.VCLUI.Wait, FireDAC.Comp.Client, FireDAC.Comp.DataSet, UDatabase,
-  UDiagramController, FireDAC.Phys.MySQL, FireDAC.Phys.MySQLDef;
+  UDiagramController, FireDAC.Phys.MySQL, FireDAC.Phys.MySQLDef, UFormController;
 
 type
   TStartPageForm = class(TForm)
     Panel1: TPanel;
-    Button1: TButton;
-    Button2: TButton;
     Panel2: TPanel;
     GroupBox1: TGroupBox;
     Edit1: TEdit;
@@ -37,7 +35,6 @@ type
     Image1: TImage;
     GroupBox2: TGroupBox;
     StringGrid1: TStringGrid;
-    Panel3: TPanel;
     ToggleSwitch1: TToggleSwitch;
     FDQuery1: TFDQuery;
     FDConnection1: TFDConnection;
@@ -45,6 +42,8 @@ type
     Edit2: TEdit;
     Button5: TButton;
     Button4: TButton;
+    Button1: TButton;
+    Button2: TButton;
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -57,6 +56,7 @@ type
     procedure Button5Click(Sender: TObject);
     procedure CreateOneMoreDiagramEntry(newDiagram : TDiagram);
     procedure FormShow(Sender: TObject);
+    procedure FormResize(Sender: TObject);
   private
     { Private-Deklarationen }
     newButtonText : String;
@@ -217,6 +217,12 @@ begin
 
   // Ohne Anbindung der Datenbank
   //TDiagramController.fillLoadingList(StringGrid1);
+end;
+
+procedure TStartPageForm.FormResize(Sender: TObject);
+begin
+  TFormController.changeWindowSize(StartPageForm, Panel1, Panel2, GroupBox1,
+      GroupBox2, StringGrid1, ToggleSwitch1, Edit2);
 end;
 
 procedure TStartPageForm.FormShow(Sender: TObject);

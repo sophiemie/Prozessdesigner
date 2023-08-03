@@ -30,7 +30,7 @@ uses
   Vcl.ComCtrls, FireDAC.Phys, Vcl.ToolWin, VCL.TMSFNCBloxCoreGroup, ShellApi,
   VCL.TMSFNCBloxUIRegistration,UNodes, UNodeSelection, UDatabase, UToolBar,
   UEdge, UDesignerToolbar, UDiagram, ULanguage, UDiagramController,
-  UNodeController, UEdgeController;
+  UNodeController, UEdgeController, UFormController;
 
 type
   TDesignerForm = class(TForm)
@@ -89,6 +89,7 @@ type
     procedure Save1Click(Sender: TObject);
     procedure Load1Click(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure FormResize(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -217,6 +218,11 @@ begin
                                                               + 'Diagramme/';
    TNodeController.IDohneDB := 0;
    TEdgeController.IDohneDB := 0;
+end;
+
+procedure TDesignerForm.FormResize(Sender: TObject);
+begin
+  TFormController.changeWindowSize(DesignerForm, Panel1, TMSFNCBloxControl1);
 end;
 
 { Event beim neu Laden des Editors }
