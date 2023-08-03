@@ -2,8 +2,8 @@ object StartPageForm: TStartPageForm
   Left = 0
   Top = 0
   Caption = 'ZMT Prozessdesigner'
-  ClientHeight = 336
-  ClientWidth = 516
+  ClientHeight = 373
+  ClientWidth = 512
   Color = clBtnHighlight
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -8271,19 +8271,20 @@ object StartPageForm: TStartPageForm
     FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0}
   OldCreateOrder = False
   OnCreate = FormCreate
+  OnResize = FormResize
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
-    Left = 127
+    Left = 0
     Top = 0
-    Width = 389
+    Width = 516
     Height = 497
     TabOrder = 0
     object Panel2: TPanel
       Left = 0
       Top = -1
-      Width = 393
+      Width = 516
       Height = 49
       Caption = 'Create New Diagram'
       Color = clGradientActiveCaption
@@ -8299,8 +8300,8 @@ object StartPageForm: TStartPageForm
     object GroupBox1: TGroupBox
       Left = 16
       Top = 54
-      Width = 361
-      Height = 274
+      Width = 489
+      Height = 299
       Caption = 'Details'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
@@ -8453,7 +8454,7 @@ object StartPageForm: TStartPageForm
         TabOrder = 0
       end
       object Button3: TButton
-        Left = 144
+        Left = 216
         Top = 224
         Width = 73
         Height = 33
@@ -8480,12 +8481,27 @@ object StartPageForm: TStartPageForm
         ParentFont = False
         TabOrder = 2
       end
+      object Button2: TButton
+        Left = 49
+        Top = 224
+        Width = 105
+        Height = 33
+        Caption = 'Load'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Avenir LT Pro 55 Roman'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 3
+        OnClick = Button2Click
+      end
     end
     object GroupBox2: TGroupBox
       Left = 16
       Top = 54
-      Width = 361
-      Height = 273
+      Width = 489
+      Height = 299
       Caption = 'All Diagrams'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -8495,8 +8511,8 @@ object StartPageForm: TStartPageForm
       ParentFont = False
       TabOrder = 2
       object Image3: TImage
-        Left = 293
-        Top = 203
+        Left = 421
+        Top = 195
         Width = 65
         Height = 57
         Picture.Data = {
@@ -8553,7 +8569,7 @@ object StartPageForm: TStartPageForm
       object StringGrid1: TStringGrid
         Left = 14
         Top = 38
-        Width = 331
+        Width = 403
         Height = 141
         DefaultColWidth = 50
         FixedCols = 0
@@ -8585,7 +8601,7 @@ object StartPageForm: TStartPageForm
         TabOrder = 1
       end
       object Button5: TButton
-        Left = 77
+        Left = 190
         Top = 224
         Width = 75
         Height = 33
@@ -8600,7 +8616,7 @@ object StartPageForm: TStartPageForm
         OnClick = Button5Click
       end
       object Button4: TButton
-        Left = 182
+        Left = 288
         Top = 224
         Width = 105
         Height = 33
@@ -8614,57 +8630,26 @@ object StartPageForm: TStartPageForm
         TabOrder = 3
         OnClick = Button4Click
       end
+      object Button1: TButton
+        Left = 80
+        Top = 224
+        Width = 87
+        Height = 33
+        Caption = 'New'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Avenir LT Pro 55 Roman'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 4
+        OnClick = Button1Click
+      end
     end
   end
-  object Button1: TButton
-    Left = 16
-    Top = 125
-    Width = 105
-    Height = 40
-    Caption = 'New'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -16
-    Font.Name = 'Avenir LT Pro 55 Roman'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 1
-    OnClick = Button1Click
-  end
-  object Button2: TButton
-    Left = 16
-    Top = 67
-    Width = 105
-    Height = 40
-    Caption = 'Load'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -16
-    Font.Name = 'Avenir LT Pro 55 Roman'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 2
-    OnClick = Button2Click
-  end
-  object Panel3: TPanel
-    Left = -8
-    Top = -1
-    Width = 145
-    Height = 49
-    Caption = 'Designer'
-    Color = clGradientActiveCaption
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clHighlightText
-    Font.Height = -21
-    Font.Name = 'Rockwell'
-    Font.Style = []
-    ParentBackground = False
-    ParentFont = False
-    TabOrder = 3
-  end
   object ToggleSwitch1: TToggleSwitch
-    Left = 25
-    Top = 303
+    Left = 30
+    Top = 317
     Width = 96
     Height = 20
     Color = clWhite
@@ -8677,14 +8662,14 @@ object StartPageForm: TStartPageForm
     ParentFont = False
     StateCaptions.CaptionOn = 'Deutsch'
     StateCaptions.CaptionOff = 'English'
-    TabOrder = 4
+    TabOrder = 1
     ThumbColor = clSkyBlue
     OnClick = ToggleSwitch1Click
   end
   object FDQuery1: TFDQuery
     Connection = FDConnection1
-    Left = 407
-    Top = 238
+    Left = 471
+    Top = 134
   end
   object FDConnection1: TFDConnection
     Params.Strings = (
@@ -8692,7 +8677,7 @@ object StartPageForm: TStartPageForm
       'User_Name=dbapp'
       'Password=Yv9i9OqHC8TRlCbE'
       'DriverID=MySQL')
-    Left = 351
-    Top = 238
+    Left = 471
+    Top = 70
   end
 end

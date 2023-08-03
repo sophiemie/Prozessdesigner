@@ -2,7 +2,9 @@ unit UFormController;
 
 interface
 
-uses Vcl.Forms, Vcl.ExtCtrls, VCL.TMSFNCBloxControl, Vcl.StdCtrls;
+uses
+  Vcl.Forms, Vcl.ExtCtrls, VCL.TMSFNCBloxControl, Vcl.StdCtrls, Vcl.Grids,
+  Vcl.WinXCtrls;
 
 type
 
@@ -12,6 +14,9 @@ public
                                     button: TButton); overload;
   class procedure changeWindowSize(form: TForm; panel: TPanel; control:
                   TTMSFNCBloxControl); overload;
+  class procedure changeWindowSize(form: TForm; panel1: TPanel; panel2: TPanel;
+                  box1: TGroupBox; box2: TGroupBox; table: TStringGrid;
+                  toggle: TToggleSwitch; edit: TEdit); overload;
 end;
 
 
@@ -29,6 +34,7 @@ implementation
     button.Left := form.Width - Round(form.Width/2) - button.Width + 25;
   end;
 
+
   { Aenderung bei dem Designformular }
   class procedure TFormController.changeWindowSize(form: TForm; panel: TPanel;
                 control: TTMSFNCBloxControl);
@@ -37,6 +43,27 @@ implementation
     control.Width := form.Width - panel.Width;
     control.Height := form.Height;
     panel.Height := form.Height;
+  end;
+
+
+  { Aenderung bei der Startpage }
+  class procedure TFormController.changeWindowSize(form: TForm; panel1: TPanel;
+                  panel2: TPanel; box1: TGroupBox; box2: TGroupBox;
+                  table: TStringGrid; toggle: TToggleSwitch; edit: TEdit);
+  const
+    BOX_BORDER = 100;
+  begin
+    panel1.Width := form.Width;
+    panel1.Height := form.Height;
+    panel2.Width := form.Width;
+    box1.Width := form.Width - BOX_BORDER;
+    box2.Width := form.Width - BOX_BORDER;
+    box1.Height := form.Height - BOX_BORDER*2;
+    box2.Height := form.Height - BOX_BORDER*2;
+    table.Width := form.Width - 200;
+    toggle.Top := form.Height - 150;
+    edit.Top := form.Height - 430;
+    table.Height := form.Height - 520;
   end;
 
 end.
