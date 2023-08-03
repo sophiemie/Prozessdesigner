@@ -8645,6 +8645,15 @@ object StartPageForm: TStartPageForm
         TabOrder = 4
         OnClick = Button1Click
       end
+      object Button6: TButton
+        Left = 256
+        Top = 263
+        Width = 75
+        Height = 25
+        Caption = 'Button6'
+        TabOrder = 5
+        OnClick = Button6Click
+      end
     end
   end
   object ToggleSwitch1: TToggleSwitch

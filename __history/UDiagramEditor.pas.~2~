@@ -1,0 +1,32 @@
+unit UDiagramEditor;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Vcl.ExtCtrls, UFormController;
+
+type
+  TForm1 = class(TForm)
+    Panel1: TPanel;
+    procedure FormResize(Sender: TObject);
+  private
+    { Private-Deklarationen }
+  public
+    { Public-Deklarationen }
+  end;
+
+var
+  DiagramEditorForm: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.FormResize(Sender: TObject);
+begin
+  TFormController.changeWindowSize(DiagramEditorForm, Panel1);
+end;
+
+end.

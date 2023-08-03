@@ -1,15 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>1899.12.30 00:00:00.000.852,=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.819,=C:\Designer\Prozessdesigner\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.755,C:\Prozessdesigner\Prozessdesigner\UToolBar.pas=</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.831,C:\Prozessdesigner\Prozessdesigner\Unit1.pas=C:\Prozessdesigner\Prozessdesigner\UEdgeController.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.432,C:\Prozessdesigner\Prozessdesigner\Unit1.pas=C:\Prozessdesigner\Prozessdesigner\UNodeController.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.442,C:\Prozessdesigner\Prozessdesigner\FormController.pas=C:\Prozessdesigner\Prozessdesigner\UFormController.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.819,=C:\Designer\Prozessdesigner\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.432,C:\Prozessdesigner\Prozessdesigner\UNodeController.pas=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.163,C:\Prozessdesigner\Prozessdesigner\Unit1.pas=C:\Prozessdesigner\Prozessdesigner\FormController.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.831,C:\Prozessdesigner\Prozessdesigner\UEdgeController.pas=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.852,=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.232,=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
-    <Transaction>2023.08.02 18:15:09.913,=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
-    <Transaction>2023.08.02 18:15:31.163,C:\Prozessdesigner\Prozessdesigner\FormController.pas=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
-    <Transaction>2023.08.02 18:26:51.442,C:\Prozessdesigner\Prozessdesigner\UFormController.pas=C:\Prozessdesigner\Prozessdesigner\FormController.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.913,=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
+    <Transaction>2023.08.03 15:16:01.030,=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
+    <Transaction>2023.08.03 15:23:22.922,C:\Prozessdesigner\Prozessdesigner\UDiagramEditor.dfm=C:\Prozessdesigner\Prozessdesigner\Unit1.dfm</Transaction>
+    <Transaction>2023.08.03 15:23:22.922,C:\Prozessdesigner\Prozessdesigner\UDiagramEditor.pas=C:\Prozessdesigner\Prozessdesigner\Unit1.pas</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="UDatabase.pas"/>
@@ -29,5 +32,7 @@
     <File Path="UStartPage.dfm"/>
     <File Path="UZMTStandard.pas"/>
     <File Path="UFormController.pas"/>
+    <File Path="UDiagramEditor.pas"/>
+    <File Path="UDiagramEditor.dfm"/>
   </ProjectSortOrder>
 </BorlandProject>

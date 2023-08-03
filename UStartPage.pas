@@ -19,7 +19,8 @@ uses
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   FireDAC.UI.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Phys,
   FireDAC.VCLUI.Wait, FireDAC.Comp.Client, FireDAC.Comp.DataSet, UDatabase,
-  UDiagramController, FireDAC.Phys.MySQL, FireDAC.Phys.MySQLDef, UFormController;
+  UDiagramController, FireDAC.Phys.MySQL, FireDAC.Phys.MySQLDef, UFormController,
+  UDiagramEditor;
 
 type
   TStartPageForm = class(TForm)
@@ -44,6 +45,7 @@ type
     Button4: TButton;
     Button1: TButton;
     Button2: TButton;
+    Button6: TButton;
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -57,6 +59,7 @@ type
     procedure CreateOneMoreDiagramEntry(newDiagram : TDiagram);
     procedure FormShow(Sender: TObject);
     procedure FormResize(Sender: TObject);
+    procedure Button6Click(Sender: TObject);
   private
     { Private-Deklarationen }
     newButtonText : String;
@@ -178,6 +181,11 @@ procedure TStartPageForm.Button5Click(Sender: TObject);
 begin
   if diagramSelected then DesignerForm.ShowModal
   else ShowMessage(noDiagramSelected);
+end;
+
+procedure TStartPageForm.Button6Click(Sender: TObject);
+begin
+  DiagramEditorForm.ShowModal;
 end;
 
 //procedure TStartPageForm.Button6Click(Sender: TObject);

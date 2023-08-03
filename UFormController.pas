@@ -17,6 +17,9 @@ public
   class procedure changeWindowSize(form: TForm; panel1: TPanel; panel2: TPanel;
                   box1: TGroupBox; box2: TGroupBox; table: TStringGrid;
                   toggle: TToggleSwitch; edit: TEdit); overload;
+  class procedure changeWindowSize(form: TForm; panel: TPanel; box:
+                    TGroupBox; edit1: TEdit; edit2: TEdit; edit3: TEdit;
+                    memo1: TMemo; memo2: TMemo); overload;
 end;
 
 
@@ -64,6 +67,20 @@ implementation
     toggle.Top := form.Height - 150;
     edit.Top := form.Height - 430;
     table.Height := form.Height - 520;
+  end;
+
+
+  { Aenderung bei dem Diagrammeditor }
+  class procedure TFormController.changeWindowSize(form: TForm; panel: TPanel;
+                  box: TGroupBox; edit1: TEdit; edit2: TEdit; edit3: TEdit;
+                  memo1: TMemo; memo2: TMemo);
+  begin
+    panel.Width := form.Width;
+    box.Width := form.Width - 100;
+    box.Height := form.Height - 100;
+    edit1.Width := form.Width - 150;
+    edit2.Width := edit1.Width;
+    edit3.Width := edit1.Width;
   end;
 
 end.

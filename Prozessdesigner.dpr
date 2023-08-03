@@ -15,7 +15,8 @@ uses
   UDiagramController in 'UDiagramController.pas',
   UNodeController in 'UNodeController.pas',
   UEdgeController in 'UEdgeController.pas',
-  UFormController in 'UFormController.pas';
+  UFormController in 'UFormController.pas',
+  UDiagramEditor in 'UDiagramEditor.pas' {DiagramEditorForm};
 
 {$R *.res}
 
@@ -25,5 +26,6 @@ begin
   Application.CreateForm(TStartPageForm, StartPageForm);
   Application.CreateForm(TDesignerForm, DesignerForm);
   Application.CreateForm(TNodeSelectionForm, NodeSelectionForm);
+  Application.CreateForm(TDiagramEditorForm, DiagramEditorForm);
   Application.Run;
 end.
