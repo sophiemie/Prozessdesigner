@@ -20,14 +20,16 @@ type
     procedure setID(newID: Integer);
     procedure setGermanName(newName: String);
     procedure setEnglishName(newName: String);
-    procedure setDescription(newDescription: String);
+    procedure setGermanDescription(newDescription: String);
+    procedure setEnglishDescription(newDescription: String);
     procedure setInUse(value: boolean);
     procedure setClassName(newClassName : String);
     procedure setVersionNumber(newVersion: Integer);
     function getID : Integer;
     function getGermanName : String;
     function getEnglishName : String;
-    function getDescription : String;
+    function getGermanDescription : String;
+    function getEnglishDescription : String;
     function getInUse : boolean;
     function getClassName : String;
     function getVersionNumber :Integer;
@@ -35,7 +37,8 @@ type
     var ID : Integer;
     var GermanName : String;
     var EnglishName : String;
-    var Description : String;
+    var GermanDescription : String;
+    var EnglishDescription : String;
     var InUse : boolean;
     var ClassName : String;
     var VersionNumber : Integer;
@@ -49,7 +52,7 @@ constructor TDiagram.Create(newID: Integer; newName: String;
 begin
   ID := newID;
   GermanName := newName;
-  Description := newDescription;
+  GermanDescription := newDescription;
   ClassName := GermanName + 'Form';
   InUse := true;
   VersionNumber := 1;
@@ -71,9 +74,14 @@ begin
   EnglishName := newName;
 end;
 
-procedure TDiagram.setDescription(newDescription: String);
+procedure TDiagram.setGermanDescription(newDescription: String);
 begin
-  Description := newDescription;
+  GermanDescription := newDescription;
+end;
+
+procedure TDiagram.setEnglishDescription(newDescription: String);
+begin
+  EnglishDescription := newDescription;
 end;
 
 procedure TDiagram.setInUse(value: boolean);
@@ -106,9 +114,14 @@ begin
   Result := EnglishName;
 end;
 
-function TDiagram.getDescription : String;
+function TDiagram.getGermanDescription : String;
 begin
-  Result := Description;
+  Result := GermanDescription;
+end;
+
+function TDiagram.getEnglishDescription : String;
+begin
+  Result := EnglishDescription;
 end;
 
 function TDiagram.getInUse : boolean;

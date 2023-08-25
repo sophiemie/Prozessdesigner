@@ -230,7 +230,7 @@ begin
     if diagram.getID <> 0 then
     begin
       entry[entryNumber] := TDiagram.Create
-                      (diagram.getID, diagram.getGermanName, diagram.getDescription);
+                      (diagram.getID, diagram.getGermanName, diagram.getGermanDescription);
       entry[entryNumber].setVersionNumber(diagram.getVersionNumber);
       entryNumber := entryNumber +1;
     end;
@@ -242,9 +242,9 @@ begin
       list.Invalidate;
       list.Cells[0,I+1] := entry[I].getID.ToString;
       list.Cells[1,I+1] := entry[I].getGermanName;
-      list.Cells[2,I+1] := entry[I].getDescription;
+      list.Cells[2,I+1] := entry[I].getGermanDescription;
       list.Cells[3,I+1] := entry[I].getVersionNumber.ToString;
-      list.Cells[4,I+1] := entry[I].getDescription;
+      list.Cells[4,I+1] := entry[I].getGermanDescription;
       {list.Cells[6,I+1] := 'Open';
       list.Cells[7,I+1] := 'Edit';
       list.Cells[8,I+1] := 'Copy';}  // Erstmal rausgenommen

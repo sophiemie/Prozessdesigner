@@ -287,7 +287,7 @@ begin
   sqlString := 'insert into ' + getTable
               + ' (wf_type_id, name_en, description_en, class, name_de)'
                 + 'values (' + diagram.getID.ToString + ',"' + diagram.getGermanName
-                + '","' + diagram.getDescription + '","' + diagram.getClassName
+                + '","' + diagram.getGermanDescription + '","' + diagram.getClassName
                 + '","'+ diagram.getVersionNumber.ToString + '")';
   write(sqlString);
 end;
@@ -328,7 +328,7 @@ begin
     begin
       diagram.setID(FieldByName('wf_type_id').AsString.ToInteger);
       diagram.setGermanName(FieldByName('name_en').AsString);
-      diagram.setDescription(FieldByName('description_en').AsString);
+      diagram.setGermanDescription(FieldByName('description_en').AsString);
       // Versionnummer voruebergehend in Name_de
       diagram.setVersionNumber(FieldByName('name_de').AsString.ToInteger);
       //diagram.setInUse(FieldByName('in_use').AsBoolean);
@@ -355,7 +355,7 @@ begin
 
   write(sqlString);
   sqlString := 'UPDATE ' + table + ' SET wf_type_id =' + newID.ToString +
-    ', description_en ="' + diagram.getDescription + '"' + ' WHERE name_en = "' +
+    ', description_en ="' + diagram.getGermanDescription + '"' + ' WHERE name_en = "' +
     diagram.getGermanName + '" AND name_de =' + newVersion.ToString ;
   write(sqlString);
   diagram.setID(newID);

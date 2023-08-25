@@ -30,6 +30,9 @@ type
     procedure Edit1Change(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Edit2Change(Sender: TObject);
+    procedure Edit3Change(Sender: TObject);
+    procedure Memo1Change(Sender: TObject);
+    procedure Memo2Change(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -64,6 +67,12 @@ begin
   NewDiagram.setEnglishName(Edit2.Text);
 end;
 
+{ Aenderung des Klassennamens}
+procedure TDiagramEditorForm.Edit3Change(Sender: TObject);
+begin
+  NewDiagram.setClassName(Edit3.Text);
+end;
+
 procedure TDiagramEditorForm.FormResize(Sender: TObject);
 begin
   TFormController.changeWindowSize(DiagramEditorForm, Panel1, GroupBox1, Edit1,
@@ -81,10 +90,21 @@ begin
   Edit1.Text := OldDiagram.getGermanName;
   Edit2.Text := OldDiagram.getGermanName;
   Edit3.Text := OldDiagram.getClassName;
-  Memo1.Text := OldDiagram.getDescription;
-  Memo1.Text := OldDiagram.getDescription;
+  Memo1.Text := OldDiagram.getGermanDescription;
+  Memo1.Text := OldDiagram.getGermanDescription;
 
 end;
 
+{ Aendere deutsche Beschreibung }
+procedure TDiagramEditorForm.Memo1Change(Sender: TObject);
+begin
+  NewDiagram.setGermanDescription(Memo1.Text);
+end;
+
+{ Aendere englische Beschreibung }
+procedure TDiagramEditorForm.Memo2Change(Sender: TObject);
+begin
+  NewDiagram.setEnglishDescription(Memo2.Text);
+end;
 
 end.

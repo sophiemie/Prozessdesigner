@@ -120,7 +120,7 @@ begin
   StringGrid1.RowCount := StringGrid1.RowCount +1;
   StringGrid1.Cells[0,StringGrid1.RowCount-1] := (StringGrid1.RowCount -1).ToString;
   StringGrid1.Cells[1,StringGrid1.RowCount-1] := newDiagram.getGermanName;
-  StringGrid1.Cells[2,StringGrid1.RowCount-1] := newDiagram.getDescription;
+  StringGrid1.Cells[2,StringGrid1.RowCount-1] := newDiagram.getGermanDescription;
   StringGrid1.Cells[3,StringGrid1.RowCount-1] := newDiagram.getVersionNumber.ToString;
 end;
 
@@ -167,7 +167,7 @@ begin
   if diagramSelected then
   begin
     diagramCopy := TDiagram.Create(StringGrid1.RowCount,
-      DesignerForm.diagram.getGermanName, DesignerForm.diagram.getDescription);
+      DesignerForm.diagram.getGermanName, DesignerForm.diagram.getGermanDescription);
     diagramCopy.setVersionNumber(DesignerForm.diagram.getVersionNumber+1);
 
     {Diagramm in Datenbank kopieren}

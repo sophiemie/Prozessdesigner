@@ -30,7 +30,8 @@ uses
   Vcl.ComCtrls, FireDAC.Phys, Vcl.ToolWin, VCL.TMSFNCBloxCoreGroup, ShellApi,
   VCL.TMSFNCBloxUIRegistration,UNodes, UNodeSelection, UDatabase, UToolBar,
   UEdge, UDesignerToolbar, UDiagram, ULanguage, UDiagramController,
-  UNodeController, UEdgeController, UFormController;
+  UNodeController, UEdgeController, UFormController, Vcl.Imaging.pngimage,
+  UDiagramEditor;
 
 type
   TDesignerForm = class(TForm)
@@ -70,6 +71,7 @@ type
     OpenDialog1: TOpenDialog;
     SaveDialog1: TSaveDialog;
     Label7: TLabel;
+    Image1: TImage;
     { Events }
     procedure FormCreate(Sender: TObject);
     procedure BitBtnStartClick(Sender: TObject);
@@ -90,6 +92,7 @@ type
     procedure Load1Click(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormResize(Sender: TObject);
+    procedure Image1Click(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -222,7 +225,8 @@ end;
 
 procedure TDesignerForm.FormResize(Sender: TObject);
 begin
-  TFormController.changeWindowSize(DesignerForm, Panel1, TMSFNCBloxControl1);
+  TFormController.changeWindowSize(DesignerForm, Panel1, TMSFNCBloxControl1,
+                                    Image1);
 end;
 
 { Event beim neu Laden des Editors }
@@ -242,6 +246,12 @@ begin
       TDiagramController.loadDiagramToFile(diagram, TMSFNCBloxControl1,
                                                         LoadedDiagramFileName);
    end;
+end;
+
+{ Diagramm bearbeiten }
+procedure TDesignerForm.Image1Click(Sender: TObject);
+begin
+  DiagramEditorForm.ShowModal;
 end;
 
 { Laden eines Diagrammes ueber MainMenue}

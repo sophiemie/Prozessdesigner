@@ -8421,6 +8421,7 @@ object DiagramEditorForm: TDiagramEditorForm
       Font.Style = []
       ParentFont = False
       TabOrder = 2
+      OnChange = Memo1Change
     end
     object Memo2: TMemo
       Left = 24
@@ -8434,6 +8435,7 @@ object DiagramEditorForm: TDiagramEditorForm
       Font.Style = []
       ParentFont = False
       TabOrder = 3
+      OnChange = Memo2Change
     end
     object RadioButton1: TRadioButton
       Left = 120
@@ -8463,6 +8465,7 @@ object DiagramEditorForm: TDiagramEditorForm
       Font.Style = []
       ParentFont = False
       TabOrder = 6
+      OnChange = Edit3Change
     end
     object Button1: TButton
       Left = 160
