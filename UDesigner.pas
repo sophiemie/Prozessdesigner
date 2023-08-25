@@ -229,7 +229,7 @@ end;
 procedure TDesignerForm.FormShow(Sender: TObject);
 begin
    {Wenn ein neues Diagramm erstellt wurde}
-   Label7.Caption := diagram.getName + ' Version:'
+   Label7.Caption := diagram.getGermanName + ' Version:'
                                           + diagram.getVersionNumber.ToString;
    if not IsLoadedDiagram then
    begin
@@ -249,7 +249,7 @@ procedure TDesignerForm.Load1Click(Sender: TObject);
 begin
   isLoadedDiagram := true;
   TDiagramController.loadDiagramToFile(diagram, OpenDialog1, TMSFNCBloxControl1);
-  Label7.Caption := diagram.getName + ' Version:'
+  Label7.Caption := diagram.getGermanName + ' Version:'
                                           + diagram.getVersionNumber.ToString;
   { Restliche Diagrammdaten aus Datenbank beziehen}
   diagram := DiagramDatabase.giveDiagramSavedDatas(diagram);

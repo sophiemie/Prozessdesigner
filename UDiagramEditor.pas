@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Vcl.ExtCtrls, UFormController, Vcl.StdCtrls;
+  Vcl.ExtCtrls, UFormController, Vcl.StdCtrls, UDiagram;
 
 type
   TDiagramEditorForm = class(TForm)
@@ -24,11 +24,18 @@ type
     Label5: TLabel;
     Label6: TLabel;
     Edit3: TEdit;
+    Button1: TButton;
     procedure FormResize(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure Edit1Change(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Edit2Change(Sender: TObject);
   private
     { Private-Deklarationen }
   public
     { Public-Deklarationen }
+    OldDiagram: TDiagram;
+    NewDiagram: TDiagram;
   end;
 
 var
@@ -38,10 +45,46 @@ implementation
 
 {$R *.dfm}
 
+{ Speichern der Veraenderung }
+procedure TDiagramEditorForm.Button1Click(Sender: TObject);
+begin
+  //ShowMessage(Edit1.Text);
+end;
+
+
+{ Aenderung des deutschen Namen}
+procedure TDiagramEditorForm.Edit1Change(Sender: TObject);
+begin
+ NewDiagram.setGermanName(Edit1.Text);
+end;
+
+{ Aenderung des englischen Namen}
+procedure TDiagramEditorForm.Edit2Change(Sender: TObject);
+begin
+  NewDiagram.setEnglishName(Edit2.Text);
+end;
+
 procedure TDiagramEditorForm.FormResize(Sender: TObject);
 begin
   TFormController.changeWindowSize(DiagramEditorForm, Panel1, GroupBox1, Edit1,
-                                    Edit2, Edit3, Memo1, Memo2);
+                                    Edit2, Edit3, Memo1, Memo2, Label4, Label5,
+                                    Button1, RadioButton1, RadioButton2);
 end;
+
+{ Fenster oeffnen bei der Auswahl zur Bearbeitung eines Diagrammes }
+procedure TDiagramEditorForm.FormShow(Sender: TObject);
+begin
+  // Zwei identische Diagramme erstellen um spaeter Differenzen zu ueberpruefen
+  //OldDiagram := TDiagram.Create(1,'','');
+  NewDiagram := OldDiagram;
+
+  Edit1.Text := OldDiagram.getGermanName;
+  Edit2.Text := OldDiagram.getGermanName;
+  Edit3.Text := OldDiagram.getClassName;
+  Memo1.Text := OldDiagram.getDescription;
+  Memo1.Text := OldDiagram.getDescription;
+
+end;
+
 
 end.

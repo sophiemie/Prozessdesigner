@@ -286,7 +286,7 @@ var
 begin
   sqlString := 'insert into ' + getTable
               + ' (wf_type_id, name_en, description_en, class, name_de)'
-                + 'values (' + diagram.getID.ToString + ',"' + diagram.getName
+                + 'values (' + diagram.getID.ToString + ',"' + diagram.getGermanName
                 + '","' + diagram.getDescription + '","' + diagram.getClassName
                 + '","'+ diagram.getVersionNumber.ToString + '")';
   write(sqlString);
@@ -327,7 +327,7 @@ begin
     else
     begin
       diagram.setID(FieldByName('wf_type_id').AsString.ToInteger);
-      diagram.setName(FieldByName('name_en').AsString);
+      diagram.setGermanName(FieldByName('name_en').AsString);
       diagram.setDescription(FieldByName('description_en').AsString);
       // Versionnummer voruebergehend in Name_de
       diagram.setVersionNumber(FieldByName('name_de').AsString.ToInteger);
@@ -351,12 +351,12 @@ begin
 
   // INSERT INTO wfdef(wf_type_id, name_en) VALUES (2, name)
   sqlString := 'INSERT INTO ' + table +'(wf_type_id, name_en, name_de) VALUES ('
-                + newID.ToString + ',"' + diagram.getName + '","' + newVersion.ToString + '")';
+                + newID.ToString + ',"' + diagram.getGermanName + '","' + newVersion.ToString + '")';
 
   write(sqlString);
   sqlString := 'UPDATE ' + table + ' SET wf_type_id =' + newID.ToString +
     ', description_en ="' + diagram.getDescription + '"' + ' WHERE name_en = "' +
-    diagram.getName + '" AND name_de =' + newVersion.ToString ;
+    diagram.getGermanName + '" AND name_de =' + newVersion.ToString ;
   write(sqlString);
   diagram.setID(newID);
   diagram.setVersionNumber(diagram.getVersionNumber +1);

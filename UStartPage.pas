@@ -60,6 +60,11 @@ type
     procedure FormShow(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure Button6Click(Sender: TObject);
+    procedure updateTable;
+    procedure StringGrid1DrawCell(Sender: TObject; ACol, ARow: Integer;
+      Rect: TRect; State: TGridDrawState);
+  public
+    procedure ClickMe(Sender: TObject);
   private
     { Private-Deklarationen }
     newButtonText : String;
@@ -73,15 +78,17 @@ type
     loadDiagamText : String;
     allDiagramText : String;
     createButtonText : String;
-    createNewVersion : String;
-    noDiagramName : String;
+    createNewVersionText : String;
+    noDiagramNameText : String;
     activeText : String;
     diagramDatabase : TDiagramDatabase;
-    openButton : String;
+    openButtonText : String;
     diagramSelected : boolean;
     noDiagramSelected : String;
     yes : String;
     no : String;
+    //ButtonList: TStringList;
+    //openButton: array of TButton;
   public
     { Public-Deklarationen }
   end;
@@ -112,7 +119,7 @@ procedure TStartPageForm.CreateOneMoreDiagramEntry(newDiagram : TDiagram);
 begin
   StringGrid1.RowCount := StringGrid1.RowCount +1;
   StringGrid1.Cells[0,StringGrid1.RowCount-1] := (StringGrid1.RowCount -1).ToString;
-  StringGrid1.Cells[1,StringGrid1.RowCount-1] := newDiagram.getName;
+  StringGrid1.Cells[1,StringGrid1.RowCount-1] := newDiagram.getGermanName;
   StringGrid1.Cells[2,StringGrid1.RowCount-1] := newDiagram.getDescription;
   StringGrid1.Cells[3,StringGrid1.RowCount-1] := newDiagram.getVersionNumber.ToString;
 end;
@@ -122,7 +129,7 @@ procedure TStartPageForm.Button3Click(Sender: TObject);
 var
   newDiagramDescription : String;
 begin
-  if Edit1.Text = '' then ShowMessage(noDiagramName)
+  if Edit1.Text = '' then ShowMessage(noDiagramNameText)
   else
   begin
     { Alle Diagramme aus Datenbank laden }
@@ -160,7 +167,7 @@ begin
   if diagramSelected then
   begin
     diagramCopy := TDiagram.Create(StringGrid1.RowCount,
-      DesignerForm.diagram.getName, DesignerForm.diagram.getDescription);
+      DesignerForm.diagram.getGermanName, DesignerForm.diagram.getDescription);
     diagramCopy.setVersionNumber(DesignerForm.diagram.getVersionNumber+1);
 
     {Diagramm in Datenbank kopieren}
@@ -177,6 +184,7 @@ begin
   TDiagramController.fillLoadingList(StringGrid1, diagramDatabase);
 end;
 
+{ Diagramm oeffnen }
 procedure TStartPageForm.Button5Click(Sender: TObject);
 begin
   if diagramSelected then DesignerForm.ShowModal
@@ -185,7 +193,11 @@ end;
 
 procedure TStartPageForm.Button6Click(Sender: TObject);
 begin
-  DiagramEditorForm.ShowModal;
+  // GEWAEHLTE REIHE IN DIAGRAM-EDITOR LADEN (wie kann ich Reihe bestimmen?)
+{  DiagramEditorForm.NewDiagram := TDiagramController.selectDiagramFromList
+      (StringGrid1, DesignerForm.diagram, ARow, diagramDatabase); }
+  if diagramSelected then DiagramEditorForm.ShowModal
+  else ShowMessage(noDiagramSelected);
 end;
 
 //procedure TStartPageForm.Button6Click(Sender: TObject);
@@ -200,8 +212,8 @@ begin
   Memo1.Lines.Clear;
   loadDiagamText := STARTPAGELABEL_LOAD_EN;
   createDiagramText := STARTPAGELABEL_CREATE_EN;
-  createNewVersion := STARTPAGELABEL_VERSION_EN;
-  noDiagramName := NODIAGRAM_NAME_EN;
+  createNewVersionText := STARTPAGELABEL_VERSION_EN;
+  noDiagramNameText := NODIAGRAM_NAME_EN;
   descriptionText := DESCRIPTION_EN;
   activeText := ACTIVE_EN;
   yes := YES_EN;
@@ -212,16 +224,14 @@ begin
   diagramSelected := false; // Zu Beginn ist kein Diagramm ausgewaehlt
   diagramDatabase := TDiagramDatabase.Create(FDQuery1,'wf_def');
 
-  StringGrid1.Cells[0,0] := 'ID';
-  StringGrid1.Cells[1,0] := 'Name';
-  StringGrid1.Cells[3,0] := 'Version';
+  // Initialisierung von Konstanten Werten
+  TFormController.initStartPageTable(StringGrid1);
+  // Weitere Tabelleninitialisierungen die abhängig von Variablen sind
   StringGrid1.Cells[2,0] := descriptionText;
   StringGrid1.Cells[4,0] := activeText;
-  Stringgrid1.ColWidths[0] := 35;
-  Stringgrid1.ColWidths[3] := 100;
-  Stringgrid1.ColWidths[4] := 80;
-  Stringgrid1.ColWidths[1] := 157;
-  Stringgrid1.ColWidths[2] := 280;
+
+  //updateTable;  // <---- FUEHRT ZUM ABSTURZ BEIM SCHLIESSEN
+
 
   // Ohne Anbindung der Datenbank
   //TDiagramController.fillLoadingList(StringGrid1);
@@ -233,10 +243,63 @@ begin
       GroupBox2, StringGrid1, ToggleSwitch1, Edit2);
 end;
 
-procedure TStartPageForm.FormShow(Sender: TObject);
+
+procedure TStartPageForm.ClickMe(Sender: TObject);
+var
+  Button: TButton;
+  RowIndex: Integer;
+begin
+  // Den gedrückten Button ermitteln
+  Button := TButton(Sender);
+  ShowMessage('Button ' + Button.Name + ' wurde gedrückt!');
+end;
+
+procedure TStartPageForm.updateTable;
 begin
   TDiagramController.fillLoadingList(StringGrid1, diagramDatabase);
+  //SetLength(openButton, StringGrid1.RowCount-2);
 end;
+
+procedure TStartPageForm.FormShow(Sender: TObject);
+var
+  i : Integer;
+  button: TButton;
+  CellRect: TRect;
+begin
+  updateTable;
+
+  StringGrid1.Cells[5, 1] := 'HALLO';
+  StringGrid1.Cells[5, 2] := 'HALLO';
+
+  // Automatische Erstellung von Knoten
+  for i := 1 to StringGrid1.RowCount-1 do
+  begin
+    StringGrid1.Cells[5, i] := openButtonText;
+ { // Button erstellen und konfigurieren
+    openButton[i-1] := TButton.Create(Self);
+    CellRect := StringGrid1.CellRect(5, i);
+    with openButton[i-1] do begin
+      Name := 'OpenButton' + i.ToString;
+      Parent := GroupBox2;
+      Caption := OPEN_EN + i.ToString;
+      OnClick := ClickMe;
+      Height := CellRect.Height;
+      Width := CellRect.Width;
+      Top := StringGrid1.Top + CellRect.Top;
+      Left := StringGrid1.Left + CellRect.Left;
+      Font.Name := 'Avenir LT Pro 55 Roman';
+    end; }
+  end;
+end;
+
+
+
+procedure TStartPageForm.StringGrid1DrawCell(Sender: TObject; ACol,
+  ARow: Integer; Rect: TRect; State: TGridDrawState);
+begin
+
+end;
+
 
 { Lade gewaehltes Diagramm aus der Liste }
 procedure TStartPageForm.StringGrid1SelectCell(Sender: TObject; ACol,
@@ -252,22 +315,25 @@ begin
 
       DesignerForm.diagram := TDiagramController.selectDiagramFromList
       (StringGrid1, DesignerForm.diagram, ARow, diagramDatabase);
+      DiagramEditorForm.OldDiagram := TDiagramController.selectDiagramFromList
+      (StringGrid1, DesignerForm.diagram, ARow, diagramDatabase);
 
       { Datei als Hilfestellung anzeigen lassen }
       Edit2.Text := DesignerForm.diagram.getID.ToString + '_v'
                     + DesignerForm.diagram.getVersionNumber.ToString + '_'
-                    + DesignerForm.diagram.getName;
+                    + DesignerForm.diagram.getGermanName;
 
       { Daten an DesignerForm uebergeben }
       DesignerForm.IsLoadedDiagram := true;
       DesignerForm.LoadedDiagramFileName :=
         DesignerForm.diagram.getID.ToString + '_' + 'v'
       + DesignerForm.diagram.getVersionNumber.ToString + '_'
-      + DesignerForm.diagram.getName + '.blox';
+      + DesignerForm.diagram.getGermanName + '.blox';
     end;
   end;
 end;
 
+{ ------------------- Spracheneinstellungen ------------------------------- }
 { Texte neu zuweisen bei Sprachaenderung}
 procedure TStartPageForm.fillComponentText();
 var
@@ -277,7 +343,7 @@ begin
   button2.Caption := loadButtonText;
   button3.Caption := createButtonText;
   button4.Caption := newVersionButtonText;
-  button5.Caption := openButton;
+  button5.Caption := openButtonText;
   StartPageForm.Caption := formText;
   label2.Caption := descriptionText;
   Image1.Hint := descriptionHintText;
@@ -300,10 +366,13 @@ begin
 
   if GroupBox2.Visible then Panel2.Caption := loadDiagamText
   else if GroupBox1.Visible then Panel2.Caption := createDiagramText;
+  //for I := 0 to Length(openButton)-1 do openButton[I].Caption := openButtonText;
 end;
 
 { Sprache aendern }
 procedure TStartPageForm.ToggleSwitch1Click(Sender: TObject);
+var
+ I : Integer;
 begin
   if ToggleSwitch1.State = tssOff then
   begin
@@ -318,10 +387,10 @@ begin
     loadDiagamText := STARTPAGELABEL_LOAD_EN;
     allDiagramText := ALLDIAGRAM_EN;
     createButtonText := CREATE_EN;
-    createNewVersion := STARTPAGELABEL_VERSION_EN;
-    noDiagramName := NODIAGRAM_NAME_EN;
+    createNewVersionText := STARTPAGELABEL_VERSION_EN;
+    noDiagramNameText := NODIAGRAM_NAME_EN;
     activeText := ACTIVE_EN;
-    openButton := OPEN_EN;
+    openButtonText := OPEN_EN;
     noDiagramSelected := NODIAGRAM_SELECTED_EN;
     yes := YES_EN;
     no := NO_EN;
@@ -339,10 +408,10 @@ begin
     loadDiagamText := STARTPAGELABEL_LOAD_DE;
     allDiagramText := ALLDIAGRAM_DE;
     createButtonText := CREATE_DE;
-    createNewVersion := STARTPAGELABEL_VERSION_DE;
-    noDiagramName := NODIAGRAM_NAME_DE;
+    createNewVersionText := STARTPAGELABEL_VERSION_DE;
+    noDiagramNameText := NODIAGRAM_NAME_DE;
     activeText := ACTIVE_DE;
-    openButton := OPEN_DE;
+    openButtonText := OPEN_DE;
     noDiagramSelected := NODIAGRAM_SELECTED_DE;
     yes := YES_DE;
     no := NO_DE;

@@ -2,7 +2,7 @@ object DiagramEditorForm: TDiagramEditorForm
   Left = 0
   Top = 0
   Caption = 'Prozessdesigner'
-  ClientHeight = 499
+  ClientHeight = 532
   ClientWidth = 497
   Color = clBtnHighlight
   Font.Charset = DEFAULT_CHARSET
@@ -8271,6 +8271,7 @@ object DiagramEditorForm: TDiagramEditorForm
     FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0}
   OldCreateOrder = False
   OnResize = FormResize
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
@@ -8293,7 +8294,7 @@ object DiagramEditorForm: TDiagramEditorForm
     Left = 10
     Top = 47
     Width = 479
-    Height = 444
+    Height = 477
     Caption = 'GroupBox1'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -8392,6 +8393,7 @@ object DiagramEditorForm: TDiagramEditorForm
       Font.Style = []
       ParentFont = False
       TabOrder = 0
+      OnChange = Edit1Change
     end
     object Edit2: TEdit
       Left = 24
@@ -8405,6 +8407,7 @@ object DiagramEditorForm: TDiagramEditorForm
       Font.Style = []
       ParentFont = False
       TabOrder = 1
+      OnChange = Edit2Change
     end
     object Memo1: TMemo
       Left = 24
@@ -8460,6 +8463,21 @@ object DiagramEditorForm: TDiagramEditorForm
       Font.Style = []
       ParentFont = False
       TabOrder = 6
+    end
+    object Button1: TButton
+      Left = 160
+      Top = 432
+      Width = 75
+      Height = 25
+      Caption = 'Save'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Avenir LT Pro 55 Roman'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 7
+      OnClick = Button1Click
     end
   end
 end

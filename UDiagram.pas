@@ -18,20 +18,23 @@ type
   public
     constructor Create(newID: Integer; newName: String; newDescription: String);
     procedure setID(newID: Integer);
-    procedure setName(newName: String);
+    procedure setGermanName(newName: String);
+    procedure setEnglishName(newName: String);
     procedure setDescription(newDescription: String);
     procedure setInUse(value: boolean);
     procedure setClassName(newClassName : String);
     procedure setVersionNumber(newVersion: Integer);
     function getID : Integer;
-    function getName : String;
+    function getGermanName : String;
+    function getEnglishName : String;
     function getDescription : String;
     function getInUse : boolean;
     function getClassName : String;
     function getVersionNumber :Integer;
   private
     var ID : Integer;
-    var Name : String;
+    var GermanName : String;
+    var EnglishName : String;
     var Description : String;
     var InUse : boolean;
     var ClassName : String;
@@ -45,9 +48,9 @@ constructor TDiagram.Create(newID: Integer; newName: String;
   newDescription: String);
 begin
   ID := newID;
-  Name := newName;
+  GermanName := newName;
   Description := newDescription;
-  ClassName := Name + 'Form';
+  ClassName := GermanName + 'Form';
   InUse := true;
   VersionNumber := 1;
 end;
@@ -58,9 +61,14 @@ begin
   ID := newID;
 end;
 
-procedure TDiagram.setName(newName: String);
+procedure TDiagram.setGermanName(newName: String);
 begin
-  Name := newName;
+  GermanName := newName;
+end;
+
+procedure TDiagram.setEnglishName(newName: String);
+begin
+  EnglishName := newName;
 end;
 
 procedure TDiagram.setDescription(newDescription: String);
@@ -88,9 +96,14 @@ begin
   Result := ID;
 end;
 
-function TDiagram.getName : String;
+function TDiagram.getGermanName : String;
 begin
-  Result := Name;
+  Result := GermanName;
+end;
+
+function TDiagram.getEnglishName : String;
+begin
+  Result := EnglishName;
 end;
 
 function TDiagram.getDescription : String;
