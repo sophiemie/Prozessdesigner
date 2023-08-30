@@ -8270,6 +8270,7 @@ object DiagramEditorForm: TDiagramEditorForm
     FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0FFFF
     FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0}
   OldCreateOrder = False
+  OnCreate = FormCreate
   OnResize = FormResize
   OnShow = FormShow
   PixelsPerInch = 96
@@ -8482,5 +8483,19 @@ object DiagramEditorForm: TDiagramEditorForm
       TabOrder = 7
       OnClick = Button1Click
     end
+  end
+  object FDConnection1: TFDConnection
+    Params.Strings = (
+      'Database=wf'
+      'User_Name=dbapp'
+      'Password=Yv9i9OqHC8TRlCbE'
+      'DriverID=MySQL')
+    Left = 306
+    Top = 447
+  end
+  object FDQuery1: TFDQuery
+    Connection = FDConnection1
+    Left = 370
+    Top = 447
   end
 end

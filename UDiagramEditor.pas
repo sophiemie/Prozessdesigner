@@ -5,7 +5,12 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Vcl.ExtCtrls, UFormController, Vcl.StdCtrls, UDiagram, UDiagramController;
+  Vcl.ExtCtrls, UFormController, Vcl.StdCtrls, UDiagram, UDiagramController,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf,
+  FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async,
+  FireDAC.Phys, FireDAC.Phys.MySQL, FireDAC.Phys.MySQLDef, FireDAC.VCLUI.Wait,
+  FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, UDatabase;
 
 type
   TDiagramEditorForm = class(TForm)
@@ -25,6 +30,8 @@ type
     Label6: TLabel;
     Edit3: TEdit;
     Button1: TButton;
+    FDConnection1: TFDConnection;
+    FDQuery1: TFDQuery;
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Edit1Change(Sender: TObject);
@@ -33,12 +40,14 @@ type
     procedure Edit3Change(Sender: TObject);
     procedure Memo1Change(Sender: TObject);
     procedure Memo2Change(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private-Deklarationen }
   public
     { Public-Deklarationen }
     OldDiagram: TDiagram;
     NewDiagram: TDiagram;
+    Database: TDiagramDatabase;
   end;
 
 var
@@ -51,17 +60,12 @@ implementation
 { Speichern der Veraenderung }
 procedure TDiagramEditorForm.Button1Click(Sender: TObject);
 begin
-  //ShowMessage(Edit1.Text);
-  if TDiagramController.compareTwoDiagramsIfSimilar(OldDiagram, NewDiagram) then
+  // Eine Veraenderung wurde vorgenommen
+  if not TDiagramController.compareTwoDiagramsIfSimilar(OldDiagram,
+                                                                NewDiagram) then
   begin
-
-  end
-  else
-  begin
-
+    Database.updateDiagram(NewDiagram);
   end;
-
-
 end;
 
 
@@ -81,6 +85,11 @@ end;
 procedure TDiagramEditorForm.Edit3Change(Sender: TObject);
 begin
   NewDiagram.setClassName(Edit3.Text);
+end;
+
+procedure TDiagramEditorForm.FormCreate(Sender: TObject);
+begin
+  Database := TDiagramDatabase.Create(FDQuery1,'wf_def');
 end;
 
 procedure TDiagramEditorForm.FormResize(Sender: TObject);

@@ -72,6 +72,7 @@ type
     function getHighestDiagramID : Integer;
     function giveDiagramSavedDatas(diagram: TDiagram) : TDiagram;
     function copyDiagram(diagram: TDiagram) : TDiagram;
+    procedure updateDiagram(diagram: TDiagram);
   end;
 
 implementation
@@ -351,16 +352,31 @@ begin
 
   // INSERT INTO wfdef(wf_type_id, name_en) VALUES (2, name)
   sqlString := 'INSERT INTO ' + table +'(wf_type_id, name_en, name_de) VALUES ('
-                + newID.ToString + ',"' + diagram.getGermanName + '","' + newVersion.ToString + '")';
+                + newID.ToString + ',"' + diagram.getGermanName + '","'
+                + newVersion.ToString + '")';
 
   write(sqlString);
   sqlString := 'UPDATE ' + table + ' SET wf_type_id =' + newID.ToString +
-    ', description_en ="' + diagram.getGermanDescription + '"' + ' WHERE name_en = "' +
-    diagram.getGermanName + '" AND name_de =' + newVersion.ToString ;
+    ', description_en ="' + diagram.getGermanDescription + '"'
+    + ' WHERE name_en = "' + diagram.getGermanName + '" AND name_de ='
+    + newVersion.ToString ;
   write(sqlString);
   diagram.setID(newID);
   diagram.setVersionNumber(diagram.getVersionNumber +1);
   Result := diagram;
+end;
+
+{ Ein Diagramm bearbeiten }
+procedure TDiagramDatabase.updateDiagram(diagram: TDiagram);
+var
+  sqlString : String;
+begin   // in_use fehlt noch
+  sqlString := 'UPDATE ' + table + ' SET name_de ="' + diagram.getGermanName +
+    '", name_en ="' + diagram.getEnglishName + '", description_de ="' +
+    diagram.getGermanDescription + '", description_en ="' +
+    diagram.getEnglishDescription + '", class ="' + diagram.getClassName +
+    '"';
+  write(sqlString);
 end;
 
 end.
