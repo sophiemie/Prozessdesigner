@@ -37,6 +37,8 @@ type
       row : Integer; database : TDiagramDatabase) : TDiagram; overload;
     class function getNewID(list : TStringGrid) : Integer; overload;
     class function getNewID(database : TDiagramDatabase) : Integer; overload;
+    class function compareTwoDiagramsIfSimilar(firstDiagram : TDiagram;
+                    secondDiagram : TDiagram) : boolean;
     var IsLoadesDiagram : boolean;
   protected { Damit die in den Unittests verwendet werden koennen }
     class procedure replaceNodeNames(fileName : String);
@@ -46,6 +48,16 @@ type
   end;
 
 implementation
+
+{ Es wird verglichen ob die beiden Diagramme dieselben Inhalt enthalten }
+class function TDiagramController.compareTwoDiagramsIfSimilar(firstDiagram :
+                TDiagram; secondDiagram : TDiagram) : boolean;
+begin
+  Result := (firstDiagram.getGermanName = secondDiagram.getGermanName) and
+    (firstDiagram.getEnglishName = firstDiagram.getEnglishName) and
+    (firstDiagram.getGermanDescription = secondDiagram.getGermanDescription) and
+    (firstDiagram.getEnglishDescription = secondDiagram.getEnglishDescription);
+end;
 
 { Diagramm von Designer-Formular laden}
 class procedure TDiagramController.loadDiagramToFile(diagram : TDiagram;
@@ -63,7 +75,7 @@ begin
   fileName := fileName.Remove(0, openDialog.InitialDir.Length);
   diagram.setID(filterIDfromFileName(fileName).ToInteger);
   diagram.setVersionNumber(filterVersionFromFileName(fileName).ToInteger);
-  diagram.setName(filterNameFromFileName(fileName));
+  diagram.setGermanName(filterNameFromFileName(fileName));
 end;
 
 class procedure TDiagramController.loadDiagramToFile(diagram : TDiagram;
@@ -80,7 +92,7 @@ var
   fileName : String;
 begin
   fileName := diagram.getID.ToString + '_' + 'v'
-                + diagram.getVersionNumber.ToString + '_' + diagram.getName;
+                + diagram.getVersionNumber.ToString + '_' + diagram.getGermanName;
   saveDialog.FileName := fileName;  // So wird Dateiname vorgeschlagen
   if saveDialog.Execute then
   begin
@@ -213,35 +225,41 @@ class procedure TDiagramController.fillLoadingList(list : TStringGrid;
                                                   database : TDiagramDatabase);
 var
   I, entryNumber : Integer;
-  entry : TDiagramEntry;
-  diagram : TDiagram;
+  entry : TDiagramEntry; // Array mit Diagrammen
+  diagram : TDiagram; // aktuelles Diagramm
 begin
   entryNumber := 0;
-  list.RowCount := database.getDataCount() +1;
-  SetLength(entry,list.RowCount-1);
+  list.RowCount := database.getDataCount() +1; // Maximale Reihen setzen
+  SetLength(entry,list.RowCount-1); // Array Groeﬂe festlegen
+
+  // Alle IDs durchgehen
   for I := 0 to database.getHighestDiagramID do
   begin
-    diagram := TDiagram.Create(I,'','');
+    diagram := TDiagram.Create(I,'',''); // Diagramm erstellen
+    // Beziehe vorhandene Daten zum Diagramm aus der Datenbank
     diagram := database.giveDiagramSavedDatas(diagram);
+    // 0 = kein Eintrag zu dem Diagramm in der Datenbank
     if diagram.getID <> 0 then
     begin
       entry[entryNumber] := TDiagram.Create
-                      (diagram.getID, diagram.getName, diagram.getDescription);
+                      (diagram.getID, diagram.getGermanName, diagram.getGermanDescription);
       entry[entryNumber].setVersionNumber(diagram.getVersionNumber);
       entryNumber := entryNumber +1;
     end;
   end;
 
-  for I := 0 to Length(entry)-1 do //list.RowCount-1 do
+  // Fuer jeden Eintrag folgende Werte eintragen
+  for I := 0 to Length(entry)-1 do
   begin
+      list.Invalidate;
       list.Cells[0,I+1] := entry[I].getID.ToString;
-      list.Cells[1,I+1] := entry[I].getName;
-      list.Cells[2,I+1] := entry[I].getDescription;
+      list.Cells[1,I+1] := entry[I].getGermanName;
+      list.Cells[2,I+1] := entry[I].getGermanDescription;
       list.Cells[3,I+1] := entry[I].getVersionNumber.ToString;
-      list.Cells[4,I+1] := entry[I].getDescription;
-      list.Cells[5,I+1] := entry[I].getDescription;
-      list.Cells[6,I+1] := entry[I].getDescription;
-      list.Cells[7,I+1] := entry[I].getDescription;
+      list.Cells[4,I+1] := entry[I].getGermanDescription;
+      {list.Cells[6,I+1] := 'Open';
+      list.Cells[7,I+1] := 'Edit';
+      list.Cells[8,I+1] := 'Copy';}  // Erstmal rausgenommen
   end;
 end;
 

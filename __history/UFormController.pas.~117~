@@ -19,7 +19,7 @@ public
   class procedure changeWindowSize(form: TForm; box: TGroupBox; list: TListBox;
                                     button: TButton); overload;
   class procedure changeWindowSize(form: TForm; panel: TPanel; control:
-                  TTMSFNCBloxControl); overload;
+                  TTMSFNCBloxControl; image: TImage); overload;
   class procedure changeWindowSize(form: TForm; panel1: TPanel; panel2: TPanel;
                   box1: TGroupBox; box2: TGroupBox; table: TStringGrid;
                   toggle: TToggleSwitch; edit: TEdit); overload;
@@ -53,12 +53,20 @@ implementation
 
   { Aenderung bei dem Designformular }
   class procedure TFormController.changeWindowSize(form: TForm; panel: TPanel;
-                control: TTMSFNCBloxControl);
+                control: TTMSFNCBloxControl; image: TImage);
   begin
     panel.Left := form.Width - panel.Width;
     control.Width := form.Width - panel.Width;
     control.Height := form.Height;
     panel.Height := form.Height;
+    image.Left := form.Width - 550;
+
+
+  {// Berechnung des Skalierungsfaktors
+  ScaleFactor := Image.Width / Image.Picture.Width;
+  // Setzen der neuen Breite und Höhe des Bildes entsprechend der Fenstergröße
+  Image.Width := Round(Image.Width * ScaleFactor);
+  Image.Height := Round(Image.Height * ScaleFactor); }
   end;
 
 
@@ -103,8 +111,7 @@ implementation
     yesButton.Top := form.Height - 340;
     noButton.Top := yesButton.Top;
     activeLabel.Top := yesButton.Top;
-
-    //memo2.Height := form.Height - 490;
+    // Formelentstehung siehe Technische Doku Kapitel 2.1
     memo1.Height := Round((-213 + (form.Height - memo1.Top))/2-100);
     descriptionLabel.Top := memo1.Top + memo1.Height +13;
     memo2.Top := descriptionLabel.Top +40;

@@ -37,6 +37,8 @@ type
       row : Integer; database : TDiagramDatabase) : TDiagram; overload;
     class function getNewID(list : TStringGrid) : Integer; overload;
     class function getNewID(database : TDiagramDatabase) : Integer; overload;
+    class function compareTwoDiagramsIfSimilar(firstDiagram : TDiagram;
+                    secondDiagram : TDiagram) : boolean;
     var IsLoadesDiagram : boolean;
   protected { Damit die in den Unittests verwendet werden koennen }
     class procedure replaceNodeNames(fileName : String);
@@ -46,6 +48,18 @@ type
   end;
 
 implementation
+
+{ Es wird verglichen ob die beiden Diagramme dieselben Inhalt enthalten }
+class function TDiagramController.compareTwoDiagramsIfSimilar(firstDiagram :
+                TDiagram; secondDiagram : TDiagram) : boolean;
+begin
+  Result := (firstDiagram.getGermanName = secondDiagram.getGermanName) and
+    (firstDiagram.getEnglishName = firstDiagram.getEnglishName) and
+    (firstDiagram.getClassName = secondDiagram.getClassName) and
+    (firstDiagram.getInUse = secondDiagram.getInUse) and
+    (firstDiagram.getGermanDescription = secondDiagram.getGermanDescription) and
+    (firstDiagram.getEnglishDescription = secondDiagram.getEnglishDescription);
+end;
 
 { Diagramm von Designer-Formular laden}
 class procedure TDiagramController.loadDiagramToFile(diagram : TDiagram;

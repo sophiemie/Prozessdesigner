@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Vcl.ExtCtrls, UFormController, Vcl.StdCtrls, UDiagram;
+  Vcl.ExtCtrls, UFormController, Vcl.StdCtrls, UDiagram, UDiagramController;
 
 type
   TDiagramEditorForm = class(TForm)
@@ -52,6 +52,16 @@ implementation
 procedure TDiagramEditorForm.Button1Click(Sender: TObject);
 begin
   //ShowMessage(Edit1.Text);
+  if TDiagramController.compareTwoDiagramsIfSimilar(OldDiagram, NewDiagram) then
+  begin
+
+  end
+  else
+  begin
+
+  end;
+
+
 end;
 
 

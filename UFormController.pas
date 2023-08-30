@@ -59,7 +59,10 @@ implementation
     control.Width := form.Width - panel.Width;
     control.Height := form.Height;
     panel.Height := form.Height;
-    image.Left := form.Width - 550;
+    image.Left := form.Width - 560;
+    //image.Top := form.Height - 100;
+    image.Height := 38;
+    image.Width := 38;
 
   {// Berechnung des Skalierungsfaktors
   ScaleFactor := Image.Width / Image.Picture.Width;
