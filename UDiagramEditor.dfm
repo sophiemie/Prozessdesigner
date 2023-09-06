@@ -8486,7 +8486,7 @@ object DiagramEditorForm: TDiagramEditorForm
   end
   object FDConnection1: TFDConnection
     Params.Strings = (
-      'Database=wf'
+      'Database=wf_test'
       'User_Name=dbapp'
       'Password=Yv9i9OqHC8TRlCbE'
       'DriverID=MySQL')

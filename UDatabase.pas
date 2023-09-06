@@ -375,7 +375,7 @@ begin   // in_use fehlt noch
     '", name_en ="' + diagram.getEnglishName + '", description_de ="' +
     diagram.getGermanDescription + '", description_en ="' +
     diagram.getEnglishDescription + '", class ="' + diagram.getClassName +
-    '"';
+    '" WHERE wf_type_id = ' + diagram.getID.ToString;
   write(sqlString);
 end;
 

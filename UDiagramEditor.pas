@@ -66,13 +66,14 @@ begin
   begin
     Database.updateDiagram(NewDiagram);
   end;
+  DiagramEditorForm.Close;
 end;
 
 
 { Aenderung des deutschen Namen}
 procedure TDiagramEditorForm.Edit1Change(Sender: TObject);
 begin
- NewDiagram.setGermanName(Edit1.Text);
+  NewDiagram.setGermanName(Edit1.Text);
 end;
 
 { Aenderung des englischen Namen}
@@ -87,11 +88,13 @@ begin
   NewDiagram.setClassName(Edit3.Text);
 end;
 
+{ Initialisierung }
 procedure TDiagramEditorForm.FormCreate(Sender: TObject);
 begin
   Database := TDiagramDatabase.Create(FDQuery1,'wf_def');
 end;
 
+{ Veraenderung der Fenstergroesse }
 procedure TDiagramEditorForm.FormResize(Sender: TObject);
 begin
   TFormController.changeWindowSize(DiagramEditorForm, Panel1, GroupBox1, Edit1,
@@ -101,16 +104,30 @@ end;
 
 { Fenster oeffnen bei der Auswahl zur Bearbeitung eines Diagrammes }
 procedure TDiagramEditorForm.FormShow(Sender: TObject);
+var
+  oldGermanName, oldEnglishName, oldGermanDescr, oldEnglishDescr, oldClass : String;
 begin
   // Zwei identische Diagramme erstellen um spaeter Differenzen zu ueberpruefen
   //OldDiagram := TDiagram.Create(1,'','');
-  NewDiagram := OldDiagram;
 
-  Edit1.Text := OldDiagram.getGermanName;
-  Edit2.Text := OldDiagram.getGermanName;
-  Edit3.Text := OldDiagram.getClassName;
-  Memo1.Text := OldDiagram.getGermanDescription;
-  Memo1.Text := OldDiagram.getGermanDescription;
+  //NewDiagram := OldDiagram;
+  NewDiagram := TDiagram.Create(OldDiagram.getID, OldDiagram.getGermanName,
+                                  OldDiagram.getGermanDescription);
+  NewDiagram.setEnglishName(OldDiagram.getEnglishName);
+  NewDiagram.setEnglishDescription(OldDiagram.getEnglishDescription);
+  NewDiagram.setClassName(OldDiagram.getClassName);
+
+  oldGermanName := OldDiagram.getGermanName;
+  oldEnglishName := OldDiagram.getEnglishName;
+  oldClass := OldDiagram.getClassName;
+  oldGermanDescr := OldDiagram.getGermanDescription;
+  oldEnglishDescr := OldDiagram.getEnglishDescription;
+
+  Edit1.Text := oldGermanName;
+  Edit2.Text := oldEnglishName;
+  Edit3.Text := oldClass;
+  Memo1.Text := oldGermanDescr;
+  Memo1.Text := oldEnglishDescr;
 
 end;
 
